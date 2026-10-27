@@ -1,0 +1,330 @@
+extends Node2D
+## One playable level: builds the map, wires puzzle events and applies the rules of the
+## time lens, hints and gentle respawns (no lives, no timers, no punishment).
+
+const PLAYER_SCENE := preload("res://scenes/characters/player.tscn")
+const PILO_SCENE := preload("res://scenes/characters/pilo.tscn")
+const HUD := preload("res://scripts/ui/hud.gd")
+const DIALOGUE := preload("res://scripts/ui/dialogue_box.gd")
+const PAUSE_MENU := preload("res://scripts/ui/pause_menu.gd")
+const LEVEL_COMPLETE := preload("res://scripts/ui/level_complete.gd")
+
+const SHIFT_COOLDOWN := 0.35
+const PAST_TINT := Color(1.0, 0.88, 0.7)
+const PAST_RING := Color(1.0, 0.75, 0.3)
+const PRESENT_RING := Color(0.4, 0.9, 1.0)
+## Failed attempts before the hint button starts to glow, per hint setting.
+const HINT_AFTER := {"more": 2, "less": 4}
+
+var level_id := 1
+var data: Dictionary = {}
+var world: Dictionary = {}
+var info: Dictionary = {}
+var player: CharacterBody2D
+var pilo: Node2D
+var hud: CanvasLayer
+var dialogue: CanvasLayer
+var respawn_point := Vector2.ZERO
+var stars_collected: Array = []
+var keys := 0
+var friend_rescued := true
+var fails := 0
+var lens_enabled := true
+var finished := false
+
+var _busy := false
+var _respawning := false
+var _shift_cooldown := 0.0
+var _notice_cooldown := 0.0
+var _world_root: Node2D
+var _modulate: CanvasModulate
+var _background: Background
+var _tint_tween: Tween
+
+
+func _ready() -> void:
+	UIKit.ensure_theme(get_tree())
+	level_id = LevelManager.current_level
+	world = LevelManager.world_of(level_id)
+	data = LevelManager.load_level(level_id)
+	if data.is_empty():
+		push_error("Level %d has no data" % level_id)
+		LevelManager.goto_map()
+		return
+	lens_enabled = bool(data.get("lens", true))
+	var palette := LevelBuilder.make_palette(world.palette)
+
+	_modulate = CanvasModulate.new()
+	add_child(_modulate)
+	_background = Background.new()
+	_background.texture_path = world.background
+	_background.hills_color = palette.hills
+	add_child(_background)
+	_world_root = Node2D.new()
+	add_child(_world_root)
+
+	info = LevelBuilder.build(data, _world_root, self, palette)
+	friend_rescued = not info.needs_rescue
+	if info.exit:
+		info.exit.set_locked(not friend_rescued)
+
+	player = PLAYER_SCENE.instantiate()
+	player.position = info.start
+	_world_root.add_child(player)
+	respawn_point = info.start
+	player.jumped.connect(func(): AudioManager.play_sfx("jump"))
+	player.landed.connect(func(): AudioManager.play_sfx("land"))
+	var camera := Camera2D.new()
+	camera.name = "Camera2D"
+	camera.limit_left = 0
+	camera.limit_top = 0
+	camera.limit_right = int(info.size.x)
+	camera.limit_bottom = int(info.size.y)
+	camera.position_smoothing_enabled = true
+	camera.position_smoothing_speed = 6.0
+	camera.offset = Vector2(0, -40)
+	player.add_child(camera)
+	camera.make_current()
+
+	pilo = PILO_SCENE.instantiate()
+	pilo.target = player
+	pilo.position = info.start + Vector2(-64, -80)
+	_world_root.add_child(pilo)
+	pilo.apply_color(String(SaveManager.data.get("pilo_color", "classic")))
+
+	hud = HUD.new()
+	add_child(hud)
+	hud.setup(LevelManager.level_title(level_id), info.stars, info.keys > 0, lens_enabled)
+	hud.pause_pressed.connect(open_pause)
+	hud.hint_pressed.connect(request_hint)
+	dialogue = DIALOGUE.new()
+	add_child(dialogue)
+
+	TimeShift.time_changed.connect(_on_time_changed)
+	TimeShift.reset(TimeShift.state_from_name(String(data.get("start_time", "present"))))
+	AudioManager.play_music(world.music)
+	Analytics.log_event("level_start", level_id)
+	_play_lines(data.get("intro", []))
+
+
+func _physics_process(delta: float) -> void:
+	if finished or player == null:
+		return
+	_shift_cooldown -= delta
+	_notice_cooldown -= delta
+	if not _busy:
+		if Input.is_action_just_pressed("time_shift"):
+			try_shift()
+		if Input.is_action_just_pressed("hint"):
+			request_hint()
+		if Input.is_action_just_pressed("pause"):
+			open_pause()
+	if not _respawning and player.global_position.y > info.size.y + 160.0:
+		on_hazard("fall")
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST or what == NOTIFICATION_APPLICATION_PAUSED:
+		open_pause()
+
+
+# --- Time lens -------------------------------------------------------------
+
+func try_shift() -> void:
+	if not lens_enabled or _shift_cooldown > 0.0 or _respawning:
+		return
+	_shift_cooldown = SHIFT_COOLDOWN
+	var blocker := TimeShift.find_blocker(player.get_body_rect())
+	if blocker:
+		AudioManager.play_sfx("reject")
+		if blocker.has_method("flash_warning"):
+			blocker.flash_warning()
+		player.react_surprise()
+		pilo.shake()
+		_notice("اینجا جای امن نیست!", UIKit.RED, true)
+		Analytics.log_event("shift_blocked", level_id)
+		return
+	TimeShift.shift()
+	AudioManager.play_sfx("shift")
+	var color := PAST_RING if TimeShift.state == TimeShift.PAST else PRESENT_RING
+	FX.ring(_world_root, player.global_position, color)
+	hud.flash(color)
+	Analytics.log_event("shift", level_id)
+
+
+func _on_time_changed(state: int, instant: bool) -> void:
+	var tint := PAST_TINT if state == TimeShift.PAST else Color.WHITE
+	if _tint_tween:
+		_tint_tween.kill()
+	if instant:
+		_modulate.color = tint
+	else:
+		_tint_tween = create_tween()
+		_tint_tween.tween_property(_modulate, "color", tint, 0.4)
+	_background.set_tint(tint, instant)
+	hud.set_time(state)
+	pilo.on_time_changed(state, instant)
+
+
+# --- Hints -----------------------------------------------------------------
+
+## Pilo flies to the next clue ahead of the hero. With "more" hints the time pieces
+## around that clue also pulse. The answer itself is never spelled out.
+func request_hint() -> void:
+	if _busy or finished:
+		return
+	var points: Array = info.hints
+	hud.stop_hint_pulse()
+	if points.is_empty():
+		pilo.shake()
+		return
+	var best: Vector2 = points[points.size() - 1]
+	for point in points:
+		if point.x > player.global_position.x - 32.0:
+			best = point
+			break
+	pilo.show_hint(best)
+	if SaveManager.data.settings.hints == "more":
+		get_tree().call_group("time_visual", "hint_flash", best, 420.0)
+	Analytics.log_event("hint", level_id)
+
+
+# --- Puzzle events (called by puzzle nodes) --------------------------------
+
+func on_star_collected(index: int, pos: Vector2) -> void:
+	stars_collected.append(index)
+	AudioManager.play_sfx("star")
+	FX.burst(_world_root, pos, UIKit.GOLD)
+	hud.set_stars(stars_collected)
+
+
+func on_key_collected(pos: Vector2) -> void:
+	keys += 1
+	AudioManager.play_sfx("key")
+	FX.burst(_world_root, pos, UIKit.GOLD, 10)
+	hud.set_keys(keys)
+
+
+func on_door_touched(door: Door) -> void:
+	if keys > 0:
+		keys -= 1
+		door.open()
+		AudioManager.play_sfx("door")
+		hud.set_keys(keys)
+	else:
+		pilo.shake()
+		_notice("کلید کجاست؟", UIKit.ORANGE)
+
+
+func on_checkpoint(checkpoint: Checkpoint) -> void:
+	respawn_point = checkpoint.respawn_position()
+	AudioManager.play_sfx("star", 0.8)
+	FX.burst(_world_root, checkpoint.global_position + Vector2(48, -30), UIKit.ORANGE, 12)
+
+
+func on_friend_rescued(_friend: Node) -> void:
+	friend_rescued = true
+	AudioManager.play_sfx("rescue")
+	if info.exit:
+		info.exit.set_locked(false)
+	await _play_lines(data.get("rescue", []))
+	if info.exit and info.exit.overlaps_body(player):
+		on_exit_reached()
+
+
+func on_exit_reached() -> void:
+	if finished:
+		return
+	if not friend_rescued:
+		_notice("اول دوستمان را نجات بده!", UIKit.ORANGE)
+		return
+	finished = true
+	_set_busy(true)
+	player.velocity.x = 0.0
+	player.celebrate()
+	AudioManager.play_sfx("win")
+	var result := ProgressManager.complete_level(level_id, stars_collected)
+	Analytics.log_event("level_complete", level_id)
+	await get_tree().create_timer(1.1).timeout
+	var outro: Array = data.get("outro", [])
+	if not outro.is_empty():
+		await dialogue.play(outro)
+	var popup := LEVEL_COMPLETE.new()
+	popup.level_id = level_id
+	popup.stars_found = stars_collected.size()
+	popup.stars_total = info.stars
+	popup.first_time = result.first_time
+	popup.action.connect(_on_complete_action)
+	add_child(popup)
+
+
+func _on_complete_action(id: String) -> void:
+	match id:
+		"next":
+			LevelManager.play_level(level_id + 1)
+		"retry":
+			LevelManager.play_level(level_id)
+		_:
+			LevelManager.goto_map()
+
+
+## Water or a fall: fade out, come back at the last checkpoint. No lives are lost.
+func on_hazard(kind: String) -> void:
+	if _respawning or finished:
+		return
+	_respawning = true
+	fails += 1
+	Analytics.log_event("respawn", level_id)
+	AudioManager.play_sfx("splash" if kind == "water" else "respawn")
+	player.controls_enabled = false
+	await player.respawn(respawn_point)
+	# A checkpoint always stands on ground; if the current time is unsafe there, switch back.
+	if TimeShift.blocker_in(player.get_body_rect(), TimeShift.state) != null:
+		TimeShift.shift()
+	player.controls_enabled = not _busy
+	_respawning = false
+	if fails >= int(HINT_AFTER.get(SaveManager.data.settings.hints, 3)):
+		hud.pulse_hint()
+
+
+# --- Flow helpers ----------------------------------------------------------
+
+func open_pause() -> void:
+	if _busy or finished or get_tree().paused:
+		return
+	get_tree().paused = true
+	var menu := PAUSE_MENU.new()
+	menu.action.connect(_on_pause_action)
+	add_child(menu)
+
+
+func _on_pause_action(id: String) -> void:
+	match id:
+		"restart":
+			LevelManager.play_level(level_id)
+		"map":
+			LevelManager.goto_map()
+
+
+func _play_lines(lines: Array) -> void:
+	if lines.is_empty():
+		return
+	_set_busy(true)
+	await dialogue.play(lines)
+	# Wait one frame so the tap that closed the dialogue does not also make the hero jump.
+	await get_tree().physics_frame
+	_set_busy(false)
+
+
+func _set_busy(value: bool) -> void:
+	_busy = value
+	if player:
+		player.controls_enabled = not value and not finished
+	hud.set_controls_visible(not value)
+
+
+func _notice(text: String, color: Color, force := false) -> void:
+	if _notice_cooldown > 0.0 and not force:
+		return
+	_notice_cooldown = 1.5
+	FX.float_text(_world_root, player.global_position + Vector2(0, -120), text, color)

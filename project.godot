@@ -1,0 +1,60 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="سفر پیلو"
+config/description="پلتفرمر معمایی کودکانه در سرزمین رنگارستان؛ با لنز زمان بین گذشته و حال جابه‌جا شو."
+config/version="0.1.0"
+run/main_scene="res://scenes/boot/boot.tscn"
+config/quit_on_go_back=false
+config/features=PackedStringArray("4.3", "GL Compatibility")
+boot_splash/bg_color=Color(0.988, 0.835, 0.443, 1)
+boot_splash/image="res://icon.png"
+boot_splash/fullsize=false
+config/icon="res://icon.png"
+
+[autoload]
+
+SaveManager="*res://scripts/save/save_manager.gd"
+GameInput="*res://scripts/platform/input_setup.gd"
+AudioManager="*res://scripts/platform/audio_manager.gd"
+Analytics="*res://scripts/platform/analytics_adapter.gd"
+StoreAdapter="*res://scripts/economy/store_adapter.gd"
+TimeShift="*res://scripts/puzzle/time_shift_manager.gd"
+LevelManager="*res://scripts/progression/level_manager.gd"
+ProgressManager="*res://scripts/progression/progress_manager.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=4
+
+[gui]
+
+theme/custom_font="res://assets/fonts/Vazirmatn-FD-Bold.ttf"
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[physics]
+
+common/physics_ticks_per_second=60
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0.53, 0.8, 0.98, 1)
