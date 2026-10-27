@@ -13,7 +13,7 @@ func _ready() -> void:
 	layer = 40
 	var modal := UIKit.make_modal(self, Vector2(640, 0))
 	var box: VBoxContainer = modal.box
-	box.add_child(UIKit.make_title("آفرین!", 72))
+	box.add_child(UIKit.make_strip_title("آفرین!", 48))
 	box.add_child(UIKit.make_label(LevelManager.level_title(level_id), 32))
 
 	var stars := HBoxContainer.new()

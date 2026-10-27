@@ -15,6 +15,22 @@ const RED := Color("e5533d")
 const GREY := Color("a8a29a")
 const GOLD := Color("ffd23f")
 const BROWN := Color("6b3f1d")
+const NAVY := Color("2b3354")
+const CREAM_BUTTON := Color("fffffe")
+
+const GLASS := "res://assets/ui/glass/"
+## Nine-patch margins (left, top, right, bottom) of each glass texture family.
+const GLASS_MARGINS := {
+	"pill": Vector4(42, 30, 42, 46),
+	"pill_s": Vector4(34, 24, 34, 36),
+	"tile": Vector4(34, 34, 34, 40),
+	"tab": Vector4(34, 30, 34, 40),
+	"panel": Vector4(60, 60, 60, 64),
+	"card": Vector4(40, 40, 40, 44),
+	"strip": Vector4(44, 40, 44, 44),
+	"ribbon": Vector4(40, 36, 40, 50),
+	"frame": Vector4(54, 54, 54, 60),
+}
 
 
 static var _theme_ready := false
@@ -54,14 +70,42 @@ static func flat(color: Color, radius := 24, margin := 16) -> StyleBoxFlat:
 	return style
 
 
-static func panel_style(color := CREAM) -> StyleBoxFlat:
-	var style := flat(color, 36, 30)
-	style.border_color = Color("e2b877")
-	style.set_border_width_all(6)
-	style.shadow_color = Color(0, 0, 0, 0.3)
-	style.shadow_size = 12
-	style.shadow_offset = Vector2(0, 6)
+## Glass panel (cream with a navy border, as in the approved design).
+static func panel_style(_color := CREAM) -> StyleBox:
+	return glass("panel_cream", "panel", Vector4(44, 40, 44, 46))
+
+
+## Stretchable glass texture from assets/ui/glass (see tools/ui_art.py).
+static func glass(texture_name: String, family: String, content := Vector4(-1, -1, -1, -1)) -> StyleBoxTexture:
+	var style := StyleBoxTexture.new()
+	style.texture = load(GLASS + texture_name + ".png")
+	var m: Vector4 = GLASS_MARGINS[family]
+	style.texture_margin_left = m.x
+	style.texture_margin_top = m.y
+	style.texture_margin_right = m.z
+	style.texture_margin_bottom = m.w
+	if content.x >= 0.0:
+		style.content_margin_left = content.x
+		style.content_margin_top = content.y
+		style.content_margin_right = content.z
+		style.content_margin_bottom = content.w
 	return style
+
+
+static func color_name(color: Color) -> String:
+	if color == GREEN:
+		return "green"
+	if color == BLUE:
+		return "blue"
+	if color == ORANGE:
+		return "orange"
+	if color == PURPLE:
+		return "purple"
+	if color == RED:
+		return "red"
+	if color == CREAM_BUTTON:
+		return "cream"
+	return "grey"
 
 
 static func button_style(color: Color) -> StyleBoxFlat:
@@ -76,26 +120,72 @@ static func button_style(color: Color) -> StyleBoxFlat:
 	return style
 
 
+## Glossy glass button. `color` picks the texture (GREEN, BLUE, ORANGE, PURPLE, RED,
+## GREY or CREAM_BUTTON); small buttons (font < 30) use the slimmer 64px pill.
 static func make_button(text: String, color := GREEN, min_width := 300.0, font_size := 34) -> Button:
 	var button := Button.new()
+	var small := font_size < 30
+	var family := "pill_s" if small else "pill"
+	var tex := "pill_%s%s" % [color_name(color), "_s" if small else ""]
 	button.text = text
-	button.custom_minimum_size = Vector2(min_width, 80)
+	button.custom_minimum_size = Vector2(min_width, 64 if small else 80)
 	button.focus_mode = Control.FOCUS_NONE
-	button.add_theme_stylebox_override("normal", button_style(color))
-	button.add_theme_stylebox_override("hover", button_style(color.lightened(0.12)))
-	var pressed := button_style(color.darkened(0.1))
-	pressed.border_width_bottom = 2
-	pressed.content_margin_top = 17
+	var content := Vector4(26, 6, 26, 16) if small else Vector4(30, 8, 30, 20)
+	var normal := glass(tex, family, content)
+	var pressed := glass(tex, family, content + Vector4(0, 3, 0, -3))
+	pressed.modulate_color = Color(0.86, 0.86, 0.86)
+	var hover := glass(tex, family, content)
+	hover.modulate_color = Color(1.06, 1.06, 1.06)
+	var disabled := glass("pill_grey" + ("_s" if small else ""), family, content)
+	button.add_theme_stylebox_override("normal", normal)
+	button.add_theme_stylebox_override("hover", hover)
 	button.add_theme_stylebox_override("pressed", pressed)
-	button.add_theme_stylebox_override("disabled", button_style(GREY))
+	button.add_theme_stylebox_override("hover_pressed", pressed)
+	button.add_theme_stylebox_override("disabled", disabled)
 	button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	var on_cream := color == CREAM_BUTTON
+	var text_color := NAVY if on_cream else Color.WHITE
 	for state in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color", "font_disabled_color", "font_hover_pressed_color"]:
-		button.add_theme_color_override(state, Color.WHITE)
-	button.add_theme_color_override("font_outline_color", color.darkened(0.45))
-	button.add_theme_constant_override("outline_size", 8)
+		button.add_theme_color_override(state, text_color)
+	if not on_cream:
+		button.add_theme_color_override("font_outline_color", color.darkened(0.5) if color != GREY else Color("6e727c"))
+		button.add_theme_constant_override("outline_size", 8)
+	button.add_theme_font_override("font", FONT_BLACK)
 	button.add_theme_font_size_override("font_size", font_size)
 	button.pressed.connect(func(): UIKit.play_click())
 	return button
+
+
+## Round glossy icon button (play, gear, back, pause, hint, close).
+static func make_round(texture_name: String, diameter := 88.0) -> TextureButton:
+	var button := TextureButton.new()
+	button.texture_normal = load(GLASS + texture_name + ".png")
+	button.ignore_texture_size = true
+	button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
+	button.custom_minimum_size = Vector2(diameter, diameter)
+	button.focus_mode = Control.FOCUS_NONE
+	button.resized.connect(func(): button.pivot_offset = button.size * 0.5)
+	button.button_down.connect(func(): button.scale = Vector2(0.92, 0.92))
+	button.button_up.connect(func(): button.scale = Vector2.ONE)
+	button.pressed.connect(func(): UIKit.play_click())
+	return button
+
+
+## A dark smoky pill with an icon and a number (star / coin counters in the design).
+static func make_counter(icon_path: String, text: String, font_size := 30) -> PanelContainer:
+	var pill := PanelContainer.new()
+	pill.add_theme_stylebox_override("panel", glass("pill_dark", "pill_s", Vector4(16, 4, 24, 12)))
+	pill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pill.add_child(row)
+	row.add_child(make_icon(icon_path, 44))
+	var label := make_label(text, font_size, Color.WHITE)
+	label.add_theme_font_override("font", FONT_BLACK)
+	label.name = "Value"
+	row.add_child(label)
+	return pill
 
 
 static func make_label(text: String, font_size := 30, color := TEXT, outline := 0, outline_color := Color.WHITE) -> Label:
@@ -159,7 +249,7 @@ static func make_modal(parent: Node, min_size := Vector2(620, 0)) -> Dictionary:
 	root.mouse_filter = Control.MOUSE_FILTER_STOP
 	parent.add_child(root)
 	var dim := ColorRect.new()
-	dim.color = Color(0.1, 0.06, 0.15, 0.55)
+	dim.color = Color(0.1, 0.06, 0.15, 0.4)
 	dim.set_anchors_preset(Control.PRESET_FULL_RECT)
 	root.add_child(dim)
 	var center := CenterContainer.new()
@@ -167,6 +257,7 @@ static func make_modal(parent: Node, min_size := Vector2(620, 0)) -> Dictionary:
 	root.add_child(center)
 	var panel := PanelContainer.new()
 	panel.custom_minimum_size = min_size
+	panel.add_theme_stylebox_override("panel", panel_style())
 	center.add_child(panel)
 	var box := VBoxContainer.new()
 	box.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -176,6 +267,16 @@ static func make_modal(parent: Node, min_size := Vector2(620, 0)) -> Dictionary:
 	var tween := root.create_tween()
 	tween.tween_property(panel, "scale", Vector2.ONE, 0.25).from(Vector2(0.85, 0.85)).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	return {"root": root, "panel": panel, "box": box}
+
+
+## Title on a pale-yellow glass strip, as at the top of the pause panel in the design.
+static func make_strip_title(text: String, font_size := 40) -> PanelContainer:
+	var strip := PanelContainer.new()
+	strip.add_theme_stylebox_override("panel", glass("title_strip", "strip", Vector4(40, 8, 40, 14)))
+	var label := make_label(text, font_size, NAVY)
+	label.add_theme_font_override("font", FONT_BLACK)
+	strip.add_child(label)
+	return strip
 
 
 static func spacer(min_size := Vector2.ZERO, expand := true) -> Control:

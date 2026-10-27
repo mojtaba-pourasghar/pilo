@@ -1,5 +1,5 @@
 extends CanvasLayer
-## Pause popup. Emits `action` with "resume", "restart" or "map".
+## Pause popup. Emits `action` with "resume" or "menu".
 
 signal action(name: String)
 
@@ -9,17 +9,18 @@ var _closing := false
 func _ready() -> void:
 	layer = 40
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	var modal := UIKit.make_modal(self, Vector2(560, 0))
+	# Layout from the approved design: title on a yellow strip, then three glass buttons.
+	var modal := UIKit.make_modal(self, Vector2(500, 0))
 	var box: VBoxContainer = modal.box
-	box.add_child(UIKit.make_title("مکث", 60))
+	box.add_theme_constant_override("separation", 18)
+	box.add_child(UIKit.make_strip_title("مکث بازی", 40))
 	var buttons := [
-		["ادامه", UIKit.GREEN, "resume"],
-		["شروع دوباره", UIKit.BLUE, "restart"],
-		["تنظیمات", UIKit.PURPLE, "settings"],
-		["نقشهٔ مرحله‌ها", UIKit.ORANGE, "map"],
+		["ادامه بازی", UIKit.GREEN, "resume"],
+		["تنظیمات", UIKit.BLUE, "settings"],
+		["منو اصلی", UIKit.ORANGE, "menu"],
 	]
 	for entry in buttons:
-		var button := UIKit.make_button(entry[0], entry[1], 420)
+		var button := UIKit.make_button(entry[0], entry[1], 380, 34)
 		var id: String = entry[2]
 		button.pressed.connect(func(): _on_pressed(id))
 		box.add_child(button)

@@ -18,6 +18,10 @@
 | دیالوگ‌ها با زیرنویس | ✅ (صدای ضبط‌شدهٔ فارسی هنوز نیست) |
 | پرداخت واقعی کافه‌بازار / مایکت | ⏳ فعلاً یک StoreAdapter با نسخهٔ آزمایشی |
 
+## طراحی منوها
+
+منوها (صفحهٔ اصلی، انتخاب جهان، مکث، فروشگاه و HUD) عیناً از روی طرح `assets/reference/ui_menus_design.webp` ساخته شده‌اند. دکمه‌ها و پنل‌ها تصاویر شیشه‌ای nine-patch هستند که با `python3 tools/ui_art.py .` دوباره ساخته می‌شوند. قانون کار روی پروژه در `CLAUDE.md` آمده است: هر طرحی که صاحب پروژه می‌دهد، عین همان پیاده می‌شود.
+
 ## اجرا
 
 1. [Godot 4.3](https://godotengine.org/download) را نصب کنید (نسخهٔ استاندارد، نه .NET).
@@ -153,7 +157,8 @@ godot --path . res://tools/screenshot.tscn -- --scene=game --level=3 --skip --ri
 | پس‌زمینهٔ سه دنیا | تولیدشده با Cloudflare Workers AI (flux-1-schnell) از طریق `tools/gen_backgrounds.sh` | پیش از انتشار، شرایط استفادهٔ تجاری مدل بررسی شود |
 | موسیقی و افکت‌های صوتی | ساخته‌شده با کد (`tools/audio.py`) | متعلق به پروژه |
 | فونت وزیرمتن | [Vazirmatn](https://github.com/rastikerdar/vazirmatn) | SIL Open Font License 1.1 (`assets/fonts/OFL.txt`) |
-| قطعه‌های معما، غبارک، سنجابک، دکمه‌ها | رسم با کد / `tools/ui.py` | متعلق به پروژه |
+| قطعه‌های معما، غبارک، سنجابک | رسم با کد | متعلق به پروژه |
+| دکمه‌ها، پنل‌ها و قاب‌های شیشه‌ای منوها | `tools/ui_art.py` بر اساس طرح `assets/reference/ui_menus_design.webp` | متعلق به پروژه |
 
 ## قدم‌های بعدی پیشنهادی
 

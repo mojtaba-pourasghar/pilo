@@ -14,9 +14,9 @@ const PAST_COLOR := Color("e39a2f")
 const PRESENT_COLOR := Color("2fa6d9")
 
 var _root: Control
-var _stars: Array[TextureRect] = []
-var _star_box: HBoxContainer
-var _key_box: HBoxContainer
+var _star_counter: PanelContainer
+var _star_total := 3
+var _key_box: PanelContainer
 var _key_label: Label
 var _time_panel: PanelContainer
 var _time_label: Label
@@ -49,16 +49,17 @@ func _ready() -> void:
 	top.add_theme_constant_override("separation", 16)
 	_root.add_child(top)
 
-	_star_box = HBoxContainer.new()
-	_star_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	top.add_child(_star_box)
-
-	_key_box = HBoxContainer.new()
-	_key_box.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_key_box.add_child(UIKit.make_icon("res://assets/ui/key.png", 46))
-	_key_label = UIKit.make_label("۰", 34, Color.WHITE, 8, UIKit.BROWN)
-	_key_box.add_child(_key_label)
+	# Top bar from the approved design: [pause][star counter] on the right, hint on the left.
+	var pause := UIKit.make_round("btn_pause", 84)
+	pause.pressed.connect(func(): pause_pressed.emit())
+	top.add_child(pause)
+	_star_counter = UIKit.make_counter("res://assets/ui/star.png", "0", 32)
+	_star_counter.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	top.add_child(_star_counter)
+	_key_box = UIKit.make_counter("res://assets/ui/key.png", "0", 32)
+	_key_box.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	top.add_child(_key_box)
+	_key_label = _key_box.find_child("Value", true, false)
 
 	top.add_child(UIKit.spacer())
 	_time_panel = PanelContainer.new()
@@ -68,12 +69,9 @@ func _ready() -> void:
 	top.add_child(_time_panel)
 	top.add_child(UIKit.spacer())
 
-	_hint_button = _texture_button("res://assets/ui/btn_hint.png")
+	_hint_button = UIKit.make_round("btn_hint", 84)
 	_hint_button.pressed.connect(func(): hint_pressed.emit())
 	top.add_child(_hint_button)
-	var pause := _texture_button("res://assets/ui/btn_pause.png")
-	pause.pressed.connect(func(): pause_pressed.emit())
-	top.add_child(pause)
 
 	_title = UIKit.make_title("", 56)
 	_title.set_anchors_preset(Control.PRESET_CENTER_TOP)
@@ -81,11 +79,10 @@ func _ready() -> void:
 	_root.add_child(_title)
 
 	_touch_root = Node2D.new()
-	_touch_root.modulate = Color(1, 1, 1, 0.82)
 	add_child(_touch_root)
 	for key in TOUCH:
 		var button := TouchScreenButton.new()
-		var texture: Texture2D = load("res://assets/ui/btn_%s.png" % key)
+		var texture: Texture2D = load(UIKit.GLASS + "touch_%s.png" % key)
 		button.texture_normal = texture
 		button.texture_pressed = texture
 		button.action = TOUCH[key]
@@ -101,11 +98,8 @@ func _ready() -> void:
 
 
 func setup(title: String, star_total: int, has_keys: bool, lens_enabled: bool) -> void:
-	for i in star_total:
-		var star := UIKit.make_icon("res://assets/ui/star.png", 46)
-		star.modulate = Color(0.2, 0.2, 0.3, 0.45)
-		_star_box.add_child(star)
-		_stars.append(star)
+	_star_total = star_total
+	set_stars([])
 	_key_box.visible = has_keys
 	_time_panel.visible = lens_enabled
 	_touch["time"].visible = lens_enabled
@@ -152,13 +146,11 @@ func _layout() -> void:
 
 
 func set_stars(collected: Array) -> void:
-	for i in _stars.size():
-		var on := collected.has(i)
-		var star := _stars[i]
-		if on and star.modulate != Color.WHITE:
-			star.modulate = Color.WHITE
-			star.pivot_offset = star.size * 0.5
-			create_tween().tween_property(star, "scale", Vector2.ONE, 0.3).from(Vector2(1.8, 1.8)).set_trans(Tween.TRANS_BACK)
+	var label := _star_counter.find_child("Value", true, false) as Label
+	label.text = "%d/%d" % [collected.size(), _star_total]
+	if not collected.is_empty():
+		_star_counter.pivot_offset = _star_counter.size * 0.5
+		create_tween().tween_property(_star_counter, "scale", Vector2.ONE, 0.3).from(Vector2(1.3, 1.3)).set_trans(Tween.TRANS_BACK)
 
 
 func set_keys(count: int) -> void:
@@ -168,7 +160,7 @@ func set_keys(count: int) -> void:
 func set_time(state: int) -> void:
 	var past := state == TimeShift.PAST
 	_time_label.text = "زمان: " + TimeShift.NAMES[state]
-	_time_panel.add_theme_stylebox_override("panel", UIKit.flat(PAST_COLOR if past else PRESENT_COLOR, 26, 12))
+	_time_panel.add_theme_stylebox_override("panel", UIKit.glass("pill_orange_s" if past else "pill_blue_s", "pill_s", Vector4(26, 4, 26, 14)))
 
 
 func flash(color: Color) -> void:

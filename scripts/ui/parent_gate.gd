@@ -18,7 +18,7 @@ func _ready() -> void:
 	var modal := UIKit.make_modal(self, Vector2(560, 0))
 	var box: VBoxContainer = modal.box
 	box.add_theme_constant_override("separation", 8)
-	box.add_child(UIKit.make_title("بخش بزرگ‌ترها", 40))
+	box.add_child(UIKit.make_strip_title("بخش بزرگ‌ترها", 34))
 	box.add_child(UIKit.make_label("برای ادامه، از یک بزرگ‌تر کمک بگیر.", 26))
 	# Separate labels in a left-to-right row keep "a × b = ?" in math order inside RTL text.
 	_question = HBoxContainer.new()

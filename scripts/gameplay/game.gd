@@ -302,8 +302,8 @@ func _on_pause_action(id: String) -> void:
 	match id:
 		"restart":
 			LevelManager.play_level(level_id)
-		"map":
-			LevelManager.goto_map()
+		"menu":
+			LevelManager.goto_menu()
 
 
 func _play_lines(lines: Array) -> void:

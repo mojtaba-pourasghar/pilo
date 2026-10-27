@@ -13,7 +13,7 @@ func _ready() -> void:
 	var settings: Dictionary = SaveManager.data.settings
 	var modal := UIKit.make_modal(self, Vector2(680, 0))
 	var box: VBoxContainer = modal.box
-	box.add_child(UIKit.make_title("تنظیمات", 56))
+	box.add_child(UIKit.make_strip_title("تنظیمات", 40))
 	box.add_child(_slider_row("موسیقی", "music", float(settings.music)))
 	box.add_child(_slider_row("صداها", "sfx", float(settings.sfx)))
 
@@ -31,11 +31,13 @@ func _ready() -> void:
 	box.add_child(hint_row)
 	_refresh_hints()
 
+	var store := UIKit.make_button("فروشگاه", UIKit.ORANGE, 300, 28)
+	store.pressed.connect(func(): add_child(StorePopup.new()))
+	box.add_child(store)
 	var reset := UIKit.make_button("پاک کردن پیشرفت", UIKit.RED, 300, 24)
-	reset.custom_minimum_size.y = 60
 	reset.pressed.connect(_on_reset)
 	box.add_child(reset)
-	var close := UIKit.make_button("بستن", UIKit.BLUE, 300)
+	var close := UIKit.make_button("بستن", UIKit.BLUE, 300, 28)
 	close.pressed.connect(_close)
 	box.add_child(close)
 
@@ -73,9 +75,9 @@ func _refresh_hints() -> void:
 	var current: String = SaveManager.data.settings.hints
 	for id in _hint_buttons:
 		var button: Button = _hint_buttons[id]
-		var color := UIKit.GREEN if id == current else UIKit.GREY
-		button.add_theme_stylebox_override("normal", UIKit.button_style(color))
-		button.add_theme_stylebox_override("hover", UIKit.button_style(color.lightened(0.1)))
+		var texture := "pill_green_s" if id == current else "pill_grey_s"
+		button.add_theme_stylebox_override("normal", UIKit.glass(texture, "pill_s", Vector4(26, 6, 26, 16)))
+		button.add_theme_stylebox_override("hover", UIKit.glass(texture, "pill_s", Vector4(26, 6, 26, 16)))
 
 
 func _on_reset() -> void:
