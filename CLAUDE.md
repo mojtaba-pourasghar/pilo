@@ -29,4 +29,4 @@ side by side with the design before handing it over.
   `python3 tools/voice/make_recording_script.py`. صدا با استودیوی `tools/voice-studio` (آواشو، هر شخصیت صدای خودش) ساخته می‌شود؛
   ضبط انسانی (فایل‌های خارج از `docs/voice/tts_generated.json`) هرگز بازنویسی نشود.
 - صدای محیط: ضبط واقعی از Commons با `tools/audio/fetch_ambience.py` (منبع و مجوز در `docs/audio/sound_sources.json`)،
-  بقیهٔ جلوه‌ها با `tools/audio.py`.
+  وگرنه با `tools/audio/synth_ambience.py`؛ بقیهٔ جلوه‌ها با `tools/audio.py`.
