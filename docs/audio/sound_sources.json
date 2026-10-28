@@ -1,0 +1,12 @@
+{
+ "note": "Real recordings with source and licence. Sounds not listed here are made by tools/audio.py.",
+ "files": {
+  "ambient/forest": {
+   "file": "assets/audio/ambient/forest.ogg",
+   "source": "https://commons.wikimedia.org/wiki/File:Gentle_breeze_and_birds_singing.ogg",
+   "license": "Public domain",
+   "author": "ezwa",
+   "fetched": "2026-10-28"
+  }
+ }
+}
