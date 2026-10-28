@@ -28,6 +28,330 @@
  },
  "lines": [
   {
+   "id": "l21_intro_1",
+   "file": "voice/l21_intro_1.mp3",
+   "who": "nima",
+   "text": "چه غار قشنگی! بلورها خاموش‌اند.",
+   "level": 21,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 21"
+  },
+  {
+   "id": "l21_intro_2",
+   "file": "voice/l21_intro_2.mp3",
+   "who": "pilo",
+   "text": "بلورها با نور روشن و محکم می‌شوند. ولی یک چیزی جلوی نور را گرفته...",
+   "level": 21,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 21"
+  },
+  {
+   "id": "l21_sign_1",
+   "file": "voice/l21_sign_1.mp3",
+   "who": "pilo",
+   "text": "در گذشته بلورهای بزرگ جلوی نور را می‌گرفتند.",
+   "level": 21,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 21"
+  },
+  {
+   "id": "l21_sign_2",
+   "file": "voice/l21_sign_2.mp3",
+   "who": "pilo",
+   "text": "نور به چشمِ بلوری برسد، دروازه باز می‌شود.",
+   "level": 21,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 21"
+  },
+  {
+   "id": "l22_intro_1",
+   "file": "voice/l22_intro_1.mp3",
+   "who": "pilo",
+   "text": "این آینه نور را برمی‌گرداند. به آن دست بزن تا بچرخد!",
+   "level": 22,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 22"
+  },
+  {
+   "id": "l22_sign_1",
+   "file": "voice/l22_sign_1.mp3",
+   "who": "pilo",
+   "text": "به آینه بخور تا بچرخد؛ نور را به چشمِ بالا برسان.",
+   "level": 22,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 22"
+  },
+  {
+   "id": "l23_intro_1",
+   "file": "voice/l23_intro_1.mp3",
+   "who": "nima",
+   "text": "بلورهای روی گودال خاموش‌اند. نمی‌شود از رویشان رد شد.",
+   "level": 23,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 23"
+  },
+  {
+   "id": "l23_intro_2",
+   "file": "voice/l23_intro_2.mp3",
+   "who": "pilo",
+   "text": "نور باید از دو آینه بگذرد تا به آن‌ها برسد.",
+   "level": 23,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 23"
+  },
+  {
+   "id": "l23_sign_1",
+   "file": "voice/l23_sign_1.mp3",
+   "who": "pilo",
+   "text": "دو آینه را بچرخان تا نور به بلورها برسد.",
+   "level": 23,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 23"
+  },
+  {
+   "id": "l24_intro_1",
+   "file": "voice/l24_intro_1.mp3",
+   "who": "pilo",
+   "text": "این در دو قفل دارد: یک کلید بلوری و یک پرتوی نور.",
+   "level": 24,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 24"
+  },
+  {
+   "id": "l24_intro_2",
+   "file": "voice/l24_intro_2.mp3",
+   "who": "nima",
+   "text": "یکی در گذشته است و یکی در حال؟",
+   "level": 24,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 24"
+  },
+  {
+   "id": "l24_sign_1",
+   "file": "voice/l24_sign_1.mp3",
+   "who": "pilo",
+   "text": "کلید بلوری روی جزیره است؛ پلِ چوبی فقط در گذشته بود.",
+   "level": 24,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 24"
+  },
+  {
+   "id": "l25_intro_1",
+   "file": "voice/l25_intro_1.mp3",
+   "who": "nima",
+   "text": "این سنگ‌ها ترک دارند!",
+   "level": 25,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 25"
+  },
+  {
+   "id": "l25_intro_2",
+   "file": "voice/l25_intro_2.mp3",
+   "who": "pilo",
+   "text": "در حال می‌ریزند... ولی در گذشته هنوز محکم بودند.",
+   "level": 25,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 25"
+  },
+  {
+   "id": "l25_sign_1",
+   "file": "voice/l25_sign_1.mp3",
+   "who": "pilo",
+   "text": "در حال این سنگ‌ها می‌ریزند. در گذشته محکم بودند!",
+   "level": 25,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 25"
+  },
+  {
+   "id": "l26_intro_1",
+   "file": "voice/l26_intro_1.mp3",
+   "who": "pilo",
+   "text": "سه چشمِ بلوری، سه پرتوی نور. هر سه باید روشن شوند.",
+   "level": 26,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 26"
+  },
+  {
+   "id": "l26_intro_2",
+   "file": "voice/l26_intro_2.mp3",
+   "who": "nima",
+   "text": "یکی‌یکی! اول اولی.",
+   "level": 26,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 26"
+  },
+  {
+   "id": "l26_sign_1",
+   "file": "voice/l26_sign_1.mp3",
+   "who": "pilo",
+   "text": "هر آینه نورش را به یک چشم می‌رساند.",
+   "level": 26,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 26"
+  },
+  {
+   "id": "l27_intro_1",
+   "file": "voice/l27_intro_1.mp3",
+   "who": "nima",
+   "text": "آب! نمی‌شود از آب رد شد.",
+   "level": 27,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 27"
+  },
+  {
+   "id": "l27_intro_2",
+   "file": "voice/l27_intro_2.mp3",
+   "who": "pilo",
+   "text": "اگر نور به بلورهای روی آب برسد، یک راه امن ساخته می‌شود.",
+   "level": 27,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 27"
+  },
+  {
+   "id": "l27_sign_1",
+   "file": "voice/l27_sign_1.mp3",
+   "who": "pilo",
+   "text": "راه امن از روی بلورهای روشن است.",
+   "level": 27,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 27"
+  },
+  {
+   "id": "l28_intro_1",
+   "file": "voice/l28_intro_1.mp3",
+   "who": "pilo",
+   "text": "این آخرین تکهٔ زمانِ غارهاست! همه‌چیز را با هم لازم داریم.",
+   "level": 28,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 28"
+  },
+  {
+   "id": "l28_intro_2",
+   "file": "voice/l28_intro_2.mp3",
+   "who": "nima",
+   "text": "سنگ‌های لرزان، پل، کلید بلوری، نور... بزن بریم!",
+   "level": 28,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 28"
+  },
+  {
+   "id": "l29_intro_1",
+   "file": "voice/l29_intro_1.mp3",
+   "who": "ghubarak",
+   "text": "کمک! این بار خودم توی حبابِ زمان گیر افتاده‌ام!",
+   "level": 29,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 29"
+  },
+  {
+   "id": "l29_intro_2",
+   "file": "voice/l29_intro_2.mp3",
+   "who": "nima",
+   "text": "غبارک! صبر کن، داریم می‌آییم.",
+   "level": 29,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 29"
+  },
+  {
+   "id": "l29_intro_3",
+   "file": "voice/l29_intro_3.mp3",
+   "who": "pilo",
+   "text": "نور را از دو آینه بگذران تا دروازه باز شود.",
+   "level": 29,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 29"
+  },
+  {
+   "id": "l29_rescue_1",
+   "file": "voice/l29_rescue_1.mp3",
+   "who": "ghubarak",
+   "text": "مرا نجات دادید؟ با این‌همه شیطنتی که کردم؟",
+   "level": 29,
+   "kind": "rescue",
+   "event": "نجات دوست — مرحلهٔ 29"
+  },
+  {
+   "id": "l29_rescue_2",
+   "file": "voice/l29_rescue_2.mp3",
+   "who": "nima",
+   "text": "معلومه! دوست‌ها همدیگر را تنها نمی‌گذارند.",
+   "level": 29,
+   "kind": "rescue",
+   "event": "نجات دوست — مرحلهٔ 29"
+  },
+  {
+   "id": "l29_sign_1",
+   "file": "voice/l29_sign_1.mp3",
+   "who": "pilo",
+   "text": "دو آینه، یکی پایین و یکی بالا.",
+   "level": 29,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 29"
+  },
+  {
+   "id": "l30_intro_1",
+   "file": "voice/l30_intro_1.mp3",
+   "who": "pilo",
+   "text": "همهٔ رنگارستان برای جشن جمع شده‌اند! فقط یک دروازهٔ دیگر مانده.",
+   "level": 30,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 30"
+  },
+  {
+   "id": "l30_intro_2",
+   "file": "voice/l30_intro_2.mp3",
+   "who": "ghubarak",
+   "text": "این بار من هم کمک می‌کنم! راه را بلدم.",
+   "level": 30,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 30"
+  },
+  {
+   "id": "l30_outro_1",
+   "file": "voice/l30_outro_1.mp3",
+   "who": "ghubarak",
+   "text": "همهٔ تکه‌های زمان سر جایشان برگشتند! ببخشید که این‌همه دردسر درست کردم.",
+   "level": 30,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 30"
+  },
+  {
+   "id": "l30_outro_2",
+   "file": "voice/l30_outro_2.mp3",
+   "who": "squirrel",
+   "text": "جشن! جشن! رنگارستان دوباره رنگی شد!",
+   "level": 30,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 30"
+  },
+  {
+   "id": "l30_outro_3",
+   "file": "voice/l30_outro_3.mp3",
+   "who": "nima",
+   "text": "بهترین ماجرای عمرم بود. ممنون پیلو!",
+   "level": 30,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 30"
+  },
+  {
+   "id": "l30_outro_4",
+   "file": "voice/l30_outro_4.mp3",
+   "who": "pilo",
+   "text": "و برای تو یک هدیه داریم: پیلوی طلایی! هر وقت خواستی، از کمد لباس انتخابش کن.",
+   "level": 30,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 30"
+  },
+  {
+   "id": "l30_sign_1",
+   "file": "voice/l30_sign_1.mp3",
+   "who": "pilo",
+   "text": "آخرین بار: آینه، بلور، پل، فنر! همه را بلدی.",
+   "level": 30,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 30"
+  },
+  {
    "id": "l01_intro_1",
    "file": "voice/l01_intro_1.mp3",
    "who": "pilo",
@@ -361,6 +685,348 @@
    "event": "پایان مرحله — مرحلهٔ 10"
   },
   {
+   "id": "l11_intro_1",
+   "file": "voice/l11_intro_1.mp3",
+   "who": "pilo",
+   "text": "به جزیره‌های ابری رسیدیم! اینجا ابرها هم سکو هستند.",
+   "level": 11,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 11"
+  },
+  {
+   "id": "l11_intro_2",
+   "file": "voice/l11_intro_2.mp3",
+   "who": "nima",
+   "text": "وای! جزیره‌ها توی هوا شناورند!",
+   "level": 11,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 11"
+  },
+  {
+   "id": "l11_intro_3",
+   "file": "voice/l11_intro_3.mp3",
+   "who": "pilo",
+   "text": "تکه‌های زمانِ اینجا هم پخش شده‌اند. مواظب لبه‌ها باش.",
+   "level": 11,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 11"
+  },
+  {
+   "id": "l11_sign_1",
+   "file": "voice/l11_sign_1.mp3",
+   "who": "pilo",
+   "text": "روی سکوی برگی بپر؛ تو را می‌برد.",
+   "level": 11,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 11"
+  },
+  {
+   "id": "l11_sign_2",
+   "file": "voice/l11_sign_2.mp3",
+   "who": "pilo",
+   "text": "ابرها در «حال» هستند. اگر در گذشته‌ای، برگرد!",
+   "level": 11,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 11"
+  },
+  {
+   "id": "l12_intro_1",
+   "file": "voice/l12_intro_1.mp3",
+   "who": "pilo",
+   "text": "حس می‌کنی؟ باد از پشت سرمان می‌وزد!",
+   "level": 12,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 12"
+  },
+  {
+   "id": "l12_intro_2",
+   "file": "voice/l12_intro_2.mp3",
+   "who": "nima",
+   "text": "پس اگر با باد بپرم، دورتر می‌روم؟",
+   "level": 12,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 12"
+  },
+  {
+   "id": "l12_intro_3",
+   "file": "voice/l12_intro_3.mp3",
+   "who": "pilo",
+   "text": "آفرین! و بادی که رو به بالاست، تو را بالا می‌برد.",
+   "level": 12,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 12"
+  },
+  {
+   "id": "l12_sign_1",
+   "file": "voice/l12_sign_1.mp3",
+   "who": "pilo",
+   "text": "با باد بپر! باد تو را تا آن طرف می‌برد.",
+   "level": 12,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 12"
+  },
+  {
+   "id": "l12_sign_2",
+   "file": "voice/l12_sign_2.mp3",
+   "who": "pilo",
+   "text": "توی ستونِ باد برو؛ تو را بالا می‌برد.",
+   "level": 12,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 12"
+  },
+  {
+   "id": "l13_intro_1",
+   "file": "voice/l13_intro_1.mp3",
+   "who": "nima",
+   "text": "نصف راه ابر است و نصفش پلِ نور!",
+   "level": 13,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 13"
+  },
+  {
+   "id": "l13_intro_2",
+   "file": "voice/l13_intro_2.mp3",
+   "who": "pilo",
+   "text": "ابرها در حال‌اند و پلِ نور در گذشته. روی تخته‌ها زمان را عوض کن.",
+   "level": 13,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 13"
+  },
+  {
+   "id": "l13_sign_1",
+   "file": "voice/l13_sign_1.mp3",
+   "who": "pilo",
+   "text": "روی تخته‌های چوبی امن است؛ همان‌جا زمان را عوض کن.",
+   "level": 13,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 13"
+  },
+  {
+   "id": "l14_intro_1",
+   "file": "voice/l14_intro_1.mp3",
+   "who": "pilo",
+   "text": "این دروازه با آسیاب بادی باز می‌شود. آسیاب کجاست؟",
+   "level": 14,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 14"
+  },
+  {
+   "id": "l14_intro_2",
+   "file": "voice/l14_intro_2.mp3",
+   "who": "nima",
+   "text": "آن بالا روی جزیره! ولی چطور برسم؟",
+   "level": 14,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 14"
+  },
+  {
+   "id": "l14_sign_1",
+   "file": "voice/l14_sign_1.mp3",
+   "who": "pilo",
+   "text": "آسیاب را روشن کن تا دروازه باز شود.",
+   "level": 14,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 14"
+  },
+  {
+   "id": "l15_intro_1",
+   "file": "voice/l15_intro_1.mp3",
+   "who": "pilo",
+   "text": "قارچ‌های فنری این‌جا روی ستون‌ها هستند. یکی‌یکی!",
+   "level": 15,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 15"
+  },
+  {
+   "id": "l15_sign_1",
+   "file": "voice/l15_sign_1.mp3",
+   "who": "pilo",
+   "text": "از روی فنرها یکی‌یکی بپر؛ هر فنر تو را به بعدی می‌رساند.",
+   "level": 15,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 15"
+  },
+  {
+   "id": "l16_intro_1",
+   "file": "voice/l16_intro_1.mp3",
+   "who": "pilo",
+   "text": "دو راه داریم: پایین از روی ابرها، یا بالا از پلِ نور.",
+   "level": 16,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 16"
+  },
+  {
+   "id": "l16_intro_2",
+   "file": "voice/l16_intro_2.mp3",
+   "who": "nima",
+   "text": "بالا چی هست؟",
+   "level": 16,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 16"
+  },
+  {
+   "id": "l16_intro_3",
+   "file": "voice/l16_intro_3.mp3",
+   "who": "pilo",
+   "text": "کسی نمی‌داند... برای همین اسمش جزیرهٔ گمشده است!",
+   "level": 16,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 16"
+  },
+  {
+   "id": "l16_sign_1",
+   "file": "voice/l16_sign_1.mp3",
+   "who": "pilo",
+   "text": "راه پایین با ابرهاست، راه بالا با باد و پلِ نور.",
+   "level": 16,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 16"
+  },
+  {
+   "id": "l16_sign_2",
+   "file": "voice/l16_sign_2.mp3",
+   "who": "pilo",
+   "text": "جزیرهٔ گمشده! ستاره‌ها این‌جا پنهان بودند.",
+   "level": 16,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 16"
+  },
+  {
+   "id": "l17_intro_1",
+   "file": "voice/l17_intro_1.mp3",
+   "who": "nima",
+   "text": "باد نمی‌وزد! چطور از این شکاف رد شوم؟",
+   "level": 17,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 17"
+  },
+  {
+   "id": "l17_intro_2",
+   "file": "voice/l17_intro_2.mp3",
+   "who": "pilo",
+   "text": "شاید باد مالِ زمانِ دیگری است...",
+   "level": 17,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 17"
+  },
+  {
+   "id": "l17_sign_1",
+   "file": "voice/l17_sign_1.mp3",
+   "who": "pilo",
+   "text": "باد فقط در گذشته می‌وزید.",
+   "level": 17,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 17"
+  },
+  {
+   "id": "l18_intro_1",
+   "file": "voice/l18_intro_1.mp3",
+   "who": "ghubarak",
+   "text": "هی‌هی! این تکهٔ زمان مال من است... شوخی کردم! اگر می‌توانی مرا بگیر!",
+   "level": 18,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 18"
+  },
+  {
+   "id": "l18_intro_2",
+   "file": "voice/l18_intro_2.mp3",
+   "who": "pilo",
+   "text": "دنبالش برو! عجله نکن؛ کنار دروازه منتظر می‌ماند.",
+   "level": 18,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 18"
+  },
+  {
+   "id": "l18_rescue_1",
+   "file": "voice/l18_rescue_1.mp3",
+   "who": "ghubarak",
+   "text": "گرفتی! باشه، باشه... تکهٔ زمان را با هم برمی‌گردانیم.",
+   "level": 18,
+   "kind": "rescue",
+   "event": "نجات دوست — مرحلهٔ 18"
+  },
+  {
+   "id": "l19_intro_1",
+   "file": "voice/l19_intro_1.mp3",
+   "who": "squirrel",
+   "text": "پیلو! نیما! یک ابرِ کوچولو توی حبابِ زمان گیر افتاده!",
+   "level": 19,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 19"
+  },
+  {
+   "id": "l19_intro_2",
+   "file": "voice/l19_intro_2.mp3",
+   "who": "nima",
+   "text": "آن بالا روی جزیره است. اول باید دروازه را باز کنیم.",
+   "level": 19,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 19"
+  },
+  {
+   "id": "l19_rescue_1",
+   "file": "voice/l19_rescue_1.mp3",
+   "who": "pilo",
+   "text": "ابرِ کوچولو آزاد شد! ببین چقدر خوشحال است!",
+   "level": 19,
+   "kind": "rescue",
+   "event": "نجات دوست — مرحلهٔ 19"
+  },
+  {
+   "id": "l19_sign_1",
+   "file": "voice/l19_sign_1.mp3",
+   "who": "pilo",
+   "text": "آسیاب، دروازه را باز می‌کند.",
+   "level": 19,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 19"
+  },
+  {
+   "id": "l20_intro_1",
+   "file": "voice/l20_intro_1.mp3",
+   "who": "pilo",
+   "text": "دروازهٔ آسمان! آخرین تکهٔ زمانِ جزیره‌ها پشتِ آن است.",
+   "level": 20,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 20"
+  },
+  {
+   "id": "l20_intro_2",
+   "file": "voice/l20_intro_2.mp3",
+   "who": "nima",
+   "text": "هرچه یاد گرفتیم: باد، ابر، پلِ نور، آسیاب!",
+   "level": 20,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 20"
+  },
+  {
+   "id": "l20_outro_1",
+   "file": "voice/l20_outro_1.mp3",
+   "who": "ghubarak",
+   "text": "دروازهٔ آسمان باز شد! ولی... چند تکه از دستم توی غارهای بلورین افتاد.",
+   "level": 20,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 20"
+  },
+  {
+   "id": "l20_outro_2",
+   "file": "voice/l20_outro_2.mp3",
+   "who": "nima",
+   "text": "غار؟ تاریک نیست؟",
+   "level": 20,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 20"
+  },
+  {
+   "id": "l20_outro_3",
+   "file": "voice/l20_outro_3.mp3",
+   "who": "pilo",
+   "text": "نگران نباش؛ آن‌جا بلورها با نور روشن می‌شوند. به‌سوی غارها!",
+   "level": 20,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 20"
+  },
+  {
    "id": "app_unsafe",
    "file": "voice/app_unsafe.mp3",
    "who": "pilo",
@@ -386,6 +1052,15 @@
    "level": 0,
    "kind": "app",
    "event": "پایان مرحله قبل از نجات دوست"
+  },
+  {
+   "id": "app_catch_first",
+   "file": "voice/app_catch_first.mp3",
+   "who": "pilo",
+   "text": "اول غبارک را بگیر!",
+   "level": 0,
+   "kind": "app",
+   "event": "پایان مرحلهٔ تعقیب قبل از گرفتن غبارک"
   },
   {
    "id": "app_well_done",

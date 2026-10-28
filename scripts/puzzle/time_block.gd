@@ -121,18 +121,37 @@ func _draw() -> void:
 			_draw_ground()
 		Kind.ROCK:
 			_draw_ghost_outline(Rect2(Vector2.ZERO, size), ghost)
-			_draw_rubble(ghost)
-			_draw_rocks(_presence)
+			match _theme():
+				"sky_islands":
+					_draw_wisps(ghost)
+					_draw_storm_clouds(_presence)
+				"crystal_caves":
+					_draw_rubble(ghost)
+					_draw_crystal_cluster(_presence)
+				_:
+					_draw_rubble(ghost)
+					_draw_rocks(_presence)
 		Kind.PLANK:
 			_draw_plank()
 		Kind.BRIDGE:
 			_draw_ghost_outline(Rect2(0, 0, size.x, THIN), ghost)
-			_draw_broken_bridge(ghost)
-			_draw_bridge(_presence)
+			if _theme() == "sky_islands":
+				_draw_energy_bridge(_presence)
+			else:
+				_draw_broken_bridge(ghost)
+				_draw_bridge(_presence)
 		Kind.VINE:
 			_draw_ghost_outline(Rect2(0, 0, size.x, THIN), ghost)
-			_draw_sprouts(ghost)
-			_draw_vine(_presence)
+			match _theme():
+				"sky_islands":
+					_draw_wisps(ghost * 0.6)
+					_draw_cloud_shelf(_presence)
+				"crystal_caves":
+					_draw_sprouts(ghost)
+					_draw_crystal_shelf(_presence)
+				_:
+					_draw_sprouts(ghost)
+					_draw_vine(_presence)
 	var outline := Rect2(Vector2.ZERO, size) if not is_one_way() else Rect2(0, 0, size.x, THIN)
 	if _warn > 0.01:
 		draw_rect(outline.grow(4.0), Color(1.0, 0.25, 0.2, _warn), false, 6.0)
@@ -258,3 +277,79 @@ func _draw_ghost_outline(rect: Rect2, alpha: float) -> void:
 	draw_dashed_line(b, c, color, 3.0, 10.0)
 	draw_dashed_line(c, d, color, 3.0, 10.0)
 	draw_dashed_line(d, a, color, 3.0, 10.0)
+
+
+# --- world looks (palette.theme) -------------------------------------------
+
+func _theme() -> String:
+	return String(palette.get("theme", "forest"))
+
+
+## Sky: a dark puffy storm cloud that blocks the way (past only).
+func _draw_storm_clouds(alpha: float) -> void:
+	if alpha <= 0.01:
+		return
+	for i in cells:
+		var x := i * 64.0
+		for p in [Vector2(18, 38), Vector2(46, 38), Vector2(32, 22), Vector2(14, 22), Vector2(50, 20)]:
+			draw_circle(Vector2(x, 0) + p, 20.0, Color(0.42, 0.45, 0.58, alpha))
+		draw_circle(Vector2(x + 26, 18), 10.0, Color(0.62, 0.66, 0.78, alpha))
+		draw_line(Vector2(x + 30, 42), Vector2(x + 24, 56), Color(1, 0.9, 0.4, alpha), 3.0)
+		draw_line(Vector2(x + 24, 56), Vector2(x + 32, 56), Color(1, 0.9, 0.4, alpha), 3.0)
+
+
+## Sky: a few thin mist wisps where a cloud will be (or was).
+func _draw_wisps(alpha: float) -> void:
+	if alpha <= 0.01:
+		return
+	for i in cells:
+		var x := i * 64.0
+		draw_line(Vector2(x + 8, 12), Vector2(x + 40, 12), Color(1, 1, 1, 0.45 * alpha), 3.0)
+		draw_line(Vector2(x + 24, 20), Vector2(x + 56, 20), Color(1, 1, 1, 0.35 * alpha), 3.0)
+
+
+## Sky: a soft white cloud you can stand on (present only).
+func _draw_cloud_shelf(alpha: float) -> void:
+	if alpha <= 0.01:
+		return
+	draw_rect(Rect2(6, 8, size.x - 12, 14), Color(0.86, 0.92, 1.0, alpha))
+	for x in range(10, int(size.x), 18):
+		draw_circle(Vector2(x, 10), 12.0, Color(1, 1, 1, alpha))
+	draw_line(Vector2(8, 22), Vector2(size.x - 8, 22), Color(0.7, 0.8, 0.95, alpha), 3.0)
+
+
+## Sky: a glowing band of light, the energy bridge (past only).
+func _draw_energy_bridge(alpha: float) -> void:
+	var rainbow := [Color("ff8fb1"), Color("ffd166"), Color("7fd65a"), Color("7cc8f5")]
+	if alpha > 0.01:
+		for i in rainbow.size():
+			draw_rect(Rect2(0, 3 + i * 4, size.x, 4), Color(rainbow[i], 0.85 * alpha))
+		draw_rect(Rect2(0, 2, size.x, 2), Color(1, 1, 1, 0.8 * alpha))
+	draw_circle(Vector2(0, 10), 10.0, Color("ffd166"))
+	draw_circle(Vector2(size.x, 10), 10.0, Color("ffd166"))
+	draw_circle(Vector2(0, 10), 5.0, Color(1, 1, 1, 0.5 + 0.5 * alpha))
+	draw_circle(Vector2(size.x, 10), 5.0, Color(1, 1, 1, 0.5 + 0.5 * alpha))
+
+
+## Caves: a cluster of crystals that blocks the way (past only).
+func _draw_crystal_cluster(alpha: float) -> void:
+	if alpha <= 0.01:
+		return
+	for i in cells:
+		var x := i * 64.0
+		for spike in [[14.0, 64.0, 46.0], [32.0, 64.0, 60.0], [50.0, 64.0, 42.0]]:
+			var cx: float = x + spike[0]
+			var tip: float = spike[1] - spike[2]
+			draw_colored_polygon(PackedVector2Array([Vector2(cx - 11, 64), Vector2(cx, tip), Vector2(cx + 11, 64)]),
+				_c("rock", alpha))
+			draw_line(Vector2(cx, tip + 4), Vector2(cx - 4, 60), Color(1, 1, 1, 0.45 * alpha), 2.0)
+
+
+## Caves: a ledge of glowing crystal (present only).
+func _draw_crystal_shelf(alpha: float) -> void:
+	if alpha <= 0.01:
+		return
+	draw_rect(Rect2(0, 4, size.x, 14), _c("vine_dark", alpha))
+	for x in range(0, int(size.x), 16):
+		draw_colored_polygon(PackedVector2Array([Vector2(x, 6), Vector2(x + 8, -6), Vector2(x + 16, 6)]), _c("vine", alpha))
+	draw_line(Vector2(0, 5), Vector2(size.x, 5), Color(1, 1, 1, 0.5 * alpha), 2.0)

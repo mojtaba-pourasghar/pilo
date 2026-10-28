@@ -4,6 +4,9 @@ extends Node
 
 signal progress_changed
 
+## Cosmetics earned by finishing a level (never sold): level id -> reward id.
+const REWARDS := {30: "reward_rangarestan"}
+
 
 func _levels() -> Dictionary:
 	return SaveManager.data.levels
@@ -62,7 +65,7 @@ func continue_level() -> int:
 	return last_done
 
 
-## Records a finished run. Returns {"first_time": bool}.
+## Records a finished run. Returns {"first_time": bool, "reward": String ("" when none)}.
 func complete_level(level_id: int, collected: Array) -> Dictionary:
 	var key := str(level_id)
 	var first_time := not is_done(level_id)
@@ -71,8 +74,12 @@ func complete_level(level_id: int, collected: Array) -> Dictionary:
 		if not stars.has(int(index)):
 			stars.append(int(index))
 	_levels()[key] = {"done": true, "stars": stars}
+	var reward := ""
 	if first_time:
 		SaveManager.data.shards = int(SaveManager.data.shards) + 1
+		if REWARDS.has(level_id) and not SaveManager.data.rewards.has(REWARDS[level_id]):
+			SaveManager.data.rewards.append(REWARDS[level_id])
+			reward = REWARDS[level_id]
 	SaveManager.save_game()
 	progress_changed.emit()
-	return {"first_time": first_time}
+	return {"first_time": first_time, "reward": reward}

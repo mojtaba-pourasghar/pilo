@@ -14,7 +14,7 @@ const PRODUCTS := {
 		"title": "بستهٔ دنیاهای ۲ و ۳",
 		"description": "جزیره‌های ابری و غارهای بلورین؛ ۲۰ مرحلهٔ تازه و ادامهٔ داستان.",
 		"icon": "res://assets/ui/crystal.png",
-		"coming_soon": true,
+		"coming_soon": false,
 	},
 	"pilo_colors": {
 		"title": "رنگ‌های پیلو",
@@ -30,13 +30,15 @@ const PILO_COLORS := {
 	"mint": {"title": "نعنایی", "hue": 0.33, "sku": "pilo_colors"},
 	"sky": {"title": "آسمانی", "hue": 0.55, "sku": "pilo_colors"},
 	"berry": {"title": "تمشکی", "hue": 0.83, "sku": "pilo_colors"},
+	# Earned, not bought: finishing the last level of Rangarestan (ProgressManager.REWARDS).
+	"gold": {"title": "طلایی", "hue": 0.1, "sku": "reward_rangarestan"},
 }
 
 var _busy := false
 
 
 func owns(sku: String) -> bool:
-	return sku == "" or SaveManager.data.purchases.has(sku)
+	return sku == "" or SaveManager.data.purchases.has(sku) or SaveManager.data.get("rewards", []).has(sku)
 
 
 func is_coming_soon(sku: String) -> bool:

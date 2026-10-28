@@ -53,6 +53,7 @@ func _ready() -> void:
 		return
 	lens_enabled = bool(data.get("lens", true))
 	var palette := LevelBuilder.make_palette(world.palette)
+	palette["theme"] = String(world.id)
 
 	_modulate = CanvasModulate.new()
 	add_child(_modulate)
@@ -241,7 +242,10 @@ func on_exit_reached() -> void:
 	if finished:
 		return
 	if not friend_rescued:
-		_notice("اول دوستمان را نجات بده!", UIKit.ORANGE, false, "app_rescue_first")
+		if info.chaser:
+			_notice("اول غبارک را بگیر!", UIKit.ORANGE, false, "app_catch_first")
+		else:
+			_notice("اول دوستمان را نجات بده!", UIKit.ORANGE, false, "app_rescue_first")
 		return
 	finished = true
 	_set_busy(true)
@@ -259,6 +263,7 @@ func on_exit_reached() -> void:
 	popup.stars_found = stars_collected.size()
 	popup.stars_total = info.stars
 	popup.first_time = result.first_time
+	popup.reward = String(result.get("reward", ""))
 	popup.action.connect(_on_complete_action)
 	add_child(popup)
 

@@ -4,8 +4,14 @@ extends Node2D
 ## he giggles, runs off and later helps fix his mistake.
 
 var game: Node
+## Chase mode (level "chase": true): he keeps ahead of the hero, never too fast, and waits at
+## stop_x (beside the exit) until he is caught. Caught = the level's "friend" is rescued.
+var chase := false
+var stop_x := 0.0
 var _t := 0.0
 var _fled := false
+var _caught := false
+var _hover_y := 0.0
 
 
 func _ready() -> void:
@@ -16,6 +22,9 @@ func _process(delta: float) -> void:
 	_t += delta
 	queue_redraw()
 	if _fled or game == null or game.player == null:
+		return
+	if chase:
+		_chase(delta)
 		return
 	if global_position.distance_to(game.player.global_position) < 300.0:
 		flee()
@@ -56,3 +65,23 @@ static func draw_body(canvas: CanvasItem, center: Vector2, s: float, t: float) -
 		canvas.draw_colored_polygon(PackedVector2Array([
 			p + Vector2(0, -r * 2), p + Vector2(r * 0.6, 0), p + Vector2(0, r * 2), p + Vector2(-r * 0.6, 0)
 		]), Color(1, 0.92, 0.5, 0.9))
+
+
+func _chase(delta: float) -> void:
+	if _caught:
+		return
+	var hero: Vector2 = game.player.global_position
+	if _hover_y == 0.0:
+		_hover_y = global_position.y
+	var gap := global_position.x - hero.x
+	if global_position.x < stop_x and gap < 380.0:
+		# run on, a little slower than the hero so a child always catches up
+		global_position.x = minf(global_position.x + 250.0 * delta, stop_x)
+		if randf() < delta * 1.5:
+			AudioManager.play_sfx_once("giggle", 1.5)
+	_hover_y = lerpf(_hover_y, hero.y - 110.0, 1.0 - exp(-2.0 * delta))
+	global_position.y = _hover_y
+	if global_position.x >= stop_x - 1.0 and global_position.distance_to(hero + Vector2(0, -60)) < 110.0:
+		_caught = true
+		AudioManager.play_sfx("pop")
+		game.on_friend_rescued(self)

@@ -20,7 +20,7 @@ const WORLDS := [
 	},
 	{
 		"id": "sky_islands", "title": "جزیره‌های ابری", "subtitle": "ترکیب مکانیک‌ها",
-		"first": 11, "last": 20, "free": false, "available": false, "sku": "worlds_pack",
+		"first": 11, "last": 20, "free": false, "available": true, "sku": "worlds_pack",
 		"background": "res://assets/environments/bg_sky.jpg", "music": "sky", "ambient": "sky",
 		"palette": {
 			"dirt": "a0704a", "dirt_dark": "7d5434", "grass": "7fd65a", "grass_light": "c2f08a",
@@ -31,7 +31,7 @@ const WORLDS := [
 	},
 	{
 		"id": "crystal_caves", "title": "غارهای بلورین", "subtitle": "چالش و جمع‌بندی",
-		"first": 21, "last": 30, "free": false, "available": false, "sku": "worlds_pack",
+		"first": 21, "last": 30, "free": false, "available": true, "sku": "worlds_pack",
 		"background": "res://assets/environments/bg_cave.jpg", "music": "cave", "ambient": "cave",
 		"palette": {
 			"dirt": "5a4a7a", "dirt_dark": "40345c", "grass": "8f7fd6", "grass_light": "c7b8ff",

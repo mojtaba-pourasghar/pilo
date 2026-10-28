@@ -166,6 +166,11 @@ func _world_card(world: Dictionary, frame_name: String) -> Control:
 func _on_world_pressed(world: Dictionary) -> void:
 	if ProgressManager.is_world_open(world):
 		_show_levels(world.id)
+	elif world.available:
+		# A locked world is sold in the worlds pack: open the store right here.
+		var store := StorePopup.new()
+		store.closed.connect(func(): _show_worlds())
+		add_child(store)
 	else:
 		AudioManager.play_sfx("reject")
 

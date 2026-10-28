@@ -7,6 +7,7 @@ var level_id := 1
 var stars_found := 0
 var stars_total := 3
 var first_time := false
+var reward := ""
 
 
 func _ready() -> void:
@@ -39,6 +40,13 @@ func _ready() -> void:
 		reward.add_child(UIKit.make_icon("res://assets/ui/crystal.png", 52))
 		reward.add_child(UIKit.make_label("یک تکهٔ زمان پیدا کردی!", 28, UIKit.PURPLE))
 		box.add_child(reward)
+
+	if reward != "":
+		var unlocked := HBoxContainer.new()
+		unlocked.alignment = BoxContainer.ALIGNMENT_CENTER
+		unlocked.add_child(UIKit.make_icon("res://assets/characters/pilo.png", 52))
+		unlocked.add_child(UIKit.make_label("پیلوی طلایی باز شد! (فروشگاه ← ظاهر پیلو)", 26, UIKit.ORANGE))
+		box.add_child(unlocked)
 
 	var next_id := level_id + 1
 	var row := HBoxContainer.new()

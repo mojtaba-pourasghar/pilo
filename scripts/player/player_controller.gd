@@ -18,6 +18,9 @@ const MAX_FALL := 1100.0
 const COYOTE_TIME := 0.14
 const JUMP_BUFFER := 0.16
 const FEET := 42.0
+const WIND_PUSH := 260.0      # extra air speed in sideways wind
+const UPDRAFT_ACCEL := 3400.0
+const UPDRAFT_MAX := -560.0
 
 var controls_enabled := true
 var facing := 1.0
@@ -29,6 +32,7 @@ var _was_on_floor := true
 var _run_phase := 0.0
 var _squash := Vector2.ONE
 var _emote: Label
+var _wind := Vector2.ZERO      # set by wind zones for the next physics frame
 
 @onready var visual: Node2D = $Visual
 
@@ -52,10 +56,17 @@ func _physics_process(delta: float) -> void:
 	_coyote = COYOTE_TIME if is_on_floor() else _coyote - delta
 
 	velocity.y = minf(velocity.y + GRAVITY * delta, MAX_FALL)
+	if _wind.y < 0.0:
+		velocity.y = maxf(velocity.y - UPDRAFT_ACCEL * delta, UPDRAFT_MAX)
 	var accel := FRICTION
 	if dir != 0.0:
 		accel = GROUND_ACCEL if is_on_floor() else AIR_ACCEL
-	velocity.x = move_toward(velocity.x, dir * SPEED, accel * delta)
+	var drift := 0.0
+	if _wind.x != 0.0 and not is_on_floor():
+		drift = signf(_wind.x) * WIND_PUSH
+		accel = maxf(accel, AIR_ACCEL)
+	velocity.x = move_toward(velocity.x, dir * SPEED + drift, accel * delta)
+	_wind = Vector2.ZERO
 
 	if _buffer > 0.0 and _coyote > 0.0:
 		velocity.y = JUMP_VELOCITY
@@ -114,6 +125,11 @@ func _animate(delta: float, on_floor: bool) -> void:
 	visual.scale = Vector2(facing * _squash.x, _squash.y)
 	visual.position.y = FEET + bob
 	visual.rotation = lerpf(visual.rotation, tilt, minf(1.0, 12.0 * delta))
+
+
+## Called by wind zones every physics frame the hero is inside them.
+func apply_wind(direction: Vector2) -> void:
+	_wind += direction
 
 
 func get_body_rect() -> Rect2:

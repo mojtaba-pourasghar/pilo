@@ -22,6 +22,7 @@ func default_data() -> Dictionary:
 		"shards": 0,
 		"settings": {"music": 0.7, "sfx": 0.9, "ambient": 0.8, "voice": 1.0, "hints": "more"},
 		"purchases": [],
+		"rewards": [],
 		"pilo_color": "classic",
 		"analytics": {},
 	}

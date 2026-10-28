@@ -4,6 +4,9 @@ extends Area2D
 
 var game: Node
 var rescued := false
+## "squirrel" (forest), "cloud" (a little cloud of the sky islands) or "ghubarak" when
+## Ghubarak himself is the one stuck in a bubble.
+var skin := "squirrel"
 
 var _t := 0.0
 var _bubble := 1.0
@@ -45,7 +48,12 @@ func _process(delta: float) -> void:
 
 func _draw() -> void:
 	var center := Vector2(32, 34 - _hop * 40.0 + sin(_t * 2.0) * 3.0 * _bubble)
-	draw_squirrel(self, center, 1.0, _t)
+	if skin == "ghubarak":
+		Ghubarak.draw_body(self, center + Vector2(0, -10), 0.8, _t)
+	elif skin == "cloud":
+		draw_cloud(self, center + Vector2(0, -10), 1.0, _t)
+	else:
+		draw_squirrel(self, center, 1.0, _t)
 	if _bubble > 0.01:
 		draw_circle(center + Vector2(0, -8), 44.0, Color(0.7, 0.9, 1.0, 0.25 * _bubble))
 		draw_arc(center + Vector2(0, -8), 44.0, 0.0, TAU, 48, Color(1, 1, 1, 0.7 * _bubble), 3.0)
@@ -73,3 +81,15 @@ static func draw_squirrel(canvas: CanvasItem, center: Vector2, s: float, t: floa
 	canvas.draw_circle(center + Vector2(-11, -19) * s, 3.0 * s, Color("2a1a10"))
 	canvas.draw_circle(center + Vector2(-2, -19) * s, 3.0 * s, Color("2a1a10"))
 	canvas.draw_circle(center + Vector2(-6, -13) * s, 2.5 * s, Color("5a2a1a"))
+
+
+## A little cloud with a face (the friend of the sky islands).
+static func draw_cloud(canvas: CanvasItem, center: Vector2, s: float, t: float) -> void:
+	var white := Color(1, 1, 1)
+	for p in [Vector2(-16, 4), Vector2(16, 4), Vector2(0, -8), Vector2(-6, 8), Vector2(8, 8)]:
+		canvas.draw_circle(center + (p + Vector2(0, sin(t * 3.0 + p.x) * 1.5)) * s, 15.0 * s, white)
+	canvas.draw_circle(center + Vector2(-7, 0) * s, 3.0 * s, Color("2d3a5a"))
+	canvas.draw_circle(center + Vector2(7, 0) * s, 3.0 * s, Color("2d3a5a"))
+	canvas.draw_arc(center + Vector2(0, 5) * s, 5.0 * s, 0.3, PI - 0.3, 10, Color("2d3a5a"), 2.0 * s)
+	canvas.draw_circle(center + Vector2(-13, 5) * s, 3.5 * s, Color(1, 0.6, 0.7, 0.6))
+	canvas.draw_circle(center + Vector2(13, 5) * s, 3.5 * s, Color(1, 0.6, 0.7, 0.6))

@@ -99,10 +99,10 @@ func play_ambient(track: String) -> void:
 	_ambient_index = 1 - _ambient_index
 	var new := _ambient[_ambient_index]
 	var stream: AudioStream = _load(AMBIENT_DIR + track + ".ogg") if track != "" else null
-	var tween := create_tween().set_parallel(true)
 	if old.playing:
-		tween.tween_property(old, "volume_db", -60.0, 1.5)
-		tween.chain().tween_callback(old.stop)
+		var fade := create_tween()
+		fade.tween_property(old, "volume_db", -60.0, 1.5)
+		fade.tween_callback(old.stop)
 	if stream:
 		_set_loop(stream)
 		new.stream = stream

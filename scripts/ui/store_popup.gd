@@ -215,6 +215,8 @@ func _color_card(color_id: String) -> Control:
 	elif owned:
 		button = _price_button("انتخاب", UIKit.BLUE, true)
 		button.pressed.connect(func(): _pick(color_id))
+	elif String(entry.sku).begins_with("reward_"):
+		button = _price_button("جایزهٔ پایان بازی", UIKit.GREY, false)
 	else:
 		button = _price_button("قفل", UIKit.GREY, true)
 		button.pressed.connect(func(): _set_tab("packs"))
