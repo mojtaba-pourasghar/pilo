@@ -1,6 +1,6 @@
 class_name SettingsPanel
 extends CanvasLayer
-## Volume, hint level and progress reset (reset is behind the parent gate).
+## Volume of the four sound channels, hint level, store and progress reset (behind the parent gate).
 
 signal closed
 
@@ -14,8 +14,11 @@ func _ready() -> void:
 	var modal := UIKit.make_modal(self, Vector2(680, 0))
 	var box: VBoxContainer = modal.box
 	box.add_child(UIKit.make_strip_title("تنظیمات", 40))
-	box.add_child(_slider_row("موسیقی", "music", float(settings.music)))
-	box.add_child(_slider_row("صداها", "sfx", float(settings.sfx)))
+	box.add_theme_constant_override("separation", 10)
+	box.add_child(_slider_row("موسیقی", "music", float(settings.get("music", 0.7))))
+	box.add_child(_slider_row("جلوه‌ها", "sfx", float(settings.get("sfx", 0.9))))
+	box.add_child(_slider_row("صدای محیط", "ambient", float(settings.get("ambient", 0.8))))
+	box.add_child(_slider_row("گوینده", "voice", float(settings.get("voice", 1.0))))
 
 	var hint_row := HBoxContainer.new()
 	hint_row.add_theme_constant_override("separation", 12)
@@ -31,34 +34,49 @@ func _ready() -> void:
 	box.add_child(hint_row)
 	_refresh_hints()
 
-	var store := UIKit.make_button("فروشگاه", UIKit.ORANGE, 300, 28)
+	var actions := HBoxContainer.new()
+	actions.alignment = BoxContainer.ALIGNMENT_CENTER
+	actions.add_theme_constant_override("separation", 12)
+	box.add_child(actions)
+	var store := UIKit.make_button("فروشگاه", UIKit.ORANGE, 190, 26)
 	store.pressed.connect(func(): add_child(StorePopup.new()))
-	box.add_child(store)
-	var reset := UIKit.make_button("پاک کردن پیشرفت", UIKit.RED, 300, 24)
+	actions.add_child(store)
+	var reset := UIKit.make_button("پاک کردن پیشرفت", UIKit.RED, 230, 22)
 	reset.pressed.connect(_on_reset)
-	box.add_child(reset)
-	var close := UIKit.make_button("بستن", UIKit.BLUE, 300, 28)
+	actions.add_child(reset)
+	var close := UIKit.make_button("بستن", UIKit.BLUE, 190, 26)
 	close.pressed.connect(_close)
-	box.add_child(close)
+	actions.add_child(close)
 
 
 func _slider_row(title: String, key: String, value: float) -> HBoxContainer:
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 20)
-	var label := UIKit.make_label(title, 30)
-	label.custom_minimum_size.x = 150
+	var label := UIKit.make_label(title, 28)
+	label.custom_minimum_size.x = 170
 	row.add_child(label)
 	var slider := HSlider.new()
 	slider.min_value = 0.0
 	slider.max_value = 1.0
 	slider.step = 0.05
 	slider.value = value
-	slider.custom_minimum_size = Vector2(380, 50)
+	slider.custom_minimum_size = Vector2(400, 44)
 	slider.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	slider.value_changed.connect(func(v: float): _on_volume(key, v))
-	slider.drag_ended.connect(func(_changed: bool): AudioManager.play_sfx("star"))
+	slider.drag_ended.connect(func(_changed: bool): _preview(key))
 	row.add_child(slider)
 	return row
+
+
+## A short sample on the channel just changed, so the new level is heard right away.
+func _preview(key: String) -> void:
+	match key:
+		"voice":
+			AudioManager.play_voice("app_well_done")
+		"ambient":
+			pass  # the ambience loop is already playing
+		_:
+			AudioManager.play_sfx("star")
 
 
 func _on_volume(key: String, value: float) -> void:

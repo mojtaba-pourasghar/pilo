@@ -1,0 +1,418 @@
+{
+ "note": "Built by tools/voice/build_voice_lines.py — edit dialogue in the level files. Only 'spoken' (TTS respelling) may be edited here; it survives rebuilds.",
+ "characters": {
+  "nima": {
+   "name": "نیما",
+   "about": "پسر ماجراجوی ۸ ساله؛ کنجکاو، مهربان و پرانرژی"
+  },
+  "pilo": {
+   "name": "پیلو",
+   "about": "همراه کوچک و بامزهٔ نیما؛ گرم، شاد و راهنما (جواب را لو نمی‌دهد)"
+  },
+  "ghubarak": {
+   "name": "غبارک",
+   "about": "موجود غباری بازیگوش؛ شیطون و خنده‌رو، اصلاً ترسناک نیست"
+  },
+  "squirrel": {
+   "name": "سنجابک",
+   "about": "سنجاب کوچولو و تند‌حرف؛ هیجان‌زده و قدردان"
+  }
+ },
+ "format": {
+  "bitrateKbps": 96,
+  "loudnessLufs": -16,
+  "silenceMs": {
+   "head": 80,
+   "tail": 150
+  }
+ },
+ "lines": [
+  {
+   "id": "l01_intro_1",
+   "file": "voice/l01_intro_1.mp3",
+   "who": "pilo",
+   "text": "سلام نیما! من پیلو هستم.",
+   "level": 1,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 1"
+  },
+  {
+   "id": "l01_intro_2",
+   "file": "voice/l01_intro_2.mp3",
+   "who": "nima",
+   "text": "سلام پیلو! چرا جنگل این‌قدر عجیب شده؟",
+   "level": 1,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 1"
+  },
+  {
+   "id": "l01_intro_3",
+   "file": "voice/l01_intro_3.mp3",
+   "who": "pilo",
+   "text": "غبارک تکه‌های زمان را پخش کرده. بیا پیدایشان کنیم!",
+   "level": 1,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 1"
+  },
+  {
+   "id": "l01_outro_1",
+   "file": "voice/l01_outro_1.mp3",
+   "who": "ghubarak",
+   "text": "هی‌هی! ببخشید... دستگاهم یک‌کم قاطی کرد!",
+   "level": 1,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 1"
+  },
+  {
+   "id": "l01_outro_2",
+   "file": "voice/l01_outro_2.mp3",
+   "who": "pilo",
+   "text": "غبارک! صبر کن!",
+   "level": 1,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 1"
+  },
+  {
+   "id": "l01_outro_3",
+   "file": "voice/l01_outro_3.mp3",
+   "who": "nima",
+   "text": "عیبی ندارد. با هم درستش می‌کنیم.",
+   "level": 1,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 1"
+  },
+  {
+   "id": "l01_sign_1",
+   "file": "voice/l01_sign_1.mp3",
+   "who": "pilo",
+   "text": "با دکمه‌های آبی راه برو.",
+   "level": 1,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 1"
+  },
+  {
+   "id": "l01_sign_2",
+   "file": "voice/l01_sign_2.mp3",
+   "who": "pilo",
+   "text": "با دکمهٔ سبز بپر!",
+   "level": 1,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 1"
+  },
+  {
+   "id": "l01_sign_3",
+   "file": "voice/l01_sign_3.mp3",
+   "who": "pilo",
+   "text": "ستاره‌ها اختیاری‌اند؛ ولی پیلو عاشقشان است!",
+   "level": 1,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 1"
+  },
+  {
+   "id": "l02_intro_1",
+   "file": "voice/l02_intro_1.mp3",
+   "who": "pilo",
+   "text": "این قارچ‌ها فنری‌اند! رویشان بپر.",
+   "level": 2,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 2"
+  },
+  {
+   "id": "l02_sign_1",
+   "file": "voice/l02_sign_1.mp3",
+   "who": "pilo",
+   "text": "روی قارچ قرمز بپر تا بالا بروی!",
+   "level": 2,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 2"
+  },
+  {
+   "id": "l02_sign_2",
+   "file": "voice/l02_sign_2.mp3",
+   "who": "pilo",
+   "text": "قارچ بزرگ تو را تا بالای صخره می‌برد.",
+   "level": 2,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 2"
+  },
+  {
+   "id": "l03_intro_1",
+   "file": "voice/l03_intro_1.mp3",
+   "who": "pilo",
+   "text": "این لنز زمان است! با آن گذشته و حالِ جنگل را می‌بینی.",
+   "level": 3,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 3"
+  },
+  {
+   "id": "l03_intro_2",
+   "file": "voice/l03_intro_2.mp3",
+   "who": "nima",
+   "text": "پس شاید پلِ شکسته در گذشته سالم بوده!",
+   "level": 3,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 3"
+  },
+  {
+   "id": "l03_sign_1",
+   "file": "voice/l03_sign_1.mp3",
+   "who": "pilo",
+   "text": "دکمهٔ بنفش = لنز زمان. پل در گذشته سالم بود!",
+   "level": 3,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 3"
+  },
+  {
+   "id": "l03_sign_2",
+   "file": "voice/l03_sign_2.mp3",
+   "who": "pilo",
+   "text": "این سنگ‌ها در گذشته بودند. در حال چه؟",
+   "level": 3,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 3"
+  },
+  {
+   "id": "l04_intro_1",
+   "file": "voice/l04_intro_1.mp3",
+   "who": "nima",
+   "text": "اینجا فقط چند جوانهٔ کوچک هست...",
+   "level": 4,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 4"
+  },
+  {
+   "id": "l04_intro_2",
+   "file": "voice/l04_intro_2.mp3",
+   "who": "pilo",
+   "text": "جوانه‌ها با گذشت زمان بزرگ می‌شوند!",
+   "level": 4,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 4"
+  },
+  {
+   "id": "l04_sign_1",
+   "file": "voice/l04_sign_1.mp3",
+   "who": "pilo",
+   "text": "در گذشته اینجا جوانه بود. در حال چه شکلی است؟",
+   "level": 4,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 4"
+  },
+  {
+   "id": "l05_intro_1",
+   "file": "voice/l05_intro_1.mp3",
+   "who": "pilo",
+   "text": "آن درِ گردویی قفل است. کلیدش باید همین نزدیکی باشد!",
+   "level": 5,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 5"
+  },
+  {
+   "id": "l05_sign_1",
+   "file": "voice/l05_sign_1.mp3",
+   "who": "pilo",
+   "text": "کلید را پیدا کن تا در گردویی باز شود.",
+   "level": 5,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 5"
+  },
+  {
+   "id": "l06_intro_1",
+   "file": "voice/l06_intro_1.mp3",
+   "who": "pilo",
+   "text": "بو می‌کشم... بوی ستاره می‌آید! شاید از آن بالا؟",
+   "level": 6,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 6"
+  },
+  {
+   "id": "l06_sign_1",
+   "file": "voice/l06_sign_1.mp3",
+   "who": "pilo",
+   "text": "راه اصلی پایین است؛ ولی بالای سرت را هم نگاه کن!",
+   "level": 6,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 6"
+  },
+  {
+   "id": "l07_intro_1",
+   "file": "voice/l07_intro_1.mp3",
+   "who": "nima",
+   "text": "آب راه را بسته!",
+   "level": 7,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 7"
+  },
+  {
+   "id": "l07_intro_2",
+   "file": "voice/l07_intro_2.mp3",
+   "who": "pilo",
+   "text": "آب همیشه همین‌جا نبوده. با لنز نگاه کن.",
+   "level": 7,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 7"
+  },
+  {
+   "id": "l07_sign_1",
+   "file": "voice/l07_sign_1.mp3",
+   "who": "pilo",
+   "text": "آب در گذشته کجا بود؟ با لنز نگاه کن.",
+   "level": 7,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 7"
+  },
+  {
+   "id": "l08_intro_1",
+   "file": "voice/l08_intro_1.mp3",
+   "who": "pilo",
+   "text": "این سکوهای برگی آرام تکان می‌خورند. صبر کن تا نزدیک شوند.",
+   "level": 8,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 8"
+  },
+  {
+   "id": "l08_sign_1",
+   "file": "voice/l08_sign_1.mp3",
+   "who": "pilo",
+   "text": "عجله نکن! صبر کن تا سکو بیاید.",
+   "level": 8,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 8"
+  },
+  {
+   "id": "l09_intro_1",
+   "file": "voice/l09_intro_1.mp3",
+   "who": "squirrel",
+   "text": "کمک! من این بالا توی حباب زمان گیر افتاده‌ام!",
+   "level": 9,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 9"
+  },
+  {
+   "id": "l09_intro_2",
+   "file": "voice/l09_intro_2.mp3",
+   "who": "nima",
+   "text": "نگران نباش سنجابک، داریم می‌آییم!",
+   "level": 9,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 9"
+  },
+  {
+   "id": "l09_rescue_1",
+   "file": "voice/l09_rescue_1.mp3",
+   "who": "squirrel",
+   "text": "ممنونم نیما! ممنونم پیلو!",
+   "level": 9,
+   "kind": "rescue",
+   "event": "نجات دوست — مرحلهٔ 9"
+  },
+  {
+   "id": "l09_sign_1",
+   "file": "voice/l09_sign_1.mp3",
+   "who": "pilo",
+   "text": "سنجابک آن بالا گیر افتاده! کمکش کن.",
+   "level": 9,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 9"
+  },
+  {
+   "id": "l10_intro_1",
+   "file": "voice/l10_intro_1.mp3",
+   "who": "pilo",
+   "text": "آخرین تکهٔ زمانِ جنگل همین‌جاست. هرچه یاد گرفتی را به کار ببر!",
+   "level": 10,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 10"
+  },
+  {
+   "id": "l10_outro_1",
+   "file": "voice/l10_outro_1.mp3",
+   "who": "ghubarak",
+   "text": "وای... همهٔ تکه‌های جنگل را پیدا کردید!",
+   "level": 10,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 10"
+  },
+  {
+   "id": "l10_outro_2",
+   "file": "voice/l10_outro_2.mp3",
+   "who": "ghubarak",
+   "text": "ببخشید که این‌همه دردسر درست کردم. می‌شود کمکتان کنم؟",
+   "level": 10,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 10"
+  },
+  {
+   "id": "l10_outro_3",
+   "file": "voice/l10_outro_3.mp3",
+   "who": "nima",
+   "text": "معلومه! با هم بقیهٔ رنگارستان را درست می‌کنیم.",
+   "level": 10,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 10"
+  },
+  {
+   "id": "l10_outro_4",
+   "file": "voice/l10_outro_4.mp3",
+   "who": "pilo",
+   "text": "جزیره‌های ابری منتظر ما هستند!",
+   "level": 10,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 10"
+  },
+  {
+   "id": "app_unsafe",
+   "file": "voice/app_unsafe.mp3",
+   "who": "pilo",
+   "text": "اینجا جای امن نیست!",
+   "level": 0,
+   "kind": "app",
+   "event": "لنز زمان رد شد"
+  },
+  {
+   "id": "app_need_key",
+   "file": "voice/app_need_key.mp3",
+   "who": "pilo",
+   "text": "کلید کجاست؟",
+   "level": 0,
+   "kind": "app",
+   "event": "به در قفل رسیدی بدون کلید"
+  },
+  {
+   "id": "app_rescue_first",
+   "file": "voice/app_rescue_first.mp3",
+   "who": "pilo",
+   "text": "اول دوستمان را نجات بده!",
+   "level": 0,
+   "kind": "app",
+   "event": "پایان مرحله قبل از نجات دوست"
+  },
+  {
+   "id": "app_well_done",
+   "file": "voice/app_well_done.mp3",
+   "who": "pilo",
+   "text": "آفرین!",
+   "level": 0,
+   "kind": "app",
+   "event": "پنجرهٔ پایان مرحله"
+  },
+  {
+   "id": "app_shard_found",
+   "file": "voice/app_shard_found.mp3",
+   "who": "pilo",
+   "text": "یک تکهٔ زمان پیدا کردی!",
+   "level": 0,
+   "kind": "app",
+   "event": "پنجرهٔ پایان مرحله، بار اول"
+  },
+  {
+   "id": "app_next_world_soon",
+   "file": "voice/app_next_world_soon.mp3",
+   "who": "pilo",
+   "text": "دنیای بعدی به‌زودی می‌آید!",
+   "level": 0,
+   "kind": "app",
+   "event": "پایان مرحلهٔ آخر دنیا"
+  }
+ ]
+}

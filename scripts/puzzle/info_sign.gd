@@ -3,6 +3,7 @@ extends Area2D
 ## Wooden sign that shows a short tip when the hero stands near it.
 
 var text := ""
+var voice_id := ""
 
 var _bubble: PanelContainer
 
@@ -36,6 +37,8 @@ func _ready() -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player") and text != "":
+		if not _bubble.visible and voice_id != "":
+			AudioManager.play_voice(voice_id)
 		_bubble.visible = true
 		create_tween().tween_property(_bubble, "modulate:a", 1.0, 0.2)
 

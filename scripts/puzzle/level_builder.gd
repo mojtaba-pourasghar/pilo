@@ -116,6 +116,7 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 				"i":
 					var board := InfoSign.new()
 					board.text = signs[sign_index] if sign_index < signs.size() else ""
+					board.voice_id = "l%02d_sign_%d" % [int(data.get("id", 0)), sign_index + 1]
 					board.position = pos
 					root.add_child(board)
 					sign_index += 1

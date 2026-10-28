@@ -13,6 +13,7 @@ func _ready() -> void:
 	_test_save_merge()
 	await _test_levels_build()
 	await _test_time_shift_safety()
+	_test_audio()
 	await _test_bot_plays_level_1()
 	SaveManager.data = backup
 	SaveManager.save_game()
@@ -33,6 +34,25 @@ func _test_save_merge() -> void:
 	var merged := SaveManager._merge(SaveManager.default_data(), {"settings": {"music": 0.2}, "version": 1})
 	_check(merged.settings.music == 0.2, "save merge keeps stored values")
 	_check(merged.settings.has("hints") and merged.has("purchases"), "save merge fills missing keys")
+
+
+func _test_audio() -> void:
+	for world in LevelManager.WORLDS:
+		var path := "res://assets/audio/ambient/%s.ogg" % world.ambient
+		_check(ResourceLoader.exists(path), "ambience for %s exists" % world.id)
+	for bus in AudioManager.BUSES:
+		_check(AudioServer.get_bus_index(bus) != -1, "audio bus %s exists" % bus)
+	_check(not AudioManager.play_voice("no_such_line"), "a missing voice line is skipped quietly")
+	var lines: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/voice/voice_lines.json"))
+	var recorded := 0
+	for line in lines.lines:
+		for ext in AudioManager.VOICE_EXTENSIONS:
+			if ResourceLoader.exists("res://assets/audio/voice/%s%s" % [line.id, ext]):
+				recorded += 1
+				_check(AudioManager.play_voice(line.id), "voice %s plays" % line.id)
+				break
+	print("     %d of %d voice lines have audio" % [recorded, lines.lines.size()])
+	AudioManager.stop_voice()
 
 
 func _test_levels_build() -> void:

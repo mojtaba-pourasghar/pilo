@@ -23,7 +23,7 @@ func _process(delta: float) -> void:
 
 func flee() -> void:
 	_fled = true
-	AudioManager.play_sfx("bounce", 1.6)
+	AudioManager.play_sfx("giggle")
 	var tween := create_tween()
 	tween.tween_property(self, "position", position + Vector2(420, -320), 1.4).set_trans(Tween.TRANS_SINE)
 	tween.parallel().tween_property(self, "modulate:a", 0.0, 1.4).set_delay(0.4)

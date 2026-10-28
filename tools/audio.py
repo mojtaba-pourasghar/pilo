@@ -52,6 +52,51 @@ sfx['click'] = tone(880,0.06,'sine',r=0.05,vol=0.4)
 sfx['bounce'] = tone(200+200*np.abs(np.sin(np.linspace(0,9,int(SR*0.35))))*np.linspace(1.5,0.5,int(SR*0.35)),0.35,'tri',vol=0.5)
 sfx['rescue'] = mix(*[at(tone(f,0.35,'bell',vol=0.35),i*0.08) for i,f in enumerate((784,988,1175,1568,1976))])
 sfx['splash'] = lowpass(noise(0.4),6)*env(int(SR*0.4),0.005,0.35)
+
+# --- environment & character effects (separate RNG so the sounds above stay identical) ---
+rng2 = np.random.default_rng(21)
+def noise2(d): return rng2.uniform(-1, 1, int(SR*d))
+def bp(y, lo_k, hi_k):  # crude band-pass: low-passed minus a wider low-pass
+    return lowpass(y, lo_k) - lowpass(y, hi_k)
+def decay(n, rate): return np.exp(-np.arange(n)/SR*rate)
+# soft footstep on grass: short filtered noise thump + tiny crunch
+n = int(SR*0.12)
+sfx['step'] = (lowpass(noise2(0.12), 18)*decay(n, 40)*1.4 + bp(noise2(0.12), 3, 9)*decay(n, 70)*0.6) * env(n, 0.003, 0.05)
+# vines growing: rising rustle with leafy flutter
+n = int(SR*0.7)
+flutter = 0.6 + 0.4*np.sin(2*np.pi*np.linspace(6, 22, n).cumsum()/SR)
+sfx['grow'] = mix(bp(noise2(0.7), 2, 7)*flutter*np.linspace(0.2, 1, n)*env(n, 0.05, 0.25),
+                  tone(np.linspace(300, 900, n), 0.7, 'sine', vol=0.12))
+# leaves rustling away (vines folding back into seeds)
+n = int(SR*0.5)
+sfx['rustle'] = bp(noise2(0.5), 2, 6)*(0.5+0.5*np.sin(np.linspace(0, 30, n)))*np.linspace(1, 0.2, n)*env(n, 0.01, 0.2)
+# rocks: low rumble with a few knocks
+n = int(SR*0.8)
+rumble = lowpass(noise2(0.8), 120)*decay(n, 4)*6
+knocks = mix(*[at(lowpass(noise2(0.06), 10)*decay(int(SR*0.06), 60)*1.5, t0) for t0 in (0.05, 0.22, 0.41)])
+sfx['rumble'] = mix(rumble, knocks, tone(np.linspace(70, 45, n), 0.8, 'sine', vol=0.35)*decay(n, 3))
+# wooden bridge creak: slow pitch-wobbling sawtooth-ish groan, band-limited
+n = int(SR*0.6)
+f = 140 + 40*np.sin(np.linspace(0, 7, n)) + rng2.uniform(-8, 8, n)
+ph = 2*np.pi*np.cumsum(f)/SR
+creak = (np.sign(np.sin(ph))*0.5 + 0.5*np.sin(3*ph)) * (0.4 + 0.6*np.abs(np.sin(np.linspace(0, 9, n))))
+sfx['creak'] = lowpass(creak, 6)*env(n, 0.03, 0.2)*0.7
+# Ghubarak giggle: quick descending hee-hee-hee with vibrato
+parts = []
+for i, f0 in enumerate((980, 900, 820, 760, 700)):
+    d = 0.09
+    m = int(SR*d)
+    vib = f0*(1 + 0.03*np.sin(2*np.pi*28*np.arange(m)/SR))
+    parts.append(at(tone(vib, d, 'tri', a=0.005, r=0.05, vol=0.45) + bp(noise2(d), 2, 5)*0.08, i*0.11))
+sfx['giggle'] = mix(*parts)
+# squirrel chatter: fast high chirps
+sfx['chatter'] = mix(*[at(tone(np.linspace(2200, 1500, int(SR*0.05)), 0.05, 'sine', vol=0.35), i*0.065 + (0.02 if i % 3 == 0 else 0)) for i in range(9)])
+# bubble pop (time bubble around the friend)
+n = int(SR*0.18)
+sfx['pop'] = mix(tone(np.linspace(500, 1400, n), 0.18, 'sine', a=0.002, r=0.12, vol=0.5)*decay(n, 18), bp(noise2(0.18), 1, 4)*decay(n, 60)*0.5)
+# checkpoint flag: two cloth flaps
+flap = lambda: bp(noise2(0.12), 2, 10)*env(int(SR*0.12), 0.01, 0.08)*1.2
+sfx['flag'] = mix(at(flap(), 0), at(flap(), 0.16))
 for k,v in sfx.items(): write(k,v,'sfx')
 def song(scale, prog, kind, bpm, bars, seed, bass_kind='sine'):
     r = np.random.default_rng(seed); beat = 60/bpm; L = bars*4*beat

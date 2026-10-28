@@ -103,6 +103,7 @@ func _ready() -> void:
 	TimeShift.time_changed.connect(_on_time_changed)
 	TimeShift.reset(TimeShift.state_from_name(String(data.get("start_time", "present"))))
 	AudioManager.play_music(world.music)
+	AudioManager.play_ambient(String(world.get("ambient", "")))
 	Analytics.log_event("level_start", level_id)
 	_play_lines(data.get("intro", []))
 
@@ -141,7 +142,7 @@ func try_shift() -> void:
 			blocker.flash_warning()
 		player.react_surprise()
 		pilo.shake()
-		_notice("اینجا جای امن نیست!", UIKit.RED, true)
+		_notice("اینجا جای امن نیست!", UIKit.RED, true, "app_unsafe")
 		Analytics.log_event("shift_blocked", level_id)
 		return
 	TimeShift.shift()
@@ -162,6 +163,7 @@ func _on_time_changed(state: int, instant: bool) -> void:
 		_tint_tween = create_tween()
 		_tint_tween.tween_property(_modulate, "color", tint, 0.4)
 	_background.set_tint(tint, instant)
+	AudioManager.set_past_filter(state == TimeShift.PAST)
 	hud.set_time(state)
 	pilo.on_time_changed(state, instant)
 
@@ -213,18 +215,21 @@ func on_door_touched(door: Door) -> void:
 		hud.set_keys(keys)
 	else:
 		pilo.shake()
-		_notice("کلید کجاست؟", UIKit.ORANGE)
+		_notice("کلید کجاست؟", UIKit.ORANGE, false, "app_need_key")
 
 
 func on_checkpoint(checkpoint: Checkpoint) -> void:
 	respawn_point = checkpoint.respawn_position()
-	AudioManager.play_sfx("star", 0.8)
+	AudioManager.play_sfx("flag")
+	AudioManager.play_sfx("star", 0.8, -6.0)
 	FX.burst(_world_root, checkpoint.global_position + Vector2(48, -30), UIKit.ORANGE, 12)
 
 
 func on_friend_rescued(_friend: Node) -> void:
 	friend_rescued = true
 	AudioManager.play_sfx("rescue")
+	AudioManager.play_sfx("pop")
+	AudioManager.play_sfx("chatter")
 	if info.exit:
 		info.exit.set_locked(false)
 	await _play_lines(data.get("rescue", []))
@@ -236,7 +241,7 @@ func on_exit_reached() -> void:
 	if finished:
 		return
 	if not friend_rescued:
-		_notice("اول دوستمان را نجات بده!", UIKit.ORANGE)
+		_notice("اول دوستمان را نجات بده!", UIKit.ORANGE, false, "app_rescue_first")
 		return
 	finished = true
 	_set_busy(true)
@@ -323,8 +328,11 @@ func _set_busy(value: bool) -> void:
 	hud.set_controls_visible(not value)
 
 
-func _notice(text: String, color: Color, force := false) -> void:
+## Floating message over the hero; Pilo also says it when a recording exists (voice_id).
+func _notice(text: String, color: Color, force := false, voice_id := "") -> void:
 	if _notice_cooldown > 0.0 and not force:
 		return
 	_notice_cooldown = 1.5
+	if voice_id != "" and not AudioManager.is_voice_playing():
+		AudioManager.play_voice(voice_id)
 	FX.float_text(_world_root, player.global_position + Vector2(0, -120), text, color)

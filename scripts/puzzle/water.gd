@@ -15,6 +15,7 @@ var _t := 0.0
 var _hint := 0.0
 var _warn := 0.0
 var _tween: Tween
+var _babble: AudioStreamPlayer2D
 
 
 func _ready() -> void:
@@ -30,8 +31,27 @@ func _ready() -> void:
 	add_child(shape)
 	add_to_group("time_hazard")
 	add_to_group("time_visual")
+	_add_babble()
 	TimeShift.time_changed.connect(_on_time_changed)
 	_on_time_changed(TimeShift.state, true)
+
+
+## A positional stream sound on the water surface; it fades with the water when time changes.
+func _add_babble() -> void:
+	const PATH := "res://assets/audio/ambient/stream.ogg"
+	if not surface or not ResourceLoader.exists(PATH):
+		return
+	var stream: AudioStream = load(PATH)
+	if stream is AudioStreamOggVorbis:
+		stream.loop = true
+	_babble = AudioStreamPlayer2D.new()
+	_babble.stream = stream
+	_babble.bus = "Ambient"
+	_babble.position = Vector2(size.x * 0.5, 20)
+	_babble.max_distance = 900.0
+	_babble.attenuation = 1.6
+	add_child(_babble)
+	_babble.play(randf() * 10.0)
 
 
 func is_active_in(state: int) -> bool:
@@ -79,6 +99,8 @@ func _physics_process(_delta: float) -> void:
 
 func _process(delta: float) -> void:
 	_t += delta
+	if _babble:
+		_babble.volume_db = linear_to_db(maxf(_presence, 0.001)) - 3.0
 	queue_redraw()
 
 

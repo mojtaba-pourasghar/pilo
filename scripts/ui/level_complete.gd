@@ -14,6 +14,7 @@ func _ready() -> void:
 	var modal := UIKit.make_modal(self, Vector2(640, 0))
 	var box: VBoxContainer = modal.box
 	box.add_child(UIKit.make_strip_title("آفرین!", 48))
+	AudioManager.play_voice("app_shard_found" if first_time else "app_well_done")
 	box.add_child(UIKit.make_label(LevelManager.level_title(level_id), 32))
 
 	var stars := HBoxContainer.new()

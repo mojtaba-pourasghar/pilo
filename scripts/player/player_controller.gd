@@ -102,7 +102,10 @@ func _animate(delta: float, on_floor: bool) -> void:
 	var bob := 0.0
 	var tilt := 0.0
 	if on_floor and absf(velocity.x) > 30.0:
+		var before := int(_run_phase / PI)
 		_run_phase += delta * 15.0
+		if int(_run_phase / PI) != before:
+			AudioManager.play_sfx("step", randf_range(0.9, 1.12), -10.0)
 		bob = -absf(sin(_run_phase)) * 7.0
 		tilt = 0.08 * signf(velocity.x)
 	elif not on_floor:

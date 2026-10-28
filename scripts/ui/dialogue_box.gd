@@ -72,6 +72,7 @@ func play(lines: Array) -> void:
 	for line in lines:
 		_show(line)
 		await advanced
+		AudioManager.stop_voice()
 	_root.visible = false
 
 
@@ -88,7 +89,9 @@ func _show(line: Dictionary) -> void:
 	_typing = create_tween()
 	_typing.tween_property(_text, "visible_ratio", 1.0, clampf(_text.text.length() * 0.03, 0.3, 1.6))
 	if line.has("id"):
-		AudioManager.play_voice(String(line.id))
+		# Text appears at the voice's pace when a recording exists.
+		if AudioManager.play_voice(String(line.id)) and _typing:
+			_typing.set_speed_scale(0.8)
 
 
 func _input(event: InputEvent) -> void:

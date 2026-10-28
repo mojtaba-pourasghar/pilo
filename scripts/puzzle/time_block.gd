@@ -90,7 +90,24 @@ func _on_time_changed(state: int, instant: bool) -> void:
 	else:
 		_tween = create_tween()
 		_tween.tween_property(self, "_presence", 1.0 if on else 0.0, 0.35)
+		_play_change_sound(on)
 	queue_redraw()
+
+
+## The world answers the time lens: vines rustle as they grow, rocks rumble, bridges creak.
+## Only pieces on screen make a sound, and each kind once per shift.
+func _play_change_sound(appearing: bool) -> void:
+	var screen := get_viewport().get_visible_rect().grow(64.0)
+	var on_screen := Rect2(get_global_transform_with_canvas().origin, size)
+	if not screen.intersects(on_screen):
+		return
+	match kind:
+		Kind.VINE:
+			AudioManager.play_sfx_once("grow" if appearing else "rustle", 0.3)
+		Kind.ROCK:
+			AudioManager.play_sfx_once("rumble", 0.3, 1.0 if appearing else 1.2, -2.0)
+		Kind.BRIDGE:
+			AudioManager.play_sfx_once("creak", 0.3, 1.0 if appearing else 0.8)
 
 
 func _process(_delta: float) -> void:

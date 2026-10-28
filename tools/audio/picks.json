@@ -1,0 +1,9 @@
+{
+ "note": "Real recordings from Wikimedia Commons, picked by hand. Key = path under assets/audio without extension. Run: python3 tools/audio/fetch_ambience.py",
+ "picks": {
+  "ambient/forest": {"file": "File:Gentle breeze and birds singing.ogg", "start": 1, "seconds": 30, "loop": true, "lufs": -24},
+  "ambient/stream": {"file": "File:2024-07-26 Molln (Oberösterreich) Bachlauf plätschert (Krumme Steyerling bei Piesslingerstraße).wav", "start": 1, "seconds": 20, "loop": true, "lufs": -22},
+  "ambient/sky": {"file": "File:Breeze birds and geese.ogg", "start": 2, "seconds": 40, "loop": true, "lufs": -25},
+  "ambient/cave": {"file": "File:Water drips in Treak Cliff Cavern, Derbyshire.flac", "start": 5, "seconds": 40, "loop": true, "lufs": -24}
+ }
+}

@@ -25,3 +25,8 @@ side by side with the design before handing it over.
 - طرح‌های مرجع: `assets/reference/` (منوها: `ui_menus_design.webp`).
 - هنر رابط کاربری با `python3 tools/ui_art.py .` ساخته می‌شود؛ اسکرین‌شات با `tools/screenshot.tscn` (README).
 - قبل از commit: `python3 tests/validate_levels.py` و `godot --headless --path . res://tests/test_runner.tscn`.
+- صدای شخصیت‌ها: دیالوگ را در فایل مرحله بنویس، بعد `python3 tools/voice/build_voice_lines.py` و
+  `python3 tools/voice/make_recording_script.py`. صدا با استودیوی `tools/voice-studio` (آواشو، هر شخصیت صدای خودش) ساخته می‌شود؛
+  ضبط انسانی (فایل‌های خارج از `docs/voice/tts_generated.json`) هرگز بازنویسی نشود.
+- صدای محیط: ضبط واقعی از Commons با `tools/audio/fetch_ambience.py` (منبع و مجوز در `docs/audio/sound_sources.json`)،
+  بقیهٔ جلوه‌ها با `tools/audio.py`.

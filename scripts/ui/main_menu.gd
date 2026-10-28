@@ -13,6 +13,8 @@ func _ready() -> void:
 	layout_direction = Control.LAYOUT_DIRECTION_LTR
 	add_child(UIKit.make_cover("res://assets/environments/key_art.webp"))
 	AudioManager.play_music("forest")
+	AudioManager.play_ambient("forest")
+	AudioManager.set_past_filter(false)
 
 	var gear := UIKit.make_round("btn_gear", 92)
 	gear.position = Vector2(24, 20)

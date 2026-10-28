@@ -10,3 +10,4 @@ build/
 *.jks
 .env
 *.env
+tools/audio/.cache/

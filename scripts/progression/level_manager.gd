@@ -10,7 +10,7 @@ const WORLDS := [
 	{
 		"id": "forest", "title": "جنگل جوانه‌ها", "subtitle": "آموزش و اکتشاف",
 		"first": 1, "last": 10, "free": true, "available": true, "sku": "",
-		"background": "res://assets/environments/bg_forest.jpg", "music": "forest",
+		"background": "res://assets/environments/bg_forest.jpg", "music": "forest", "ambient": "forest",
 		"palette": {
 			"dirt": "8d5a34", "dirt_dark": "6e4325", "grass": "6cc24a", "grass_light": "a6e070",
 			"rock": "9ea3ad", "rock_dark": "6f7580", "wood": "c08048", "wood_dark": "7c4a24",
@@ -21,7 +21,7 @@ const WORLDS := [
 	{
 		"id": "sky_islands", "title": "جزیره‌های ابری", "subtitle": "ترکیب مکانیک‌ها",
 		"first": 11, "last": 20, "free": false, "available": false, "sku": "worlds_pack",
-		"background": "res://assets/environments/bg_sky.jpg", "music": "sky",
+		"background": "res://assets/environments/bg_sky.jpg", "music": "sky", "ambient": "sky",
 		"palette": {
 			"dirt": "a0704a", "dirt_dark": "7d5434", "grass": "7fd65a", "grass_light": "c2f08a",
 			"rock": "c9ced8", "rock_dark": "9097a6", "wood": "d09a5c", "wood_dark": "8a5a2c",
@@ -32,7 +32,7 @@ const WORLDS := [
 	{
 		"id": "crystal_caves", "title": "غارهای بلورین", "subtitle": "چالش و جمع‌بندی",
 		"first": 21, "last": 30, "free": false, "available": false, "sku": "worlds_pack",
-		"background": "res://assets/environments/bg_cave.jpg", "music": "cave",
+		"background": "res://assets/environments/bg_cave.jpg", "music": "cave", "ambient": "cave",
 		"palette": {
 			"dirt": "5a4a7a", "dirt_dark": "40345c", "grass": "8f7fd6", "grass_light": "c7b8ff",
 			"rock": "a59ccc", "rock_dark": "6f6699", "wood": "a87850", "wood_dark": "6e4a2c",

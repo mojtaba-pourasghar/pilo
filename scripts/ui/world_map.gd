@@ -19,6 +19,8 @@ func _ready() -> void:
 	layout_direction = Control.LAYOUT_DIRECTION_LTR
 	add_child(UIKit.make_cover("res://assets/environments/key_art.webp", 0.15))
 	AudioManager.play_music("forest")
+	AudioManager.play_ambient("forest")
+	AudioManager.set_past_filter(false)
 
 	var ribbon := PanelContainer.new()
 	ribbon.add_theme_stylebox_override("panel", UIKit.glass("ribbon_blue", "ribbon", Vector4(70, 10, 70, 22)))
