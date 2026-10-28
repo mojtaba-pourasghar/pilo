@@ -1,18 +1,10 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/pilo_companion.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/characters/pilo.png" id="2_pilo"]
-[ext_resource type="Shader" path="res://assets/vfx/hue_shift.gdshader" id="3_hue"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hue"]
-resource_local_to_scene = true
-shader = ExtResource("3_hue")
-shader_parameter/hue_shift = 0.0
+[ext_resource type="Script" path="res://scripts/characters/pilo_rig.gd" id="2_rig"]
 
 [node name="Pilo" type="Node2D"]
 script = ExtResource("1_script")
 
-[node name="Sprite" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_hue")
-scale = Vector2(0.3, 0.3)
-texture = ExtResource("2_pilo")
+[node name="Rig" type="Node2D" parent="."]
+script = ExtResource("2_rig")

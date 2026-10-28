@@ -1,7 +1,12 @@
 class_name LevelBuilder
 extends RefCounted
-## Builds a level from its ASCII map (data/levels/<world>/level_XX.json). Every puzzle
-## piece is a reusable node, so levels differ only by data. Legend: see README.md.
+## Builds a level from its ASCII map (data/levels/<world>/level_XX.json). Every piece is a
+## reusable node, so levels differ only by data. Legend: see README.md.
+## Platformer pieces: Q ?-block (coin)  U ?-block (several coins)  J ?-block (diamond)
+## H ?-block (heart)  b brick  $ brick with coins  n hidden block (diamond)  c coin
+## d diamond  + heart  k time key (opens the exit gate)  e shadow mushroom  y shadow bee
+## h shadow hedgehog  F thorn wheel  T stone crusher  t falling raft  A thorns
+## N shadow cannon  p pipe (top-left; warps in data "warps")  W cracked wall
 
 const TILE := 64
 const PAST := 1
@@ -18,6 +23,13 @@ const RUNS := {
 }
 ## Water: character -> times it flows in
 const WATERS := {"~": PRESENT, "w": PAST, "a": BOTH}
+## Blocks: character -> [kind, content]
+const BLOCKS := {
+	"Q": [Block.Kind.QUESTION, "coin"], "U": [Block.Kind.QUESTION, "coins"],
+	"J": [Block.Kind.QUESTION, "diamond"], "H": [Block.Kind.QUESTION, "heart"],
+	"b": [Block.Kind.BRICK, ""], "$": [Block.Kind.BRICK, "coins"], "n": [Block.Kind.HIDDEN, "diamond"],
+}
+const ENEMIES := {"e": "shroom", "y": "bee", "h": "hog"}
 ## Wind: character -> direction. Rows of ">"/"<" and columns of "^" become one zone each.
 const WINDS := {">": Vector2.RIGHT, "<": Vector2.LEFT, "^": Vector2.UP}
 const TIME_MASKS := {"past": PAST, "present": PRESENT, "both": BOTH}
@@ -47,11 +59,13 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 	var info := {
 		"size": Vector2(w * TILE, h * TILE), "start": Vector2(TILE * 2, TILE * 2), "exit": null,
 		"hints": [], "stars": 0, "keys": 0, "needs_rescue": false, "chaser": null, "mechanisms": null,
+		"diamonds": 0, "time_key": false, "enemies": 0, "pipes": {},
 	}
 	_build_runs(grid, w, h, root, palette)
 	_build_water(grid, w, h, root, game, palette)
 	_build_wind(grid, w, h, root, int(TIME_MASKS.get(String(data.get("wind_time", "both")), BOTH)))
 	_build_crumble(grid, w, h, root, palette)
+	_build_thorns(grid, w, h, root)
 	var mechanisms := Mechanisms.new()
 	mechanisms.grid = grid
 	mechanisms.game = game
@@ -181,6 +195,79 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 						info.needs_rescue = true
 						info.chaser = dust
 					root.add_child(dust)
+				"Q", "U", "J", "H", "b", "$", "n":
+					var block := Block.new()
+					block.kind = BLOCKS[c][0]
+					block.content = BLOCKS[c][1]
+					block.game = game
+					if block.content == "diamond":
+						block.diamond_index = info.diamonds
+						info.diamonds += 1
+					block.position = pos
+					root.add_child(block)
+				"c", "d", "+", "k":
+					var item := Collectible.new()
+					item.kind = {"c": Collectible.Kind.COIN, "d": Collectible.Kind.DIAMOND, "+": Collectible.Kind.HEART, "k": Collectible.Kind.TIME_KEY}[c]
+					item.game = game
+					item.position = pos + Vector2(32, 32)
+					if c == "d":
+						item.index = info.diamonds
+						info.diamonds += 1
+					elif c == "k":
+						info.time_key = true
+					root.add_child(item)
+				"e", "y", "h":
+					var enemy: Enemy
+					match ENEMIES[c]:
+						"shroom":
+							enemy = Shroom.new()
+						"bee":
+							enemy = ShadowBee.new()
+							enemy.span = float(data.get("bee_span", 150))
+						_:
+							enemy = SpikyHog.new()
+					enemy.game = game
+					enemy.position = pos + Vector2(32, TILE if c != "y" else 40.0)
+					root.add_child(enemy)
+					info.enemies += 1
+				"F":
+					var wheel := ThornWheel.new()
+					wheel.length = int(data.get("wheel_length", 4))
+					wheel.position = pos + Vector2(32, 32)
+					root.add_child(wheel)
+				"T":
+					var crusher := Crusher.new()
+					crusher.position = pos + Vector2(-16, 0)
+					root.add_child(crusher)
+				"t":
+					var raft := FallingPlatform.new()
+					raft.palette = palette
+					raft.position = pos
+					root.add_child(raft)
+				"N":
+					var cannon := ShadowCannon.new()
+					cannon.game = game
+					cannon.position = pos
+					root.add_child(cannon)
+				"W":
+					if y == 0 or String(grid[y - 1])[x] != "W":
+						var wall := CrackedWall.new()
+						var n := 0
+						while y + n < h and String(grid[y + n])[x] == "W":
+							n += 1
+						wall.cells = n
+						wall.palette = palette
+						wall.position = pos
+						root.add_child(wall)
+				"p":
+					var pipe := Pipe.new()
+					var n := 1
+					while y + n < h and not RUNS.has(String(grid[y + n])[x]):
+						n += 1
+					pipe.cells = n
+					pipe.position = pos
+					root.add_child(pipe)
+					info.pipes[Vector2i(x, y)] = pipe
 				"f":
 					_add_flower(root, pos, palette)
 				"?":
@@ -190,6 +277,12 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 					if y + 1 < h and String(grid[y + 1])[x] == "#" and rng.randf() < 0.12:
 						_add_flower(root, pos, palette)
 	info.hints.sort_custom(func(a: Vector2, b: Vector2): return a.x < b.x)
+	for warp in data.get("warps", []):
+		var from := Vector2i(int(warp.from[0]), int(warp.from[1]))
+		if info.pipes.has(from):
+			var pipe: Pipe = info.pipes[from]
+			pipe.is_warp = true
+			pipe.warp_to = Vector2(int(warp.to[0]) * TILE, int(warp.to[1]) * TILE)
 	if info.chaser and info.exit:
 		info.chaser.stop_x = info.exit.position.x - 96.0
 	root.add_child(mechanisms)
@@ -302,3 +395,20 @@ static func _build_crumble(grid: Array, w: int, h: int, root: Node2D, palette: D
 			shelf.palette = palette
 			shelf.position = Vector2(start * TILE, y * TILE)
 			root.add_child(shelf)
+
+
+static func _build_thorns(grid: Array, w: int, h: int, root: Node2D) -> void:
+	for y in h:
+		var row: String = grid[y]
+		var x := 0
+		while x < w:
+			if row[x] != "A":
+				x += 1
+				continue
+			var start := x
+			while x < w and row[x] == "A":
+				x += 1
+			var thorns := Thorns.new()
+			thorns.cells = x - start
+			thorns.position = Vector2(start * TILE, y * TILE)
+			root.add_child(thorns)

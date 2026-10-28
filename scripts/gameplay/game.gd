@@ -1,6 +1,9 @@
 extends Node2D
-## One playable level: builds the map, wires puzzle events and applies the rules of the
-## time lens, hints and gentle respawns (no lives, no timers, no punishment).
+## One playable level: builds the map, wires the events of every piece (blocks, coins,
+## diamonds, shadow creatures, hazards, pipes, the time lens) and keeps the level's score.
+## Hearts: a hit costs one and spills a few coins; a fall costs one and returns Nima to the
+## last flag. With no hearts left Nima simply starts again from the flag with full hearts —
+## there is no game over.
 
 const PLAYER_SCENE := preload("res://scenes/characters/player.tscn")
 const PILO_SCENE := preload("res://scenes/characters/pilo.tscn")
@@ -31,6 +34,10 @@ var friend_rescued := true
 var fails := 0
 var lens_enabled := true
 var finished := false
+var coins := 0
+var diamonds_found: Array = []
+var has_time_key := false
+var enemies_freed := 0
 
 var _busy := false
 var _respawning := false
@@ -38,12 +45,14 @@ var _shift_cooldown := 0.0
 var _notice_cooldown := 0.0
 var _world_root: Node2D
 var _modulate: CanvasModulate
-var _background: Background
+var _background: CanvasLayer
+var _camera: GameCamera
 var _tint_tween: Tween
 
 
 func _ready() -> void:
 	UIKit.ensure_theme(get_tree())
+	add_to_group("game")
 	level_id = LevelManager.current_level
 	world = LevelManager.world_of(level_id)
 	data = LevelManager.load_level(level_id)
@@ -57,17 +66,24 @@ func _ready() -> void:
 
 	_modulate = CanvasModulate.new()
 	add_child(_modulate)
-	_background = Background.new()
-	_background.texture_path = world.background
-	_background.hills_color = palette.hills
-	add_child(_background)
 	_world_root = Node2D.new()
 	add_child(_world_root)
 
 	info = LevelBuilder.build(data, _world_root, self, palette)
+	if String(world.id) == "forest":
+		var layered := LayeredBackground.new()
+		layered.level_size = info.size
+		_background = layered
+	else:
+		var painted := Background.new()
+		painted.texture_path = world.background
+		painted.hills_color = palette.hills
+		_background = painted
+	add_child(_background)
+	move_child(_background, 0)
 	friend_rescued = not info.needs_rescue
 	if info.exit:
-		info.exit.set_locked(not friend_rescued)
+		info.exit.set_locked(not friend_rescued or info.time_key)
 
 	player = PLAYER_SCENE.instantiate()
 	player.position = info.start
@@ -75,17 +91,15 @@ func _ready() -> void:
 	respawn_point = info.start
 	player.jumped.connect(func(): AudioManager.play_sfx("jump"))
 	player.landed.connect(func(): AudioManager.play_sfx("land"))
-	var camera := Camera2D.new()
-	camera.name = "Camera2D"
-	camera.limit_left = 0
-	camera.limit_top = 0
-	camera.limit_right = int(info.size.x)
-	camera.limit_bottom = int(info.size.y)
-	camera.position_smoothing_enabled = true
-	camera.position_smoothing_speed = 6.0
-	camera.offset = Vector2(0, -40)
-	player.add_child(camera)
-	camera.make_current()
+	_camera = GameCamera.new()
+	_camera.name = "Camera2D"
+	_camera.target = player
+	_camera.limit_left = 0
+	_camera.limit_top = 0
+	_camera.limit_right = int(info.size.x)
+	_camera.limit_bottom = int(info.size.y)
+	player.add_child(_camera)
+	_camera.make_current()
 
 	pilo = PILO_SCENE.instantiate()
 	pilo.target = player
@@ -95,7 +109,10 @@ func _ready() -> void:
 
 	hud = HUD.new()
 	add_child(hud)
-	hud.setup(LevelManager.level_title(level_id), info.stars, info.keys > 0, lens_enabled)
+	hud.setup(LevelManager.level_title(level_id), info.stars, info.keys > 0 or info.time_key, lens_enabled)
+	hud.set_hearts(player.hearts, player.max_hearts)
+	hud.set_coins(0)
+	hud.set_diamonds(0, info.diamonds)
 	hud.pause_pressed.connect(open_pause)
 	hud.hint_pressed.connect(request_hint)
 	dialogue = DIALOGUE.new()
@@ -117,6 +134,12 @@ func _physics_process(delta: float) -> void:
 	if not _busy:
 		if Input.is_action_just_pressed("time_shift"):
 			try_shift()
+		if Input.is_action_just_pressed("pilo"):
+			pilo.act(self)
+		var pipe := _warp_pipe_under_player()
+		hud.show_down(pipe != null)
+		if pipe and Input.is_action_pressed("down"):
+			enter_pipe(pipe)
 		if Input.is_action_just_pressed("hint"):
 			request_hint()
 		if Input.is_action_just_pressed("pause"):
@@ -128,6 +151,132 @@ func _physics_process(delta: float) -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_GO_BACK_REQUEST or what == NOTIFICATION_APPLICATION_PAUSED:
 		open_pause()
+
+
+# --- Score: coins, diamonds, hearts, creatures --------------------------------
+
+func on_collect(item: Collectible) -> void:
+	match item.kind:
+		Collectible.Kind.COIN:
+			add_coins(1, item.global_position, false)
+		Collectible.Kind.DIAMOND:
+			if item.index >= 0 and not diamonds_found.has(item.index):
+				diamonds_found.append(item.index)
+			AudioManager.play_sfx("diamond")
+			FX.burst(_world_root, item.global_position, Color("62ccff"), 18)
+			hud.set_diamonds(diamonds_found.size(), info.diamonds)
+		Collectible.Kind.HEART:
+			player.heal(1)
+			AudioManager.play_sfx("heart")
+			hud.set_hearts(player.hearts, player.max_hearts)
+		Collectible.Kind.TIME_KEY:
+			has_time_key = true
+			AudioManager.play_sfx("key")
+			FX.burst(_world_root, item.global_position, UIKit.GOLD, 20)
+			hud.set_keys(1)
+			if info.exit and friend_rescued:
+				info.exit.set_locked(false)
+			_notice("کلید زمان! حالا دروازه باز می‌شود.", UIKit.GREEN, true)
+
+
+func add_coins(amount: int, pos: Vector2, from_block := true) -> void:
+	coins += amount
+	hud.set_coins(coins)
+	if not from_block:
+		AudioManager.play_sfx("coin")
+		FX.burst(_world_root, pos, UIKit.GOLD, 6)
+
+
+func on_enemy_freed(enemy: Enemy) -> void:
+	enemies_freed += 1
+	SaveManager.data.pilo_xp = int(SaveManager.data.get("pilo_xp", 0)) + 1
+	FX.burst(_world_root, enemy.global_position + Vector2(0, -30), Color(1, 0.9, 0.5), 14)
+	for i in enemy.coins:
+		var coin := Block.CoinPop.new()
+		coin.position = enemy.global_position + Vector2(i * 20.0 - 10.0, -40)
+		_world_root.add_child(coin)
+	if enemy.coins > 0:
+		add_coins(enemy.coins, enemy.global_position)
+
+
+## Nima was hit: update the hearts and spill a few coins that can be caught again.
+func on_player_hurt(away: float) -> void:
+	hud.set_hearts(player.hearts, player.max_hearts)
+	_camera.shake(5.0)
+	var spill := mini(coins, 4)
+	coins -= spill
+	hud.set_coins(coins)
+	for i in spill:
+		var coin := Collectible.new()
+		coin.kind = Collectible.Kind.COIN
+		coin.spill = true
+		coin.game = self
+		coin.position = player.global_position + Vector2(0, -30)
+		coin.velocity = Vector2(away * randf_range(80, 320) * (1 if i % 2 == 0 else -1), randf_range(-700, -450))
+		_world_root.add_child(coin)
+	if player.hearts <= 0:
+		_player_down()
+
+
+## No hearts left: a short "oh!" and back to the flag with full hearts (no game over).
+func _player_down() -> void:
+	if _respawning:
+		return
+	_respawning = true
+	fails += 1
+	player.controls_enabled = false
+	_notice("اوه! دوباره امتحان کنیم.", UIKit.ORANGE, true)
+	pilo.shake()
+	await get_tree().create_timer(0.7).timeout
+	AudioManager.play_sfx("respawn")
+	await player.respawn(respawn_point)
+	player.hearts = player.max_hearts
+	player.invulnerable = 1.0
+	hud.set_hearts(player.hearts, player.max_hearts)
+	player.controls_enabled = not _busy
+	_respawning = false
+
+
+# --- Pipes -----------------------------------------------------------------------
+
+func _warp_pipe_under_player() -> Pipe:
+	if _respawning:
+		return null
+	for pipe in info.pipes.values():
+		if pipe.is_warp and pipe.player_on_top(player):
+			return pipe
+	return null
+
+
+## Down the pipe and out at its destination (often a secret room), Mario style.
+func enter_pipe(pipe: Pipe) -> void:
+	if _busy:
+		return
+	_set_busy(true)
+	hud.show_down(false)
+	player.velocity = Vector2.ZERO
+	player.z_index = 4
+	AudioManager.play_sfx("pipe")
+	var down := create_tween()
+	down.tween_property(player, "global_position", Vector2(pipe.global_position.x + 64.0, player.global_position.y + 90.0), 0.5)
+	await down.finished
+	var target_pipe: Pipe = null
+	for other in info.pipes.values():
+		if other != pipe and other.global_position.distance_to(pipe.warp_to) < 2.0:
+			target_pipe = other
+	if target_pipe:
+		player.global_position = target_pipe.global_position + Vector2(64, 90)
+		_camera.reset_smoothing()
+		AudioManager.play_sfx("pipe", 1.2)
+		var up := create_tween()
+		up.tween_property(player, "global_position:y", target_pipe.global_position.y - player.FEET - 1.0, 0.5)
+		await up.finished
+	else:
+		player.global_position = pipe.warp_to + Vector2(32, 64 - player.FEET - 1.0)
+		_camera.reset_smoothing()
+		FX.burst(_world_root, player.global_position, UIKit.GOLD, 14)
+	player.velocity = Vector2.ZERO
+	_set_busy(false)
 
 
 # --- Time lens -------------------------------------------------------------
@@ -241,6 +390,9 @@ func on_friend_rescued(_friend: Node) -> void:
 func on_exit_reached() -> void:
 	if finished:
 		return
+	if info.time_key and not has_time_key:
+		_notice("دروازه قفل است؛ کلید زمان را پیدا کن!", UIKit.ORANGE, false)
+		return
 	if not friend_rescued:
 		if info.chaser:
 			_notice("اول غبارک را بگیر!", UIKit.ORANGE, false, "app_catch_first")
@@ -252,7 +404,7 @@ func on_exit_reached() -> void:
 	player.velocity.x = 0.0
 	player.celebrate()
 	AudioManager.play_sfx("win")
-	var result := ProgressManager.complete_level(level_id, stars_collected)
+	var result := ProgressManager.complete_level(level_id, stars_collected, coins, diamonds_found)
 	Analytics.log_event("level_complete", level_id)
 	await get_tree().create_timer(1.1).timeout
 	var outro: Array = data.get("outro", [])
@@ -278,12 +430,17 @@ func _on_complete_action(id: String) -> void:
 			LevelManager.goto_map()
 
 
-## Water or a fall: fade out, come back at the last checkpoint. No lives are lost.
+## Water or a fall: costs a heart and Nima comes back at the last flag (with full hearts
+## when that was the last one).
 func on_hazard(kind: String) -> void:
 	if _respawning or finished:
 		return
 	_respawning = true
 	fails += 1
+	player.hearts -= 1
+	if player.hearts <= 0:
+		player.hearts = player.max_hearts
+	hud.set_hearts(player.hearts, player.max_hearts)
 	Analytics.log_event("respawn", level_id)
 	AudioManager.play_sfx("splash" if kind == "water" else "respawn")
 	player.controls_enabled = false
@@ -334,7 +491,7 @@ func _set_busy(value: bool) -> void:
 
 
 ## Floating message over the hero; Pilo also says it when a recording exists (voice_id).
-func _notice(text: String, color: Color, force := false, voice_id := "") -> void:
+func _notice(text: String, color: Color = UIKit.ORANGE, force := false, voice_id := "") -> void:
 	if _notice_cooldown > 0.0 and not force:
 		return
 	_notice_cooldown = 1.5

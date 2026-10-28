@@ -97,6 +97,29 @@ sfx['pop'] = mix(tone(np.linspace(500, 1400, n), 0.18, 'sine', a=0.002, r=0.12, 
 # checkpoint flag: two cloth flaps
 flap = lambda: bp(noise2(0.12), 2, 10)*env(int(SR*0.12), 0.01, 0.08)*1.2
 sfx['flag'] = mix(at(flap(), 0), at(flap(), 0.16))
+# --- platformer effects (own RNG so the sounds above stay identical) ---
+rng3 = np.random.default_rng(33)
+def noise3(d): return rng3.uniform(-1, 1, int(SR*d))
+sfx['coin'] = cat(tone(988, 0.06, 'sq', a=0.002, r=0.01, vol=0.3), tone(1319, 0.28, 'sq', a=0.002, r=0.25, vol=0.3)*decay(int(SR*0.28), 9))
+sfx['diamond'] = mix(*[at(tone(f, 0.35, 'bell', vol=0.35), i*0.05) for i, f in enumerate((1568, 2093, 2637, 3136, 2637))])
+n = int(SR*0.22)
+sfx['stomp'] = mix(tone(np.linspace(520, 180, n), 0.22, 'tri', a=0.002, r=0.1, vol=0.55), lowpass(noise3(0.22), 8)*decay(n, 30)*0.8)
+n = int(SR*0.45)
+sfx['hurt'] = tone(np.linspace(620, 260, n)*(1 + 0.05*np.sin(np.linspace(0, 60, n))), 0.45, 'tri', a=0.005, r=0.2, vol=0.5)
+n = int(SR*0.35)
+sfx['brick'] = mix(*[at(bp(noise3(0.12), 2, 9)*decay(int(SR*0.12), 25)*1.4, t0) for t0 in (0.0, 0.05, 0.11, 0.2)], tone(np.linspace(220, 120, n), 0.35, 'sine', vol=0.3)*decay(n, 8))
+n = int(SR*0.12)
+sfx['bump'] = mix(tone(np.linspace(240, 140, n), 0.12, 'sine', a=0.002, r=0.08, vol=0.7), lowpass(noise3(0.12), 14)*decay(n, 40))
+n = int(SR*0.3)
+sfx['dash'] = bp(noise3(0.3), 2, 12)*np.sin(np.linspace(0, np.pi, n))**2*1.6
+n = int(SR*0.55)
+sfx['pipe'] = tone(np.linspace(700, 180, n)*(1 + 0.12*np.sign(np.sin(np.linspace(0, 70, n)))), 0.55, 'sq', a=0.005, r=0.1, vol=0.25)
+sfx['heart'] = mix(*[at(tone(f, 0.3, 'marimba', vol=0.5), i*0.08) for i, f in enumerate((659, 880, 1047, 1319))])
+n = int(SR*0.5)
+sfx['cannon'] = mix(lowpass(noise3(0.5), 40)*decay(n, 9)*5, tone(np.linspace(110, 50, n), 0.5, 'sine', vol=0.6)*decay(n, 7))
+n = int(SR*0.4)
+sfx['thud'] = mix(lowpass(noise3(0.4), 90)*decay(n, 12)*6, tone(np.linspace(80, 40, n), 0.4, 'sine', vol=0.7)*decay(n, 10))
+sfx['free'] = mix(*[at(tone(f, 0.4, 'bell', vol=0.3), i*0.06) for i, f in enumerate((1047, 1319, 1568, 2093))], at(bp(noise3(0.3), 1, 3)*decay(int(SR*0.3), 12)*0.3, 0.0))
 for k,v in sfx.items(): write(k,v,'sfx')
 def song(scale, prog, kind, bpm, bars, seed, bass_kind='sine'):
     r = np.random.default_rng(seed); beat = 60/bpm; L = bars*4*beat

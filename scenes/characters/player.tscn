@@ -1,24 +1,23 @@
 [gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="1_script"]
-[ext_resource type="Texture2D" path="res://assets/characters/hero.png" id="2_hero"]
+[ext_resource type="Script" path="res://scripts/characters/nima_rig.gd" id="2_rig"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(40, 84)
+size = Vector2(36, 80)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 collision_mask = 1
-floor_snap_length = 10.0
+floor_snap_length = 12.0
+floor_max_angle = 0.9
 script = ExtResource("1_script")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_body")
 
 [node name="Visual" type="Node2D" parent="."]
-position = Vector2(0, 42)
+position = Vector2(0, 40)
 
-[node name="Sprite" type="Sprite2D" parent="Visual"]
-position = Vector2(0, -55)
-scale = Vector2(0.23, 0.23)
-texture = ExtResource("2_hero")
+[node name="Rig" type="Node2D" parent="Visual"]
+script = ExtResource("2_rig")

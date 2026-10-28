@@ -65,15 +65,34 @@ func continue_level() -> int:
 	return last_done
 
 
-## Records a finished run. Returns {"first_time": bool, "reward": String ("" when none)}.
-func complete_level(level_id: int, collected: Array) -> Dictionary:
+## Diamonds already found in a level (each diamond counts once, however often it is replayed).
+func diamonds_of(level_id: int) -> Array:
+	var entry: Dictionary = _levels().get(str(level_id), {})
+	var found: Array = []
+	for value in entry.get("diamonds", []):
+		found.append(int(value))
+	return found
+
+
+## Records a finished run: stars and diamonds merge with earlier runs, coins go to the
+## wallet (spent in the village shop), new diamonds go to the diamond wallet.
+## Returns {"first_time": bool, "reward": String ("" when none), "new_diamonds": int}.
+func complete_level(level_id: int, collected: Array, coins := 0, diamonds: Array = []) -> Dictionary:
 	var key := str(level_id)
 	var first_time := not is_done(level_id)
 	var stars := stars_of(level_id)
 	for index in collected:
 		if not stars.has(int(index)):
 			stars.append(int(index))
-	_levels()[key] = {"done": true, "stars": stars}
+	var found := diamonds_of(level_id)
+	var new_diamonds := 0
+	for index in diamonds:
+		if not found.has(int(index)):
+			found.append(int(index))
+			new_diamonds += 1
+	_levels()[key] = {"done": true, "stars": stars, "diamonds": found}
+	SaveManager.data.coins = int(SaveManager.data.get("coins", 0)) + coins
+	SaveManager.data.diamonds = int(SaveManager.data.get("diamonds", 0)) + new_diamonds
 	var reward := ""
 	if first_time:
 		SaveManager.data.shards = int(SaveManager.data.shards) + 1
@@ -82,4 +101,4 @@ func complete_level(level_id: int, collected: Array) -> Dictionary:
 			reward = REWARDS[level_id]
 	SaveManager.save_game()
 	progress_changed.emit()
-	return {"first_time": first_time, "reward": reward}
+	return {"first_time": first_time, "reward": reward, "new_diamonds": new_diamonds}

@@ -6,16 +6,22 @@ const KEYS := {
 	"move_left": [KEY_LEFT, KEY_A],
 	"move_right": [KEY_RIGHT, KEY_D],
 	"jump": [KEY_SPACE, KEY_UP, KEY_W],
-	"time_shift": [KEY_E, KEY_SHIFT, KEY_X],
+	"down": [KEY_DOWN, KEY_S],
+	"dash": [KEY_C, KEY_K, KEY_SHIFT],
+	"pilo": [KEY_F, KEY_J],
+	"time_shift": [KEY_E, KEY_X],
 	"hint": [KEY_H],
 	"pause": [KEY_ESCAPE, KEY_P],
 }
 const PAD_BUTTONS := {
 	"move_left": [JOY_BUTTON_DPAD_LEFT],
 	"move_right": [JOY_BUTTON_DPAD_RIGHT],
+	"down": [JOY_BUTTON_DPAD_DOWN],
 	"jump": [JOY_BUTTON_A],
+	"dash": [JOY_BUTTON_B, JOY_BUTTON_RIGHT_SHOULDER],
+	"pilo": [JOY_BUTTON_Y],
 	"time_shift": [JOY_BUTTON_X],
-	"hint": [JOY_BUTTON_Y],
+	"hint": [JOY_BUTTON_BACK],
 	"pause": [JOY_BUTTON_START],
 }
 

@@ -1,5 +1,6 @@
 extends CanvasLayer
-## In-level overlay: stars, keys, the time indicator and large touch buttons.
+## In-level overlay: hearts, coins, diamonds, stars, the time key, the time indicator and
+## large touch buttons (move, jump, dash, Pilo, time lens; ↓ appears on a warp pipe).
 
 signal pause_pressed
 signal hint_pressed
@@ -8,7 +9,10 @@ const TOUCH := {
 	"left": "move_left",
 	"right": "move_right",
 	"jump": "jump",
+	"dash": "dash",
+	"pilo": "pilo",
 	"time": "time_shift",
+	"down": "down",
 }
 const PAST_COLOR := Color("e39a2f")
 const PRESENT_COLOR := Color("2fa6d9")
@@ -18,6 +22,10 @@ var _star_counter: PanelContainer
 var _star_total := 3
 var _key_box: PanelContainer
 var _key_label: Label
+var _hearts: Array = []
+var _coin_label: Label
+var _diamond_label: Label
+var _coin_box: PanelContainer
 var _time_panel: PanelContainer
 var _time_label: Label
 var _hint_button: TextureButton
@@ -60,6 +68,26 @@ func _ready() -> void:
 	_key_box.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	top.add_child(_key_box)
 	_key_label = _key_box.find_child("Value", true, false)
+	var hearts := PanelContainer.new()
+	hearts.add_theme_stylebox_override("panel", UIKit.glass("pill_dark", "pill_s", Vector4(16, 4, 16, 12)))
+	hearts.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hearts.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var heart_row := HBoxContainer.new()
+	heart_row.add_theme_constant_override("separation", 4)
+	heart_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hearts.add_child(heart_row)
+	for i in 3:
+		var icon := HudIcon.new()
+		icon.kind = "heart"
+		heart_row.add_child(icon)
+		_hearts.append(icon)
+	top.add_child(hearts)
+	_coin_box = _counter("coin")
+	_coin_label = _coin_box.find_child("Value", true, false)
+	top.add_child(_coin_box)
+	var diamonds := _counter("diamond")
+	_diamond_label = diamonds.find_child("Value", true, false)
+	top.add_child(diamonds)
 
 	top.add_child(UIKit.spacer())
 	_time_panel = PanelContainer.new()
@@ -95,6 +123,47 @@ func _ready() -> void:
 
 	get_viewport().size_changed.connect(_layout)
 	_layout()
+	_touch.down.visible = false
+
+
+func _counter(kind: String) -> PanelContainer:
+	var pill := PanelContainer.new()
+	pill.add_theme_stylebox_override("panel", UIKit.glass("pill_dark", "pill_s", Vector4(16, 4, 24, 12)))
+	pill.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pill.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pill.add_child(row)
+	var icon := HudIcon.new()
+	icon.kind = kind
+	row.add_child(icon)
+	var label := UIKit.make_label("0", 30, Color.WHITE)
+	label.add_theme_font_override("font", UIKit.FONT_BLACK)
+	label.name = "Value"
+	row.add_child(label)
+	return pill
+
+
+func set_hearts(count: int, total: int) -> void:
+	for i in _hearts.size():
+		_hearts[i].visible = i < total
+		_hearts[i].empty = i >= count
+		_hearts[i].queue_redraw()
+
+
+func set_coins(count: int) -> void:
+	_coin_label.text = str(count)
+	_coin_box.pivot_offset = _coin_box.size * 0.5
+	create_tween().tween_property(_coin_box, "scale", Vector2.ONE, 0.15).from(Vector2(1.12, 1.12))
+
+
+func set_diamonds(count: int, total: int) -> void:
+	_diamond_label.text = "%d/%d" % [count, total]
+
+
+func show_down(value: bool) -> void:
+	_touch.down.visible = value and _touch_root.visible
 
 
 func setup(title: String, star_total: int, has_keys: bool, lens_enabled: bool) -> void:
@@ -136,13 +205,18 @@ func _layout() -> void:
 	_title.position = Vector2(view.x * 0.5 - _title.size.x * 0.5, 130)
 	var y: float = view.y - bottom - 160.0
 	_touch.left.position = Vector2(left, y)
-	_touch.right.position = Vector2(left + 175.0, y)
 	_touch.left.scale = Vector2(0.9, 0.9)
 	_touch.right.scale = Vector2(0.9, 0.9)
 	_touch.right.position = Vector2(left + 160.0, y)
-	_touch.time.scale = Vector2(0.9, 0.9)
+	_touch.down.scale = Vector2(0.7, 0.7)
+	_touch.down.position = Vector2(left + 100.0, y - 130.0)
+	# right hand: big jump in the corner, dash beside it, Pilo and the lens above
 	_touch.jump.position = Vector2(view.x - right - 160.0, y - 10.0)
-	_touch.time.position = Vector2(view.x - right - 160.0 - 165.0, y + 6.0)
+	for key in ["dash", "pilo", "time"]:
+		_touch[key].scale = Vector2(0.75, 0.75)
+	_touch.dash.position = Vector2(view.x - right - 160.0 - 140.0, y + 22.0)
+	_touch.pilo.position = Vector2(view.x - right - 140.0, y - 140.0)
+	_touch.time.position = Vector2(view.x - right - 160.0 - 140.0, y - 108.0)
 
 
 func set_stars(collected: Array) -> void:
@@ -184,3 +258,33 @@ func stop_hint_pulse() -> void:
 	if _hint_tween:
 		_hint_tween.kill()
 	_hint_button.scale = Vector2.ONE
+
+
+## Small icons drawn in code for the top bar (same drawings as in the level).
+class HudIcon extends Control:
+	var kind := "coin"
+	var empty := false
+	var _t := 0.0
+
+	func _init() -> void:
+		custom_minimum_size = Vector2(40, 44)
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	func _process(delta: float) -> void:
+		_t += delta
+		if kind != "heart":
+			queue_redraw()
+
+	func _draw() -> void:
+		var c := size * 0.5
+		match kind:
+			"heart":
+				if empty:
+					modulate = Color(0.3, 0.3, 0.35, 0.8)
+				else:
+					modulate = Color.WHITE
+				Collectible.draw_heart(self, c + Vector2(0, 2), 0.95)
+			"coin":
+				Collectible.draw_coin(self, c, 1.1, _t * 0.6)
+			"diamond":
+				Collectible.draw_diamond(self, c, 0.95, _t)

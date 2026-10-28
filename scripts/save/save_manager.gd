@@ -6,7 +6,7 @@ signal saved
 const SAVE_PATH := "user://save.json"
 const TMP_PATH := "user://save.tmp"
 const CORRUPT_PATH := "user://save_corrupt.json"
-const VERSION := 1
+const VERSION := 2
 
 var data: Dictionary = {}
 
@@ -24,6 +24,11 @@ func default_data() -> Dictionary:
 		"purchases": [],
 		"rewards": [],
 		"pilo_color": "classic",
+		"coins": 0,
+		"diamonds": 0,
+		"pilo_xp": 0,
+		"companions": ["pilo"],
+		"tools": [],
 		"analytics": {},
 	}
 
@@ -74,6 +79,10 @@ func _migrate(old: Dictionary) -> Dictionary:
 	var version := int(old.get("version", 0))
 	if version < 1:
 		old["version"] = 1
+	if version < 2:
+		# v2 (platformer): wallet of coins and diamonds, Pilo's experience, companions, tools.
+		# Missing keys are filled by _merge; nothing old needs converting.
+		old["version"] = 2
 	return old
 
 

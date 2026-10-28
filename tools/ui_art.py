@@ -344,6 +344,12 @@ TOUCH = {
     "jump": lambda d, s: (d.polygon([(s * .5, s * .26), (s * .71, s * .5), (s * .29, s * .5)], fill=W), d.rounded_rectangle((s * .42, s * .46, s * .58, s * .73), s * .03, fill=W)),
     "time": lambda d, s: (d.polygon([(s * .34, s * .28), (s * .66, s * .28), (s * .5, s * .5)], fill=W), d.polygon([(s * .5, s * .5), (s * .66, s * .72), (s * .34, s * .72)], fill=W),
                           d.rounded_rectangle((s * .3, s * .24, s * .7, s * .29), s * .02, fill=W), d.rounded_rectangle((s * .3, s * .71, s * .7, s * .76), s * .02, fill=W)),
+    "dash": lambda d, s: (d.polygon([(s * .26, s * .3), (s * .48, s * .5), (s * .26, s * .7), (s * .36, s * .5)], fill=W),
+                          d.polygon([(s * .5, s * .3), (s * .74, s * .5), (s * .5, s * .7), (s * .6, s * .5)], fill=W)),
+    "pilo": lambda d, s: (d.ellipse((s * .33, s * .48, s * .67, s * .74), fill=W), d.ellipse((s * .24, s * .36, s * .36, s * .5), fill=W),
+                          d.ellipse((s * .36, s * .25, s * .48, s * .41), fill=W), d.ellipse((s * .52, s * .25, s * .64, s * .41), fill=W),
+                          d.ellipse((s * .64, s * .36, s * .76, s * .5), fill=W)),
+    "down": lambda d, s: (d.polygon([(s * .5, s * .74), (s * .71, s * .5), (s * .29, s * .5)], fill=W), d.rounded_rectangle((s * .42, s * .27, s * .58, s * .54), s * .03, fill=W)),
 }
 
 if __name__ == "__main__":
