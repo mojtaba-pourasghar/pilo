@@ -2,7 +2,8 @@ extends CharacterBody2D
 ## Nima's movement, in the spirit of Mario and Sonic but tuned for small hands:
 ## - momentum: walking speed at first, holding a direction opens up running speed;
 ##   faster runs jump higher; turning at speed skids;
-## - dash (its own button): a short burst that also smashes cracked walls;
+## - dash (its own button): a short burst that also smashes cracked walls; once per jump
+##   in the air;
 ## - stomp: landing on a stompable enemy frees it and bounces Nima up (higher if jump is held);
 ## - hitting a block from below bumps it (coins, diamonds, bricks);
 ## - hearts: a hit costs one heart, knocks Nima back, spills a few coins and gives a short
@@ -48,6 +49,7 @@ var hearts := 3
 var max_hearts := 3
 var invulnerable := 0.0
 var dashing := 0.0
+var _air_dash_used := false
 
 var _coyote := 0.0
 var _buffer := 0.0
@@ -82,7 +84,8 @@ func _physics_process(delta: float) -> void:
 		dir = Input.get_axis("move_left", "move_right")
 		if Input.is_action_just_pressed("jump"):
 			_buffer = JUMP_BUFFER
-		if Input.is_action_just_pressed("dash") and _dash_cooldown <= 0.0:
+		if Input.is_action_just_pressed("dash") and _dash_cooldown <= 0.0 and (is_on_floor() or not _air_dash_used):
+			_air_dash_used = not is_on_floor()
 			_start_dash(dir)
 	_buffer -= delta
 	_dash_cooldown -= delta
@@ -91,6 +94,8 @@ func _physics_process(delta: float) -> void:
 	invulnerable = maxf(0.0, invulnerable - delta)
 	var on_floor := is_on_floor()
 	_coyote = COYOTE_TIME if on_floor else _coyote - delta
+	if on_floor:
+		_air_dash_used = false
 
 	if dashing > 0.0:
 		dashing -= delta

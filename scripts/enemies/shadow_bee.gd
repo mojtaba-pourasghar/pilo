@@ -42,7 +42,7 @@ class Rig extends EnemyRig:
 		var wing := p("wing")
 		# wings behind
 		for w in [-1.0, 1.0]:
-			var a := -0.6 + wing * 0.5 * w
+			var a: float = -0.6 + wing * 0.5 * w
 			ellipse(c + Vector2(-4 + w * 3.0, -14), Vector2(11, 6), Color(0.85, 0.95, 1.0, 0.75), a - PI * 0.5 + 0.9)
 		# stinger
 		shape(PackedVector2Array([c + Vector2(-20, -3), c + Vector2(-31, 1), c + Vector2(-20, 5)]), STRIPE)

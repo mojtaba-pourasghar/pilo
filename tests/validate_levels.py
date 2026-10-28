@@ -19,9 +19,12 @@ import sys
 from collections import deque
 
 PAST, PRESENT = 0, 1
-LEGEND = set(".#roBVMKD*CEPi?GRf~wamu<>^Lg/\\SOxz")
-REACH = {0: 4, 1: 3, 2: 2}        # rise in tiles -> horizontal reach (JUMP_VELOCITY -830, SPEED 330)
+LEGEND = set(".#roBVMKD*CEPi?GRf~wamu<>^Lg/\\SOxz") | set("QUJHb$ncd+keyhFTtANpW")
+REACH = {0: 4, 1: 3, 2: 2}        # rise in tiles -> horizontal reach (puzzle levels: walk 330)
+# Platformer levels ("format": 2): JUMP_VELOCITY -870 plus run bonus, RUN 470, one air dash.
+REACH_V2 = {0: 6, 1: 5, 2: 4, 3: 2}
 SPRING_RISE = 6
+BLOCKS = set("QUJHb$N")           # solid blocks (bricks are kept solid: conservative)
 WIND_BONUS = 2                    # extra reach with the wind behind you
 DIRS = {"right": (1, 0), "left": (-1, 0), "up": (0, -1), "down": (0, 1)}
 TIME_MASKS = {"past": {PAST}, "present": {PRESENT}, "both": {PAST, PRESENT}}
@@ -34,6 +37,22 @@ class Level:
         self.h = len(rows)
         self.g = [r.ljust(self.w, ".") for r in rows]
         self.move_range = int(data.get("move_range", 4))
+        self.v2 = int(data.get("format", 1)) >= 2
+        # pipes: two tiles wide, from the 'p' down to the ground
+        self.pipe_cells = set()
+        self.pipe_tops = {}
+        for (x, y) in [(x, y) for y, r in enumerate(self.g) for x, c in enumerate(r) if c == "p"]:
+            yy = y
+            while yy < self.h and self.g[yy][x] not in "#roBV":
+                self.pipe_cells.update({(x, yy), (x + 1, yy)})
+                yy += 1
+            self.pipe_tops[(x, y)] = True
+        self.warps = {}
+        for warp in data.get("warps", []):
+            self.warps[tuple(warp["from"])] = tuple(warp["to"])
+        self.rafts = set()
+        for (x, y) in [(x, y) for y, r in enumerate(self.g) for x, c in enumerate(r) if c == "t"]:
+            self.rafts.update({(x, y), (x + 1, y)})
         self.start_time = PAST if data.get("start_time", "present") == "past" else PRESENT
         self.wind_times = TIME_MASKS[data.get("wind_time", "both")]
         self.doors_open = False
@@ -106,17 +125,17 @@ class Level:
     # --- tiles ---------------------------------------------------------------
     def solid(self, x, y, t):
         c = self.at(x, y)
-        return (c in "#M" or (c == "r" and t == PAST) or (c == "D" and not self.doors_open)
-                or (c == "g" and not self.gates_open))
+        return (c in "#M" or c in BLOCKS or c == "F" or (x, y) in self.pipe_cells or (c == "r" and t == PAST)
+                or (c == "D" and not self.doors_open) or (c == "g" and not self.gates_open))
 
     def one_way(self, x, y, t, cfg):
         c = self.at(x, y)
-        return (c in "oz" or (c == "B" and t == PAST) or (c == "V" and t == PRESENT) or (x, y) in self.ride
+        return (c in "oz" or (x, y) in self.rafts or (c == "B" and t == PAST) or (c == "V" and t == PRESENT) or (x, y) in self.ride
                 or (c == "x" and (x, y) in self.lit(t, cfg)))
 
     def hazard(self, x, y, t):
         c = self.at(x, y)
-        return c == "a" or (c == "~" and t == PRESENT) or (c == "w" and t == PAST)
+        return c in "aA" or (c == "~" and t == PRESENT) or (c == "w" and t == PAST)
 
     def free(self, x, y, t):
         return not self.solid(x, y, t) and not self.hazard(x, y, t)
@@ -169,16 +188,23 @@ class Level:
             landing = self.fall(x, y, other, cfg)
             if landing:
                 yield (landing[0], landing[1], other, cfg, lev)
+        for (px, py), dest in self.warps.items():
+            if y == py - 1 and x in (px, px + 1):
+                tx, ty = dest
+                landing = (tx, ty - 1) if (tx, ty) in self.pipe_tops else self.fall(tx, ty, t, cfg)
+                if landing and self.standable(landing[0], landing[1], t, cfg):
+                    yield (landing[0], landing[1], t, cfg, lev)
         on_spring = self.at(x, y + 1) == "M"
-        max_rise = SPRING_RISE if on_spring else 2
+        max_rise = SPRING_RISE if on_spring else (3 if self.v2 else 2)
         for dx in range(-8, 9):
             nx = x + dx
             for ny in range(max(0, y - max_rise), self.h):
                 rise = y - ny
+                table = REACH_V2 if self.v2 else REACH
                 if rise > 0:
-                    reach = 3 if on_spring else REACH[rise]
+                    reach = 3 if on_spring else table[rise]
                 else:
-                    reach = 4 + (-rise) // 2
+                    reach = table[0] + (-rise) // 2
                 if dx and self.wind_helps(x, nx, min(y, ny), t):
                     reach += WIND_BONUS
                 if abs(dx) > reach or (dx == 0 and rise == 0):
@@ -258,7 +284,7 @@ def check(path):
         errors.append("need exactly one P and one E (found %d / %d)" % (len(starts), len(exits)))
         return errors, warnings
     for (x, y) in starts + level.find("C"):
-        if level.at(x, y + 1) != "#":
+        if level.at(x, y + 1) not in "#":
             errors.append("start/checkpoint at %d,%d must stand on '#' (exists in both times)" % (x, y))
     if level.find("i") and len(level.find("i")) > len(data.get("signs", [])):
         errors.append("more 'i' signs than texts in 'signs'")
@@ -280,6 +306,19 @@ def check(path):
     ex, ey = exits[0]
     if not body_touches(states, ex, ey):
         errors.append("exit looks unreachable from the start")
+    for kx, ky in level.find("k"):
+        if not touches(states, kx, ky, level):
+            errors.append("time key at %d,%d looks unreachable" % (kx, ky))
+        else:
+            near = [s for s in states if abs(s[0] - kx) <= 1 and ky - 2 <= s[1] <= ky + 1]
+            if not body_touches(level.search(near), ex, ey):
+                errors.append("exit unreachable after taking the time key")
+    for warp in data.get("warps", []):
+        if tuple(warp["from"]) not in level.pipe_tops:
+            errors.append("warp from %s is not the top-left of a pipe" % (warp["from"],))
+    for d in level.find("d") + level.find("c"):
+        if not touches(states, d[0], d[1], level, arc=True):
+            warnings.append("%s at %d,%d may be unreachable" % (level.at(*d), d[0], d[1]))
     for rx, ry in level.find("R"):
         if not touches(states, rx, ry, level, rise=2):
             errors.append("friend at %d,%d looks unreachable" % (rx, ry))

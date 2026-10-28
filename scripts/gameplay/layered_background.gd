@@ -251,7 +251,7 @@ class TreeLayer extends BgLayer:
 			var sway := sin(t * 1.1 + tx * 0.01) * 6.0
 			draw_colored_polygon(PackedVector2Array([Vector2(tx - 14, ground), Vector2(tx - 9 + sway * 0.3, ground - h), Vector2(tx + 9 + sway * 0.3, ground - h), Vector2(tx + 14, ground)]), Color("6b4a2e"))
 			var top := Vector2(tx + sway, ground - h)
-			var green := [Color("3f8f3e"), Color("4aa046"), Color("357d36")][int(tree.k)]
+			var green: Color = [Color("3f8f3e"), Color("4aa046"), Color("357d36")][int(tree.k)]
 			for part in [[Vector2(0, 0), 1.0], [Vector2(-0.6, 0.35), 0.75], [Vector2(0.6, 0.3), 0.8], [Vector2(0, -0.5), 0.7]]:
 				draw_circle(top + part[0] * r, r * float(part[1]) * 0.75, green)
 			draw_circle(top + Vector2(-0.25, -0.45) * r, r * 0.3, Color(green).lightened(0.15))
@@ -327,13 +327,13 @@ class FrontLayer extends BgLayer:
 			if i % 2 == 0:
 				var sway := sin(t * 1.4 + i) * 0.08
 				for k in 3:
-					var a := -PI * 0.5 + (k - 1) * 0.45 + sway
-					var tip := Vector2(x, view.y + 30.0) + Vector2(cos(a), sin(a)) * (150.0 + k * 20.0)
-					var mid := Vector2(x, view.y + 30.0).lerp(tip, 0.5)
-					var side := Vector2(cos(a), sin(a)).orthogonal() * 34.0
-					draw_colored_polygon(PackedVector2Array([Vector2(x, view.y + 30.0), mid + side, tip, mid - side]), Color(0.12, 0.3, 0.14, 0.92))
+					var a := -PI * 0.5 + (k - 1) * 0.5 + sway
+					var tip := Vector2(x, view.y + 20.0) + Vector2(cos(a), sin(a)) * (70.0 + k * 12.0)
+					var mid := Vector2(x, view.y + 20.0).lerp(tip, 0.5)
+					var side := Vector2(cos(a), sin(a)).orthogonal() * 18.0
+					draw_colored_polygon(PackedVector2Array([Vector2(x, view.y + 20.0), mid + side, tip, mid - side]), Color(0.16, 0.38, 0.17, 0.7))
 			else:
-				var len := 120.0 + (i % 3) * 50.0
+				var len := 70.0 + (i % 3) * 35.0
 				var swing := sin(t * 1.2 + i) * 10.0
 				draw_line(Vector2(x, -10), Vector2(x + swing, len), Color(0.15, 0.35, 0.16, 0.9), 6.0)
 				for k in 4:

@@ -14,7 +14,12 @@ func _ready() -> void:
 	await _test_levels_build()
 	await _test_time_shift_safety()
 	_test_audio()
-	await _test_bot_plays_level_1()
+	_test_level_1_layout()
+	await _test_stomp_and_hurt()
+	await _test_blocks()
+	await _test_pipe_warp()
+	await _test_pilo_frees_hedgehog()
+	await _test_bot_runs_course()
 	SaveManager.data = backup
 	SaveManager.save_game()
 	print("\n%d checks, %d failed" % [_checks, _failures])
@@ -101,17 +106,183 @@ func _test_time_shift_safety() -> void:
 	await get_tree().process_frame
 
 
-func _test_bot_plays_level_1() -> void:
+func _test_level_1_layout() -> void:
+	var data := LevelManager.load_level(1)
+	var root := Node2D.new()
+	add_child(root)
+	var palette := LevelBuilder.make_palette(LevelManager.WORLDS[0].palette)
+	var info := LevelBuilder.build(data, root, FakeGame.new(), palette)
+	_check(info.time_key, "level 1 has a time key that locks the gate")
+	_check(info.diamonds >= 5, "level 1 hides %d diamonds" % info.diamonds)
+	_check(info.enemies >= 8, "level 1 has %d shadow creatures" % info.enemies)
+	var warps := 0
+	for pipe in info.pipes.values():
+		warps += int(pipe.is_warp)
+	_check(warps == data.warps.size(), "every warp starts on a pipe (%d)" % warps)
+	var rooms := 0
+	for child in root.get_children():
+		rooms += int(child is SecretRoom)
+	_check(rooms >= 3, "level 1 has %d secret rooms or caves" % rooms)
+	root.free()
+
+
+## Starts the game scene on a small hand-made map (no dialogue).
+func _start(map: Array, extra := {}) -> Node:
+	var data := {"id": 98, "title": "test", "lens": false, "map": map}
+	data.merge(extra)
+	LevelManager.override_level = data
 	LevelManager.current_level = 1
 	var game: Node = load("res://scenes/gameplay/game.tscn").instantiate()
 	add_child(game)
+	for i in 3:
+		await get_tree().physics_frame
+	return game
+
+
+func _stop(game: Node) -> void:
+	LevelManager.override_level = {}
+	for action in ["move_right", "move_left", "jump", "dash", "pilo", "down"]:
+		Input.action_release(action)
+	game.queue_free()
+	await get_tree().process_frame
+
+
+func _wait(seconds: float) -> void:
+	var left := seconds
+	while left > 0.0:
+		await get_tree().physics_frame
+		left -= get_physics_process_delta_time()
+
+
+func _test_stomp_and_hurt() -> void:
+	var game := await _start([
+		"............",
+		"............",
+		"............",
+		".P....e.....",
+		"############",
+	])
+	var enemy: Enemy = get_tree().get_first_node_in_group("enemy")
+	# drop Nima onto the mushroom from above
+	game.player.global_position = enemy.global_position + Vector2(0, -200)
+	game.player.velocity = Vector2(0, 300)
+	await _wait(0.6)
+	_check(enemy == null or not is_instance_valid(enemy) or enemy.freed, "stomping a shadow mushroom frees it")
+	_check(game.player.hearts == 3, "a stomp costs no heart")
+	_check(game.coins >= 1, "a freed creature leaves a coin")
+	# now walk into a second one from the side
+	var second := Shroom.new()
+	second.game = game
+	second.position = game.player.global_position + Vector2(120, 40)
+	game._world_root.add_child(second)
+	game.coins = 3
+	Input.action_press("move_right")
+	await _wait(0.8)
+	Input.action_release("move_right")
+	_check(game.player.hearts == 2, "touching a shadow from the side costs a heart")
+	_check(game.coins < 3, "a hit spills coins")
+	game.player.invulnerable = 0.0
+	game.player.take_hit(game.player.global_position.x)
+	game.player.invulnerable = 0.0
+	game.player.take_hit(game.player.global_position.x)
+	await _wait(2.0)
+	_check(game.player.hearts == game.player.max_hearts, "with no hearts left Nima starts again with full hearts")
+	await _stop(game)
+
+
+func _test_blocks() -> void:
+	var game := await _start([
+		"..........",
+		"..........",
+		"...Q.b.n..",
+		"..........",
+		".P........",
+		"##########",
+	])
+	var blocks := get_tree().get_nodes_in_group("block")
+	var question: Block
+	var brick: Block
+	var hidden: Block
+	for block in blocks:
+		match block.kind:
+			Block.Kind.QUESTION:
+				question = block
+			Block.Kind.BRICK:
+				brick = block
+			Block.Kind.HIDDEN:
+				hidden = block
+	for target in [question, brick, hidden]:
+		game.player.global_position = target.global_position + Vector2(32, 64 * 2 + 20)
+		game.player.velocity = Vector2.ZERO
+		await _wait(0.3)
+		Input.action_press("jump")
+		await _wait(0.5)
+		Input.action_release("jump")
+		await _wait(0.3)
+	_check(question.kind == Block.Kind.USED and game.coins == 1, "a ? block gives a coin and is used up")
+	_check(not is_instance_valid(brick), "an empty brick breaks when bumped")
+	_check(hidden.kind == Block.Kind.USED, "a hidden block appears when bumped from below")
+	await _wait(0.6)
+	var diamonds := 0
+	for item in get_tree().get_nodes_in_group("collectible"):
+		diamonds += int(item.kind == Collectible.Kind.DIAMOND)
+	_check(diamonds == 1 or game.diamonds_found.size() == 1, "the hidden block gives its diamond")
+	await _stop(game)
+
+
+func _test_pipe_warp() -> void:
+	var game := await _start([
+		"..............",
+		"..............",
+		".P.p......p...",
+		"##############",
+		"##############",
+	], {"warps": [{"from": [3, 2], "to": [10, 2]}]})
+	game.player.global_position = Vector2(4 * 64, 2 * 64 - 60)
+	await _wait(0.5)
+	Input.action_press("down")
+	await _wait(1.6)
+	Input.action_release("down")
+	_check(game.player.global_position.x > 10 * 64, "pressing down on a warp pipe comes out of the other pipe")
+	await _stop(game)
+
+
+func _test_pilo_frees_hedgehog() -> void:
+	var game := await _start([
+		"............",
+		"............",
+		".P...h......",
+		"############",
+	])
+	var hog: Enemy = get_tree().get_first_node_in_group("enemy")
+	await _wait(0.3)
+	Input.action_press("pilo")
+	await _wait(0.1)
+	Input.action_release("pilo")
+	await _wait(0.8)
+	_check(not is_instance_valid(hog) or hog.freed, "Pilo's attack frees a spiky hedgehog")
+	await _stop(game)
+
+
+## A blind bot (hold right, jump every half second) must get through a short course with a
+## pit, shadow creatures, blocks and a flag: the controls are forgiving enough for that.
+func _test_bot_runs_course() -> void:
+	var game := await _start([
+		"..............................................",
+		"..............................................",
+		".........Q.b.Q................................",
+		"..............................................",
+		".P......e...........C.......e...c.c.c.....E...",
+		"############...###############################",
+		"############...###############################",
+	])
 	Engine.time_scale = 3.0
 	var elapsed := 0.0
 	var jump_timer := 0.0
 	Input.action_press("move_right")
 	while elapsed < 60.0 and not game.finished:
 		await get_tree().physics_frame
-		var delta := get_physics_process_delta_time() * Engine.time_scale
+		var delta := get_physics_process_delta_time()  # already scaled by time_scale
 		elapsed += delta
 		jump_timer += delta
 		if game._busy:
@@ -125,13 +296,15 @@ func _test_bot_plays_level_1() -> void:
 	Input.action_release("move_right")
 	Input.action_release("jump")
 	Engine.time_scale = 1.0
-	_check(game.finished, "bot finishes level 1 (%.1fs game time)" % elapsed)
-	game.queue_free()
-	await get_tree().process_frame
+	_check(game.finished, "bot runs the course to the gate (%.1fs game time, ended at x %d, hearts %d)" % [elapsed, int(game.player.global_position.x), game.player.hearts])
+	await _stop(game)
 
 
 class FakeGame extends Node:
 	var player: Node2D = null
+
+	func on_collect(_item: Node) -> void:
+		pass
 
 	func on_hazard(_kind: String) -> void:
 		pass

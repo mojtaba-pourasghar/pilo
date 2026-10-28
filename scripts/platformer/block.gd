@@ -50,7 +50,7 @@ func _physics_process(delta: float) -> void:
 	var player: CharacterBody2D = game.player
 	if player.velocity.y >= 0.0:
 		return
-	var head := player.global_position.y - player.BODY_SIZE.y * 0.5
+	var head: float = player.global_position.y - player.BODY_SIZE.y * 0.5
 	var x := player.global_position.x - global_position.x
 	if x > 4.0 and x < SIZE - 4.0 and head < global_position.y + SIZE and head > global_position.y + SIZE * 0.4:
 		kind = Kind.QUESTION

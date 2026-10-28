@@ -287,6 +287,7 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 		info.chaser.stop_x = info.exit.position.x - 96.0
 	root.add_child(mechanisms)
 	info.mechanisms = mechanisms
+	_build_secret_rooms(grid, w, h, root, palette)
 	return info
 
 
@@ -412,3 +413,36 @@ static func _build_thorns(grid: Array, w: int, h: int, root: Node2D) -> void:
 			thorns.cells = x - start
 			thorns.position = Vector2(start * TILE, y * TILE)
 			root.add_child(thorns)
+
+
+## Open cells under the ground (some "#" above them in the same column) become secret rooms:
+## covered with earth until Nima gets inside. One room per connected group of cells.
+static func _build_secret_rooms(grid: Array, w: int, h: int, root: Node2D, palette: Dictionary) -> void:
+	var covered := {}
+	for x in w:
+		var roof := false
+		for y in h:
+			var c := String(grid[y])[x]
+			if c == "#":
+				roof = true
+			elif roof and not RUNS.has(c) and c != "W":
+				covered[Vector2i(x, y)] = true
+	var seen := {}
+	for start in covered:
+		if seen.has(start):
+			continue
+		var cells: Array = []
+		var stack: Array = [start]
+		seen[start] = true
+		while not stack.is_empty():
+			var cell: Vector2i = stack.pop_back()
+			cells.append(cell)
+			for d in [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]:
+				var next: Vector2i = cell + d
+				if covered.has(next) and not seen.has(next):
+					seen[next] = true
+					stack.append(next)
+		var room := SecretRoom.new()
+		room.cells = cells
+		room.palette = palette
+		root.add_child(room)

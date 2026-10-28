@@ -52,6 +52,8 @@ const LEVEL_TITLES := [
 ]
 
 var current_level := 1
+## Tests can play a hand-made map: when set, load_level returns it instead of the file.
+var override_level: Dictionary = {}
 var _fade: ColorRect
 var _busy := false
 
@@ -101,6 +103,8 @@ func has_level(level_id: int) -> bool:
 
 
 func load_level(level_id: int) -> Dictionary:
+	if not override_level.is_empty():
+		return override_level
 	if not has_level(level_id):
 		return {}
 	var file := FileAccess.open(level_path(level_id), FileAccess.READ)

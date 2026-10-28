@@ -30,7 +30,7 @@ func _ready() -> void:
 func player_on_top(player: CharacterBody2D) -> bool:
 	if not player.is_on_floor():
 		return false
-	var feet := player.global_position.y + player.FEET
+	var feet: float = player.global_position.y + player.FEET
 	return absf(feet - global_position.y) < 6.0 and absf(player.global_position.x - (global_position.x + TILE)) < TILE * 0.6
 
 
