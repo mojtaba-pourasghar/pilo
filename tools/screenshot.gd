@@ -1,6 +1,7 @@
 extends Node
 ## Dev helper for store screenshots and visual checks. Example:
 ##   godot --path . res://tools/screenshot.tscn -- --scene=game --level=3 --wait=2.5 --out=/tmp/shot.png [--shift] [--right=1.5]
+##   [--at=60,9] puts Nima at that tile first
 
 func _ready() -> void:
 	var args := {}
@@ -18,6 +19,12 @@ func _ready() -> void:
 		for i in 8:
 			scene.dialogue.advanced.emit()
 			await get_tree().create_timer(0.3).timeout
+	if args.has("at"):
+		# --at=x,y in tiles: put Nima there (feet on the bottom of that cell)
+		var cell := String(args.at).split(",")
+		scene.player.global_position = Vector2(float(cell[0]) * 64.0 + 32.0, float(cell[1]) * 64.0 + 23.0)
+		scene.player.get_node("Camera2D").reset_smoothing()
+		await get_tree().create_timer(0.4).timeout
 	if args.has("right"):
 		Input.action_press("move_right")
 		await get_tree().create_timer(float(args.right)).timeout
@@ -33,6 +40,10 @@ func _ready() -> void:
 			"gate":
 				scene.add_child(ParentGate.new())
 			"complete":
+				scene.has_time_key = true
+				scene.coins = 57
+				scene.diamonds_found = [0, 2, 3]
+				scene.enemies_freed = 9
 				scene.on_exit_reached()
 	await get_tree().create_timer(float(args.get("wait", "1.0"))).timeout
 	var image := get_viewport().get_texture().get_image()

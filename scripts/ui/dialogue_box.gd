@@ -6,8 +6,8 @@ extends CanvasLayer
 signal advanced
 
 const SPEAKERS := {
-	"nima": {"name": "نیما", "color": Color("e5533d"), "texture": "res://assets/characters/hero.png"},
-	"pilo": {"name": "پیلو", "color": Color("f39a2b"), "texture": "res://assets/characters/pilo.png"},
+	"nima": {"name": "نیما", "color": Color("e5533d"), "texture": ""},
+	"pilo": {"name": "پیلو", "color": Color("f39a2b"), "texture": ""},
 	"ghubarak": {"name": "غبارک", "color": Color("8e7cc3"), "texture": ""},
 	"squirrel": {"name": "سنجابک", "color": Color("a0663a"), "texture": ""},
 }
@@ -125,12 +125,51 @@ func _advance() -> void:
 
 class Portrait extends Control:
 	var texture: Texture2D
-	var speaker := ""
+	var speaker := "":
+		set(value):
+			speaker = value
+			_update_rig()
 	var t := 0.0
+	var _rig: CharacterRig
+
+	func _init() -> void:
+		clip_contents = true
+		resized.connect(_update_rig)
 
 	func _process(delta: float) -> void:
 		t += delta
 		queue_redraw()
+
+	## Nima and Pilo are drawn by their code rigs (head and shoulders in the circle).
+	func _update_rig() -> void:
+		if _rig:
+			_rig.queue_free()
+			_rig = null
+		var center := size * 0.5
+		if speaker == "nima":
+			_rig = NimaRig.new()
+			_rig.scale = Vector2(1.7, 1.7)
+			_rig.position = center + Vector2(-6, 82 * 1.7)
+		elif speaker == "pilo":
+			_rig = PiloRig.new()
+			_rig.scale = Vector2(2.4, 2.4)
+			_rig.position = center + Vector2(-17.0, 42.0) * 2.4
+		if _rig:
+			_rig.expression = "happy" if speaker == "nima" else "normal"
+			add_child(_rig)
+			var frame := Frame.new()
+			frame.set_anchors_preset(Control.PRESET_FULL_RECT)
+			frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			_rig.add_sibling(frame)
+			_rig.tree_exiting.connect(frame.queue_free)
+
+	## Covers the square corners around the round portrait and draws its golden ring.
+	class Frame extends Control:
+		func _draw() -> void:
+			var center := size * 0.5
+			var r := size.x * 0.5
+			draw_arc(center, r * 1.22, 0.0, TAU, 64, Color("fbf4e4"), r * 0.46)
+			draw_arc(center, r - 3.0, 0.0, TAU, 48, Color("e2b877"), 6.0)
 
 	func _draw() -> void:
 		var center := size * 0.5

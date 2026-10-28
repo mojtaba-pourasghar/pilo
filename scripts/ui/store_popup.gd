@@ -72,7 +72,7 @@ func _ready() -> void:
 	tabs.add_theme_constant_override("separation", 14)
 	body.add_child(tabs)
 	_add_tab(tabs, "packs", "بسته‌ها", "res://assets/ui/crystal.png")
-	_add_tab(tabs, "colors", "ظاهر پیلو", "res://assets/characters/pilo.png")
+	_add_tab(tabs, "colors", "ظاهر پیلو", "pilo")
 	var grid_holder := CenterContainer.new()
 	grid_holder.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	body.add_child(grid_holder)
@@ -112,7 +112,7 @@ func _add_tab(parent: VBoxContainer, id: String, text: String, icon: String) -> 
 	label.add_theme_font_override("font", UIKit.FONT_BLACK)
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	label.name = "Label"
-	row.add_child(UIKit.make_icon(icon, 48))
+	row.add_child(RigIcon.make("pilo", 48) if icon == "pilo" else UIKit.make_icon(icon, 48))
 	row.add_child(label)
 	parent.add_child(button)
 	_tabs[id] = button
@@ -204,11 +204,7 @@ func _color_card(color_id: String) -> Control:
 	var entry: Dictionary = StoreAdapter.PILO_COLORS[color_id]
 	var owned := StoreAdapter.owns(entry.sku)
 	var current := String(SaveManager.data.get("pilo_color", "classic")) == color_id
-	var preview := UIKit.make_icon("res://assets/characters/pilo.png", 96)
-	var material := ShaderMaterial.new()
-	material.shader = load("res://assets/vfx/hue_shift.gdshader")
-	material.set_shader_parameter("hue_shift", float(entry.hue))
-	preview.material = material
+	var preview := RigIcon.make("pilo", 96, float(entry.hue), "happy" if current else "idle")
 	var button: Button
 	if current:
 		button = _price_button("انتخاب شد", UIKit.GREEN, false)

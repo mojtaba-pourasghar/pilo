@@ -416,6 +416,10 @@ func on_exit_reached() -> void:
 	popup.stars_total = info.stars
 	popup.first_time = result.first_time
 	popup.reward = String(result.get("reward", ""))
+	popup.coins = coins
+	popup.diamonds_found = diamonds_found.size()
+	popup.diamonds_total = info.diamonds
+	popup.freed = enemies_freed
 	popup.action.connect(_on_complete_action)
 	add_child(popup)
 

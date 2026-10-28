@@ -288,6 +288,7 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 	root.add_child(mechanisms)
 	info.mechanisms = mechanisms
 	_build_secret_rooms(grid, w, h, root, palette)
+	_build_pit_shade(grid, w, h, root)
 	return info
 
 
@@ -446,3 +447,54 @@ static func _build_secret_rooms(grid: Array, w: int, h: int, root: Node2D, palet
 		room.cells = cells
 		room.palette = palette
 		root.add_child(room)
+
+
+## Bottomless pits fade to dark so a child can see there is no ground down there.
+static func _build_pit_shade(grid: Array, w: int, h: int, root: Node2D) -> void:
+	var shade := PitShade.new()
+	var x := 0
+	while x < w:
+		var c := String(grid[h - 1])[x]
+		if RUNS.has(c) or WATERS.has(c):
+			x += 1
+			continue
+		var top := h - 1
+		while top > 0 and not RUNS.has(String(grid[top - 1])[x]) and not WATERS.has(String(grid[top - 1])[x]):
+			top -= 1
+		# only real pits: the gap must cut through the ground next to it
+		var left_ground := x > 0 and RUNS.has(String(grid[h - 1])[x - 1])
+		var right_ground := x + 1 < w and RUNS.has(String(grid[h - 1])[x + 1])
+		var near := left_ground or right_ground or shade.columns.has(x - 1)
+		if near:
+			var surface := h - 1
+			for nx in [x - 1, x + 1]:
+				if nx >= 0 and nx < w:
+					for y in h:
+						if String(grid[y])[nx] == "#":
+							surface = mini(surface, y)
+							break
+			shade.columns[x] = surface
+		x += 1
+	shade.level_height = h * TILE
+	root.add_child(shade)
+
+
+class PitShade extends Node2D:
+	var columns := {}          ## column -> row where the ground surface is beside it
+	var level_height := 0.0
+
+	func _ready() -> void:
+		z_index = -1
+
+	func _draw() -> void:
+		for x in columns:
+			var top: float = (float(columns[x]) + 0.3) * TILE
+			var deep := top + TILE * 2.5
+			var bottom := level_height + 240.0
+			var clear := Color(0.06, 0.08, 0.16, 0.0)
+			var dark := Color(0.06, 0.08, 0.16, 0.9)
+			var x0: float = x * TILE
+			var x1: float = (x + 1) * TILE
+			draw_polygon(PackedVector2Array([Vector2(x0, top), Vector2(x1, top), Vector2(x1, deep), Vector2(x0, deep)]),
+				PackedColorArray([clear, clear, dark, dark]))
+			draw_rect(Rect2(x0, deep, TILE, bottom - deep), dark)

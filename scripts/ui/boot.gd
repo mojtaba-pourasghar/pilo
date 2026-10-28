@@ -4,8 +4,6 @@ extends Control
 const WARM_UP := [
 	"res://scenes/gameplay/game.tscn",
 	"res://assets/environments/bg_forest.jpg",
-	"res://assets/characters/hero.png",
-	"res://assets/characters/pilo.png",
 ]
 
 var _bar: ProgressBar

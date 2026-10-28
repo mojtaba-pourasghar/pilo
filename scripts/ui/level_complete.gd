@@ -1,13 +1,20 @@
 extends CanvasLayer
-## End-of-level popup: stars found, time-shard reward and what to do next.
+## End-of-level popup: stars found, coins and diamonds collected, creatures freed, the
+## time-shard reward and what to do next.
 
 signal action(name: String)
+
+const HUD_ICON := preload("res://scripts/ui/hud.gd").HudIcon
 
 var level_id := 1
 var stars_found := 0
 var stars_total := 3
 var first_time := false
 var reward := ""
+var coins := 0
+var diamonds_found := 0
+var diamonds_total := 0
+var freed := 0
 
 
 func _ready() -> void:
@@ -34,6 +41,23 @@ func _ready() -> void:
 			tween.tween_callback(func(): AudioManager.play_sfx("star", 1.0 + i * 0.12))
 			tween.tween_property(star, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
+	var score := HBoxContainer.new()
+	score.alignment = BoxContainer.ALIGNMENT_CENTER
+	score.add_theme_constant_override("separation", 28)
+	box.add_child(score)
+	for item in [["coin", str(coins)], ["diamond", "%d/%d" % [diamonds_found, diamonds_total]], ["freed", str(freed)]]:
+		var cell := HBoxContainer.new()
+		cell.add_theme_constant_override("separation", 6)
+		if item[0] == "freed":
+			var label := UIKit.make_label("آزاد شده:", 26, UIKit.PURPLE)
+			cell.add_child(label)
+		else:
+			var icon := HUD_ICON.new()
+			icon.kind = item[0]
+			cell.add_child(icon)
+		cell.add_child(UIKit.make_label(item[1], 30, Color("5a3a1e")))
+		score.add_child(cell)
+
 	if first_time:
 		var reward := HBoxContainer.new()
 		reward.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -44,7 +68,7 @@ func _ready() -> void:
 	if reward != "":
 		var unlocked := HBoxContainer.new()
 		unlocked.alignment = BoxContainer.ALIGNMENT_CENTER
-		unlocked.add_child(UIKit.make_icon("res://assets/characters/pilo.png", 52))
+		unlocked.add_child(RigIcon.make("pilo", 52, float(StoreAdapter.PILO_COLORS.gold.hue), "happy"))
 		unlocked.add_child(UIKit.make_label("پیلوی طلایی باز شد! (فروشگاه ← ظاهر پیلو)", 26, UIKit.ORANGE))
 		box.add_child(unlocked)
 
