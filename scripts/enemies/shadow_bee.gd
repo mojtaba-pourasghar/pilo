@@ -19,6 +19,14 @@ func _ready() -> void:
 	_t = randf() * TAU
 
 
+func art_name() -> String:
+	return skin if skin != "" else "bee"
+
+
+func art_motion() -> String:
+	return "fly"
+
+
 func make_rig() -> EnemyRig:
 	return Rig.new()
 

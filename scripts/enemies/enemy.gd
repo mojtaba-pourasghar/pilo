@@ -41,7 +41,11 @@ func _ready() -> void:
 	hit_shape.position = Vector2(0, -body_size.y * 0.5)
 	_hurtbox.add_child(hit_shape)
 	add_child(_hurtbox)
-	rig = make_rig()
+	var art := "enemy_" + art_name()
+	if PaintedCreature.available(art):
+		rig = PaintedCreature.make(art, body_size.y * 1.35, art_motion())
+	else:
+		rig = make_rig()
 	rig.skin = skin
 	add_child(rig)
 
@@ -49,6 +53,16 @@ func _ready() -> void:
 ## Override: the drawing for this kind.
 func make_rig() -> EnemyRig:
 	return EnemyRig.new()
+
+
+## The creature's name in the generated art (enemy_<name>_shadow.png / _free.png).
+func art_name() -> String:
+	return skin if skin != "" else "shroom"
+
+
+## How the generated picture moves: "walk", "fly" or "roll".
+func art_motion() -> String:
+	return "walk"
 
 
 ## Override: movement for one physics step.

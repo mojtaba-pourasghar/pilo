@@ -25,7 +25,7 @@ var max_hp := 3
 var facing := -1.0
 var state := "intro"           ## intro, walk, windup, charge, jump, stunned, high, dive, under, hurt, free
 var is_freed := false
-var rig: BossRig
+var rig: EnemyRig
 
 var _cfg: Dictionary
 var _timer := 1.5
@@ -70,9 +70,16 @@ func _ready() -> void:
 	hit.position = Vector2(0, -size.y * 0.5)
 	_hurtbox.add_child(hit)
 	add_child(_hurtbox)
-	rig = BossRig.new()
-	rig.kind = kind
-	rig.size = size
+	if PaintedCreature.available("boss_" + kind):
+		# rendered guardian art faces right; the drawn one faces left
+		var painted := PaintedCreature.make("boss_" + kind, size.y * 1.25, "boss")
+		painted.face_left = true
+		rig = painted
+	else:
+		var drawn := BossRig.new()
+		drawn.kind = kind
+		drawn.size = size
+		rig = drawn
 	add_child(rig)
 
 
@@ -146,7 +153,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	rig.scale.x = -facing
 	rig.state = state
-	rig.anger = anger
+	rig.set("anger", anger)
 	if state != "under":
 		for body in _hurtbox.get_overlapping_bodies():
 			if body.is_in_group("player"):
@@ -158,7 +165,7 @@ func _start_move(player: Node2D) -> void:
 	_move = String(moves[_rng.randi() % moves.size()])
 	state = "windup"
 	_timer = 0.7
-	rig.flash = 1.0
+	rig.set("flash", 1.0)
 	AudioManager.play_sfx("reject", 0.6, -4.0)
 
 
@@ -253,7 +260,7 @@ func take_hit() -> void:
 	hp -= 1
 	_invulnerable = 1.2
 	AudioManager.play_sfx("stomp", 0.7)
-	rig.flash = 1.0
+	rig.set("flash", 1.0)
 	if game and game.has_method("on_boss_hit"):
 		game.on_boss_hit(self)
 	if hp <= 0:

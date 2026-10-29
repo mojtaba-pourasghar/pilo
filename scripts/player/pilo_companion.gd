@@ -33,11 +33,17 @@ var _sniff_target: Node2D
 var _sniff_left := 0.0
 var _bubble: Label
 
-@onready var rig: PiloRig = $Rig
+@onready var rig: CharacterRig = $Rig
 
 
 func _ready() -> void:
 	z_index = 6
+	if PaintedRig.available("pilo"):
+		var painted := PaintedRig.make("pilo")
+		painted.name = "Rig"
+		rig.replace_by(painted)
+		rig.queue_free()
+		rig = painted
 	_last_pos = global_position
 	_bubble = UIKit.make_label("!", 40, UIKit.ORANGE, 10, Color.WHITE)
 	_bubble.size = Vector2(60, 50)

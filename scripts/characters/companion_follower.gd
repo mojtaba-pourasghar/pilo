@@ -6,14 +6,20 @@ extends Node2D
 var id := "squirrel"
 var target: Node2D
 
-var _rig: CompanionRig
+var _rig: CharacterRig
+var _flyer := false
 var _velocity := Vector2.ZERO
 
 
 func _ready() -> void:
 	z_index = 4
-	_rig = CompanionRig.new()
-	_rig.id = id
+	_flyer = CompanionRig.FLYERS.has(id)
+	if PaintedCreature.available("companion_" + id):
+		_rig = PaintedCreature.make("companion_" + id, 64.0, "fly" if _flyer else "walk")
+	else:
+		var drawn := CompanionRig.new()
+		drawn.id = id
+		_rig = drawn
 	add_child(_rig)
 
 
@@ -24,7 +30,7 @@ func _physics_process(delta: float) -> void:
 	if target.get("facing") != null:
 		facing = float(target.get("facing"))
 	var goal := target.global_position + Vector2(-130.0 * facing, 0.0)
-	if not _rig.is_flyer():
+	if not _flyer:
 		# walkers stand on the ground under the goal
 		var query := PhysicsRayQueryParameters2D.create(goal + Vector2(0, -40), goal + Vector2(0, 400), 1)
 		var hit := get_world_2d().direct_space_state.intersect_ray(query)

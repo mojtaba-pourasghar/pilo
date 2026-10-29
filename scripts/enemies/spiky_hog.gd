@@ -12,6 +12,14 @@ func _init() -> void:
 	coins = 2
 
 
+func art_name() -> String:
+	return skin if skin != "" else "hog"
+
+
+func art_motion() -> String:
+	return "roll"
+
+
 func make_rig() -> EnemyRig:
 	return Rig.new()
 

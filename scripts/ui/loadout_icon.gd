@@ -25,7 +25,12 @@ static func make(item_kind: String, item_id: String, icon_size := 96.0, dimmed :
 func _ready() -> void:
 	if dim:
 		modulate = Color(0.55, 0.55, 0.62)
-	if kind == "companion" and id != "":
+	if kind == "companion" and id != "" and PaintedCreature.available("companion_" + id):
+		var painted := PaintedCreature.make("companion_" + id, custom_minimum_size.y * 0.9, "idle")
+		add_child(painted)
+		resized.connect(func(): painted.position = Vector2(size.x * 0.5, size.y * 0.95))
+		painted.position = Vector2(custom_minimum_size.x * 0.5, custom_minimum_size.y * 0.95)
+	elif kind == "companion" and id != "":
 		var rig := CompanionRig.new()
 		rig.id = id
 		rig.show_shadow = not rig.is_flyer()

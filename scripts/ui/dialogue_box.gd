@@ -146,7 +146,11 @@ class Portrait extends Control:
 			_rig.queue_free()
 			_rig = null
 		var center := size * 0.5
-		if speaker == "nima":
+		if PaintedCreature.available(speaker + "_portrait"):
+			# rendered head-and-shoulders portrait, standing on the bottom of the circle
+			_rig = PaintedCreature.make(speaker + "_portrait", size.y * 0.98, "idle")
+			_rig.position = center + Vector2(0, size.y * 0.49)
+		elif speaker == "nima":
 			_rig = NimaRig.new()
 			_rig.scale = Vector2(1.7, 1.7)
 			_rig.position = center + Vector2(-6, 82 * 1.7)

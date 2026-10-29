@@ -83,7 +83,13 @@ def main():
             dest = os.path.join(STORY if job["id"].startswith("story_") else OUT, job["id"] + ".png")
             im.convert("RGB").save(dest)
         elif post == "cutout":
-            cutout(im).save(os.path.join(OUT, job["id"] + ".png"))
+            out = cutout(im)
+            # sprites are shown small: keep them at most "max" pixels on the long side
+            limit = job.get("max", 1024)
+            if max(out.size) > limit:
+                f = limit / max(out.size)
+                out = out.resize((round(out.width * f), round(out.height * f)), Image.LANCZOS)
+            out.save(os.path.join(OUT, job["id"] + ".png"))
         elif post == "sheet":
             views = split_views(cutout(im))
             for i, view in enumerate(views):

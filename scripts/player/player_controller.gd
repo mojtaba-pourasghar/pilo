@@ -94,11 +94,18 @@ var _swim := 0                 # deep water areas Nima is in (swimming when > 0)
 var _sand := 0                 # quicksand areas Nima is in (slowed when > 0)
 
 @onready var visual: Node2D = $Visual
-@onready var rig: NimaRig = $Visual/Rig
+@onready var rig: CharacterRig = $Visual/Rig
 
 
 func _ready() -> void:
 	z_index = 4
+	if PaintedRig.available("nima"):
+		# the generated, rendered Nima replaces the drawn one
+		var painted := PaintedRig.make("nima")
+		painted.name = "Rig"
+		rig.replace_by(painted)
+		rig.queue_free()
+		rig = painted
 	_emote = UIKit.make_label("!", 48, UIKit.RED, 10, Color.WHITE)
 	_emote.size = Vector2(80, 60)
 	_emote.position = Vector2(-40, -130)

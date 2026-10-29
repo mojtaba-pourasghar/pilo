@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Generates the game's art with Cloudflare Workers AI (FLUX), job by job, from
 tools/art/manifest.json. Finished pictures are skipped, so it can run every day on the free
-daily allowance and simply continue where it stopped; it stops by itself when the allowance
-is used up. Keys come from the environment (CF_ACCOUNT_ID, CF_API_TOKEN), never from files
-in the project.
+daily allowance and simply continue where it stopped; when an account's allowance is used up
+it moves on to the next account, and stops when all are used up. Keys come from the
+environment, never from files in the project: CF_KEYS="account:token,account:token,..." or a
+single CF_ACCOUNT_ID + CF_API_TOKEN.
 
     python3 tools/art/cf_generate.py [--only id1,id2] [--limit N]
 
@@ -77,9 +78,12 @@ def main():
     ap.add_argument("--only", default="")
     ap.add_argument("--limit", type=int, default=0)
     a = ap.parse_args()
-    account, token = os.environ.get("CF_ACCOUNT_ID"), os.environ.get("CF_API_TOKEN")
-    if not account or not token:
-        sys.exit("CF_ACCOUNT_ID / CF_API_TOKEN are not set")
+    keys = [tuple(k.split(":", 1)) for k in os.environ.get("CF_KEYS", "").split(",") if ":" in k]
+    if not keys and os.environ.get("CF_ACCOUNT_ID") and os.environ.get("CF_API_TOKEN"):
+        keys = [(os.environ["CF_ACCOUNT_ID"], os.environ["CF_API_TOKEN"])]
+    if not keys:
+        sys.exit("CF_KEYS (or CF_ACCOUNT_ID / CF_API_TOKEN) is not set")
+    spent = set()   # accounts whose daily allowance is used up (tokens of one account share it)
     manifest = json.load(open(MANIFEST, encoding="utf-8"))
     style = manifest["styles"]
     only = set(filter(None, a.only.split(",")))
@@ -95,15 +99,27 @@ def main():
         if any(not os.path.exists(os.path.join(OUT, r + ".png")) for r in job.get("refs", [])):
             print("wait  ", job["id"], "(needs", job["refs"], ")")
             continue
-        try:
-            image = run_job(job, style, account, token)
-        except QuotaUsed as e:
-            print("quota used up for today:", e)
-            break
-        except Exception as e:
-            print("fail  ", job["id"], e)
-            time.sleep(2)
+        image = None
+        failed = False
+        for account, token in keys:
+            if account in spent:
+                continue
+            try:
+                image = run_job(job, style, account, token)
+                break
+            except QuotaUsed:
+                print("quota used up for account", account[:6] + "…")
+                spent.add(account)
+            except Exception as e:
+                print("fail  ", job["id"], e)
+                failed = True
+                time.sleep(2)
+                break
+        if failed:
             continue
+        if image is None:
+            print("all accounts used up for today")
+            break
         from PIL import Image
         Image.open(io.BytesIO(image)).convert("RGB").save(path)
         made += 1

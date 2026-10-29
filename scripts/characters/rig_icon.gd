@@ -20,7 +20,12 @@ static func make(character: String, icon_size: float, hue_shift := 0.0, state :=
 
 func _ready() -> void:
 	var rig: CharacterRig
-	if who == "nima":
+	if PaintedRig.available(who):
+		var painted := PaintedRig.make(who)
+		rig = painted
+		if who == "pilo":
+			painted.ready.connect(func(): painted.set_hue_shift(hue))
+	elif who == "nima":
 		rig = NimaRig.new()
 	else:
 		var fox := PiloRig.new()

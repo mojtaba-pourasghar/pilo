@@ -1,14 +1,14 @@
 {
  "styles": {
-  "default": "stylized 3D render, polished premium children's mobile game art, Pixar-like, soft global illumination, vibrant saturated colors, smooth clean shapes, high detail",
-  "sprite": "stylized 3D render, polished premium children's mobile game art, Pixar-like, soft studio lighting, vibrant colors, clean crisp silhouette, isolated single subject centered, entire subject inside the frame, plain flat light grey background, no shadow on the ground, no text, no border",
-  "scene": "lush painterly stylized 3D environment art for a premium 2D side-scrolling platformer, Rayman Legends and Ori quality, rich depth and atmospheric perspective, vibrant saturated colors, soft volumetric light, no characters, no text",
+  "default": "high-end 3D CGI character render, Pixar and DreamWorks animated feature film quality, physically based materials, soft subsurface skin, detailed fur and fabric textures, cinematic soft studio key light and rim light, crisp sharp details, vibrant appealing colors",
+  "sprite": "high-end 3D CGI character render, Pixar and DreamWorks animated feature film quality, physically based materials, soft subsurface skin, detailed fur and fabric textures, cinematic soft studio key light and rim light, crisp sharp details, vibrant appealing colors, isolated single subject centered, entire subject inside the frame with margin, plain flat light grey background, no ground shadow, no text, no border, not a painting, not an illustration, not 2D, not a sketch",
+  "scene": "high-end 3D CGI environment render for a premium side-scrolling platformer, Pixar animated film quality, physically based materials, volumetric light, rich depth and atmospheric perspective, vibrant saturated colors, crisp detail, no characters, no text, not a painting, not an illustration",
   "texture": "seamless tileable game texture, stylized hand-painted 3D look, top-down orthographic, even lighting, no perspective, no text"
  },
  "jobs": [
   {
    "id": "nima_sheet",
-   "prompt": "Character turnaround model sheet of an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots. Four full-body views in a row, evenly spaced: front view, three-quarter view, side view facing right, back view. Same character in every view, neutral standing pose",
+   "prompt": "Character turnaround model sheet of an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots. Four full-body views in a row, evenly spaced with wide gaps: front view, three-quarter view, side view facing right, back view. Same character in every view, neutral standing pose",
    "style": "sprite",
    "size": [
     1440,
@@ -17,11 +17,12 @@
    "post": "sheet",
    "refs": [
     "ref_heroes"
-   ]
+   ],
+   "max": 1024
   },
   {
    "id": "pilo_sheet",
-   "prompt": "Character turnaround model sheet of Pilo, a small cute fox cub: bright orange fur, cream white chest, cheeks and tail tip, big sparkling blue eyes, large pointed ears, blue neck scarf with a small gold medal, fluffy tail. Four full-body views in a row, evenly spaced: front view, three-quarter view, side view facing right, back view. Same character in every view, standing on four legs",
+   "prompt": "Character turnaround model sheet of Pilo, a small cute fox cub: bright orange fur, cream white chest, cheeks and tail tip, big sparkling blue eyes, large pointed ears, blue neck scarf with a small gold medal, fluffy tail. Four full-body views in a row, evenly spaced with wide gaps: front view, three-quarter view, side view facing right, back view. Same character in every view, standing on four legs",
    "style": "sprite",
    "size": [
     1440,
@@ -30,11 +31,12 @@
    "post": "sheet",
    "refs": [
     "ref_heroes"
-   ]
+   ],
+   "max": 1024
   },
   {
    "id": "nima_rig",
-   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference sheet. Full body, strict side view facing right, standing tall, arms hanging slightly away from the body, legs slightly apart with a clear gap between them",
+   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference sheet. Full body, strict side profile view facing right, standing tall and relaxed, the near arm hanging straight down slightly in front of the body with a clear gap between arm and body, legs slightly apart with a clear gap between them, the backpack on his back",
    "style": "sprite",
    "size": [
     768,
@@ -43,11 +45,12 @@
    "post": "cutout",
    "refs": [
     "nima_sheet"
-   ]
+   ],
+   "max": 1024
   },
   {
    "id": "pilo_rig",
-   "prompt": "Pilo, a small cute fox cub: bright orange fur, cream white chest, cheeks and tail tip, big sparkling blue eyes, large pointed ears, blue neck scarf with a small gold medal, fluffy tail, exactly as in the reference sheet. Full body, strict side view facing right, standing on all four legs with clear gaps between the front legs and between the hind legs, tail raised behind",
+   "prompt": "Pilo, a small cute fox cub: bright orange fur, cream white chest, cheeks and tail tip, big sparkling blue eyes, large pointed ears, blue neck scarf with a small gold medal, fluffy tail, exactly as in the reference sheet. Full body, strict side profile view facing right, standing on all four legs with clear gaps between the front legs and between the hind legs, tail raised up behind, head up",
    "style": "sprite",
    "size": [
     1024,
@@ -56,11 +59,12 @@
    "post": "cutout",
    "refs": [
     "pilo_sheet"
-   ]
+   ],
+   "max": 1024
   },
   {
    "id": "nima_jump",
-   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference. Full body side view facing right, jumping joyfully, one knee raised, arms up",
+   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference. Full body, side view facing right, jumping high with joy, both arms raised, one knee up",
    "style": "sprite",
    "size": [
     768,
@@ -68,12 +72,69 @@
    ],
    "post": "cutout",
    "refs": [
-    "nima_sheet"
-   ]
+    "nima_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "nima_glide",
+   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference. Full body, side view facing right, hanging in the air holding on with both hands raised above his head, legs together dangling, as if carried by something above him",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "nima_hurt",
+   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference. Full body, side view facing right, knocked back, leaning backward with a surprised dizzy face, arms flailing",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "nima_celebrate",
+   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference. Full body, side view facing right, cheering happily with both fists in the air, big smile, eyes closed with joy",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "nima_dash",
+   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference. Full body, side view facing right, dashing forward fast, body leaning far forward, arms back, motion",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 1024
   },
   {
    "id": "pilo_fly",
-   "prompt": "Pilo, a small cute fox cub: bright orange fur, cream white chest, cheeks and tail tip, big sparkling blue eyes, large pointed ears, blue neck scarf with a small gold medal, fluffy tail, exactly as in the reference. Side view facing right, leaping through the air with legs stretched, glowing with soft magical blue sparkles",
+   "prompt": "Pilo, a small cute fox cub: bright orange fur, cream white chest, cheeks and tail tip, big sparkling blue eyes, large pointed ears, blue neck scarf with a small gold medal, fluffy tail, exactly as in the reference. Full body, side view facing right, leaping through the air with legs stretched forward and back, glowing with soft magical blue sparkles",
    "style": "sprite",
    "size": [
     1024,
@@ -81,8 +142,1069 @@
    ],
    "post": "cutout",
    "refs": [
-    "pilo_sheet"
-   ]
+    "pilo_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "pilo_attack",
+   "prompt": "Pilo, a small cute fox cub: bright orange fur, cream white chest, cheeks and tail tip, big sparkling blue eyes, large pointed ears, blue neck scarf with a small gold medal, fluffy tail, exactly as in the reference. Full body, side view facing right, pouncing forward with paws out, playful determined face",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "refs": [
+    "pilo_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "pilo_happy",
+   "prompt": "Pilo, a small cute fox cub: bright orange fur, cream white chest, cheeks and tail tip, big sparkling blue eyes, large pointed ears, blue neck scarf with a small gold medal, fluffy tail, exactly as in the reference. Full body, side view facing right, sitting and laughing with eyes closed, tail wagging up",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "refs": [
+    "pilo_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "pilo_sleep",
+   "prompt": "Pilo, a small cute fox cub: bright orange fur, cream white chest, cheeks and tail tip, big sparkling blue eyes, large pointed ears, blue neck scarf with a small gold medal, fluffy tail, exactly as in the reference. Full body, side view facing right, curled up asleep with the tail around the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "refs": [
+    "pilo_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "nima_portrait",
+   "prompt": "head and shoulders portrait of an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference, three-quarter view facing right, friendly big smile",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 640
+  },
+  {
+   "id": "pilo_portrait",
+   "prompt": "head and chest portrait of Pilo, a small cute fox cub: bright orange fur, cream white chest, cheeks and tail tip, big sparkling blue eyes, large pointed ears, blue neck scarf with a small gold medal, fluffy tail, exactly as in the reference, three-quarter view facing right, cheerful open mouth smile",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "pilo_rig"
+   ],
+   "max": 640
+  },
+  {
+   "id": "companion_squirrel",
+   "prompt": "Sanjabak, a cheerful chatty red squirrel with a huge curly bushy tail, holding a small acorn, cute companion animal character for a kids game, full body, side view facing right",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "companion_turtle",
+   "prompt": "Laki, a friendly little green sea turtle with a shiny patterned shell, standing on its legs, cute companion animal character for a kids game, full body, side view facing right",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "companion_mole",
+   "prompt": "Khal-khali, a cute purple-grey mole with a pink nose and big digging paws, wearing a little yellow miner's helmet with a lamp, cute companion animal character for a kids game, full body, side view facing right",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "companion_penguin",
+   "prompt": "Yakhak, a small round penguin chick wearing a blue knitted scarf, cute companion animal character for a kids game, full body, side view facing right",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "companion_butterfly",
+   "prompt": "Parpari, a cute small butterfly fairy creature with big pink and sky-blue wings and a round smiling face, flying, cute companion animal character for a kids game, full body, side view facing right",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "companion_owl",
+   "prompt": "Pich-pich, a wise round brown owl with big amber eyes and ear tufts, wings slightly open, flying, carrying a tiny glowing lantern, cute companion animal character for a kids game, full body, side view facing right",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "companion_spark",
+   "prompt": "Jaraghe, a tiny glowing golden star spirit with a cute face and little arms, sparkling, flying, cute companion animal character for a kids game, full body, side view facing right",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "companion_hedgehog",
+   "prompt": "Topoli, a cute round brown hedgehog with soft spikes and a big smile, cute companion animal character for a kids game, full body, side view facing right",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "companion_goat",
+   "prompt": "Shakh-tala, a small white mountain goat kid with golden curled horns and a little beard, cute companion animal character for a kids game, full body, side view facing right",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "companion_cat",
+   "prompt": "Shadow Cat, an elegant small dark indigo cat with glowing violet eyes and a curled tail, friendly, cute companion animal character for a kids game, full body, side view facing right",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "companion_dragon",
+   "prompt": "Ezhdahak, a tiny friendly red baby dragon with yellow belly, small wings and a puff of warm smoke, flying, cute companion animal character for a kids game, full body, side view facing right",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "companion_lion",
+   "prompt": "Shirak, a small golden lion cub with a fluffy orange mane and white feathered angel wings, flying, cute companion animal character for a kids game, full body, side view facing right",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "enemy_shroom_free",
+   "prompt": "a small cute mushroom creature with a big red cap with white spots, tiny feet and a cute face, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_shroom_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_shroom_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_bee_free",
+   "prompt": "a round fuzzy cute bee creature with small wings and a tiny stinger, flying, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_bee_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_bee_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_hog_free",
+   "prompt": "a small cute round hedgehog creature with spikes on its back, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_hog_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_hog_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_crab_free",
+   "prompt": "a small cute red crab creature with big claws raised, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_crab_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_crab_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_jelly_free",
+   "prompt": "a cute pink jellyfish creature with a round dome and wavy tentacles, floating, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_jelly_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_jelly_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_urchin_free",
+   "prompt": "a cute round purple sea urchin creature with long spikes and big eyes, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_urchin_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_urchin_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_scorpion_free",
+   "prompt": "a small cute sand-yellow scorpion creature with a curled tail and small pincers, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_scorpion_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_scorpion_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_vulture_free",
+   "prompt": "a small cute desert vulture chick creature with brown feathers, flying, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_vulture_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_vulture_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_cactus_free",
+   "prompt": "a small cute round cactus creature with spikes and a little pink flower on top, standing on tiny feet, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_cactus_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_cactus_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_penguin_free",
+   "prompt": "a small round cute penguin creature with a tiny beak, waddling, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_penguin_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_penguin_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_owl_free",
+   "prompt": "a small fluffy white snow owl creature with big eyes, flying, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_owl_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_owl_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_iceball_free",
+   "prompt": "a cute round spiky ice ball creature made of crystal ice with big eyes, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_iceball_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_iceball_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_cloudling_free",
+   "prompt": "a small fluffy white cloud creature with tiny feet and a sweet face, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_cloudling_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_cloudling_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_stormbird_free",
+   "prompt": "a small blue storm bird creature with yellow lightning crest feathers, flying, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_stormbird_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_stormbird_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_thunderpuff_free",
+   "prompt": "a cute round yellow thundercloud puff creature with little lightning spikes around it, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_thunderpuff_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_thunderpuff_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_beetle_free",
+   "prompt": "a small cute turquoise crystal beetle creature with a shiny shell, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_beetle_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_beetle_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_bat_free",
+   "prompt": "a small cute purple cave bat creature with big ears and round wings, flying, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_bat_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_bat_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_porcupine_free",
+   "prompt": "a small cute porcupine creature with crystal violet quills, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_porcupine_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_porcupine_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_robot_free",
+   "prompt": "a small cute round tin robot creature with clock gears, antenna and stubby legs, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_robot_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_robot_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_drone_free",
+   "prompt": "a small cute flying clockwork drone creature with a propeller and one big eye, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_drone_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_drone_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_gear_free",
+   "prompt": "a cute spiky golden cogwheel creature with a face, rolling, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_gear_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_gear_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_knight_free",
+   "prompt": "a small cute armored toy knight creature with a helmet plume and tiny sword, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_knight_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_knight_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_wraith_free",
+   "prompt": "a small cute ghost wraith creature with a flowing tail, floating, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_wraith_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_wraith_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "enemy_spikeball_free",
+   "prompt": "a cute round spiky iron ball creature with big eyes, cheerful happy face, bright natural colors, full body, side view facing right, cute game creature for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 320
+  },
+  {
+   "id": "enemy_spikeball_shadow",
+   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_spikeball_free"
+   ],
+   "max": 320
+  },
+  {
+   "id": "boss_forest_free",
+   "prompt": "the Old Bear, a huge kind forest guardian brown bear with moss, ferns and flowers on his shoulders and a crown of leaves, full body, side view facing right, powerful but kind, game boss character for a kids game",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 640
+  },
+  {
+   "id": "boss_forest_shadow",
+   "prompt": "the exact same character in the exact same pose, but corrupted by shadow magic: dark purple and indigo colors, glowing purple eyes, dark smoke swirling around, menacing but not too scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "boss_forest_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_coral_beach_free",
+   "prompt": "the Great Octopus, a huge friendly coral-orange octopus guardian with a crown of seashells and big curling tentacles, full body, side view facing right, powerful but kind, game boss character for a kids game",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 640
+  },
+  {
+   "id": "boss_coral_beach_shadow",
+   "prompt": "the exact same character in the exact same pose, but corrupted by shadow magic: dark purple and indigo colors, glowing purple eyes, dark smoke swirling around, menacing but not too scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "boss_coral_beach_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_golden_desert_free",
+   "prompt": "the Sand Worm, a huge friendly golden sand worm guardian with segmented armored body and a gem on its forehead, full body, side view facing right, powerful but kind, game boss character for a kids game",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 640
+  },
+  {
+   "id": "boss_golden_desert_shadow",
+   "prompt": "the exact same character in the exact same pose, but corrupted by shadow magic: dark purple and indigo colors, glowing purple eyes, dark smoke swirling around, menacing but not too scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "boss_golden_desert_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_snow_mountain_free",
+   "prompt": "the Ice Giant, a huge friendly snow yeti guardian with icy blue crystals on his shoulders, full body, side view facing right, powerful but kind, game boss character for a kids game",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 640
+  },
+  {
+   "id": "boss_snow_mountain_shadow",
+   "prompt": "the exact same character in the exact same pose, but corrupted by shadow magic: dark purple and indigo colors, glowing purple eyes, dark smoke swirling around, menacing but not too scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "boss_snow_mountain_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_sky_islands_free",
+   "prompt": "the Storm Eagle, a huge majestic white and blue eagle guardian with golden crest feathers, wings spread, flying, full body, side view facing right, powerful but kind, game boss character for a kids game",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 640
+  },
+  {
+   "id": "boss_sky_islands_shadow",
+   "prompt": "the exact same character in the exact same pose, but corrupted by shadow magic: dark purple and indigo colors, glowing purple eyes, dark smoke swirling around, menacing but not too scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "boss_sky_islands_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_crystal_caves_free",
+   "prompt": "the Crystal Spider, a huge friendly spider guardian made of glowing violet crystal, round body, full body, side view facing right, powerful but kind, game boss character for a kids game",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 640
+  },
+  {
+   "id": "boss_crystal_caves_shadow",
+   "prompt": "the exact same character in the exact same pose, but corrupted by shadow magic: dark purple and indigo colors, glowing purple eyes, dark smoke swirling around, menacing but not too scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "boss_crystal_caves_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_clock_factory_free",
+   "prompt": "the Clockmaker Golem, a huge friendly brass clockwork golem guardian with a clock face in its chest and gears, full body, side view facing right, powerful but kind, game boss character for a kids game",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 640
+  },
+  {
+   "id": "boss_clock_factory_shadow",
+   "prompt": "the exact same character in the exact same pose, but corrupted by shadow magic: dark purple and indigo colors, glowing purple eyes, dark smoke swirling around, menacing but not too scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "boss_clock_factory_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_shadow_castle_free",
+   "prompt": "the Shadow King, a tall mysterious king with a broken golden crown and a long flowing dark purple cloak, glowing eyes, full body, side view facing right, powerful but kind, game boss character for a kids game",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 640
+  },
+  {
+   "id": "boss_shadow_castle_shadow",
+   "prompt": "the exact same character in the exact same pose, but corrupted by shadow magic: dark purple and indigo colors, glowing purple eyes, dark smoke swirling around, menacing but not too scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "boss_shadow_castle_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_inverted_land_free",
+   "prompt": "Zurvan, the guardian of time, a tall ancient wizard of time with a starry robe, an hourglass staff and a long white beard, floating, full body, side view facing right, powerful but kind, game boss character for a kids game",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 640
+  },
+  {
+   "id": "boss_inverted_land_shadow",
+   "prompt": "the exact same character in the exact same pose, but corrupted by shadow magic: dark purple and indigo colors, glowing purple eyes, dark smoke swirling around, menacing but not too scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "boss_inverted_land_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "npc_grandpa",
+   "prompt": "Grandpa Clockmaker: a kind old man with a white beard, round glasses, a brown waistcoat with brass gears and a pocket watch, full body, three-quarter view",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 768
+  },
+  {
+   "id": "npc_ghubarak",
+   "prompt": "Ghubarak: a mischievous but cute small purple dust-cloud imp with big eyes, tiny hands and a cheeky grin, floating, full body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 768
+  },
+  {
+   "id": "npc_shadow_king",
+   "prompt": "Shah-Sayeh the Shadow King: a tall mysterious shadow figure with a broken golden crown, a flowing dark purple cloak and glowing eyes, majestic but kid-friendly, full body",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 768
   },
   {
    "id": "forest_far",
@@ -336,138 +1458,6 @@
    "refs": [
     "time_gate"
    ]
-  },
-  {
-   "id": "enemy_shroom_shadow",
-   "prompt": "a small cute mushroom creature with a big cap, tiny feet and a face, cursed by shadow magic: dark purple and indigo colors, glowing purple angry eyes, wisps of dark smoke, side view facing right, full body",
-   "style": "sprite",
-   "size": [
-    1024,
-    1024
-   ],
-   "post": "cutout"
-  },
-  {
-   "id": "enemy_shroom_free",
-   "prompt": "the same creature freed from the curse: bright happy natural colors, smiling, side view facing right, full body",
-   "style": "sprite",
-   "size": [
-    1024,
-    1024
-   ],
-   "post": "cutout",
-   "refs": [
-    "enemy_shroom_shadow"
-   ]
-  },
-  {
-   "id": "enemy_bee_shadow",
-   "prompt": "a round cute bee creature with small wings and a stinger, cursed by shadow magic: dark purple and indigo colors, glowing purple angry eyes, wisps of dark smoke, side view facing right, full body",
-   "style": "sprite",
-   "size": [
-    1024,
-    1024
-   ],
-   "post": "cutout"
-  },
-  {
-   "id": "enemy_bee_free",
-   "prompt": "the same creature freed from the curse: bright happy natural colors, smiling, side view facing right, full body",
-   "style": "sprite",
-   "size": [
-    1024,
-    1024
-   ],
-   "post": "cutout",
-   "refs": [
-    "enemy_bee_shadow"
-   ]
-  },
-  {
-   "id": "enemy_hog_shadow",
-   "prompt": "a small cute hedgehog creature with spikes on its back, cursed by shadow magic: dark purple and indigo colors, glowing purple angry eyes, wisps of dark smoke, side view facing right, full body",
-   "style": "sprite",
-   "size": [
-    1024,
-    1024
-   ],
-   "post": "cutout"
-  },
-  {
-   "id": "enemy_hog_free",
-   "prompt": "the same creature freed from the curse: bright happy natural colors, smiling, side view facing right, full body",
-   "style": "sprite",
-   "size": [
-    1024,
-    1024
-   ],
-   "post": "cutout",
-   "refs": [
-    "enemy_hog_shadow"
-   ]
-  },
-  {
-   "id": "boss_bear_shadow",
-   "prompt": "the Old Bear, a huge friendly forest guardian bear with moss on his shoulders, corrupted by shadow magic: dark purple fur, glowing purple eyes, shadow smoke, a stone crown of leaves, side view facing left, full body, menacing but not scary for kids",
-   "style": "sprite",
-   "size": [
-    1024,
-    1024
-   ],
-   "post": "cutout"
-  },
-  {
-   "id": "boss_bear_free",
-   "prompt": "the same Old Bear freed from the curse: warm brown fur, kind smiling eyes, moss and flowers on his shoulders, side view facing left, full body",
-   "style": "sprite",
-   "size": [
-    1024,
-    1024
-   ],
-   "post": "cutout",
-   "refs": [
-    "boss_bear_shadow"
-   ]
-  },
-  {
-   "id": "npc_grandpa",
-   "prompt": "Grandpa Clockmaker: a kind old man with a white beard, round glasses, a brown waistcoat with brass gears and a pocket watch, full body, three-quarter view",
-   "style": "sprite",
-   "size": [
-    768,
-    1024
-   ],
-   "post": "cutout"
-  },
-  {
-   "id": "npc_ghubarak",
-   "prompt": "Ghubarak: a mischievous but cute small purple dust-cloud imp with big eyes, tiny hands and a cheeky grin, floating, full body",
-   "style": "sprite",
-   "size": [
-    1024,
-    1024
-   ],
-   "post": "cutout"
-  },
-  {
-   "id": "npc_shadow_king",
-   "prompt": "Shah-Sayeh the Shadow King: a tall mysterious shadow figure with a broken golden crown, a flowing dark purple cloak and glowing eyes, majestic but kid-friendly, full body",
-   "style": "sprite",
-   "size": [
-    768,
-    1024
-   ],
-   "post": "cutout"
-  },
-  {
-   "id": "npc_squirrel",
-   "prompt": "Sanjabak: a cheerful chatty squirrel holding a rolled map, full body, side view facing right",
-   "style": "sprite",
-   "size": [
-    1024,
-    1024
-   ],
-   "post": "cutout"
   },
   {
    "id": "story_1",
