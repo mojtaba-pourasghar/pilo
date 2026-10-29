@@ -27,7 +27,10 @@ def mix(*ys):
     return o
 def at(y, off, n=None):
     o=np.zeros(int(SR*off)+len(y) if n is None else n); s=int(SR*off); o[s:s+len(y)]+=y[:len(o)-s]; return o
+ONLY = set(filter(None, os.environ.get("ONLY", "").split(",")))   # ONLY=a,b: write just these
 def write(name, y, folder):
+    if ONLY and name not in ONLY:
+        return
     y = y/ max(1e-6, np.max(np.abs(y))) * 0.85
     w = os.path.join(TMP, name+'.wav')
     with wave.open(w,'wb') as f:
@@ -144,3 +147,11 @@ pent = lambda base: [base*m for m in (1,9/8,5/4,3/2,5/3,2)]
 write('forest', song(pent(523), [262,349,392,262,220,349,392,262], 'marimba', 104, 16, 1), 'music')
 write('sky', song(pent(587), [294,392,440,330,294,392,440,294], 'tri', 92, 16, 2), 'music')
 write('cave', song([440,494,587,659,740,880], [220,294,330,247,220,294,330,220], 'bell', 80, 12, 3), 'music')
+# one tune per new world, plus the guardian fights
+write('beach', song(pent(659), [330,440,494,330,294,440,494,330], 'marimba', 112, 16, 4), 'music')
+write('desert', song([440,466,554,587,659,698,831], [220,233,220,196,220,233,262,220], 'tri', 96, 16, 5), 'music')
+write('snow', song(pent(698), [349,466,523,392,349,466,523,349], 'bell', 84, 16, 6), 'music')
+write('factory', song([392,440,466,523,587,622,698], [196,233,262,175,196,233,262,196], 'sq', 116, 16, 7, 'tri'), 'music')
+write('castle', song([392,415,466,523,554,622,698], [196,207,233,175,196,207,156,196], 'bell', 76, 12, 8), 'music')
+write('inverted', song(pent(784), [392,523,587,440,392,523,587,392], 'tri', 88, 16, 9), 'music')
+write('boss', song([440,466,523,554,622,659,740], [220,233,262,208,220,233,277,220], 'sq', 136, 16, 10, 'tri'), 'music')

@@ -1,7 +1,8 @@
 extends Control
 ## "Choose a world" screen, laid out as the approved design: blue glass title ribbon, round
 ## back button, three framed world cards (green / blue / orange) with a star counter, and
-## yellow chevrons. Tapping a world opens its level grid in the same visual language.
+## yellow chevrons that page through the nine worlds three at a time. Tapping a world opens
+## its eight levels (six, the secret one and the guardian) in the same visual language.
 
 const FRAMES := ["frame_green", "frame_blue", "frame_orange"]
 const CARD_SIZE := Vector2(320, 410)
@@ -11,6 +12,8 @@ var _title: Label
 var _world_id := ""
 var _cards: Array[Control] = []
 var _selected := 0
+var _page := 0
+const PER_PAGE := 3
 
 
 func _ready() -> void:
@@ -43,6 +46,8 @@ func _ready() -> void:
 	_content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(_content)
 	var current := LevelManager.world_of(LevelManager.current_level)
+	if not current.is_empty():
+		_page = (int(current.index) - 1) / PER_PAGE
 	if not current.is_empty() and ProgressManager.has_progress() and ProgressManager.is_world_open(current):
 		_show_levels(current.id)
 	else:
@@ -82,18 +87,33 @@ func _show_worlds() -> void:
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
 	center.add_child(row)
 	row.add_child(_chevron("arrow_left", -1))
-	for i in LevelManager.WORLDS.size():
+	var first := _page * PER_PAGE
+	for i in range(first, mini(first + PER_PAGE, LevelManager.WORLDS.size())):
 		var card := _world_card(LevelManager.WORLDS[i], FRAMES[i % FRAMES.size()])
 		row.add_child(card)
 		_cards.append(card)
 	row.add_child(_chevron("arrow_right", 1))
 	_select(0)
+	var dots := HBoxContainer.new()
+	dots.alignment = BoxContainer.ALIGNMENT_CENTER
+	dots.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	dots.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	dots.offset_top = -46
+	dots.offset_bottom = -20
+	var pages := int(ceil(LevelManager.WORLDS.size() / float(PER_PAGE)))
+	for i in pages:
+		var dot := UIKit.make_label("●" if i == _page else "○", 26, Color.WHITE, 6, Color(0, 0, 0, 0.4))
+		dots.add_child(dot)
+	_content.add_child(dots)
 
 
 func _chevron(texture_name: String, step: int) -> TextureButton:
 	var button := UIKit.make_round(texture_name, 70)
 	button.custom_minimum_size = Vector2(64, 104)
-	button.pressed.connect(func(): _select(posmod(_selected + step, _cards.size())))
+	button.pressed.connect(func():
+		var pages := int(ceil(LevelManager.WORLDS.size() / float(PER_PAGE)))
+		_page = posmod(_page + step, pages)
+		_show_worlds())
 	return button
 
 
@@ -115,12 +135,8 @@ func _world_card(world: Dictionary, frame_name: String) -> Control:
 	card.pressed.connect(func(): UIKit.play_click())
 	card.pressed.connect(func(): _on_world_pressed(world))
 
-	var full: Texture2D = load(world.background)
-	var half := AtlasTexture.new()
-	half.atlas = full
-	half.region = Rect2(0, 0, full.get_width() * 0.5, full.get_height())
 	var picture := TextureRect.new()
-	picture.texture = half
+	picture.texture = load(world.card)
 	picture.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	picture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	picture.set_anchors_preset(Control.PRESET_FULL_RECT)
@@ -154,10 +170,12 @@ func _world_card(world: Dictionary, frame_name: String) -> Control:
 	var name_label := UIKit.make_label(world.title, 34, Color.WHITE, 12, Color(0.1, 0.08, 0.15, 0.9))
 	name_label.add_theme_font_override("font", UIKit.FONT_BLACK)
 	info.add_child(name_label)
-	var counter_text := "به‌زودی"
-	if world.available:
-		counter_text = "%d/%d" % [ProgressManager.total_stars(world.id), (world.last - world.first + 1) * 3]
-	var counter := UIKit.make_counter("res://assets/ui/star.png", counter_text, 26)
+	var counter_text := "%d/%d" % [ProgressManager.total_stars(world.id), (world.last - world.first + 1) * 3]
+	var icon := "res://assets/ui/star.png"
+	if int(world.index) == 9 and not open:
+		counter_text = "%d/8" % ProgressManager.legendary_count()
+		icon = "res://assets/ui/crystal.png"
+	var counter := UIKit.make_counter(icon, counter_text, 26)
 	counter.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	info.add_child(counter)
 	return card
@@ -166,6 +184,9 @@ func _world_card(world: Dictionary, frame_name: String) -> Control:
 func _on_world_pressed(world: Dictionary) -> void:
 	if ProgressManager.is_world_open(world):
 		_show_levels(world.id)
+	elif int(world.index) == 9:
+		AudioManager.play_sfx("reject")
+		FX.float_text(self, get_viewport().get_visible_rect().size * 0.5, "۸ الماس افسانه‌ای لازم است (یکی در مرحلهٔ مخفی هر جهان)", UIKit.PURPLE)
 	elif world.available:
 		# A locked world is sold in the worlds pack: open the store right here.
 		var store := StorePopup.new()
@@ -187,7 +208,7 @@ func _show_levels(world_id: String) -> void:
 	center.offset_bottom = -40
 	_content.add_child(center)
 	var grid := GridContainer.new()
-	grid.columns = 5
+	grid.columns = 4
 	grid.add_theme_constant_override("h_separation", 16)
 	grid.add_theme_constant_override("v_separation", 16)
 	center.add_child(grid)
@@ -198,9 +219,13 @@ func _show_levels(world_id: String) -> void:
 func _level_tile(level_id: int) -> Button:
 	var unlocked := ProgressManager.is_unlocked(level_id) and LevelManager.has_level(level_id)
 	var done := ProgressManager.is_done(level_id)
+	var world := LevelManager.world_of(level_id)
+	var special := level_id == int(world.secret_level) or level_id == int(world.boss_level)
 	var color_name := "green" if done else ("blue" if unlocked else "grey")
+	if unlocked and not done and special:
+		color_name = "orange"
 	var button := Button.new()
-	button.custom_minimum_size = Vector2(196, 196)
+	button.custom_minimum_size = Vector2(196, 176)
 	button.focus_mode = Control.FOCUS_NONE
 	button.disabled = not unlocked
 	var normal := UIKit.glass("tile_" + color_name, "tile")
@@ -222,14 +247,19 @@ func _level_tile(level_id: int) -> Button:
 	button.add_child(box)
 	var outline := Color("1f3f7a") if color_name == "blue" else (Color("1f5a22") if done else Color("5c606a"))
 	if unlocked:
-		var number := UIKit.make_label(str(level_id), 56, Color.WHITE, 12, outline)
+		var number := UIKit.make_label(str(level_id - int(world.first) + 1), 56, Color.WHITE, 12, outline)
 		number.add_theme_font_override("font", UIKit.FONT_BLACK)
 		box.add_child(number)
 	else:
 		var lock := UIKit.make_icon("res://assets/ui/key.png", 60)
 		lock.modulate = Color(1, 1, 1, 0.75)
 		box.add_child(lock)
-	var title := UIKit.make_label(LevelManager.level_title(level_id), 20, Color.WHITE, 6, outline)
+	var label := LevelManager.level_title(level_id)
+	if level_id == int(world.secret_level):
+		label = "✦ " + label
+	elif level_id == int(world.boss_level):
+		label = "☠ " + label
+	var title := UIKit.make_label(label, 20, Color.WHITE, 6, outline)
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	title.custom_minimum_size.x = 170
 	box.add_child(title)

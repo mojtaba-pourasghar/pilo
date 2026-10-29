@@ -20,6 +20,10 @@ func _ready() -> void:
 		for i in 8:
 			scene.dialogue.advanced.emit()
 			await get_tree().create_timer(0.3).timeout
+	if args.has("call"):
+		# --call=method: call a method on the scene first (e.g. _show_worlds on the map)
+		scene.call(String(args.call))
+		await get_tree().create_timer(0.3).timeout
 	if args.has("at"):
 		# --at=x,y in tiles: put Nima there (feet on the bottom of that cell)
 		var cell := String(args.at).split(",")

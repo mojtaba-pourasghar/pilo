@@ -121,7 +121,7 @@ func _ready() -> void:
 
 	TimeShift.time_changed.connect(_on_time_changed)
 	TimeShift.reset(TimeShift.state_from_name(String(data.get("start_time", "present"))))
-	AudioManager.play_music(world.music)
+	AudioManager.play_music("boss" if data.has("boss") else world.music)
 	AudioManager.play_ambient(String(world.get("ambient", "")))
 	Analytics.log_event("level_start", level_id)
 	_play_lines(data.get("intro", []))
