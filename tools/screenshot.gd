@@ -11,7 +11,8 @@ func _ready() -> void:
 	UIKit.ensure_theme(get_tree())
 	LevelManager.current_level = int(args.get("level", "1"))
 	var scenes := {"menu": LevelManager.MENU_SCENE, "map": LevelManager.MAP_SCENE,
-		"store": LevelManager.STORE_SCENE, "game": LevelManager.GAME_SCENE, "boot": "res://scenes/boot/boot.tscn"}
+		"store": LevelManager.STORE_SCENE, "game": LevelManager.GAME_SCENE, "boot": "res://scenes/boot/boot.tscn",
+		"intro": LevelManager.INTRO_SCENE}
 	var scene: Node = load(scenes.get(args.get("scene", "menu"), LevelManager.MENU_SCENE)).instantiate()
 	get_tree().root.add_child.call_deferred(scene)
 	await get_tree().create_timer(0.3).timeout

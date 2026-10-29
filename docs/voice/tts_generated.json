@@ -1,0 +1,53 @@
+{
+  "note": "clips made with the TTS service — temporary until a voice actor records them",
+  "files": {
+    "intro_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-10-29T08:43:43Z"
+    },
+    "intro_2": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-10-29T08:43:43Z"
+    },
+    "intro_3": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-10-29T08:43:43Z"
+    },
+    "intro_4": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-10-29T08:43:43Z"
+    },
+    "intro_5": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-10-29T08:43:43Z"
+    },
+    "intro_6": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-10-29T08:43:43Z"
+    },
+    "intro_7": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-10-29T08:43:43Z"
+    },
+    "intro_8": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-10-29T08:43:43Z"
+    }
+  }
+}

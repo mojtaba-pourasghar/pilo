@@ -1,6 +1,7 @@
 class_name SettingsPanel
 extends CanvasLayer
-## Volume of the four sound channels, hint level, store and progress reset (behind the parent gate).
+## Volume of the four sound channels, hint level, the opening story, the store and starting the
+## whole game over (behind the parent gate: progress is cleared and the story plays again).
 
 signal closed
 
@@ -41,7 +42,12 @@ func _ready() -> void:
 	var store := UIKit.make_button("فروشگاه", UIKit.ORANGE, 190, 26)
 	store.pressed.connect(func(): add_child(StorePopup.new()))
 	actions.add_child(store)
-	var reset := UIKit.make_button("پاک کردن پیشرفت", UIKit.RED, 230, 22)
+	var story := UIKit.make_button("دیدن داستان", UIKit.PURPLE, 200, 24)
+	story.pressed.connect(func():
+		get_tree().paused = false
+		LevelManager.goto_intro())
+	actions.add_child(story)
+	var reset := UIKit.make_button("شروع دوباره بازی", UIKit.RED, 240, 22)
 	reset.pressed.connect(_on_reset)
 	actions.add_child(reset)
 	var close := UIKit.make_button("بستن", UIKit.BLUE, 190, 26)
@@ -105,6 +111,8 @@ func _on_reset() -> void:
 	if ok:
 		SaveManager.reset_progress()
 		ProgressManager.progress_changed.emit()
+		get_tree().paused = false
+		LevelManager.goto_intro()
 
 
 func _close() -> void:

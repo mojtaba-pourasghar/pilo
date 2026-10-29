@@ -55,6 +55,11 @@ func target_pose(_delta: float) -> Dictionary:
 			var flap := sin(t * 14.0) * 0.18
 			return {"lean": 0.02, "bob": 0.0, "hipF": 0.45, "hipB": -0.25, "kneeF": 0.6, "kneeB": 0.35,
 				"shF": 1.9 + flap, "shB": -1.6 - flap, "elF": 0.25, "elB": 0.25, "head": 0.1, "squash": 0.0}
+		"glide":
+			# holding on to Pilo above: both arms up, legs dangling and swaying
+			var sway := sin(t * 4.0) * 0.15
+			return {"lean": 0.05, "bob": 0.0, "hipF": 0.3 + sway, "hipB": -0.2 + sway, "kneeF": 0.4, "kneeB": 0.3,
+				"shF": 2.9, "shB": 2.7, "elF": 0.1, "elB": 0.1, "head": -0.15, "squash": 0.0}
 		"dash":
 			return {"lean": 0.42, "bob": 0.0, "hipF": 1.15, "hipB": -1.0, "kneeF": 0.7, "kneeB": 0.5,
 				"shF": -1.0, "shB": -1.3, "elF": 0.4, "elB": 0.3, "head": -0.25, "squash": 0.0}

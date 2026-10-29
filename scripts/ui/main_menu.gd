@@ -38,7 +38,7 @@ func _ready() -> void:
 	options.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	column.add_child(options)
 	_option(options, "ادامه بازی", _on_continue)
-	_option(options, "شروع جدید", func(): LevelManager.play_level(1))
+	_option(options, "شروع جدید", func(): LevelManager.goto_intro("level"))
 	_option(options, "تنظیمات", func(): add_child(SettingsPanel.new()))
 	_option(options, "خروج", func(): get_tree().quit())
 

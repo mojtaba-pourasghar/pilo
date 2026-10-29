@@ -1,0 +1,568 @@
+{
+ "styles": {
+  "default": "stylized 3D render, polished premium children's mobile game art, Pixar-like, soft global illumination, vibrant saturated colors, smooth clean shapes, high detail",
+  "sprite": "stylized 3D render, polished premium children's mobile game art, Pixar-like, soft studio lighting, vibrant colors, clean crisp silhouette, isolated single subject centered, entire subject inside the frame, plain flat light grey background, no shadow on the ground, no text, no border",
+  "scene": "lush painterly stylized 3D environment art for a premium 2D side-scrolling platformer, Rayman Legends and Ori quality, rich depth and atmospheric perspective, vibrant saturated colors, soft volumetric light, no characters, no text",
+  "texture": "seamless tileable game texture, stylized hand-painted 3D look, top-down orthographic, even lighting, no perspective, no text"
+ },
+ "jobs": [
+  {
+   "id": "nima_sheet",
+   "prompt": "Character turnaround model sheet of an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots. Four full-body views in a row, evenly spaced: front view, three-quarter view, side view facing right, back view. Same character in every view, neutral standing pose",
+   "style": "sprite",
+   "size": [
+    1440,
+    768
+   ],
+   "post": "sheet",
+   "refs": [
+    "ref_heroes"
+   ]
+  },
+  {
+   "id": "pilo_sheet",
+   "prompt": "Character turnaround model sheet of Pilo, a small cute fox cub: bright orange fur, cream white chest, cheeks and tail tip, big sparkling blue eyes, large pointed ears, blue neck scarf with a small gold medal, fluffy tail. Four full-body views in a row, evenly spaced: front view, three-quarter view, side view facing right, back view. Same character in every view, standing on four legs",
+   "style": "sprite",
+   "size": [
+    1440,
+    768
+   ],
+   "post": "sheet",
+   "refs": [
+    "ref_heroes"
+   ]
+  },
+  {
+   "id": "nima_rig",
+   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference sheet. Full body, strict side view facing right, standing tall, arms hanging slightly away from the body, legs slightly apart with a clear gap between them",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "nima_sheet"
+   ]
+  },
+  {
+   "id": "pilo_rig",
+   "prompt": "Pilo, a small cute fox cub: bright orange fur, cream white chest, cheeks and tail tip, big sparkling blue eyes, large pointed ears, blue neck scarf with a small gold medal, fluffy tail, exactly as in the reference sheet. Full body, strict side view facing right, standing on all four legs with clear gaps between the front legs and between the hind legs, tail raised behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "refs": [
+    "pilo_sheet"
+   ]
+  },
+  {
+   "id": "nima_jump",
+   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference. Full body side view facing right, jumping joyfully, one knee raised, arms up",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "nima_sheet"
+   ]
+  },
+  {
+   "id": "pilo_fly",
+   "prompt": "Pilo, a small cute fox cub: bright orange fur, cream white chest, cheeks and tail tip, big sparkling blue eyes, large pointed ears, blue neck scarf with a small gold medal, fluffy tail, exactly as in the reference. Side view facing right, leaping through the air with legs stretched, glowing with soft magical blue sparkles",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "refs": [
+    "pilo_sheet"
+   ]
+  },
+  {
+   "id": "forest_far",
+   "prompt": "Wide panoramic far background of an enchanted mushroom forest valley: soft blue sky with big fluffy clouds, distant blue mountains, a far waterfall, rolling green hills with a few giant red mushrooms far away. Horizontally seamless, no ground in the foreground",
+   "style": "scene",
+   "size": [
+    1536,
+    768
+   ],
+   "post": "tile_x"
+  },
+  {
+   "id": "forest_mid",
+   "prompt": "A row of distant lush forest treetops and giant colorful mushrooms forming a horizontal band, seen from the side, isolated on plain light grey background, bottom edge flat",
+   "style": "sprite",
+   "size": [
+    1536,
+    640
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_tree_1",
+   "prompt": "a tall lush stylized forest tree with a round leafy canopy and a thick twisted trunk, side view, full tree from roots to top",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_tree_2",
+   "prompt": "a slender birch-like forest tree with bright green leaves, side view, full tree from roots to top",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_tree_3",
+   "prompt": "an ancient big oak tree with moss and roots, side view, full tree from roots to top",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_mushroom_1",
+   "prompt": "a giant red mushroom with white spots, side view, whole mushroom",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_mushroom_2",
+   "prompt": "a giant orange mushroom with cream spots, side view, whole mushroom",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_mushroom_3",
+   "prompt": "a cluster of three purple glowing mushrooms, side view, whole mushroom",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_bush_1",
+   "prompt": "a round leafy green bush with tiny pink berries, side view",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_bush_2",
+   "prompt": "a wide flowering bush with yellow flowers, side view",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_bush_3",
+   "prompt": "a cluster of tall ferns, side view",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_rocks",
+   "prompt": "a group of mossy grey boulders, side view",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_front_leaves",
+   "prompt": "big dark green jungle leaves and fern fronds silhouette growing upward from the bottom, for a foreground layer",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_vines",
+   "prompt": "hanging green jungle vines with leaves, hanging down from the top",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_ground_top",
+   "prompt": "A horizontal strip of stylized platform ground seen from the side: lush green grass top edge with small flowers over rich brown soil with small stones, the grass edge runs along the top, side-scroller terrain tile, seamless left to right",
+   "style": "sprite",
+   "size": [
+    1024,
+    512
+   ],
+   "post": "tile_x"
+  },
+  {
+   "id": "forest_soil",
+   "prompt": "Rich brown soil with small embedded stones and roots",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "tile_xy"
+  },
+  {
+   "id": "forest_plank",
+   "prompt": "A floating wooden plank platform made of three logs tied with rope, with a little moss, side view",
+   "style": "sprite",
+   "size": [
+    1024,
+    512
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "block_question",
+   "prompt": "A shiny golden mystery block with a big white question mark, rounded edges, rivets in the corners, game item, front view",
+   "style": "sprite",
+   "size": [
+    768,
+    768
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "block_brick",
+   "prompt": "A single orange-brown brick block made of stacked bricks, rounded edges, game item, front view",
+   "style": "sprite",
+   "size": [
+    768,
+    768
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "block_used",
+   "prompt": "A dull brown empty stone block with rivets, rounded edges, game item, front view",
+   "style": "sprite",
+   "size": [
+    768,
+    768
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_pipe",
+   "prompt": "A hollow upright tree trunk pipe with a wide mossy rim at the top, front view, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_cracked_wall",
+   "prompt": "A tall mossy stone wall block with big cracks, front view, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "forest_thorns",
+   "prompt": "A row of dark purple thorny bramble vines with sharp spikes, side view, game hazard",
+   "style": "sprite",
+   "size": [
+    1024,
+    512
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "time_gate",
+   "prompt": "A magical stone arch gate with a golden clock on top and a swirling purple time portal inside, mossy stones, front view",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "time_gate_locked",
+   "prompt": "The same magical stone arch gate with a golden clock on top, closed with wooden bars and a big golden padlock, front view",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "time_gate"
+   ]
+  },
+  {
+   "id": "enemy_shroom_shadow",
+   "prompt": "a small cute mushroom creature with a big cap, tiny feet and a face, cursed by shadow magic: dark purple and indigo colors, glowing purple angry eyes, wisps of dark smoke, side view facing right, full body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "enemy_shroom_free",
+   "prompt": "the same creature freed from the curse: bright happy natural colors, smiling, side view facing right, full body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_shroom_shadow"
+   ]
+  },
+  {
+   "id": "enemy_bee_shadow",
+   "prompt": "a round cute bee creature with small wings and a stinger, cursed by shadow magic: dark purple and indigo colors, glowing purple angry eyes, wisps of dark smoke, side view facing right, full body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "enemy_bee_free",
+   "prompt": "the same creature freed from the curse: bright happy natural colors, smiling, side view facing right, full body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_bee_shadow"
+   ]
+  },
+  {
+   "id": "enemy_hog_shadow",
+   "prompt": "a small cute hedgehog creature with spikes on its back, cursed by shadow magic: dark purple and indigo colors, glowing purple angry eyes, wisps of dark smoke, side view facing right, full body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "enemy_hog_free",
+   "prompt": "the same creature freed from the curse: bright happy natural colors, smiling, side view facing right, full body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "enemy_hog_shadow"
+   ]
+  },
+  {
+   "id": "boss_bear_shadow",
+   "prompt": "the Old Bear, a huge friendly forest guardian bear with moss on his shoulders, corrupted by shadow magic: dark purple fur, glowing purple eyes, shadow smoke, a stone crown of leaves, side view facing left, full body, menacing but not scary for kids",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "boss_bear_free",
+   "prompt": "the same Old Bear freed from the curse: warm brown fur, kind smiling eyes, moss and flowers on his shoulders, side view facing left, full body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "boss_bear_shadow"
+   ]
+  },
+  {
+   "id": "npc_grandpa",
+   "prompt": "Grandpa Clockmaker: a kind old man with a white beard, round glasses, a brown waistcoat with brass gears and a pocket watch, full body, three-quarter view",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "npc_ghubarak",
+   "prompt": "Ghubarak: a mischievous but cute small purple dust-cloud imp with big eyes, tiny hands and a cheeky grin, floating, full body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "npc_shadow_king",
+   "prompt": "Shah-Sayeh the Shadow King: a tall mysterious shadow figure with a broken golden crown, a flowing dark purple cloak and glowing eyes, majestic but kid-friendly, full body",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "npc_squirrel",
+   "prompt": "Sanjabak: a cheerful chatty squirrel holding a rolled map, full body, side view facing right",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout"
+  },
+  {
+   "id": "story_1",
+   "prompt": "the colorful magical land of Rangarestan at morning: floating islands, waterfalls, a cozy village with a tall clock tower, happy and bright",
+   "style": "scene",
+   "size": [
+    1536,
+    864
+   ],
+   "post": "none",
+   "refs": [
+    "ref_keyart"
+   ]
+  },
+  {
+   "id": "story_2",
+   "prompt": "inside a warm clock tower workshop full of gears: a kind old clockmaker with a white beard watches over eight glowing colorful time hearts on a shelf",
+   "style": "scene",
+   "size": [
+    1536,
+    864
+   ],
+   "post": "none"
+  },
+  {
+   "id": "story_3",
+   "prompt": "night falls on the clock tower: a tall shadow king with a broken crown and a purple cloak steals the eight glowing time hearts, dark purple smoke everywhere, dramatic but kid-friendly",
+   "style": "scene",
+   "size": [
+    1536,
+    864
+   ],
+   "post": "none"
+  },
+  {
+   "id": "story_4",
+   "prompt": "the colorful village turns grey and still, colors fly away like ribbons into the sky, the big clock stops",
+   "style": "scene",
+   "size": [
+    1536,
+    864
+   ],
+   "post": "none"
+  },
+  {
+   "id": "story_5",
+   "prompt": "the next morning in a sunlit forest: an 8-year-old boy explorer with a red beanie and backpack finds a softly glowing egg among roots",
+   "style": "scene",
+   "size": [
+    1536,
+    864
+   ],
+   "post": "none",
+   "refs": [
+    "ref_keyart"
+   ]
+  },
+  {
+   "id": "story_6",
+   "prompt": "the glowing egg hatches and a tiny orange fox cub with big blue eyes and a blue scarf pops out in a burst of golden light, the boy smiles in surprise",
+   "style": "scene",
+   "size": [
+    1536,
+    864
+   ],
+   "post": "none",
+   "refs": [
+    "ref_keyart"
+   ]
+  },
+  {
+   "id": "story_7",
+   "prompt": "the boy and the fox cub hold a magical brass time lens that glows, showing the same forest half in the past (warm golden) and half in the present (cool blue)",
+   "style": "scene",
+   "size": [
+    1536,
+    864
+   ],
+   "post": "none",
+   "refs": [
+    "ref_keyart"
+   ]
+  },
+  {
+   "id": "story_8",
+   "prompt": "the boy and the fox cub stand on a cliff at sunrise looking toward eight distant worlds: forest, coral beach, golden desert, snowy mountains, sky islands, crystal caves, clockwork factory and a dark shadow castle, adventure begins",
+   "style": "scene",
+   "size": [
+    1536,
+    864
+   ],
+   "post": "none",
+   "refs": [
+    "ref_keyart"
+   ]
+  }
+ ]
+}

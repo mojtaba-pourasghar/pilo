@@ -19,7 +19,7 @@ import sys
 from collections import deque
 
 PAST, PRESENT = 0, 1
-LEGEND = set(".#roBVMKD*CEPi?GRf~wamu<>^Lg/\\SOxz") | set("QUJHb$ncd+keyhFTtANpW")
+LEGEND = set(".#roBVMKD*CEPi?GRf~wamu<>^Lg/\\SOxz") | set("QUJHb$ncd+keyhFTtANpWYX")
 REACH = {0: 4, 1: 3, 2: 2}        # rise in tiles -> horizontal reach (puzzle levels: walk 330)
 # Platformer levels ("format": 2): JUMP_VELOCITY -870 plus run bonus, RUN 470, one air dash.
 REACH_V2 = {0: 6, 1: 5, 2: 4, 3: 2}
@@ -306,7 +306,7 @@ def check(path):
     ex, ey = exits[0]
     if not body_touches(states, ex, ey):
         errors.append("exit looks unreachable from the start")
-    for kx, ky in level.find("k"):
+    for kx, ky in level.find("k") + level.find("X"):
         if not touches(states, kx, ky, level):
             errors.append("time key at %d,%d looks unreachable" % (kx, ky))
         else:

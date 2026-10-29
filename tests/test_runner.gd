@@ -19,6 +19,7 @@ func _ready() -> void:
 	await _test_blocks()
 	await _test_pipe_warp()
 	await _test_pilo_frees_hedgehog()
+	await _test_glide_and_den()
 	await _test_bot_runs_course()
 	SaveManager.data = backup
 	SaveManager.save_game()
@@ -266,6 +267,32 @@ func _test_pilo_frees_hedgehog() -> void:
 
 ## A blind bot (hold right, jump every half second) must get through a short course with a
 ## pit, shadow creatures, blocks and a flag: the controls are forgiving enough for that.
+func _test_glide_and_den() -> void:
+	var game := await _start([
+		"..............",
+		"..............",
+		"..............",
+		".P............",
+		"######....##X#",
+	])
+	await _wait(0.2)
+	game.player.global_position = Vector2(6.5 * 64, 64)
+	game.player.velocity = Vector2.ZERO
+	Input.action_press("jump")
+	game.player._jump_held = false
+	await _wait(0.5)
+	_check(game.player.gliding and game.player.velocity.y <= game.player.GLIDE_FALL + 1.0, "holding jump while falling glides with Pilo")
+	Input.action_release("jump")
+	game.player.global_position = Vector2(11 * 64, 3 * 64)
+	await _wait(0.6)
+	Input.action_press("pilo")
+	await _wait(0.1)
+	Input.action_release("pilo")
+	await _wait(2.5)
+	_check(game.has_time_key, "Pilo brings the time key out of a fox den")
+	await _stop(game)
+
+
 func _test_bot_runs_course() -> void:
 	var game := await _start([
 		"..............................................",

@@ -12,3 +12,4 @@ build/
 *.env
 tools/audio/.cache/
 __pycache__/
+venv/

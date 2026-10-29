@@ -91,6 +91,7 @@ row(87, 91, G - 6, "o")
 text(80, G - 8, "cccc")
 put(85, G - 4, "y")
 put(93, G - 1, "e")
+put(90, G - 1, "Y")                     # a fox den with a diamond (Pilo's nose finds it)
 put(96, G - 1, "N")                     # shadow cannon
 
 # E. the river: a bridge that only exists in the past (time lens) (x 98-125)
@@ -122,7 +123,7 @@ rect(139, 173, G + 1, H - 2, ".")
 put(141, H - 3, "p")                    # arrival pipe under the entry
 text(146, H - 2, "cc.cc")
 put(150, H - 2, "e")
-put(156, H - 2, "k")                    # the time key
+put(156, H - 2, "X")                    # the time key, deep in a fox den: only Pilo can fetch it
 text(158, G + 2, "Q.b$b")
 put(162, H - 2, "e")
 put(166, H - 2, "d")
@@ -166,10 +167,10 @@ level = {
     "signs": [
         "دکمهٔ آبی: راه برو. نگه داری تندتر می‌دوی!",
         "روی سر قارچ‌سایه بپر تا آزاد شود. به جعبه‌ها از زیر ضربه بزن!",
-        "خارپشت سایه تیغ دارد! دکمهٔ پیلو را بزن تا آزادش کند.",
+        "خارپشت سایه تیغ دارد! دکمهٔ پیلو را بزن تا آزادش کند. وسط پرش، پرش را نگه دار تا پیلو تو را ببرد!",
         "پل فقط در گذشته هست. عدسی زمان را بزن!",
         "دیوار ترک‌دار؟ با دکمهٔ دَش بدو و بشکنش!",
-        "دروازه قفل است. کلید زمان زیر زمین است؛ از لوله پایین برو!",
+        "دروازه قفل است. کلید زمان زیر زمین، در لانهٔ روباه است؛ از لوله پایین برو و پیلو را بفرست!",
     ],
     "warps": warps,
     "map": ["".join(r) for r in grid],

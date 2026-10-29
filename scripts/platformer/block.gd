@@ -25,6 +25,7 @@ var _bump := 0.0
 var _t := 0.0
 var _left := MULTI_COINS
 var _cooldown := 0.0
+var _sniffed := false
 
 
 func _ready() -> void:
@@ -32,6 +33,8 @@ func _ready() -> void:
 	collision_mask = 0
 	z_index = 2
 	add_to_group("block")
+	if kind == Kind.HIDDEN:
+		add_to_group("secret")
 	_shape = CollisionShape2D.new()
 	var rect := RectangleShape2D.new()
 	rect.size = Vector2(SIZE, SIZE)
@@ -62,8 +65,19 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta: float) -> void:
 	_t += delta
-	if kind != Kind.HIDDEN:
+	if kind != Kind.HIDDEN or _sniffed:
 		queue_redraw()
+
+
+## Pilo's nose (see pilo_companion.gd): only a still-hidden block is a secret.
+func is_secret() -> bool:
+	return kind == Kind.HIDDEN
+
+
+## Pilo found it: a faint shimmer shows where it hides.
+func sniffed() -> void:
+	_sniffed = true
+	set_process(true)
 
 
 func bump(_by: Node = null) -> void:
@@ -132,6 +146,15 @@ func _coin_pop(pos: Vector2) -> void:
 func _draw() -> void:
 	var o := Vector2(0, -_bump * 12.0)
 	var r := Rect2(o + Vector2(2, 2), Vector2(SIZE - 4, SIZE - 4))
+	if kind == Kind.HIDDEN:
+		if _sniffed:
+			var a := 0.25 + 0.2 * sin(_t * 5.0)
+			draw_rect(r, Color(1, 0.95, 0.6, a * 0.4))
+			draw_rect(r, Color(1, 0.95, 0.6, a), false, 3.0)
+			for k in 3:
+				var p := r.get_center() + Vector2(cos(_t * 2.0 + k * 2.1), sin(_t * 2.0 + k * 2.1)) * 22.0
+				draw_circle(p, 3.0, Color(1, 1, 0.8, a + 0.2))
+		return
 	match kind:
 		Kind.QUESTION:
 			_rounded(r.grow(2), 10.0, OUTLINE)

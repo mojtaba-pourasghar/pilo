@@ -15,6 +15,7 @@ func _ready() -> void:
 	collision_mask = 0
 	z_index = 1
 	add_to_group("breakable")
+	add_to_group("secret")
 	var shape := CollisionShape2D.new()
 	var rect := RectangleShape2D.new()
 	rect.size = Vector2(TILE, TILE * cells)

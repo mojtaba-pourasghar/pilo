@@ -5,6 +5,7 @@ const GAME_SCENE := "res://scenes/gameplay/game.tscn"
 const MENU_SCENE := "res://scenes/menus/main_menu.tscn"
 const MAP_SCENE := "res://scenes/menus/world_map.tscn"
 const STORE_SCENE := "res://scenes/menus/store.tscn"
+const INTRO_SCENE := "res://scenes/story/intro.tscn"
 
 const WORLDS := [
 	{
@@ -54,6 +55,8 @@ const LEVEL_TITLES := [
 var current_level := 1
 ## Tests can play a hand-made map: when set, load_level returns it instead of the file.
 var override_level: Dictionary = {}
+## Where the opening story goes when it ends: "menu" or "level" (level 1, for a new game).
+var after_intro := "menu"
 var _fade: ColorRect
 var _busy := false
 
@@ -125,6 +128,11 @@ func goto_menu() -> void:
 
 func goto_map() -> void:
 	change_scene(MAP_SCENE)
+
+
+func goto_intro(then := "menu") -> void:
+	after_intro = then
+	change_scene(INTRO_SCENE)
 
 
 func goto_store() -> void:

@@ -51,4 +51,7 @@ func _process(delta: float) -> void:
 		_done = true
 		for path in WARM_UP:
 			ResourceLoader.load_threaded_get(path)
-		LevelManager.goto_menu()
+		if bool(SaveManager.data.get("intro_seen", false)):
+			LevelManager.goto_menu()
+		else:
+			LevelManager.goto_intro()

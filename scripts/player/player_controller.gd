@@ -6,6 +6,8 @@ extends CharacterBody2D
 ##   in the air;
 ## - stomp: landing on a stompable enemy frees it and bounces Nima up (higher if jump is held);
 ## - hitting a block from below bumps it (coins, diamonds, bricks);
+## - glide: holding jump while falling, Pilo carries Nima and they float down slowly (a few
+##   seconds, refilled on landing) — some gaps can only be crossed this way;
 ## - hearts: a hit costs one heart, knocks Nima back, spills a few coins and gives a short
 ##   blinking invulnerability. Forgiving jump timing (coyote time and jump buffer) stays.
 ## Nima is drawn in code (NimaRig), every joint animated.
@@ -39,6 +41,8 @@ const DASH_TIME := 0.26
 const DASH_COOLDOWN := 0.45
 const INVULNERABLE := 1.6
 const KNOCKBACK := Vector2(340, -560)
+const GLIDE_FALL := 110.0      # fall speed while Pilo carries Nima
+const GLIDE_TIME := 2.2
 const WIND_PUSH := 260.0
 const UPDRAFT_ACCEL := 3400.0
 const UPDRAFT_MAX := -560.0
@@ -49,6 +53,9 @@ var hearts := 3
 var max_hearts := 3
 var invulnerable := 0.0
 var dashing := 0.0
+var can_glide := true           ## false in levels before Pilo learns it (or without Pilo)
+var gliding := false
+var glide_left := GLIDE_TIME
 var _air_dash_used := false
 
 var _coyote := 0.0
@@ -96,6 +103,7 @@ func _physics_process(delta: float) -> void:
 	_coyote = COYOTE_TIME if on_floor else _coyote - delta
 	if on_floor:
 		_air_dash_used = false
+		glide_left = GLIDE_TIME
 
 	if dashing > 0.0:
 		dashing -= delta
@@ -103,6 +111,11 @@ func _physics_process(delta: float) -> void:
 		velocity.y = minf(velocity.y + GRAVITY * 0.15 * delta, 120.0)
 	else:
 		velocity.y = minf(velocity.y + GRAVITY * delta, MAX_FALL)
+		gliding = can_glide and can_move and not on_floor and velocity.y > 0.0 and glide_left > 0.0 \
+			and Input.is_action_pressed("jump") and not _jump_held
+		if gliding:
+			glide_left -= delta
+			velocity.y = minf(velocity.y, GLIDE_FALL)
 		if _wind.y < 0.0:
 			velocity.y = maxf(velocity.y - UPDRAFT_ACCEL * delta, UPDRAFT_MAX)
 		_horizontal(dir, delta, on_floor)
@@ -200,6 +213,8 @@ func _animate(delta: float, on_floor: bool, dir: float) -> void:
 		state = "hurt"
 	elif dashing > 0.0:
 		state = "dash"
+	elif gliding:
+		state = "glide"
 	elif not on_floor:
 		state = "jump" if velocity.y < -120.0 else "fall"
 	elif dir != 0.0 and signf(dir) != signf(velocity.x) and absf(velocity.x) > 200.0:

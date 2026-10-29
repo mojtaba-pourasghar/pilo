@@ -7,6 +7,7 @@ extends RefCounted
 ## d diamond  + heart  k time key (opens the exit gate)  e shadow mushroom  y shadow bee
 ## h shadow hedgehog  F thorn wheel  T stone crusher  t falling raft  A thorns
 ## N shadow cannon  p pipe (top-left; warps in data "warps")  W cracked wall
+## Y fox den with a diamond  X fox den with the time key (only Pilo gets them)
 
 const TILE := 64
 const PAST := 1
@@ -259,6 +260,17 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 						wall.palette = palette
 						wall.position = pos
 						root.add_child(wall)
+				"Y", "X":
+					var den := FoxDen.new()
+					den.content = "key" if c == "X" else "diamond"
+					den.game = game
+					if c == "X":
+						info.time_key = true
+					else:
+						den.diamond_index = info.diamonds
+						info.diamonds += 1
+					den.position = pos
+					root.add_child(den)
 				"p":
 					var pipe := Pipe.new()
 					var n := 1

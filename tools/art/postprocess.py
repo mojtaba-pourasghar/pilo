@@ -1,0 +1,99 @@
+#!/usr/bin/env python3
+"""Turns the raw generated art (art_src/<id>.png) into game assets, following the "post" field
+of each job in tools/art/manifest.json:
+
+  cutout  → transparent background (rembg, isnet-general-use), trimmed  → assets/art/<id>.png
+  sheet   → like cutout, then split into the separate views (left to right) → <id>_1.png ...
+  tile_x  → left and right edges blended so it repeats sideways          → assets/art/<id>.png
+  tile_xy → seamless in both directions                                  → assets/art/<id>.png
+  none    → copied as it is (story pictures go to assets/story/)
+
+Needs rembg:  python3 -m venv venv && venv/bin/pip install "rembg[cpu]" pillow
+    venv/bin/python tools/art/postprocess.py [ids...]
+"""
+import json, os, sys
+from PIL import Image, ImageChops
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
+SRC = os.path.join(ROOT, "art_src")
+OUT = os.path.join(ROOT, "assets", "art")
+STORY = os.path.join(ROOT, "assets", "story")
+_session = None
+
+
+def cutout(im):
+    global _session
+    from rembg import remove, new_session
+    if _session is None:
+        _session = new_session("isnet-general-use")
+    out = remove(im, session=_session, alpha_matting=True)
+    r, g, b, a = out.split()
+    a = a.point(lambda v: 0 if v < 24 else v)
+    out = Image.merge("RGBA", (r, g, b, a))
+    box = out.getbbox()
+    return out.crop(box) if box else out
+
+
+def split_views(im):
+    """Columns of empty space separate the views of a turnaround sheet."""
+    alpha = im.split()[3]
+    w, h = im.size
+    filled = [any(alpha.getpixel((x, y)) > 40 for y in range(0, h, 3)) for x in range(w)]
+    views, start = [], None
+    for x, f in enumerate(filled + [False]):
+        if f and start is None:
+            start = x
+        elif not f and start is not None:
+            if x - start > w * 0.05:
+                part = im.crop((start, 0, x, h))
+                views.append(part.crop(part.getbbox()))
+            start = None
+    return views
+
+
+def tile_x(im, blend=0.12):
+    w, h = im.size
+    k = int(w * blend)
+    out = im.copy()
+    for i in range(k):
+        t = i / k
+        right = im.crop((w - k + i, 0, w - k + i + 1, h))
+        left = im.crop((i, 0, i + 1, h))
+        out.paste(Image.blend(right, left, t), (w - k + i, 0))
+    return out.crop((0, 0, w - k, h))
+
+
+def tile_xy(im):
+    im = tile_x(im)
+    return tile_x(im.rotate(90, expand=True)).rotate(-90, expand=True)
+
+
+def main():
+    manifest = json.load(open(os.path.join(ROOT, "tools", "art", "manifest.json"), encoding="utf-8"))
+    only = set(sys.argv[1:])
+    os.makedirs(OUT, exist_ok=True)
+    os.makedirs(STORY, exist_ok=True)
+    for job in manifest["jobs"]:
+        src = os.path.join(SRC, job["id"] + ".png")
+        if (only and job["id"] not in only) or not os.path.exists(src):
+            continue
+        im = Image.open(src).convert("RGBA")
+        post = job.get("post", "cutout")
+        if post == "none":
+            dest = os.path.join(STORY if job["id"].startswith("story_") else OUT, job["id"] + ".png")
+            im.convert("RGB").save(dest)
+        elif post == "cutout":
+            cutout(im).save(os.path.join(OUT, job["id"] + ".png"))
+        elif post == "sheet":
+            views = split_views(cutout(im))
+            for i, view in enumerate(views):
+                view.save(os.path.join(OUT, f"{job['id']}_{i + 1}.png"))
+        elif post == "tile_x":
+            tile_x(im).save(os.path.join(OUT, job["id"] + ".png"))
+        elif post == "tile_xy":
+            tile_xy(im.convert("RGB")).save(os.path.join(OUT, job["id"] + ".png"))
+        print("done", job["id"], post)
+
+
+if __name__ == "__main__":
+    main()
