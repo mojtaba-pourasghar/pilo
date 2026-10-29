@@ -14,11 +14,11 @@ extends Node2D
 const PAST_GLOW := Color(1.0, 0.72, 0.3)
 const PRESENT_GLOW := Color(0.4, 0.9, 1.0)
 const HINT_TIME := 4.0
-const ATTACK_RANGE := 320.0
+var attack_range := 320.0
 const SMASH_RANGE := 220.0
 const FETCH_RANGE := 380.0
 const COOLDOWN := 0.8
-const SNIFF_RANGE := 230.0
+var sniff_range := 230.0
 
 var target: Node2D
 var busy := false
@@ -105,7 +105,7 @@ func _sniff(delta: float) -> void:
 		if _sniffed.has(node) or not is_instance_valid(node):
 			continue
 		var at: Vector2 = node.global_position + Vector2(32, 32)
-		if at.distance_to(here) < SNIFF_RANGE and (not node.has_method("is_secret") or node.is_secret()):
+		if at.distance_to(here) < sniff_range and (not node.has_method("is_secret") or node.is_secret()):
 			_sniffed[node] = true
 			_sniff_target = node
 			_sniff_left = 1.6
@@ -128,7 +128,7 @@ func act(game: Node) -> String:
 		return ""
 	_cooldown = COOLDOWN
 	var here: Vector2 = target.global_position
-	var enemy := _nearest(get_tree().get_nodes_in_group("enemy"), here, ATTACK_RANGE, func(n): return not n.freed)
+	var enemy := _nearest(get_tree().get_nodes_in_group("enemy"), here, attack_range, func(n): return not n.freed)
 	if enemy:
 		_pounce(enemy.global_position + Vector2(0, -20), func(): enemy.defeat())
 		return "attack"

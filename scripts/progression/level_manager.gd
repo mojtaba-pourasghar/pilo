@@ -6,6 +6,7 @@ const MENU_SCENE := "res://scenes/menus/main_menu.tscn"
 const MAP_SCENE := "res://scenes/menus/world_map.tscn"
 const STORE_SCENE := "res://scenes/menus/store.tscn"
 const INTRO_SCENE := "res://scenes/story/intro.tscn"
+const VILLAGE_SCENE := "res://scenes/menus/village.tscn"
 
 ## The nine worlds (8 levels each: 6 normal, a secret one opened by stars, and the boss).
 ## The ninth, «سرزمین وارونه», opens with the eight legendary diamonds.
@@ -244,6 +245,10 @@ func goto_intro(then := "menu") -> void:
 
 func goto_store() -> void:
 	change_scene(STORE_SCENE)
+
+
+func goto_village() -> void:
+	change_scene(VILLAGE_SCENE)
 
 
 func change_scene(path: String) -> void:

@@ -11,14 +11,44 @@ signal purchases_restored(skus: Array)
 
 const PRODUCTS := {
 	"worlds_pack": {
-		"title": "بستهٔ دنیاهای ۲ و ۳",
-		"description": "جزیره‌های ابری و غارهای بلورین؛ ۲۰ مرحلهٔ تازه و ادامهٔ داستان.",
+		"title": "بستهٔ دنیاهای ۲ تا ۸",
+		"description": "هفت دنیای تازه، ۵۶ مرحله، هفت نگهبان و ادامهٔ داستان تا دنیای وارونه.",
 		"icon": "res://assets/ui/crystal.png",
 		"coming_soon": false,
 	},
 	"pilo_colors": {
 		"title": "رنگ‌های پیلو",
 		"description": "سه رنگ تازه برای پیلو. فقط ظاهری است و مرحله‌ها را آسان‌تر نمی‌کند.",
+		"icon": "res://assets/ui/backpack.png",
+		"coming_soon": false,
+	},
+	"companion_dragon": {
+		"title": "اژدهاک",
+		"description": "همراهی که با پیلو بی‌آنکه پایین بیاید سُر می‌خورد. راه اصلی هیچ مرحله‌ای به آن نیاز ندارد.",
+		"icon": "res://assets/ui/backpack.png",
+		"coming_soon": false,
+	},
+	"companion_lion": {
+		"title": "شیرک بالدار",
+		"description": "همراهی که یک قلب بیشتر به نیما می‌دهد.",
+		"icon": "res://assets/ui/backpack.png",
+		"coming_soon": false,
+	},
+	"tool_skateboard": {
+		"title": "اسکیت موشکی",
+		"description": "دَش بلندتر و تندتر.",
+		"icon": "res://assets/ui/backpack.png",
+		"coming_soon": false,
+	},
+	"tool_balloon": {
+		"title": "بالن رنگین‌کمان",
+		"description": "سُر خوردن بی‌پایان در هوا.",
+		"icon": "res://assets/ui/backpack.png",
+		"coming_soon": false,
+	},
+	"tool_toolbox": {
+		"title": "جعبه‌ابزار طلایی",
+		"description": "یک جای ابزار سوم در کوله.",
 		"icon": "res://assets/ui/backpack.png",
 		"coming_soon": false,
 	},

@@ -5,7 +5,7 @@ extends Node
 signal progress_changed
 
 ## Cosmetics earned by finishing a level (never sold): level id -> reward id.
-const REWARDS := {30: "reward_rangarestan"}
+const REWARDS := {64: "reward_rangarestan"}
 
 
 func _levels() -> Dictionary:

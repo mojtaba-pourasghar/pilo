@@ -23,7 +23,7 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	for body in get_overlapping_bodies():
-		if body.is_in_group("player"):
+		if body.is_in_group("player") and not body.thorn_proof:
 			body.take_hit(body.global_position.x + body.facing * 20.0)
 			if body.velocity.y > -300.0:
 				body.velocity.y = -620.0

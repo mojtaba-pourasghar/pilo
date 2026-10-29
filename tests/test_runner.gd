@@ -22,10 +22,49 @@ func _ready() -> void:
 	await _test_glide_and_den()
 	await _test_boss_fight()
 	await _test_bot_runs_course()
+	await _test_loadout()
 	SaveManager.data = backup
 	SaveManager.save_game()
 	print("\n%d checks, %d failed" % [_checks, _failures])
 	get_tree().quit(1 if _failures > 0 else 0)
+
+
+func _test_loadout() -> void:
+	var data: Dictionary = SaveManager.data
+	data.coins = 1000
+	data.diamonds = 0
+	data.tools = []
+	data.companions = []
+	data.equipped = []
+	data.companion = ""
+	data.hearts_of_time = 1
+	_check(Loadout.owns_companion("squirrel"), "the first guardian's companion joins for free")
+	_check(not Loadout.owns_companion("turtle"), "the second one waits for its guardian")
+	_check(not Loadout.buy_with_wallet("tool", "shield"), "the bubble shield needs diamonds too")
+	_check(Loadout.buy_with_wallet("tool", "hammer") and int(data.coins) == 700, "the hammer costs 300 coins")
+	_check(Loadout.buy_with_wallet("tool", "umbrella") and Loadout.buy_with_wallet("companion", "hedgehog") == false, "coins run out")
+	_check(Loadout.toggle_tool("hammer") and Loadout.toggle_tool("umbrella"), "two tools fit in the backpack")
+	data.tools.append("magnet")
+	_check(not Loadout.toggle_tool("magnet"), "a third tool needs the golden toolbox")
+	Loadout.pick_companion("squirrel")
+	var game := await _start([
+		"..........",
+		"..........",
+		"P.........",
+		"##########",
+	])
+	_check(game.player.wall_jump and game.player.dash_breaks_bricks, "the squirrel and the hammer work in the level")
+	_check(game._follower != null and game._follower.id == "squirrel", "the picked companion follows along")
+	await _wait(0.5)
+	_stop(game)
+	for id in Loadout.COMPANIONS:
+		var rig := CompanionRig.new()
+		rig.id = id
+		add_child(rig)
+	for id in Loadout.TOOLS:
+		add_child(LoadoutIcon.make("tool", id))
+	await _wait(0.1)
+	_check(true, "all 12 companions and 12 tools draw without errors")
 
 
 func _check(ok: bool, what: String) -> void:

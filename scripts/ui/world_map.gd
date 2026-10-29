@@ -40,6 +40,16 @@ func _ready() -> void:
 	back.pressed.connect(_back)
 	add_child(back)
 
+	# Pilo's village (companions and tools), top-right across from the back button.
+	var village := UIKit.make_button("دهکده", UIKit.ORANGE, 190, 28)
+	village.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	village.offset_left = -214
+	village.offset_right = -24
+	village.offset_top = 26
+	village.offset_bottom = 90
+	village.pressed.connect(LevelManager.goto_village)
+	add_child(village)
+
 	_content = Control.new()
 	_content.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_content.offset_top = 110

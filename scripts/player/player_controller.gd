@@ -51,6 +51,24 @@ var controls_enabled := true
 var facing := 1.0
 var hearts := 3
 var max_hearts := 3
+## Set from the companion and the tools (apply_loadout).
+var walk_speed := WALK
+var run_speed := RUN
+var jump_scale := 1.0
+var glide_time := GLIDE_TIME
+var glide_fall := GLIDE_FALL
+var dash_speed := DASH_SPEED
+var dash_time := DASH_TIME
+var wall_jump := false
+var double_jump := false
+var ice_grip := false
+var sand_free := false
+var swim_fast := false
+var thorn_proof := false
+var dash_frees_spiky := false
+var dash_breaks_bricks := false
+var shield := 0
+var _double_used := false
 var invulnerable := 0.0
 var dashing := 0.0
 var can_glide := true           ## false in levels before Pilo learns it (or without Pilo)
@@ -95,6 +113,8 @@ func _physics_process(delta: float) -> void:
 		dir = Input.get_axis("move_left", "move_right")
 		if Input.is_action_just_pressed("jump"):
 			_buffer = JUMP_BUFFER
+			if not is_on_floor() and _coyote <= 0.0 and _swim == 0:
+				_air_jump()
 		if Input.is_action_just_pressed("dash") and _dash_cooldown <= 0.0 and (is_on_floor() or not _air_dash_used):
 			_air_dash_used = not is_on_floor()
 			_start_dash(dir)
@@ -107,18 +127,19 @@ func _physics_process(delta: float) -> void:
 	_coyote = COYOTE_TIME if on_floor else _coyote - delta
 	if on_floor:
 		_air_dash_used = false
-		glide_left = GLIDE_TIME
+		_double_used = false
+		glide_left = glide_time
 
 	if dashing > 0.0:
 		dashing -= delta
-		velocity.x = facing * DASH_SPEED
+		velocity.x = facing * dash_speed
 		velocity.y = minf(velocity.y + GRAVITY * 0.15 * delta, 120.0)
 	elif _swim > 0:
 		# swimming: soft gravity, slow sinking, every jump press is a stroke upward
 		gliding = false
 		velocity.y = minf(velocity.y + 650.0 * delta, 210.0)
 		if can_move and Input.is_action_just_pressed("jump"):
-			velocity.y = -470.0
+			velocity.y = -600.0 if swim_fast else -470.0
 			_buffer = 0.0
 			_squash = Vector2(0.85, 1.15)
 			AudioManager.play_sfx_once("splash", 0.2, 1.5, -10.0)
@@ -129,15 +150,15 @@ func _physics_process(delta: float) -> void:
 			and Input.is_action_pressed("jump") and not _jump_held
 		if gliding:
 			glide_left -= delta
-			velocity.y = minf(velocity.y, GLIDE_FALL)
+			velocity.y = minf(velocity.y, glide_fall)
 		if _wind.y < 0.0:
 			velocity.y = maxf(velocity.y - UPDRAFT_ACCEL * delta, UPDRAFT_MAX)
 		_horizontal(dir, delta, on_floor)
 	_wind = Vector2.ZERO
 
 	if _buffer > 0.0 and _coyote > 0.0 and can_move and _swim == 0:
-		velocity.y = JUMP_VELOCITY - absf(velocity.x) * JUMP_SPEED_BONUS
-		if _sand > 0:
+		velocity.y = (JUMP_VELOCITY - absf(velocity.x) * JUMP_SPEED_BONUS) * jump_scale
+		if _sand > 0 and not sand_free:
 			velocity.y *= 0.78
 		_buffer = 0.0
 		_coyote = 0.0
@@ -172,7 +193,7 @@ func _horizontal(dir: float, delta: float, on_floor: bool) -> void:
 		_run_hold += delta
 	elif dir == 0.0 or signf(dir) != signf(velocity.x):
 		_run_hold = 0.0
-	var cap := RUN if _run_hold > RUN_AFTER else WALK
+	var cap := run_speed if _run_hold > RUN_AFTER else walk_speed
 	var drift := 0.0
 	if _wind.x != 0.0 and not on_floor:
 		drift = signf(_wind.x) * WIND_PUSH
@@ -184,9 +205,10 @@ func _horizontal(dir: float, delta: float, on_floor: bool) -> void:
 			rate = SKID_DECEL
 	if absf(velocity.x) > cap and signf(velocity.x) == signf(target):
 		rate = OVERSPEED_DECEL
-	if _on_ice and on_floor:
+	if _on_ice and on_floor and not ice_grip:
 		rate *= 0.18 if dir == 0.0 else 0.4      # ice: slow to start, slower to stop
-	if _swim > 0 or _sand > 0:
+	var slowed := (_swim > 0 and not swim_fast) or (_sand > 0 and not sand_free)
+	if slowed:
 		cap *= 0.7 if _swim > 0 else 0.45
 		target = dir * cap
 	velocity.x = move_toward(velocity.x, target, rate * delta)
@@ -195,7 +217,7 @@ func _horizontal(dir: float, delta: float, on_floor: bool) -> void:
 func _start_dash(dir: float) -> void:
 	if dir != 0.0:
 		facing = signf(dir)
-	dashing = DASH_TIME
+	dashing = dash_time
 	_dash_cooldown = DASH_COOLDOWN
 	velocity.y = minf(velocity.y, 0.0) * 0.4
 	_squash = Vector2(1.25, 0.85)
@@ -224,7 +246,9 @@ func _check_collisions() -> void:
 			body.call("boing")
 			AudioManager.play_sfx("bounce")
 			return
-		elif absf(normal.x) > 0.6 and dashing > 0.0 and body.has_method("smash"):
+		elif absf(normal.x) > 0.6 and dashing > 0.0 and body is Block and dash_breaks_bricks and body.kind == Block.Kind.BRICK:
+			body.smash()
+		elif absf(normal.x) > 0.6 and dashing > 0.0 and body.has_method("smash") and not body is Block:
 			body.call("smash")
 			dashing = 0.0
 			velocity.x = -facing * 120.0
@@ -253,7 +277,7 @@ func _animate(delta: float, on_floor: bool, dir: float) -> void:
 		state = "run" if absf(velocity.x) > WALK + 20.0 else "walk"
 	rig.state = state
 	rig.speed = velocity.x
-	rig.run_speed = RUN
+	rig.run_speed = run_speed
 	if state == "skid" and Engine.get_physics_frames() % 6 == 0:
 		FX.dust(get_parent(), global_position + Vector2(facing * 14.0, FEET))
 	visual.scale = Vector2(facing * _squash.x, _squash.y)
@@ -288,6 +312,13 @@ func stomp_bounce() -> void:
 func take_hit(source_x: float) -> bool:
 	if invulnerable > 0.0 or hearts <= 0:
 		return false
+	if shield > 0:
+		# the bubble shield takes this hit instead
+		shield -= 1
+		invulnerable = 1.0
+		FX.ring(get_parent(), global_position, Color(0.6, 0.9, 1.0))
+		AudioManager.play_sfx("pop")
+		return false
 	hearts -= 1
 	invulnerable = INVULNERABLE
 	_hurt_lock = 0.35
@@ -303,6 +334,51 @@ func take_hit(source_x: float) -> bool:
 	if game and game.has_method("on_player_hurt"):
 		game.on_player_hurt(away)
 	return true
+
+
+## Wall jump (Sanjabak) and double jump (Shakh-Tala) — pressed in the air.
+func _air_jump() -> void:
+	if wall_jump and is_on_wall_only():
+		var away := get_wall_normal().x
+		velocity = Vector2(away * 420.0, JUMP_VELOCITY * 0.92)
+		facing = signf(away)
+		_squash = Vector2(0.8, 1.2)
+		jumped.emit()
+		_buffer = 0.0
+	elif double_jump and not _double_used:
+		_double_used = true
+		velocity.y = JUMP_VELOCITY * 0.85
+		_jump_held = true
+		_squash = Vector2(0.8, 1.2)
+		FX.dust(get_parent(), global_position + Vector2(0, FEET), 6)
+		jumped.emit()
+		_buffer = 0.0
+
+
+## The companion picked in the village and the tools in the bag change how Nima moves.
+func apply_loadout() -> void:
+	var c := Loadout.companion()
+	wall_jump = c == "squirrel"
+	swim_fast = c == "turtle"
+	sand_free = c == "mole"
+	ice_grip = c == "penguin"
+	glide_time = GLIDE_TIME * (2.0 if c == "butterfly" else 1.0) * (1.5 if Loadout.has_tool("umbrella") else 1.0)
+	if Loadout.has_tool("balloon"):
+		glide_time = 9999.0
+	glide_fall = 0.0 if c == "dragon" else (70.0 if Loadout.has_tool("umbrella") else GLIDE_FALL)
+	dash_frees_spiky = c == "hedgehog"
+	dash_breaks_bricks = c == "hedgehog" or Loadout.has_tool("hammer")
+	double_jump = c == "goat"
+	thorn_proof = c == "cat"
+	max_hearts = 4 if c == "lion" else 3
+	hearts = max_hearts
+	walk_speed = WALK * (1.12 if Loadout.has_tool("shoes") else 1.0)
+	run_speed = RUN * (1.15 if Loadout.has_tool("shoes") else 1.0)
+	jump_scale = 1.08 if Loadout.has_tool("springs") else 1.0
+	dash_speed = DASH_SPEED * (1.3 if Loadout.has_tool("skateboard") else 1.0)
+	dash_time = DASH_TIME * (1.4 if Loadout.has_tool("skateboard") else 1.0)
+	shield = 1 if Loadout.has_tool("shield") else 0
+	glide_left = glide_time
 
 
 func heal(amount := 1) -> void:

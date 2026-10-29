@@ -49,6 +49,7 @@ var _modulate: CanvasModulate
 var _background: CanvasLayer
 var _camera: GameCamera
 var _dark := false
+var _follower: Node2D
 var _tint_tween: Tween
 
 
@@ -103,6 +104,7 @@ func _ready() -> void:
 	pilo.position = info.start + Vector2(-64, -80)
 	_world_root.add_child(pilo)
 	pilo.apply_color(String(SaveManager.data.get("pilo_color", "classic")))
+	_apply_loadout()
 	if bool(data.get("dark", false)):
 		_make_dark()
 
@@ -137,6 +139,8 @@ func _physics_process(delta: float) -> void:
 			try_shift()
 		if Input.is_action_just_pressed("pilo"):
 			pilo.act(self)
+		if Engine.get_physics_frames() % 6 == 0:
+			_magnet()
 		var pipe := _warp_pipe_under_player()
 		hud.show_down(pipe != null)
 		if pipe and Input.is_action_pressed("down"):
@@ -238,6 +242,44 @@ func _player_down() -> void:
 	_respawning = false
 
 
+# --- The companion and the tools ---------------------------------------------------
+
+func _apply_loadout() -> void:
+	player.apply_loadout()
+	var c := Loadout.companion()
+	if c == "owl":
+		pilo.sniff_range *= 2.0
+	if c == "spark":
+		pilo.attack_range *= 2.0
+	if Loadout.has_tool("compass"):
+		pilo.sniff_range *= 1.5
+		for item in get_tree().get_nodes_in_group("collectible"):
+			if item.kind == Collectible.Kind.DIAMOND:
+				item.add_to_group("secret")
+	if Loadout.has_tool("glasses") or c == "mole":
+		for block in get_tree().get_nodes_in_group("block"):
+			if block.kind == Block.Kind.HIDDEN:
+				block.sniffed()
+	if Loadout.has_tool("watch"):
+		for enemy in get_tree().get_nodes_in_group("enemy"):
+			if enemy is Enemy:
+				enemy.speed *= 0.7
+	if c != "":
+		_follower = CompanionFollower.new()
+		_follower.id = c
+		_follower.target = player
+		_follower.position = player.position + Vector2(-120, 0)
+		_world_root.add_child(_follower)
+
+
+func _magnet() -> void:
+	if not Loadout.has_tool("magnet"):
+		return
+	for item in get_tree().get_nodes_in_group("collectible"):
+		if item.kind == Collectible.Kind.COIN and not item.taken and item.monitoring and item.global_position.distance_to(player.global_position) < 190.0:
+			item.fetch_to(player)
+
+
 # --- Darkness and the guardian of the world ----------------------------------------
 
 ## Dark caves and castle halls: the world is dim, Nima carries a small light and Pilo glows.
@@ -257,7 +299,7 @@ func _make_dark() -> void:
 		texture.width = 512
 		texture.height = 512
 		light.texture = texture
-		light.texture_scale = 1.6 if holder == player else 1.1
+		light.texture_scale = (1.6 if holder == player else 1.1) * (1.6 if Loadout.companion() == "owl" else 1.0)
 		light.energy = 1.4
 		light.color = Color(1.0, 0.92, 0.75) if holder == player else Color(0.6, 0.9, 1.0)
 		holder.add_child(light)

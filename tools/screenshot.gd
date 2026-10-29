@@ -12,7 +12,17 @@ func _ready() -> void:
 	LevelManager.current_level = int(args.get("level", "1"))
 	var scenes := {"menu": LevelManager.MENU_SCENE, "map": LevelManager.MAP_SCENE,
 		"store": LevelManager.STORE_SCENE, "game": LevelManager.GAME_SCENE, "boot": "res://scenes/boot/boot.tscn",
-		"intro": LevelManager.INTRO_SCENE}
+		"intro": LevelManager.INTRO_SCENE, "village": LevelManager.VILLAGE_SCENE}
+	if args.has("save"):
+		# --save=coins:2500;companion:owl;tools:hammer|magnet - temporary save values (not written)
+		for pair in String(args.save).split(";"):
+			var kv := pair.split(":")
+			var value: Variant = kv[1]
+			if kv[1].contains("|"):
+				value = Array(kv[1].split("|"))
+			elif kv[1].is_valid_int():
+				value = int(kv[1])
+			SaveManager.data[kv[0]] = value
 	var scene: Node = load(scenes.get(args.get("scene", "menu"), LevelManager.MENU_SCENE)).instantiate()
 	get_tree().root.add_child.call_deferred(scene)
 	await get_tree().create_timer(0.3).timeout
@@ -22,7 +32,12 @@ func _ready() -> void:
 			await get_tree().create_timer(0.3).timeout
 	if args.has("call"):
 		# --call=method: call a method on the scene first (e.g. _show_worlds on the map)
-		scene.call(String(args.call))
+		# --call=method:arg passes one string argument
+		var call_parts := String(args.call).split(":")
+		if call_parts.size() > 1:
+			scene.call(call_parts[0], call_parts[1])
+		else:
+			scene.call(call_parts[0])
 		await get_tree().create_timer(0.3).timeout
 	if args.has("at"):
 		# --at=x,y in tiles: put Nima there (feet on the bottom of that cell)
