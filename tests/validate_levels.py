@@ -19,7 +19,7 @@ import sys
 from collections import deque
 
 PAST, PRESENT = 0, 1
-LEGEND = set(".#roBVMKD*CEPi?GRf~wamu<>^Lg/\\SOxz") | set("QUJHb$ncd+keyhFTtANpWYX")
+LEGEND = set(".#roBVMKD*CEPi?GRf~wamu<>^Lg/\\SOxz") | set("QUJHb$ncd+keyhFTtANpWYX") | set("Isq=_vZ&|")
 REACH = {0: 4, 1: 3, 2: 2}        # rise in tiles -> horizontal reach (puzzle levels: walk 330)
 # Platformer levels ("format": 2): JUMP_VELOCITY -870 plus run bonus, RUN 470, one air dash.
 REACH_V2 = {0: 6, 1: 5, 2: 4, 3: 2}
@@ -125,12 +125,12 @@ class Level:
     # --- tiles ---------------------------------------------------------------
     def solid(self, x, y, t):
         c = self.at(x, y)
-        return (c in "#M" or c in BLOCKS or c == "F" or (x, y) in self.pipe_cells or (c == "r" and t == PAST)
+        return (c in "#MI=_" or c in BLOCKS or c == "F" or (x, y) in self.pipe_cells or (c == "r" and t == PAST)
                 or (c == "D" and not self.doors_open) or (c == "g" and not self.gates_open))
 
     def one_way(self, x, y, t, cfg):
         c = self.at(x, y)
-        return (c in "oz" or (x, y) in self.rafts or (c == "B" and t == PAST) or (c == "V" and t == PRESENT) or (x, y) in self.ride
+        return (c in "ozqv" or (x, y) in self.rafts or (c == "B" and t == PAST) or (c == "V" and t == PRESENT) or (x, y) in self.ride
                 or (c == "x" and (x, y) in self.lit(t, cfg)))
 
     def hazard(self, x, y, t):
@@ -144,7 +144,8 @@ class Level:
         return 0 <= x < self.w and self.free(x, y, t) and self.free(x, y - 1, t)
 
     def hover(self, x, y, t):
-        return (x, y) in self.updraft and t in self.wind_times
+        # updrafts lift the hero; in deep water ("s") he swims anywhere
+        return ((x, y) in self.updraft and t in self.wind_times) or self.at(x, y) == "s" or self.at(x, y + 1) == "s"
 
     def standable(self, x, y, t, cfg):
         if not self.body_free(x, y, t):
@@ -194,6 +195,20 @@ class Level:
                 landing = (tx, ty - 1) if (tx, ty) in self.pipe_tops else self.fall(tx, ty, t, cfg)
                 if landing and self.standable(landing[0], landing[1], t, cfg):
                     yield (landing[0], landing[1], t, cfg, lev)
+        if self.v2:
+            # Pilo carries Nima in a glide: far across, slowly down (at most one row up)
+            for dx in range(-12, 13):
+                nx = x + dx
+                for ny in range(max(0, y - 1), self.h):
+                    if abs(dx) > min(12, 6 + 3 * max(0, ny - y)) or abs(dx) < 4:
+                        continue
+                    if not self.standable(nx, ny, t, cfg):
+                        continue
+                    top = min(y, ny) - 2
+                    step = 1 if dx > 0 else -1
+                    if all(self.free(cx, top, t) and self.free(cx, top + 1, t) for cx in range(x, nx + step, step)) \
+                            and self.column_clear(nx, top, ny, t):
+                        yield (nx, ny, t, cfg, lev)
         on_spring = self.at(x, y + 1) == "M"
         max_rise = SPRING_RISE if on_spring else (3 if self.v2 else 2)
         for dx in range(-8, 9):
@@ -317,6 +332,10 @@ def check(path):
         if tuple(warp["from"]) not in level.pipe_tops:
             errors.append("warp from %s is not the top-left of a pipe" % (warp["from"],))
     for d in level.find("d") + level.find("c"):
+        # coins hanging over a gap are met in flight (a long jump, a glide or the wind)
+        over_gap = all(level.at(d[0], yy) in ".cd*^><" for yy in range(d[1] + 1, min(level.h, d[1] + 5)))
+        if over_gap and any(abs(s[0] - d[0]) <= 7 and d[1] - 4 <= s[1] for s in states):
+            continue
         if not touches(states, d[0], d[1], level, arc=True):
             warnings.append("%s at %d,%d may be unreachable" % (level.at(*d), d[0], d[1]))
     for rx, ry in level.find("R"):
@@ -330,6 +349,9 @@ def check(path):
     if len(stars) != 3:
         warnings.append("has %d stars (3 expected)" % len(stars))
     for (x, y) in stars:
+        over_gap = all(level.at(x, yy) in ".cd*^><" for yy in range(y + 1, min(level.h, y + 5)))
+        if over_gap and any(abs(s[0] - x) <= 7 and y - 4 <= s[1] for s in states):
+            continue
         if not touches(states, x, y, level, arc=True):
             warnings.append("star at %d,%d may be unreachable" % (x, y))
     return errors, warnings

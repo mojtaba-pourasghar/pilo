@@ -38,13 +38,43 @@ func total_stars(world_id := "") -> int:
 func is_world_open(world: Dictionary) -> bool:
 	if world.is_empty() or not world.available:
 		return false
+	if int(world.index) == 9:
+		return legendary_count() >= 8
 	return world.free or StoreAdapter.owns(world.sku)
 
 
+## Stars needed in a world's six normal levels to open its secret level.
+const SECRET_STARS := 12
+
+
+## Order inside a world: levels 1-6 one after another, the secret level (7) once enough stars
+## are found, the boss (8) after level 6; a world's first level after the previous boss.
 func is_unlocked(level_id: int) -> bool:
-	if not is_world_open(LevelManager.world_of(level_id)):
+	var world := LevelManager.world_of(level_id)
+	if not is_world_open(world):
 		return false
-	return level_id == 1 or is_done(level_id - 1)
+	if level_id == int(world.first):
+		if int(world.index) <= 1 or int(world.index) == 9:
+			return true
+		return is_done(int(world.first) - 1)
+	if level_id == int(world.secret_level):
+		return world_stars(world, true) >= SECRET_STARS
+	if level_id == int(world.boss_level):
+		return is_done(int(world.first) + 5)
+	return is_done(level_id - 1)
+
+
+func world_stars(world: Dictionary, normal_only := false) -> int:
+	var total := 0
+	var last := int(world.first) + 5 if normal_only else int(world.last)
+	for level_id in range(int(world.first), last + 1):
+		total += stars_of(level_id).size()
+	return total
+
+
+## Legendary diamonds: one for finishing each world's secret level; eight open the ninth world.
+func legendary_count() -> int:
+	return SaveManager.data.get("legendary", []).size()
 
 
 func has_progress() -> bool:
@@ -94,6 +124,12 @@ func complete_level(level_id: int, collected: Array, coins := 0, diamonds: Array
 	SaveManager.data.coins = int(SaveManager.data.get("coins", 0)) + coins
 	SaveManager.data.diamonds = int(SaveManager.data.get("diamonds", 0)) + new_diamonds
 	var reward := ""
+	var world := LevelManager.world_of(level_id)
+	if not world.is_empty() and level_id == int(world.secret_level):
+		var legendary: Array = SaveManager.data.get("legendary", [])
+		if not legendary.has(world.id):
+			legendary.append(world.id)
+			SaveManager.data.legendary = legendary
 	if first_time:
 		SaveManager.data.shards = int(SaveManager.data.shards) + 1
 		if REWARDS.has(level_id) and not SaveManager.data.rewards.has(REWARDS[level_id]):

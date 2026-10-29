@@ -30,6 +30,7 @@ func default_data() -> Dictionary:
 		"companions": ["pilo"],
 		"tools": [],
 		"intro_seen": false,
+		"legendary": [],
 		"analytics": {},
 	}
 
