@@ -3,7 +3,9 @@ extends StaticBody2D
 ## A horizontal run of tiles that may exist in only one time. Both looks are drawn so the
 ## child can compare: the missing version stays visible as a faint "ghost" outline.
 
-enum Kind { GROUND, ROCK, PLANK, BRIDGE, VINE }
+enum Kind { GROUND, ROCK, PLANK, BRIDGE, VINE, ICE, BELT }
+
+const BELT_SPEED := 150.0
 
 const TILE := 64.0
 const THIN := 20.0
@@ -14,6 +16,8 @@ var active_mask := 3
 var caps: Array = []
 var palette: Dictionary = {}
 var size := Vector2(TILE, TILE)
+var belt := 0.0              ## conveyors: +1 carries to the right, -1 to the left
+var _belt_t := 0.0
 
 var _shape: CollisionShape2D
 var _presence := 1.0
@@ -37,7 +41,9 @@ func _ready() -> void:
 		_shape.position = size * 0.5
 	_shape.shape = rect
 	add_child(_shape)
-	set_process(active_mask != 3)
+	set_process(active_mask != 3 or kind == Kind.BELT)
+	if kind == Kind.ICE:
+		add_to_group("ice")
 	if active_mask != 3:
 		add_to_group("time_solid")
 		add_to_group("time_visual")
@@ -110,7 +116,8 @@ func _play_change_sound(appearing: bool) -> void:
 			AudioManager.play_sfx_once("creak", 0.3, 1.0 if appearing else 0.8)
 
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	_belt_t += delta * belt
 	queue_redraw()
 
 
@@ -133,6 +140,11 @@ func _draw() -> void:
 					_draw_rocks(_presence)
 		Kind.PLANK:
 			_draw_plank()
+		Kind.ICE:
+			_draw_ground()
+			_draw_ice()
+		Kind.BELT:
+			_draw_belt()
 		Kind.BRIDGE:
 			_draw_ghost_outline(Rect2(0, 0, size.x, THIN), ghost)
 			if _theme() == "sky_islands":
@@ -180,6 +192,36 @@ func _draw_ground() -> void:
 			for k in 4:
 				draw_circle(Vector2(x + 8 + k * 16, 16), 9.0, _c("grass"))
 			draw_rect(Rect2(x, 0, TILE, 5), _c("grass_light"))
+
+
+## Slippery ice on top of the ground: pale blue sheet with highlights and little icicles.
+func _draw_ice() -> void:
+	draw_rect(Rect2(0, 0, size.x, 18), Color("cfeeff"))
+	draw_rect(Rect2(0, 0, size.x, 5), Color.WHITE)
+	for i in cells:
+		var x := i * TILE
+		draw_line(Vector2(x + 10, 9), Vector2(x + 30, 7), Color(1, 1, 1, 0.8), 2.0)
+		draw_colored_polygon(PackedVector2Array([Vector2(x + 40, 18), Vector2(x + 46, 34), Vector2(x + 52, 18)]), Color("aee2ff"))
+
+
+## Conveyor belt: steel frame, rolling drums and chevrons moving the way it carries.
+func _draw_belt() -> void:
+	draw_rect(Rect2(Vector2.ZERO, size), Color("5a5560"))
+	draw_rect(Rect2(0, 0, size.x, 20), Color("2e2b33"))
+	var step := 32.0
+	var shift := fposmod(_belt_t * BELT_SPEED, step)
+	var dir := signf(belt) if belt != 0.0 else 1.0
+	var x := -step + shift
+	while x < size.x:
+		if x > 0.0 and x + 12.0 < size.x:
+			var a := Vector2(x, 4)
+			draw_polyline(PackedVector2Array([a, a + Vector2(8 * dir, 6), a + Vector2(0, 12)]), Color("ffcf4a"), 3.0)
+		x += step
+	for i in cells * 2:
+		var c := Vector2(i * 32 + 16, 38)
+		draw_circle(c, 11.0, Color("3b3640"))
+		draw_circle(c, 7.0, Color("8a8490"))
+		draw_line(c, c + Vector2(cos(_belt_t * 4.0), sin(_belt_t * 4.0)) * 7.0, Color("3b3640"), 2.0)
 
 
 func _draw_rocks(alpha: float) -> void:

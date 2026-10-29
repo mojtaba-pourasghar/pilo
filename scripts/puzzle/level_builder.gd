@@ -21,6 +21,9 @@ const RUNS := {
 	"o": [TimeBlock.Kind.PLANK, BOTH],
 	"B": [TimeBlock.Kind.BRIDGE, PAST],
 	"V": [TimeBlock.Kind.VINE, PRESENT],
+	"I": [TimeBlock.Kind.ICE, BOTH],
+	"=": [TimeBlock.Kind.BELT, BOTH],
+	"_": [TimeBlock.Kind.BELT, BOTH],
 }
 ## Water: character -> times it flows in
 const WATERS := {"~": PRESENT, "w": PAST, "a": BOTH}
@@ -60,13 +63,14 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 	var info := {
 		"size": Vector2(w * TILE, h * TILE), "start": Vector2(TILE * 2, TILE * 2), "exit": null,
 		"hints": [], "stars": 0, "keys": 0, "needs_rescue": false, "chaser": null, "mechanisms": null,
-		"diamonds": 0, "time_key": false, "enemies": 0, "pipes": {},
+		"diamonds": 0, "time_key": false, "enemies": 0, "pipes": {}, "boss": null,
 	}
 	_build_runs(grid, w, h, root, palette)
 	_build_water(grid, w, h, root, game, palette)
 	_build_wind(grid, w, h, root, int(TIME_MASKS.get(String(data.get("wind_time", "both")), BOTH)))
 	_build_crumble(grid, w, h, root, palette)
 	_build_thorns(grid, w, h, root)
+	_build_world_pieces(grid, w, h, root, palette)
 	var mechanisms := Mechanisms.new()
 	mechanisms.grid = grid
 	mechanisms.game = game
@@ -227,6 +231,8 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 							enemy.span = float(data.get("bee_span", 150))
 						_:
 							enemy = SpikyHog.new()
+					var world_id := String(data.get("world", "forest"))
+					enemy.skin = {"e": SkinBook.walker(world_id), "y": SkinBook.flyer(world_id), "h": SkinBook.spiky(world_id)}[c]
 					enemy.game = game
 					enemy.position = pos + Vector2(32, TILE if c != "y" else 40.0)
 					root.add_child(enemy)
@@ -260,6 +266,27 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 						wall.palette = palette
 						wall.position = pos
 						root.add_child(wall)
+				"Z":
+					var cloud := WorldHazards.StormCloud.new()
+					cloud.offset = fposmod(x * 0.37, 3.0)
+					cloud.position = pos
+					root.add_child(cloud)
+				"&":
+					var boss := Boss.new()
+					boss.kind = String(data.get("boss", "forest"))
+					boss.game = game
+					boss.position = pos + Vector2(32, TILE)
+					root.add_child(boss)
+					info.boss = boss
+				"|":
+					if y == 0 or String(grid[y - 1])[x] != "|":
+						var door := WorldHazards.BossDoor.new()
+						var n := 0
+						while y + n < h and String(grid[y + n])[x] == "|":
+							n += 1
+						door.cells = n
+						door.position = pos
+						root.add_child(door)
 				"Y", "X":
 					var den := FoxDen.new()
 					den.content = "key" if c == "X" else "diamond"
@@ -328,6 +355,8 @@ static func _build_runs(grid: Array, w: int, h: int, root: Node2D, palette: Dict
 			block.active_mask = RUNS[c][1]
 			block.cells = x - start
 			block.palette = palette
+			if c == "=" or c == "_":
+				block.belt = 1.0 if c == "=" else -1.0
 			block.position = Vector2(start * TILE, y * TILE)
 			if c == "#":
 				for i in range(start, x):
@@ -510,3 +539,39 @@ class PitShade extends Node2D:
 			draw_polygon(PackedVector2Array([Vector2(x0, top), Vector2(x1, top), Vector2(x1, deep), Vector2(x0, deep)]),
 				PackedColorArray([clear, clear, dark, dark]))
 			draw_rect(Rect2(x0, deep, TILE, bottom - deep), dark)
+
+
+## Deep water (s), quicksand (q) and vanishing platforms (v): one piece per run in a row.
+static func _build_world_pieces(grid: Array, w: int, h: int, root: Node2D, palette: Dictionary) -> void:
+	for y in h:
+		var row: String = grid[y]
+		var x := 0
+		while x < w:
+			var c := row[x]
+			if c != "s" and c != "q" and c != "v":
+				x += 1
+				continue
+			var start := x
+			while x < w and row[x] == c:
+				x += 1
+			var pos := Vector2(start * TILE, y * TILE)
+			match c:
+				"s":
+					var water := WorldHazards.SwimWater.new()
+					water.size = Vector2((x - start) * TILE, TILE)
+					water.surface = y == 0 or String(grid[y - 1])[start] != "s"
+					water.palette = palette
+					water.position = pos
+					root.add_child(water)
+				"q":
+					var sand := WorldHazards.Quicksand.new()
+					sand.cells = x - start
+					sand.palette = palette
+					sand.position = pos
+					root.add_child(sand)
+				"v":
+					var stone := WorldHazards.VanishPlatform.new()
+					stone.cells = x - start
+					stone.offset = fposmod(start * 0.9, WorldHazards.VanishPlatform.CYCLE)
+					stone.position = pos
+					root.add_child(stone)

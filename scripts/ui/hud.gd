@@ -26,6 +26,7 @@ var _hearts: Array = []
 var _coin_label: Label
 var _diamond_label: Label
 var _coin_box: PanelContainer
+var _boss_bar: PanelContainer
 var _time_panel: PanelContainer
 var _time_label: Label
 var _hint_button: TextureButton
@@ -160,6 +161,25 @@ func set_coins(count: int) -> void:
 
 func set_diamonds(count: int, total: int) -> void:
 	_diamond_label.text = "%d/%d" % [count, total]
+
+
+## The guardian's name and hits left, under the top bar (boss levels).
+func show_boss(boss_name: String, hits: int, total: int) -> void:
+	if _boss_bar == null:
+		_boss_bar = PanelContainer.new()
+		_boss_bar.add_theme_stylebox_override("panel", UIKit.glass("pill_dark", "pill_s", Vector4(30, 6, 30, 14)))
+		_boss_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_boss_bar.set_anchors_preset(Control.PRESET_CENTER_TOP)
+		_boss_bar.grow_horizontal = Control.GROW_DIRECTION_BOTH
+		_boss_bar.offset_top = 118
+		var label := UIKit.make_label("", 28, Color.WHITE)
+		label.name = "Value"
+		_boss_bar.add_child(label)
+		_root.add_child(_boss_bar)
+	var text := boss_name + "   "
+	for i in total:
+		text += "●" if i < hits else "○"
+	(_boss_bar.find_child("Value", true, false) as Label).text = text if hits > 0 else boss_name + " آزاد شد!"
 
 
 func show_down(value: bool) -> void:

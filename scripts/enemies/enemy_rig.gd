@@ -6,6 +6,7 @@ extends CharacterRig
 
 var freed_amount := 0.0
 var squash := 0.0
+var skin := ""
 
 
 func mixc(shadow: Color, real: Color) -> Color:

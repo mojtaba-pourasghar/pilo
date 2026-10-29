@@ -14,6 +14,7 @@ const LEVEL_COMPLETE := preload("res://scripts/ui/level_complete.gd")
 
 const SHIFT_COOLDOWN := 0.35
 const PAST_TINT := Color(1.0, 0.88, 0.7)
+const DARK_TINT := Color(0.28, 0.25, 0.4)
 const PAST_RING := Color(1.0, 0.75, 0.3)
 const PRESENT_RING := Color(0.4, 0.9, 1.0)
 ## Failed attempts before the hint button starts to glow, per hint setting.
@@ -47,6 +48,7 @@ var _world_root: Node2D
 var _modulate: CanvasModulate
 var _background: CanvasLayer
 var _camera: GameCamera
+var _dark := false
 var _tint_tween: Tween
 
 
@@ -70,15 +72,10 @@ func _ready() -> void:
 	add_child(_world_root)
 
 	info = LevelBuilder.build(data, _world_root, self, palette)
-	if String(world.id) == "forest":
-		var layered := LayeredBackground.new()
-		layered.level_size = info.size
-		_background = layered
-	else:
-		var painted := Background.new()
-		painted.texture_path = world.background
-		painted.hills_color = palette.hills
-		_background = painted
+	var layered := LayeredBackground.new()
+	layered.level_size = info.size
+	layered.world_id = String(world.id)
+	_background = layered
 	add_child(_background)
 	move_child(_background, 0)
 	friend_rescued = not info.needs_rescue
@@ -106,6 +103,8 @@ func _ready() -> void:
 	pilo.position = info.start + Vector2(-64, -80)
 	_world_root.add_child(pilo)
 	pilo.apply_color(String(SaveManager.data.get("pilo_color", "classic")))
+	if bool(data.get("dark", false)):
+		_make_dark()
 
 	hud = HUD.new()
 	add_child(hud)
@@ -113,6 +112,8 @@ func _ready() -> void:
 	hud.set_hearts(player.hearts, player.max_hearts)
 	hud.set_coins(0)
 	hud.set_diamonds(0, info.diamonds)
+	if info.boss:
+		hud.show_boss(info.boss.display_name(), info.boss.hp, info.boss.max_hp)
 	hud.pause_pressed.connect(open_pause)
 	hud.hint_pressed.connect(request_hint)
 	dialogue = DIALOGUE.new()
@@ -237,6 +238,45 @@ func _player_down() -> void:
 	_respawning = false
 
 
+# --- Darkness and the guardian of the world ----------------------------------------
+
+## Dark caves and castle halls: the world is dim, Nima carries a small light and Pilo glows.
+func _make_dark() -> void:
+	_dark = true
+	_modulate.color = DARK_TINT
+	for holder in [player, pilo]:
+		var light := PointLight2D.new()
+		var gradient := Gradient.new()
+		gradient.set_color(0, Color(1, 1, 1, 1))
+		gradient.set_color(1, Color(1, 1, 1, 0))
+		var texture := GradientTexture2D.new()
+		texture.gradient = gradient
+		texture.fill = GradientTexture2D.FILL_RADIAL
+		texture.fill_from = Vector2(0.5, 0.5)
+		texture.fill_to = Vector2(1.0, 0.5)
+		texture.width = 512
+		texture.height = 512
+		light.texture = texture
+		light.texture_scale = 1.6 if holder == player else 1.1
+		light.energy = 1.4
+		light.color = Color(1.0, 0.92, 0.75) if holder == player else Color(0.6, 0.9, 1.0)
+		holder.add_child(light)
+
+
+func on_boss_hit(boss: Boss) -> void:
+	hud.show_boss(boss.display_name(), maxi(boss.hp, 0), boss.max_hp)
+	_camera.shake(7.0)
+
+
+func on_boss_freed(boss: Boss) -> void:
+	hud.show_boss(boss.display_name(), 0, boss.max_hp)
+	for door in get_tree().get_nodes_in_group("boss_door"):
+		door.open()
+	FX.burst(_world_root, boss.global_position + Vector2(0, -80), UIKit.GOLD, 40)
+	_notice("%s آزاد شد! دروازه باز است." % boss.display_name(), UIKit.GREEN, true)
+	SaveManager.data.hearts_of_time = maxi(int(SaveManager.data.get("hearts_of_time", 0)), int(world.index))
+
+
 # --- Pipes -----------------------------------------------------------------------
 
 func _warp_pipe_under_player() -> Pipe:
@@ -305,6 +345,8 @@ func try_shift() -> void:
 
 func _on_time_changed(state: int, instant: bool) -> void:
 	var tint := PAST_TINT if state == TimeShift.PAST else Color.WHITE
+	if _dark:
+		tint *= DARK_TINT
 	if _tint_tween:
 		_tint_tween.kill()
 	if instant:

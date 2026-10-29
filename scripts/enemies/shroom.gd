@@ -31,6 +31,9 @@ class Rig extends EnemyRig:
 		return {"step": sin(phase), "bob": absf(sin(phase)) * 2.0}
 
 	func _draw() -> void:
+		if skin != "" and skin != "shroom":
+			SkinBook.draw_walker(self, skin, p("step"))
+			return
 		var step := p("step")
 		var bob := -p("bob")
 		# feet

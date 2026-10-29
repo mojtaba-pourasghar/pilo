@@ -31,6 +31,7 @@ func default_data() -> Dictionary:
 		"tools": [],
 		"intro_seen": false,
 		"legendary": [],
+		"hearts_of_time": 0,
 		"analytics": {},
 	}
 

@@ -40,6 +40,9 @@ class Rig extends EnemyRig:
 		return {"step": sin(phase)}
 
 	func _draw() -> void:
+		if skin != "" and skin != "hog":
+			SkinBook.draw_spiky(self, skin, p("step"))
+			return
 		var step := p("step")
 		for side in [-1.0, 1.0]:
 			var lift := maxf(0.0, step * side) * 4.0

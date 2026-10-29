@@ -70,6 +70,10 @@ var _pose_lock_state := ""
 var _squash := Vector2.ONE
 var _emote: Label
 var _wind := Vector2.ZERO      # set by wind zones for the next physics frame
+var _on_ice := false
+var _belt := 0.0
+var _swim := 0                 # deep water areas Nima is in (swimming when > 0)
+var _sand := 0                 # quicksand areas Nima is in (slowed when > 0)
 
 @onready var visual: Node2D = $Visual
 @onready var rig: NimaRig = $Visual/Rig
@@ -109,6 +113,16 @@ func _physics_process(delta: float) -> void:
 		dashing -= delta
 		velocity.x = facing * DASH_SPEED
 		velocity.y = minf(velocity.y + GRAVITY * 0.15 * delta, 120.0)
+	elif _swim > 0:
+		# swimming: soft gravity, slow sinking, every jump press is a stroke upward
+		gliding = false
+		velocity.y = minf(velocity.y + 650.0 * delta, 210.0)
+		if can_move and Input.is_action_just_pressed("jump"):
+			velocity.y = -470.0
+			_buffer = 0.0
+			_squash = Vector2(0.85, 1.15)
+			AudioManager.play_sfx_once("splash", 0.2, 1.5, -10.0)
+		_horizontal(dir, delta, false)
 	else:
 		velocity.y = minf(velocity.y + GRAVITY * delta, MAX_FALL)
 		gliding = can_glide and can_move and not on_floor and velocity.y > 0.0 and glide_left > 0.0 \
@@ -121,8 +135,10 @@ func _physics_process(delta: float) -> void:
 		_horizontal(dir, delta, on_floor)
 	_wind = Vector2.ZERO
 
-	if _buffer > 0.0 and _coyote > 0.0 and can_move:
+	if _buffer > 0.0 and _coyote > 0.0 and can_move and _swim == 0:
 		velocity.y = JUMP_VELOCITY - absf(velocity.x) * JUMP_SPEED_BONUS
+		if _sand > 0:
+			velocity.y *= 0.78
 		_buffer = 0.0
 		_coyote = 0.0
 		dashing = minf(dashing, 0.05)
@@ -138,6 +154,8 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 	_check_collisions()
+	if _belt != 0.0 and is_on_floor():
+		move_and_collide(Vector2(_belt * TimeBlock.BELT_SPEED * delta, 0))
 
 	on_floor = is_on_floor()
 	if on_floor and not _was_on_floor:
@@ -166,6 +184,11 @@ func _horizontal(dir: float, delta: float, on_floor: bool) -> void:
 			rate = SKID_DECEL
 	if absf(velocity.x) > cap and signf(velocity.x) == signf(target):
 		rate = OVERSPEED_DECEL
+	if _on_ice and on_floor:
+		rate *= 0.18 if dir == 0.0 else 0.4      # ice: slow to start, slower to stop
+	if _swim > 0 or _sand > 0:
+		cap *= 0.7 if _swim > 0 else 0.45
+		target = dir * cap
 	velocity.x = move_toward(velocity.x, target, rate * delta)
 
 
@@ -181,12 +204,17 @@ func _start_dash(dir: float) -> void:
 
 
 func _check_collisions() -> void:
+	_on_ice = false
+	_belt = 0.0
 	for i in get_slide_collision_count():
 		var hit := get_slide_collision(i)
 		var body := hit.get_collider()
 		if not (body is Node):
 			continue
 		var normal := hit.get_normal()
+		if normal.y < -0.6 and body is TimeBlock:
+			_on_ice = body.kind == TimeBlock.Kind.ICE
+			_belt = body.belt
 		if normal.y > 0.6 and body.has_method("bump"):
 			body.call("bump", self)
 		elif normal.y < -0.6 and body.is_in_group("spring"):
@@ -213,6 +241,8 @@ func _animate(delta: float, on_floor: bool, dir: float) -> void:
 		state = "hurt"
 	elif dashing > 0.0:
 		state = "dash"
+	elif _swim > 0:
+		state = "fall" if velocity.y > 0.0 else "jump"
 	elif gliding:
 		state = "glide"
 	elif not on_floor:
@@ -277,6 +307,26 @@ func take_hit(source_x: float) -> bool:
 
 func heal(amount := 1) -> void:
 	hearts = mini(max_hearts, hearts + amount)
+
+
+func enter_water() -> void:
+	_swim += 1
+	velocity.y *= 0.3
+	AudioManager.play_sfx("splash", 1.1, -4.0)
+
+
+func exit_water() -> void:
+	_swim = maxi(0, _swim - 1)
+	if _swim == 0 and velocity.y < 0.0:
+		velocity.y = minf(velocity.y, -560.0)   # a little hop out onto the bank
+
+
+func enter_sand() -> void:
+	_sand += 1
+
+
+func exit_sand() -> void:
+	_sand = maxi(0, _sand - 1)
 
 
 ## Called by wind zones every physics frame the hero is inside them.

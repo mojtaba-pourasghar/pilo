@@ -38,6 +38,9 @@ class Rig extends EnemyRig:
 		return {"wing": sin(t * 40.0)}
 
 	func _draw() -> void:
+		if skin != "" and skin != "bee":
+			SkinBook.draw_flyer(self, skin, p("wing"))
+			return
 		var c := Vector2(0, -20 + sin(t * 5.0) * 2.0)
 		var wing := p("wing")
 		# wings behind

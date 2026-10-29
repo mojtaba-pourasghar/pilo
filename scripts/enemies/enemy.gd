@@ -14,6 +14,7 @@ var speed := 70.0
 var facing := -1.0
 var freed := false
 var coins := 1
+var skin := ""                  ## the look for this world (SkinBook); "" = the forest look
 var rig: EnemyRig
 
 var _hurtbox: Area2D
@@ -41,6 +42,7 @@ func _ready() -> void:
 	_hurtbox.add_child(hit_shape)
 	add_child(_hurtbox)
 	rig = make_rig()
+	rig.skin = skin
 	add_child(rig)
 
 

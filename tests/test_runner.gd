@@ -20,6 +20,7 @@ func _ready() -> void:
 	await _test_pipe_warp()
 	await _test_pilo_frees_hedgehog()
 	await _test_glide_and_den()
+	await _test_boss_fight()
 	await _test_bot_runs_course()
 	SaveManager.data = backup
 	SaveManager.save_game()
@@ -290,6 +291,33 @@ func _test_glide_and_den() -> void:
 	Input.action_release("pilo")
 	await _wait(2.5)
 	_check(game.has_time_key, "Pilo brings the time key out of a fox den")
+	await _stop(game)
+
+
+func _test_boss_fight() -> void:
+	var game := await _start([
+		"......................",
+		"......................",
+		"......................",
+		"......................",
+		"......................",
+		".P.........&...|..E...",
+		"######################",
+	], {"boss": "forest"})
+	var boss: Boss = game.info.boss
+	_check(boss != null and boss.hp == 3, "the forest guardian appears with three hits")
+	for i in 3:
+		await _wait(1.4)
+		boss.state = "stunned"
+		boss._timer = 3.0
+		game.player.invulnerable = 5.0
+		game.player.global_position = boss.global_position + Vector2(0, -boss.KINDS.forest.size.y - 70)
+		game.player.velocity = Vector2(0, 400)
+		await _wait(0.4)
+	_check(boss.is_freed, "stomping the guardian three times frees it")
+	await _wait(1.5)
+	var door: Node = get_tree().get_first_node_in_group("boss_door")
+	_check(door != null and door._shape.disabled, "the barred door opens when the guardian is freed")
 	await _stop(game)
 
 
