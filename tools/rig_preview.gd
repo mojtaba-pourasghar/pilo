@@ -1,6 +1,6 @@
 extends Node2D
 ## Dev helper: every pose of the code-drawn characters side by side, for visual checks.
-##   godot --path . res://tools/rig_preview.tscn -- --out=/tmp/rigs.png [--time=0.4] [--scale=2.2]
+##   godot --path . res://tools/rig_preview.tscn -- --out=/tmp/rigs.png [--time=0.4] [--scale=2.2] [--painted]
 
 const NIMA_STATES := ["idle", "walk", "run", "jump", "fall", "dash", "skid", "hurt", "celebrate"]
 const PILO_STATES := ["idle", "run", "leap", "fly", "attack", "happy", "sad"]
@@ -14,7 +14,7 @@ func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color("bfe6ff"))
 	var s := float(args.get("scale", "1.7"))
 	for i in NIMA_STATES.size():
-		var rig := NimaRig.new()
+		var rig: CharacterRig = PaintedRig.make("nima") if args.has("painted") else NimaRig.new()
 		rig.state = NIMA_STATES[i]
 		rig.speed = 260.0 if rig.state == "walk" else 520.0
 		rig.position = Vector2(80 + i * 136, 330)
@@ -22,7 +22,7 @@ func _ready() -> void:
 		add_child(rig)
 		_label(NIMA_STATES[i], rig.position + Vector2(-40, 14))
 	for i in PILO_STATES.size():
-		var fox := PiloRig.new()
+		var fox: CharacterRig = PaintedRig.make("pilo") if args.has("painted") else PiloRig.new()
 		fox.state = PILO_STATES[i]
 		fox.speed = 520.0
 		fox.position = Vector2(110 + i * 170, 640)

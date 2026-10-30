@@ -1,0 +1,84 @@
+{
+ "scale": 0.4,
+ "feet": [
+  113,
+  185
+ ],
+ "parts": {
+  "tail": {
+   "box": [
+    0,
+    31
+   ],
+   "pivot": [
+    64,
+    80
+   ]
+  },
+  "leg_front": {
+   "box": [
+    133,
+    119
+   ],
+   "pivot": [
+    15,
+    5
+   ]
+  },
+  "leg_hind": {
+   "box": [
+    53,
+    121
+   ],
+   "pivot": [
+    16,
+    6
+   ]
+  },
+  "head": {
+   "box": [
+    120,
+    0
+   ],
+   "pivot": [
+    33,
+    85
+   ]
+  },
+  "body": {
+   "box": [
+    48,
+    63
+   ],
+   "pivot": [
+    65,
+    58
+   ]
+  }
+ },
+ "far_front": [
+  156,
+  124
+ ],
+ "far_hind": [
+  79,
+  127
+ ],
+ "poses": {
+  "fly": {
+   "file": "pose_fly.png",
+   "scale": 1.0,
+   "lift": 0
+  },
+  "attack": {
+   "file": "pose_attack.png",
+   "scale": 1.0,
+   "lift": 0
+  },
+  "happy": {
+   "file": "pose_happy.png",
+   "scale": 1.0,
+   "lift": 0
+  }
+ }
+}

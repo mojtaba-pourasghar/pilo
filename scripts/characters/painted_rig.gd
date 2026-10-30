@@ -154,26 +154,26 @@ func target_pose(delta: float) -> Dictionary:
 			var s := sin(phase)
 			var amp := lerpf(0.45, 0.75, stride)
 			return {"lean": lerpf(0.05, 0.14, stride), "bob": -absf(sin(phase)) * lerpf(5.0, 11.0, stride),
-				"front": s * amp, "back": -s * amp, "arm": -s * amp * 0.9, "head": sin(phase * 2.0) * 0.03 - 0.03, "squash": 0.0}
+				"front": s * amp, "back": -s * amp, "arm": -s * amp * 0.6, "head": sin(phase * 2.0) * 0.03 - 0.03, "squash": 0.0}
 		"jump":
-			return {"lean": -0.06, "bob": 0.0, "front": 0.7, "back": -0.35, "arm": -1.6, "head": -0.1, "squash": 0.0}
+			return {"lean": -0.06, "bob": 0.0, "front": 0.7, "back": -0.35, "arm": -0.5, "head": -0.1, "squash": 0.0}
 		"fall":
-			return {"lean": 0.04, "bob": 0.0, "front": 0.35, "back": -0.2, "arm": -1.1, "head": 0.06, "squash": 0.0}
+			return {"lean": 0.04, "bob": 0.0, "front": 0.35, "back": -0.2, "arm": -0.35, "head": 0.06, "squash": 0.0}
 		"glide":
-			return {"lean": 0.0, "bob": sin(t * 4.0) * 3.0, "front": 0.2, "back": -0.2, "arm": -2.6, "head": -0.06, "squash": 0.0}
+			return {"lean": 0.0, "bob": sin(t * 4.0) * 3.0, "front": 0.2, "back": -0.2, "arm": -0.6, "head": -0.06, "squash": 0.0}
 		"dash":
-			return {"lean": 0.3, "bob": 0.0, "front": 0.9, "back": -0.8, "arm": 1.0, "head": -0.12, "squash": 0.0}
+			return {"lean": 0.3, "bob": 0.0, "front": 0.9, "back": -0.8, "arm": 0.5, "head": -0.12, "squash": 0.0}
 		"skid":
-			return {"lean": -0.2, "bob": 0.0, "front": 0.6, "back": 0.15, "arm": 0.8, "head": 0.1, "squash": 0.0}
+			return {"lean": -0.2, "bob": 0.0, "front": 0.6, "back": 0.15, "arm": 0.35, "head": 0.1, "squash": 0.0}
 		"hurt":
-			return {"lean": -0.3, "bob": 0.0, "front": 0.5, "back": -0.5, "arm": -1.2, "head": 0.2, "squash": 0.0}
+			return {"lean": -0.3, "bob": 0.0, "front": 0.5, "back": -0.5, "arm": -0.45, "head": 0.2, "squash": 0.0}
 		"stomp":
-			return {"lean": 0.0, "bob": 0.0, "front": 0.3, "back": -0.3, "arm": -0.8, "head": -0.08, "squash": 0.0}
+			return {"lean": 0.0, "bob": 0.0, "front": 0.3, "back": -0.3, "arm": -0.3, "head": -0.08, "squash": 0.0}
 		"celebrate":
-			return {"lean": -0.05, "bob": -absf(sin(t * 7.0)) * 10.0, "front": 0.15, "back": -0.15, "arm": -2.4 + sin(t * 14.0) * 0.3,
+			return {"lean": -0.05, "bob": -absf(sin(t * 7.0)) * 10.0, "front": 0.15, "back": -0.15, "arm": -0.5 + sin(t * 14.0) * 0.15,
 				"head": sin(t * 6.0) * 0.12, "squash": 0.0}
 		"lens":
-			return {"lean": 0.0, "bob": 0.0, "front": 0.1, "back": -0.1, "arm": -1.3, "head": -0.15, "squash": 0.0}
+			return {"lean": 0.0, "bob": 0.0, "front": 0.1, "back": -0.1, "arm": -0.5, "head": -0.15, "squash": 0.0}
 		_:
 			var breath := sin(t * 2.4)
 			return {"lean": 0.0, "bob": breath * 1.2, "front": 0.04, "back": -0.04, "arm": sin(t * 1.2) * 0.05,
@@ -189,7 +189,7 @@ func _pilo_pose(delta: float) -> Dictionary:
 			return {"lean": 0.04, "bob": -absf(sin(phase)) * 9.0 * stride, "front": s * 0.6, "back": -s * 0.6,
 				"head": sin(phase * 2.0) * 0.04, "tail": 0.3 + sin(phase) * 0.25, "squash": 0.0}
 		"leap", "fly":
-			return {"lean": -0.08, "bob": sin(t * 5.0) * 4.0, "front": 0.8, "back": -0.8, "head": -0.06,
+			return {"lean": -0.08, "bob": sin(t * 5.0) * 4.0, "front": 0.5, "back": -0.5, "head": -0.06,
 				"tail": 0.6 + sin(t * 8.0) * 0.12, "squash": 0.0}
 		"attack":
 			return {"lean": 0.25, "bob": -8.0, "front": 1.0, "back": -0.6, "head": 0.1, "tail": 0.8, "squash": 0.0}

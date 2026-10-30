@@ -133,7 +133,6 @@ class Portrait extends Control:
 	var _rig: CharacterRig
 
 	func _init() -> void:
-		clip_contents = true
 		resized.connect(_update_rig)
 
 	func _process(delta: float) -> void:
@@ -148,8 +147,8 @@ class Portrait extends Control:
 		var center := size * 0.5
 		if PaintedCreature.available(speaker + "_portrait"):
 			# rendered head-and-shoulders portrait, standing on the bottom of the circle
-			_rig = PaintedCreature.make(speaker + "_portrait", size.y * 0.98, "idle")
-			_rig.position = center + Vector2(0, size.y * 0.49)
+			_rig = PaintedCreature.make(speaker + "_portrait", size.y * 0.86, "idle")
+			_rig.position = center + Vector2(0, size.y * 0.47)
 		elif speaker == "nima":
 			_rig = NimaRig.new()
 			_rig.scale = Vector2(1.7, 1.7)
@@ -160,20 +159,32 @@ class Portrait extends Control:
 			_rig.position = center + Vector2(-17.0, 42.0) * 2.4
 		if _rig:
 			_rig.expression = "happy" if speaker == "nima" else "normal"
-			add_child(_rig)
+			# the character is clipped to the round portrait, the golden ring drawn over it
+			var mask := Mask.new()
+			mask.center = center
+			mask.radius = size.x * 0.5 - 3.0
+			mask.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
+			add_child(mask)
+			mask.add_child(_rig)
 			var frame := Frame.new()
 			frame.set_anchors_preset(Control.PRESET_FULL_RECT)
 			frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			_rig.add_sibling(frame)
+			add_child(frame)
+			_rig.tree_exiting.connect(mask.queue_free)
 			_rig.tree_exiting.connect(frame.queue_free)
 
-	## Covers the square corners around the round portrait and draws its golden ring.
+	## The round window the portrait character shows through.
+	class Mask extends Node2D:
+		var center := Vector2.ZERO
+		var radius := 60.0
+
+		func _draw() -> void:
+			draw_circle(center, radius, Color.WHITE)
+
+	## The golden ring around the round portrait.
 	class Frame extends Control:
 		func _draw() -> void:
-			var center := size * 0.5
-			var r := size.x * 0.5
-			draw_arc(center, r * 1.22, 0.0, TAU, 64, Color("fbf4e4"), r * 0.46)
-			draw_arc(center, r - 3.0, 0.0, TAU, 48, Color("e2b877"), 6.0)
+			draw_arc(size * 0.5, size.x * 0.5 - 3.0, 0.0, TAU, 64, Color("e2b877"), 6.0)
 
 	func _draw() -> void:
 		var center := size * 0.5

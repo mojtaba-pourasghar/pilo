@@ -90,6 +90,13 @@ def main():
                 f = limit / max(out.size)
                 out = out.resize((round(out.width * f), round(out.height * f)), Image.LANCZOS)
             out.save(os.path.join(OUT, job["id"] + ".png"))
+        elif post == "bust":
+            # head and shoulders: the top part of the cut-out (portraits in the dialogue box)
+            out = cutout(im)
+            out = out.crop((0, 0, out.width, round(out.height * job.get("bust", 0.45))))
+            out = out.crop(out.getbbox())
+            out.thumbnail((job.get("max", 640),) * 2, Image.LANCZOS)
+            out.save(os.path.join(OUT, job["id"] + ".png"))
         elif post == "sheet":
             views = split_views(cutout(im))
             for i, view in enumerate(views):

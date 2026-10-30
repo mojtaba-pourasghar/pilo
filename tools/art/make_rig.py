@@ -7,11 +7,13 @@ that PaintedRig animates, following tools/art/rigs.json:
       "height": 128,                     # height in the game, in pixels (feet to top)
       "feet": [x, y],                    # ground point between the feet (source pixels)
       "parts": {                         # every part: a polygon around it and its joint
+                                         # ("shared": area the body keeps as well)
         "leg":  {"poly": [[x, y], ...], "pivot": [x, y]},
         "arm":  {"poly": [...], "pivot": [...], "fill": [[x, y], ...]},
         "head": {"poly": [...], "pivot": [...]}
       },
       "body_pivot": [x, y],              # the rest is the body; it leans around this point
+      "drop": [[[x, y], ...]],           # pixels nobody keeps (far legs: the near leg is drawn twice)
       "points": {"hip_front": [x, y], "hip_back": [x, y]},
       "poses": {"jump": {"src": "nima_jump", "scale": 1.0}}
     }
@@ -100,11 +102,18 @@ def build(name, spec):
         image.save(os.path.join(folder, part + ".png"))
         pivot = info["pivot"]
         rig["parts"][part] = {"box": box, "pivot": [pivot[0] - box[0], pivot[1] - box[1]]}
-        taken |= mask & ~disc_mask(size, pivot, info.get("keep", KEEP))
+        lost = mask & ~disc_mask(size, pivot, info.get("keep", KEEP))
+        if "shared" in info:
+            # the top of a leg stays on the body too (it hides the joint when the leg swings)
+            lost &= ~poly_mask(size, info["shared"])
+        taken |= lost
         if "fill" in info:
             region = poly_mask(size, info["fill"]) & mask
             body_rgba = inpaint(body_rgba, region)
             taken &= ~region
+    for points in spec.get("drop", []):
+        # pixels nobody keeps (the far legs: the rig draws the near leg twice instead)
+        taken |= poly_mask(size, points) & ~np.zeros_like(alpha)
     body_alpha = (body_rgba[..., 3] > 8) & ~taken
     image, box = crop(body_rgba, body_alpha)
     image.save(os.path.join(folder, "body.png"))

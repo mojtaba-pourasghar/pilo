@@ -78,7 +78,7 @@
   },
   {
    "id": "nima_glide",
-   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference. Full body, side view facing right, hanging in the air holding on with both hands raised above his head, legs together dangling, as if carried by something above him",
+   "prompt": "the same cartoon explorer character as in the reference picture (red knitted beanie, orange t-shirt, olive backpack, denim shorts, brown boots), same 3D style, full body, side view facing right, floating in the air with both arms stretched straight up, holding on to something above, legs together, happy face",
    "style": "sprite",
    "size": [
     768,
@@ -92,7 +92,7 @@
   },
   {
    "id": "nima_hurt",
-   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference. Full body, side view facing right, knocked back, leaning backward with a surprised dizzy face, arms flailing",
+   "prompt": "the same cartoon explorer character as in the reference picture (red knitted beanie, orange t-shirt, olive backpack, denim shorts, brown boots), same 3D style, full body, side view facing right, stumbling backward with a surprised dizzy face, arms out for balance",
    "style": "sprite",
    "size": [
     768,
@@ -106,7 +106,7 @@
   },
   {
    "id": "nima_celebrate",
-   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference. Full body, side view facing right, cheering happily with both fists in the air, big smile, eyes closed with joy",
+   "prompt": "the same cartoon explorer character as in the reference picture (red knitted beanie, orange t-shirt, olive backpack, denim shorts, brown boots), same 3D style, full body, side view facing right, cheering with both fists raised high, big happy smile",
    "style": "sprite",
    "size": [
     768,
@@ -196,11 +196,12 @@
     1024,
     1024
    ],
-   "post": "cutout",
+   "post": "bust",
    "refs": [
     "nima_rig"
    ],
-   "max": 640
+   "max": 640,
+   "bust": 0.42
   },
   {
    "id": "pilo_portrait",
@@ -210,11 +211,12 @@
     1024,
     1024
    ],
-   "post": "cutout",
+   "post": "bust",
    "refs": [
     "pilo_rig"
    ],
-   "max": 640
+   "max": 640,
+   "bust": 0.62
   },
   {
    "id": "companion_squirrel",
@@ -886,7 +888,7 @@
   },
   {
    "id": "enemy_knight_shadow",
-   "prompt": "the exact same creature in the exact same pose and shape, but cursed by shadow magic: dark purple and indigo colors, glowing purple grumpy eyes, faint wisps of dark smoke around it, still cute and not scary for kids",
+   "prompt": "the exact same toy figure in the same pose, recolored in dark purple and indigo with glowing purple eyes and faint purple smoke, cute",
    "style": "sprite",
    "size": [
     1024,
@@ -1025,7 +1027,7 @@
   },
   {
    "id": "boss_snow_mountain_free",
-   "prompt": "the Ice Giant, a huge friendly snow yeti guardian with icy blue crystals on his shoulders, full body, side view facing right, powerful but kind, game boss character for a kids game",
+   "prompt": "the Ice Giant, a huge friendly white furry snow yeti guardian with icy blue crystals on his shoulders and a kind face, full body, side view facing right, game boss character, cute stylized",
    "style": "sprite",
    "size": [
     1024,
