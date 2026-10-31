@@ -1,13 +1,12 @@
 #!/bin/bash
-# Regenerates pictures that were judged not good enough: their raw sources are moved aside
-# (art_src/_old/) so cf_generate.py makes them again, then they are post-processed.
-#   CF_KEYS=... tools/art/redo.sh id1 id2 ...
+# Makes pictures again that were judged not good enough. The old picture stays until the
+# new one is made (so a day whose allowance runs out never leaves a character without one),
+# then the new ones are post-processed.
+#   CF_KEYS=... VENV=... tools/art/redo.sh id1 id2 ...
 set -e
 cd "$(dirname "$0")/../.."
-mkdir -p art_src/_old
-for id in "$@"; do
-  [ -f "art_src/$id.png" ] && mv "art_src/$id.png" "art_src/_old/$id.png"
-done
-python3 tools/art/cf_generate.py --only "$(IFS=,; echo "$*")"
+python3 tools/art/cf_generate.py --redo --only "$(IFS=,; echo "$*")" | tee /tmp/redo_gen.log
+made=$(grep '^made' /tmp/redo_gen.log | awk '{print $2}' | tr '\n' ' ')
 VENV=${VENV:-venv}
-"$VENV/bin/python" tools/art/postprocess.py "$@"
+[ -n "$made" ] && "$VENV/bin/python" tools/art/postprocess.py $made
+echo "made: $made"

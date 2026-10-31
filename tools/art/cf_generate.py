@@ -77,6 +77,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--only", default="")
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--redo", action="store_true", help="make the --only pictures again even if they exist (the old one stays until the new one is made)")
     a = ap.parse_args()
     keys = [tuple(k.split(":", 1)) for k in os.environ.get("CF_KEYS", "").split(",") if ":" in k]
     if not keys and os.environ.get("CF_ACCOUNT_ID") and os.environ.get("CF_API_TOKEN"):
@@ -89,11 +90,12 @@ def main():
     only = set(filter(None, a.only.split(",")))
     os.makedirs(OUT, exist_ok=True)
     done = made = 0
+    redone = set()
     for job in manifest["jobs"]:
         path = os.path.join(OUT, job["id"] + ".png")
         if only and job["id"] not in only:
             continue
-        if os.path.exists(path):
+        if os.path.exists(path) and not (a.redo and job["id"] in only and job["id"] not in redone):
             done += 1
             continue
         if any(not os.path.exists(os.path.join(OUT, r + ".png")) for r in job.get("refs", [])):
@@ -122,6 +124,7 @@ def main():
             break
         from PIL import Image
         Image.open(io.BytesIO(image)).convert("RGB").save(path)
+        redone.add(job["id"])
         made += 1
         print("made  ", job["id"])
         if a.limit and made >= a.limit:
