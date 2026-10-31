@@ -84,6 +84,13 @@ def main():
             im.convert("RGB").save(dest)
         elif post == "cutout":
             out = cutout(im)
+            if job.get("trim_top"):
+                # the generator sometimes adds a prop above the subject: cut those rows off
+                out = out.crop((0, job["trim_top"], out.width, out.height))
+                out = out.crop(out.getbbox())
+            for box in job.get("erase", []):
+                # leftover bits of such a prop, in pixels of the trimmed cut-out
+                out.paste((0, 0, 0, 0), tuple(box))
             # sprites are shown small: keep them at most "max" pixels on the long side
             limit = job.get("max", 1024)
             if max(out.size) > limit:

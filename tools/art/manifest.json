@@ -88,7 +88,16 @@
    "refs": [
     "nima_rig"
    ],
-   "max": 1024
+   "max": 1024,
+   "trim_top": 62,
+   "erase": [
+    [
+     248,
+     0,
+     278,
+     30
+    ]
+   ]
   },
   {
    "id": "nima_hurt",

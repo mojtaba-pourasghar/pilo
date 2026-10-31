@@ -2,7 +2,7 @@ extends Node2D
 ## Dev helper: every pose of the code-drawn characters side by side, for visual checks.
 ##   godot --path . res://tools/rig_preview.tscn -- --out=/tmp/rigs.png [--time=0.4] [--scale=2.2] [--painted]
 
-const NIMA_STATES := ["idle", "walk", "run", "jump", "fall", "dash", "skid", "hurt", "celebrate"]
+const NIMA_STATES := ["idle", "walk", "run", "jump", "glide", "dash", "skid", "hurt", "celebrate"]
 const PILO_STATES := ["idle", "run", "leap", "fly", "attack", "happy", "sad"]
 
 

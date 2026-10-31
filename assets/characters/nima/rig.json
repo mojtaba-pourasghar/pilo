@@ -60,6 +60,21 @@
    "scale": 1.0,
    "lift": 0
   },
+  "glide": {
+   "file": "pose_glide.png",
+   "scale": 1.0,
+   "lift": 0
+  },
+  "hurt": {
+   "file": "pose_hurt.png",
+   "scale": 1.0,
+   "lift": 0
+  },
+  "celebrate": {
+   "file": "pose_celebrate.png",
+   "scale": 1.0,
+   "lift": 0
+  },
   "dash": {
    "file": "pose_dash.png",
    "scale": 1.0,
