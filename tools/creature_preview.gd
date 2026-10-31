@@ -26,6 +26,30 @@ func _ready() -> void:
 	boss.position = Vector2(1100, 640)
 	boss.state = "walk"
 	add_child(boss)
+	if OS.get_cmdline_user_args().has("--big"):
+		for child in get_children():
+			child.queue_free()
+		var names := [["enemy_crab", "walk"], ["enemy_bat", "fly"], ["enemy_knight", "walk"], ["boss_forest", "boss"]]
+		for i in names.size():
+			var big := PaintedCreature.make(names[i][0], 230.0, names[i][1])
+			big.position = Vector2(160 + i * 320, 560)
+			big.state = "walk"
+			big.freed_amount = 1.0 if i % 2 == 0 else 0.0
+			add_child(big)
+		if OS.get_cmdline_user_args().has("--movie"):
+			await get_tree().create_timer(3.0).timeout
+			for child in get_children():
+				if child is PaintedCreature and child.motion == "boss":
+					child.state = "windup"
+			await get_tree().create_timer(1.5).timeout
+			get_tree().quit()
+			return
+		for f in 4:
+			await get_tree().create_timer(0.09).timeout
+			await RenderingServer.frame_post_draw
+			get_viewport().get_texture().get_image().save_png("%s_big%d.png" % [out, f])
+		get_tree().quit()
+		return
 	if OS.get_cmdline_user_args().has("--movie"):
 		await get_tree().create_timer(3.0).timeout
 		boss.state = "windup"
