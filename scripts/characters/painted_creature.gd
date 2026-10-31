@@ -58,11 +58,57 @@ static func make(name: String, game_height: float, kind_of_motion := "walk") -> 
 	return creature
 
 
+## Separate drawn poses of this creature (assets/art/<art>_walk_a.png ...), played one after
+## another like a cartoon. When they exist they are used instead of the cut parts.
+const FRAMES := {
+	"walk": ["walk_a", "walk_b", "walk_c", "walk_b"],
+	"fly": ["fly_a", "fly_b", "fly_c", "fly_b"],
+	"roll": ["roll_a", "roll_b"],
+}
+
+var _frames := {}            ## animation -> Array[Texture2D]
+var _frame_sprite: Sprite2D
+var _tint: ShaderMaterial
+var _base_h := 0.0           ## height of the base picture: every pose keeps its scale
+
+
+func _base_name() -> String:
+	return art.trim_suffix("_free")
+
+
+func _load_frames() -> void:
+	var base := _base_name()
+	for anim in FRAMES:
+		var list: Array = []
+		for f in FRAMES[anim]:
+			var path := ART % (base + "_" + f)
+			if ResourceLoader.exists(path):
+				list.append(load(path))
+		if list.size() == FRAMES[anim].size():
+			_frames[anim] = list
+	for single in ["hurt", "windup", "stunned"]:
+		if ResourceLoader.exists(ART % (base + "_" + single)):
+			_frames[single] = [load(ART % (base + "_" + single))]
+
+
 func _ready() -> void:
 	_holder = Node2D.new()
 	if face_left:
 		_holder.scale.x = -1.0
 	add_child(_holder)
+	_load_frames()
+	if not _frames.is_empty() and motion != "idle":
+		var base_pic := ART % (art if ResourceLoader.exists(ART % art) else art + "_free")
+		_base_h = float(load(base_pic).get_height()) if ResourceLoader.exists(base_pic) else 0.0
+		_frame_sprite = Sprite2D.new()
+		_frame_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		_tint = ShaderMaterial.new()
+		_tint.shader = preload("res://assets/vfx/shadow_tint.gdshader")
+		_frame_sprite.material = _tint
+		_holder.add_child(_frame_sprite)
+		if not ResourceLoader.exists(ART % (art + "_shadow")):
+			freed_amount = 1.0
+		return
 	var looks: Array = []
 	if ResourceLoader.exists(ART % (art + "_shadow")):
 		var free_name := art + "_free"
@@ -132,6 +178,9 @@ func target_pose(delta: float) -> Dictionary:
 func _process(delta: float) -> void:
 	super(delta)
 	flash = maxf(0.0, flash - delta * 2.5)
+	if _frame_sprite:
+		_play_frames()
+		return
 	if _layers.is_empty():
 		return
 	if _layers[1].size() > 0:
@@ -190,3 +239,36 @@ func _rot(part: String, angle: float) -> void:
 
 func _draw() -> void:
 	draw_wisps(Vector2(0, -height * 0.6), height * 0.35)
+
+
+## Frame mode: picks this moment's pose and places it with the feet on the origin.
+func _play_frames() -> void:
+	var freed := state == "freed" or state == "free"
+	var list: Array = []
+	var bob := 0.0
+	if freed and _frames.has("hurt"):
+		list = _frames.hurt
+	elif state == "windup" and _frames.has("windup"):
+		list = _frames.windup
+	elif (state == "stunned" or state == "hurt") and _frames.has("stunned"):
+		list = _frames.stunned
+	elif _frames.has(motion):
+		list = _frames[motion]
+	elif _frames.has("walk"):
+		list = _frames.walk
+	else:
+		list = _frames.values()[0]
+	var i := int(phase / 1.4) % list.size()
+	var texture: Texture2D = list[i]
+	_frame_sprite.texture = texture
+	var k := height / (_base_h if _base_h > 0.0 else float(texture.get_height()))
+	if motion == "fly":
+		bob = -height * 0.25 + sin(phase * 0.4) * height * 0.08
+	_frame_sprite.scale = Vector2(k, k)
+	_frame_sprite.offset = Vector2(0, -texture.get_height() * 0.5)
+	_tint.set_shader_parameter("amount", 1.0 - freed_amount)
+	if freed:
+		bob = -absf(sin(t * 8.0)) * height * 0.2
+	_holder.position = Vector2(0, bob)
+	_holder.rotation = 0.0
+	modulate = Color(1, 1, 1).lerp(Color(2.0, 1.6, 1.6), flash)

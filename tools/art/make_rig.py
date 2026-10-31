@@ -92,7 +92,7 @@ def build(name, spec):
     alpha = rgba[..., 3] > 8
     folder = os.path.join(OUT, name)
     os.makedirs(folder, exist_ok=True)
-    rig = {"scale": spec["height"] / float(spec["feet"][1] - np.nonzero(alpha.any(axis=1))[0].min()),
+    rig = {"height": spec["height"], "src": spec["src"], "scale": spec["height"] / float(spec["feet"][1] - np.nonzero(alpha.any(axis=1))[0].min()),
            "feet": spec["feet"], "parts": {}}
     taken = np.zeros_like(alpha)
     body_rgba = rgba.copy()

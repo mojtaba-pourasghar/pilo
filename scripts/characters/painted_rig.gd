@@ -24,6 +24,9 @@ var _legs: Array = []          ## [sprite, kind] kind: "front", "back", "hind", 
 var _poses: Dictionary = {}    ## state -> Sprite2D
 var _hue_material: ShaderMaterial
 var _flash := 0.0
+var _cycles := {}
+var _cycle_sprite: Sprite2D
+var _cycle_scale := 1.0
 var _s := 1.0                ## source pixels -> game pixels
 
 
@@ -54,6 +57,7 @@ func _ready() -> void:
 		_build_quadruped()
 	else:
 		_build_biped()
+	_load_cycles()
 	for pose_state in _rig.get("poses", {}):
 		var info: Dictionary = _rig.poses[pose_state]
 		var sprite := Sprite2D.new()
@@ -68,6 +72,40 @@ func _ready() -> void:
 			sprite.material = _hue_material
 		_root.add_child(sprite)
 		_poses[pose_state] = sprite
+
+
+## Drawn cycles of Nima / Pilo (assets/art/<name>_run_a.png ...), played like a cartoon in
+## the states they cover; every pose keeps the base picture's scale (tools/art "frame").
+const CYCLES := {
+	"run": ["run_a", "run_b", "run_c", "run_d"],
+	"walk": ["walk_a", "walk_b"],
+	"idle": ["", "idle_b"],
+}
+
+
+func _load_cycles() -> void:
+	var src := String(_rig.get("src", character + "_rig"))
+	var base_path := "res://assets/art/%s.png" % src
+	if not ResourceLoader.exists(base_path):
+		return
+	var base: Texture2D = load(base_path)
+	for anim in CYCLES:
+		var list: Array = []
+		for f in CYCLES[anim]:
+			var path := base_path if f == "" else "res://assets/art/%s_%s.png" % [character, f]
+			if ResourceLoader.exists(path):
+				list.append(load(path))
+		if list.size() == CYCLES[anim].size():
+			_cycles[anim] = list
+	if _cycles.is_empty():
+		return
+	_cycle_scale = float(_rig.get("height", 128.0)) / float(base.get_height())
+	_cycle_sprite = Sprite2D.new()
+	_cycle_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	_cycle_sprite.visible = false
+	if character == "pilo":
+		_cycle_sprite.material = _hue_material
+	add_child(_cycle_sprite)
 
 
 func _part(part: String, parent: Node, at: Vector2, shade := 1.0) -> Sprite2D:
@@ -224,6 +262,22 @@ func _process(delta: float) -> void:
 	for key in _poses:
 		_poses[key].visible = _poses[key] == pose_sprite
 	_parts.visible = pose_sprite == null
+	# a drawn cycle for this state (run, walk, idle)?
+	var anim := "run" if state == "run" and _cycles.has("run") else state
+	if anim == "walk" and not _cycles.has("walk") and _cycles.has("run"):
+		anim = "run"
+	if pose_sprite == null and _cycles.has(anim) and not tired:
+		var list: Array = _cycles[anim]
+		var i := int(t * 2.0) % list.size() if anim == "idle" else int(phase / (PI * 0.5)) % list.size()
+		var texture: Texture2D = list[i]
+		_cycle_sprite.texture = texture
+		_cycle_sprite.scale = Vector2(_cycle_scale, _cycle_scale)
+		_cycle_sprite.offset = Vector2(0, -texture.get_height() * 0.5)
+		_cycle_sprite.position = Vector2(0, p("bob") * 0.5)
+		_cycle_sprite.visible = true
+		_parts.visible = false
+	elif _cycle_sprite:
+		_cycle_sprite.visible = false
 	if pose_sprite:
 		pose_sprite.rotation = p("lean") * 0.5
 		pose_sprite.position.y = -float(pose_sprite.get_meta("lift")) + p("bob") / _s

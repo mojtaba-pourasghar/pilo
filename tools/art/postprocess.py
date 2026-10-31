@@ -8,6 +8,7 @@ of each job in tools/art/manifest.json:
   tile_xy → seamless in both directions                                  → assets/art/<id>.png
   texture → made seamless by blending with itself shifted by half, resized → assets/art/<id>.png
   none    → copied as it is (story pictures go to assets/story/)
+  frame   → a pose of a character: cut out and scaled to the size of its base picture
 
 Needs rembg:  python3 -m venv venv && venv/bin/pip install "rembg[cpu]" pillow
     venv/bin/python tools/art/postprocess.py [ids...]
@@ -114,6 +115,18 @@ def main():
             if max(out.size) > limit:
                 f = limit / max(out.size)
                 out = out.resize((round(out.width * f), round(out.height * f)), Image.LANCZOS)
+            out.save(os.path.join(OUT, job["id"] + ".png"))
+        elif post == "frame":
+            # a pose of a character: cut out, then scaled so its painted area matches the
+            # base picture's (the same size from pose to pose), feet at the bottom edge
+            out = cutout(im)
+            base_path = os.path.join(OUT, job["base"] + ".png")
+            if os.path.exists(base_path):
+                import numpy as np
+                base = Image.open(base_path).convert("RGBA")
+                area = lambda pic: float((np.asarray(pic)[..., 3] > 40).sum())
+                k = (area(base) / max(1.0, area(out))) ** 0.5
+                out = out.resize((max(1, round(out.width * k)), max(1, round(out.height * k))), Image.LANCZOS)
             out.save(os.path.join(OUT, job["id"] + ".png"))
         elif post == "bust":
             # head and shoulders: the top part of the cut-out (portraits in the dialogue box)

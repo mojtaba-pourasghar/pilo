@@ -7,61 +7,6 @@
  },
  "jobs": [
   {
-   "id": "npc_grandma",
-   "prompt": "Grandma Cactus, a kind old desert woman with a shawl, round glasses and a little cactus flower in her grey hair, holding a walking stick, full body, three-quarter view",
-   "style": "sprite",
-   "size": [
-    768,
-    1024
-   ],
-   "post": "cutout",
-   "max": 768
-  },
-  {
-   "id": "npc_captain",
-   "prompt": "Captain Wave, a funny chubby pirate with a big blue hat, a curly red beard, a striped shirt and a map in his hand, full body, three-quarter view",
-   "style": "sprite",
-   "size": [
-    768,
-    1024
-   ],
-   "post": "cutout",
-   "max": 768
-  },
-  {
-   "id": "npc_masked",
-   "prompt": "a mysterious figure in a dark hooded cloak and a smooth silver mask with a clock symbol, full body, kid friendly",
-   "style": "sprite",
-   "size": [
-    768,
-    1024
-   ],
-   "post": "cutout",
-   "max": 768
-  },
-  {
-   "id": "npc_zurvan",
-   "prompt": "Zurvan, a tall thin sly former clockmaker apprentice in a long dark purple coat with clock gears, a monocle and a pointed grey beard, holding a strange backward-running pocket watch, full body, three-quarter view, kid friendly",
-   "style": "sprite",
-   "size": [
-    768,
-    1024
-   ],
-   "post": "cutout",
-   "max": 768
-  },
-  {
-   "id": "npc_kian",
-   "prompt": "Kian, a confident 10-year-old boy treasure hunter rival: blue bandana, spiky black hair, aviator goggles on his head, blue vest with many pockets, khaki shorts, a small brass mechanical owl on his shoulder, full body, side view facing right, standing",
-   "style": "sprite",
-   "size": [
-    768,
-    1024
-   ],
-   "post": "cutout",
-   "max": 768
-  },
-  {
    "id": "item_diamond",
    "prompt": "a single brilliant-cut sky blue diamond gem shown from the side like a classic diamond icon: flat table on top, pointed bottom, sharp facets, sparkling highlights, transparent crystal, game item",
    "style": "sprite",
@@ -123,6 +68,241 @@
    "refs": [
     "ref_keyart"
    ]
+  },
+  {
+   "id": "nima_run_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, running fast: right leg forward, left arm forward, body leaning forward",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "frame",
+   "base": "nima_rig",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "nima_run_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, running fast: both feet off the ground in mid-stride, arms swinging",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "frame",
+   "base": "nima_rig",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "nima_run_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, running fast: left leg forward, right arm forward, body leaning forward",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "frame",
+   "base": "nima_rig",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "nima_run_d",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, running fast: passing pose, one knee raised high",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "frame",
+   "base": "nima_rig",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "nima_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking calmly, right leg forward",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "frame",
+   "base": "nima_rig",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "nima_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking calmly, left leg forward",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "frame",
+   "base": "nima_rig",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "nima_idle_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, standing relaxed, breathing in, shoulders slightly raised, a small smile",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "frame",
+   "base": "nima_rig",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "pilo_run_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, galloping: front legs stretched forward, hind legs pushing back",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "frame",
+   "base": "pilo_rig",
+   "refs": [
+    "pilo_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "pilo_run_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, galloping: all four legs gathered under the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "frame",
+   "base": "pilo_rig",
+   "refs": [
+    "pilo_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "pilo_run_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, galloping: front legs reaching back under, hind legs forward",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "frame",
+   "base": "pilo_rig",
+   "refs": [
+    "pilo_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "pilo_run_d",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, galloping: legs stretched out in mid-air, tail streaming behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "frame",
+   "base": "pilo_rig",
+   "refs": [
+    "pilo_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "pilo_idle_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, standing, tail swishing to the other side, ears perked",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "frame",
+   "base": "pilo_rig",
+   "refs": [
+    "pilo_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "npc_grandma",
+   "prompt": "Grandma Cactus, a kind old desert woman with a shawl, round glasses and a little cactus flower in her grey hair, holding a walking stick, full body, three-quarter view",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 768
+  },
+  {
+   "id": "npc_captain",
+   "prompt": "Captain Wave, a funny chubby pirate with a big blue hat, a curly red beard, a striped shirt and a map in his hand, full body, three-quarter view",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 768
+  },
+  {
+   "id": "npc_masked",
+   "prompt": "a mysterious figure in a dark hooded cloak and a smooth silver mask with a clock symbol, full body, kid friendly",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 768
+  },
+  {
+   "id": "npc_zurvan",
+   "prompt": "Zurvan, a tall thin sly former clockmaker apprentice in a long dark purple coat with clock gears, a monocle and a pointed grey beard, holding a strange backward-running pocket watch, full body, three-quarter view, kid friendly",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 768
+  },
+  {
+   "id": "npc_kian",
+   "prompt": "Kian, a confident 10-year-old boy treasure hunter rival: blue bandana, spiky black hair, aviator goggles on his head, blue vest with many pockets, khaki shorts, a small brass mechanical owl on his shoulder, full body, side view facing right, standing",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 768
   },
   {
    "id": "card_forest",
@@ -3146,6 +3326,2661 @@
    ],
    "post": "cutout",
    "max": 256
+  },
+  {
+   "id": "enemy_shroom_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_shroom_free",
+   "refs": [
+    "enemy_shroom_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_shroom_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_shroom_free",
+   "refs": [
+    "enemy_shroom_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_shroom_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_shroom_free",
+   "refs": [
+    "enemy_shroom_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_shroom_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, knocked over backwards, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_shroom_free",
+   "refs": [
+    "enemy_shroom_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_crab_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_crab_free",
+   "refs": [
+    "enemy_crab_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_crab_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_crab_free",
+   "refs": [
+    "enemy_crab_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_crab_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_crab_free",
+   "refs": [
+    "enemy_crab_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_crab_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, knocked over backwards, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_crab_free",
+   "refs": [
+    "enemy_crab_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_scorpion_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_scorpion_free",
+   "refs": [
+    "enemy_scorpion_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_scorpion_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_scorpion_free",
+   "refs": [
+    "enemy_scorpion_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_scorpion_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_scorpion_free",
+   "refs": [
+    "enemy_scorpion_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_scorpion_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, knocked over backwards, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_scorpion_free",
+   "refs": [
+    "enemy_scorpion_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_penguin_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_penguin_free",
+   "refs": [
+    "enemy_penguin_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_penguin_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_penguin_free",
+   "refs": [
+    "enemy_penguin_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_penguin_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_penguin_free",
+   "refs": [
+    "enemy_penguin_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_penguin_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, knocked over backwards, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_penguin_free",
+   "refs": [
+    "enemy_penguin_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_beetle_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_beetle_free",
+   "refs": [
+    "enemy_beetle_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_beetle_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_beetle_free",
+   "refs": [
+    "enemy_beetle_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_beetle_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_beetle_free",
+   "refs": [
+    "enemy_beetle_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_beetle_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, knocked over backwards, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_beetle_free",
+   "refs": [
+    "enemy_beetle_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_robot_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_robot_free",
+   "refs": [
+    "enemy_robot_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_robot_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_robot_free",
+   "refs": [
+    "enemy_robot_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_robot_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_robot_free",
+   "refs": [
+    "enemy_robot_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_robot_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, knocked over backwards, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_robot_free",
+   "refs": [
+    "enemy_robot_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_knight_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_knight_free",
+   "refs": [
+    "enemy_knight_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_knight_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_knight_free",
+   "refs": [
+    "enemy_knight_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_knight_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_knight_free",
+   "refs": [
+    "enemy_knight_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_knight_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, knocked over backwards, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_knight_free",
+   "refs": [
+    "enemy_knight_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_cloudling_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_cloudling_free",
+   "refs": [
+    "enemy_cloudling_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_cloudling_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_cloudling_free",
+   "refs": [
+    "enemy_cloudling_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_cloudling_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_cloudling_free",
+   "refs": [
+    "enemy_cloudling_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_cloudling_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, knocked over backwards, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_cloudling_free",
+   "refs": [
+    "enemy_cloudling_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_bee_fly_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_bee_free",
+   "refs": [
+    "enemy_bee_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_bee_fly_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_bee_free",
+   "refs": [
+    "enemy_bee_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_bee_fly_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_bee_free",
+   "refs": [
+    "enemy_bee_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_bee_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, tumbling in the air, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_bee_free",
+   "refs": [
+    "enemy_bee_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_jelly_fly_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_jelly_free",
+   "refs": [
+    "enemy_jelly_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_jelly_fly_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_jelly_free",
+   "refs": [
+    "enemy_jelly_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_jelly_fly_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_jelly_free",
+   "refs": [
+    "enemy_jelly_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_jelly_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, tumbling in the air, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_jelly_free",
+   "refs": [
+    "enemy_jelly_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_vulture_fly_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_vulture_free",
+   "refs": [
+    "enemy_vulture_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_vulture_fly_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_vulture_free",
+   "refs": [
+    "enemy_vulture_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_vulture_fly_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_vulture_free",
+   "refs": [
+    "enemy_vulture_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_vulture_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, tumbling in the air, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_vulture_free",
+   "refs": [
+    "enemy_vulture_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_owl_fly_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_owl_free",
+   "refs": [
+    "enemy_owl_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_owl_fly_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_owl_free",
+   "refs": [
+    "enemy_owl_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_owl_fly_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_owl_free",
+   "refs": [
+    "enemy_owl_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_owl_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, tumbling in the air, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_owl_free",
+   "refs": [
+    "enemy_owl_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_stormbird_fly_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_stormbird_free",
+   "refs": [
+    "enemy_stormbird_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_stormbird_fly_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_stormbird_free",
+   "refs": [
+    "enemy_stormbird_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_stormbird_fly_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_stormbird_free",
+   "refs": [
+    "enemy_stormbird_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_stormbird_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, tumbling in the air, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_stormbird_free",
+   "refs": [
+    "enemy_stormbird_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_bat_fly_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_bat_free",
+   "refs": [
+    "enemy_bat_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_bat_fly_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_bat_free",
+   "refs": [
+    "enemy_bat_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_bat_fly_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_bat_free",
+   "refs": [
+    "enemy_bat_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_bat_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, tumbling in the air, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_bat_free",
+   "refs": [
+    "enemy_bat_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_drone_fly_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_drone_free",
+   "refs": [
+    "enemy_drone_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_drone_fly_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_drone_free",
+   "refs": [
+    "enemy_drone_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_drone_fly_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_drone_free",
+   "refs": [
+    "enemy_drone_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_drone_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, tumbling in the air, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_drone_free",
+   "refs": [
+    "enemy_drone_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_wraith_fly_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_wraith_free",
+   "refs": [
+    "enemy_wraith_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_wraith_fly_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_wraith_free",
+   "refs": [
+    "enemy_wraith_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_wraith_fly_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_wraith_free",
+   "refs": [
+    "enemy_wraith_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_wraith_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, tumbling in the air, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_wraith_free",
+   "refs": [
+    "enemy_wraith_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_hog_roll_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a tight ball, rolling",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_hog_free",
+   "refs": [
+    "enemy_hog_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_hog_roll_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a ball, rolling, seen a quarter turn later",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_hog_free",
+   "refs": [
+    "enemy_hog_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_hog_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, standing on its feet, ready",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_hog_free",
+   "refs": [
+    "enemy_hog_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_hog_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flipped on its back, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_hog_free",
+   "refs": [
+    "enemy_hog_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_urchin_roll_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a tight ball, rolling",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_urchin_free",
+   "refs": [
+    "enemy_urchin_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_urchin_roll_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a ball, rolling, seen a quarter turn later",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_urchin_free",
+   "refs": [
+    "enemy_urchin_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_urchin_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, standing on its feet, ready",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_urchin_free",
+   "refs": [
+    "enemy_urchin_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_urchin_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flipped on its back, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_urchin_free",
+   "refs": [
+    "enemy_urchin_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_cactus_roll_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a tight ball, rolling",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_cactus_free",
+   "refs": [
+    "enemy_cactus_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_cactus_roll_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a ball, rolling, seen a quarter turn later",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_cactus_free",
+   "refs": [
+    "enemy_cactus_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_cactus_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, standing on its feet, ready",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_cactus_free",
+   "refs": [
+    "enemy_cactus_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_cactus_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flipped on its back, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_cactus_free",
+   "refs": [
+    "enemy_cactus_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_iceball_roll_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a tight ball, rolling",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_iceball_free",
+   "refs": [
+    "enemy_iceball_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_iceball_roll_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a ball, rolling, seen a quarter turn later",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_iceball_free",
+   "refs": [
+    "enemy_iceball_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_iceball_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, standing on its feet, ready",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_iceball_free",
+   "refs": [
+    "enemy_iceball_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_iceball_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flipped on its back, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_iceball_free",
+   "refs": [
+    "enemy_iceball_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_thunderpuff_roll_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a tight ball, rolling",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_thunderpuff_free",
+   "refs": [
+    "enemy_thunderpuff_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_thunderpuff_roll_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a ball, rolling, seen a quarter turn later",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_thunderpuff_free",
+   "refs": [
+    "enemy_thunderpuff_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_thunderpuff_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, standing on its feet, ready",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_thunderpuff_free",
+   "refs": [
+    "enemy_thunderpuff_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_thunderpuff_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flipped on its back, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_thunderpuff_free",
+   "refs": [
+    "enemy_thunderpuff_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_porcupine_roll_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a tight ball, rolling",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_porcupine_free",
+   "refs": [
+    "enemy_porcupine_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_porcupine_roll_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a ball, rolling, seen a quarter turn later",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_porcupine_free",
+   "refs": [
+    "enemy_porcupine_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_porcupine_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, standing on its feet, ready",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_porcupine_free",
+   "refs": [
+    "enemy_porcupine_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_porcupine_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flipped on its back, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_porcupine_free",
+   "refs": [
+    "enemy_porcupine_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_gear_roll_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a tight ball, rolling",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_gear_free",
+   "refs": [
+    "enemy_gear_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_gear_roll_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a ball, rolling, seen a quarter turn later",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_gear_free",
+   "refs": [
+    "enemy_gear_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_gear_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, standing on its feet, ready",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_gear_free",
+   "refs": [
+    "enemy_gear_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_gear_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flipped on its back, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_gear_free",
+   "refs": [
+    "enemy_gear_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_spikeball_roll_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a tight ball, rolling",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_spikeball_free",
+   "refs": [
+    "enemy_spikeball_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_spikeball_roll_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, curled up into a ball, rolling, seen a quarter turn later",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_spikeball_free",
+   "refs": [
+    "enemy_spikeball_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_spikeball_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, standing on its feet, ready",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_spikeball_free",
+   "refs": [
+    "enemy_spikeball_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "enemy_spikeball_hurt",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flipped on its back, dizzy with spirals in the eyes",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "enemy_spikeball_free",
+   "refs": [
+    "enemy_spikeball_free"
+   ],
+   "max": 384
+  },
+  {
+   "id": "boss_forest_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_forest_free",
+   "refs": [
+    "boss_forest_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_forest_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_forest_free",
+   "refs": [
+    "boss_forest_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_forest_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_forest_free",
+   "refs": [
+    "boss_forest_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_forest_windup",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, rearing up with both arms raised high, about to slam the ground, angry face",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_forest_free",
+   "refs": [
+    "boss_forest_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_forest_stunned",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, dizzy and stunned, sitting down, stars and spirals around the head",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_forest_free",
+   "refs": [
+    "boss_forest_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_coral_beach_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_coral_beach_free",
+   "refs": [
+    "boss_coral_beach_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_coral_beach_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_coral_beach_free",
+   "refs": [
+    "boss_coral_beach_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_coral_beach_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_coral_beach_free",
+   "refs": [
+    "boss_coral_beach_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_coral_beach_windup",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, rearing up with both arms raised high, about to slam the ground, angry face",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_coral_beach_free",
+   "refs": [
+    "boss_coral_beach_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_coral_beach_stunned",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, dizzy and stunned, sitting down, stars and spirals around the head",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_coral_beach_free",
+   "refs": [
+    "boss_coral_beach_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_golden_desert_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_golden_desert_free",
+   "refs": [
+    "boss_golden_desert_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_golden_desert_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_golden_desert_free",
+   "refs": [
+    "boss_golden_desert_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_golden_desert_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_golden_desert_free",
+   "refs": [
+    "boss_golden_desert_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_golden_desert_windup",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, rearing up with both arms raised high, about to slam the ground, angry face",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_golden_desert_free",
+   "refs": [
+    "boss_golden_desert_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_golden_desert_stunned",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, dizzy and stunned, sitting down, stars and spirals around the head",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_golden_desert_free",
+   "refs": [
+    "boss_golden_desert_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_snow_mountain_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_snow_mountain_free",
+   "refs": [
+    "boss_snow_mountain_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_snow_mountain_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_snow_mountain_free",
+   "refs": [
+    "boss_snow_mountain_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_snow_mountain_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_snow_mountain_free",
+   "refs": [
+    "boss_snow_mountain_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_snow_mountain_windup",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, rearing up with both arms raised high, about to slam the ground, angry face",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_snow_mountain_free",
+   "refs": [
+    "boss_snow_mountain_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_snow_mountain_stunned",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, dizzy and stunned, sitting down, stars and spirals around the head",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_snow_mountain_free",
+   "refs": [
+    "boss_snow_mountain_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_sky_islands_fly_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_sky_islands_free",
+   "refs": [
+    "boss_sky_islands_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_sky_islands_fly_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_sky_islands_free",
+   "refs": [
+    "boss_sky_islands_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_sky_islands_fly_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_sky_islands_free",
+   "refs": [
+    "boss_sky_islands_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_sky_islands_windup",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, rearing up with both arms raised high, about to slam the ground, angry face",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_sky_islands_free",
+   "refs": [
+    "boss_sky_islands_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_sky_islands_stunned",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, dizzy and stunned, sitting down, stars and spirals around the head",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_sky_islands_free",
+   "refs": [
+    "boss_sky_islands_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_crystal_caves_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_crystal_caves_free",
+   "refs": [
+    "boss_crystal_caves_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_crystal_caves_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_crystal_caves_free",
+   "refs": [
+    "boss_crystal_caves_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_crystal_caves_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_crystal_caves_free",
+   "refs": [
+    "boss_crystal_caves_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_crystal_caves_windup",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, rearing up with both arms raised high, about to slam the ground, angry face",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_crystal_caves_free",
+   "refs": [
+    "boss_crystal_caves_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_crystal_caves_stunned",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, dizzy and stunned, sitting down, stars and spirals around the head",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_crystal_caves_free",
+   "refs": [
+    "boss_crystal_caves_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_clock_factory_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_clock_factory_free",
+   "refs": [
+    "boss_clock_factory_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_clock_factory_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_clock_factory_free",
+   "refs": [
+    "boss_clock_factory_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_clock_factory_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_clock_factory_free",
+   "refs": [
+    "boss_clock_factory_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_clock_factory_windup",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, rearing up with both arms raised high, about to slam the ground, angry face",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_clock_factory_free",
+   "refs": [
+    "boss_clock_factory_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_clock_factory_stunned",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, dizzy and stunned, sitting down, stars and spirals around the head",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_clock_factory_free",
+   "refs": [
+    "boss_clock_factory_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_shadow_castle_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_shadow_castle_free",
+   "refs": [
+    "boss_shadow_castle_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_shadow_castle_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_shadow_castle_free",
+   "refs": [
+    "boss_shadow_castle_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_shadow_castle_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_shadow_castle_free",
+   "refs": [
+    "boss_shadow_castle_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_shadow_castle_windup",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, rearing up with both arms raised high, about to slam the ground, angry face",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_shadow_castle_free",
+   "refs": [
+    "boss_shadow_castle_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_shadow_castle_stunned",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, dizzy and stunned, sitting down, stars and spirals around the head",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_shadow_castle_free",
+   "refs": [
+    "boss_shadow_castle_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_inverted_land_fly_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_inverted_land_free",
+   "refs": [
+    "boss_inverted_land_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_inverted_land_fly_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_inverted_land_free",
+   "refs": [
+    "boss_inverted_land_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_inverted_land_fly_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_inverted_land_free",
+   "refs": [
+    "boss_inverted_land_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_inverted_land_windup",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, rearing up with both arms raised high, about to slam the ground, angry face",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_inverted_land_free",
+   "refs": [
+    "boss_inverted_land_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "boss_inverted_land_stunned",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, dizzy and stunned, sitting down, stars and spirals around the head",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "boss_inverted_land_free",
+   "refs": [
+    "boss_inverted_land_free"
+   ],
+   "max": 640
+  },
+  {
+   "id": "companion_squirrel_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_squirrel",
+   "refs": [
+    "companion_squirrel"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_squirrel_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_squirrel",
+   "refs": [
+    "companion_squirrel"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_squirrel_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_squirrel",
+   "refs": [
+    "companion_squirrel"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_turtle_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_turtle",
+   "refs": [
+    "companion_turtle"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_turtle_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_turtle",
+   "refs": [
+    "companion_turtle"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_turtle_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_turtle",
+   "refs": [
+    "companion_turtle"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_mole_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_mole",
+   "refs": [
+    "companion_mole"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_mole_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_mole",
+   "refs": [
+    "companion_mole"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_mole_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_mole",
+   "refs": [
+    "companion_mole"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_penguin_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_penguin",
+   "refs": [
+    "companion_penguin"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_penguin_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_penguin",
+   "refs": [
+    "companion_penguin"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_penguin_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_penguin",
+   "refs": [
+    "companion_penguin"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_hedgehog_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_hedgehog",
+   "refs": [
+    "companion_hedgehog"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_hedgehog_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_hedgehog",
+   "refs": [
+    "companion_hedgehog"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_hedgehog_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_hedgehog",
+   "refs": [
+    "companion_hedgehog"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_goat_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_goat",
+   "refs": [
+    "companion_goat"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_goat_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_goat",
+   "refs": [
+    "companion_goat"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_goat_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_goat",
+   "refs": [
+    "companion_goat"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_cat_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_cat",
+   "refs": [
+    "companion_cat"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_cat_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_cat",
+   "refs": [
+    "companion_cat"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_cat_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_cat",
+   "refs": [
+    "companion_cat"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_lion_walk_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_lion",
+   "refs": [
+    "companion_lion"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_lion_walk_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_lion",
+   "refs": [
+    "companion_lion"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_lion_walk_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_lion",
+   "refs": [
+    "companion_lion"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_butterfly_fly_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_butterfly",
+   "refs": [
+    "companion_butterfly"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_butterfly_fly_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_butterfly",
+   "refs": [
+    "companion_butterfly"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_butterfly_fly_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_butterfly",
+   "refs": [
+    "companion_butterfly"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_owl_fly_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_owl",
+   "refs": [
+    "companion_owl"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_owl_fly_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_owl",
+   "refs": [
+    "companion_owl"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_owl_fly_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_owl",
+   "refs": [
+    "companion_owl"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_spark_fly_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_spark",
+   "refs": [
+    "companion_spark"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_spark_fly_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_spark",
+   "refs": [
+    "companion_spark"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_spark_fly_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_spark",
+   "refs": [
+    "companion_spark"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_dragon_fly_a",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_dragon",
+   "refs": [
+    "companion_dragon"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_dragon_fly_b",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_dragon",
+   "refs": [
+    "companion_dragon"
+   ],
+   "max": 320
+  },
+  {
+   "id": "companion_dragon_fly_c",
+   "prompt": "the exact same character as in the reference picture, same design, same colors, same proportions, same 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "frame",
+   "base": "companion_dragon",
+   "refs": [
+    "companion_dragon"
+   ],
+   "max": 320
   }
  ]
 }
