@@ -79,13 +79,18 @@ func _process(delta: float) -> void:
 		var facing: float = target.facing
 		var feet: Vector2 = target.global_position + Vector2(0, target.FEET)
 		goal = feet + Vector2(-70.0 * facing, 0)
-		flying = not target.is_on_floor() or absf(global_position.y - feet.y) > 40.0
+		# Pilo walks on the ground behind Nima; he only flies while Nima is in the air or when
+		# there is no ground under his spot (a gap, a ledge)
+		var ground = _ground_under(goal.x, feet.y)
+		flying = not target.is_on_floor() or ground == null
 		if flying:
 			goal.y -= 46.0 + sin(_t * 3.0) * 6.0
+		else:
+			goal.y = ground
 	var k := 1.0 - exp(-(9.0 if not flying else 5.0) * delta)
 	global_position = global_position.lerp(goal, k)
 	if not flying and target:
-		global_position.y = lerpf(global_position.y, goal.y, 1.0 - exp(-20.0 * delta))
+		global_position.y = lerpf(global_position.y, goal.y, 1.0 - exp(-14.0 * delta))
 	var moved := (global_position - _last_pos) / maxf(delta, 0.001)
 	_last_pos = global_position
 	if absf(moved.x) > 12.0:
@@ -96,10 +101,22 @@ func _process(delta: float) -> void:
 		rig.state = "fly"
 	elif absf(moved.x) > 40.0:
 		rig.state = "run"
+	elif target and target.get("fx") and target.fx._tired > 0.0:
+		rig.state = "sad"
 	else:
 		rig.state = "idle"
+		# now and then a happy hop while he waits
+		if fmod(_t, 6.0) < delta:
+			_happy(0.7)
 	rig.speed = moved.x
 	rig.run_speed = 470.0
+
+
+## The top of the ground under x near Nima's feet height (null if there is none close).
+func _ground_under(x: float, feet_y: float) -> Variant:
+	var query := PhysicsRayQueryParameters2D.create(Vector2(x, feet_y - 70.0), Vector2(x, feet_y + 90.0), 1)
+	var hit := get_world_2d().direct_space_state.intersect_ray(query)
+	return null if hit.is_empty() else float(hit.position.y)
 
 
 ## Pilo's nose: the first time a secret comes near, he runs to it and points it out.

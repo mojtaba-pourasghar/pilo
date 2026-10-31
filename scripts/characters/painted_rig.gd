@@ -195,7 +195,7 @@ func _pilo_pose(delta: float) -> Dictionary:
 			return {"lean": 0.04, "bob": -absf(sin(phase)) * 9.0 * stride, "front": s * 0.6, "back": -s * 0.6,
 				"head": sin(phase * 2.0) * 0.04, "tail": 0.3 + sin(phase) * 0.25, "squash": 0.0}
 		"leap", "fly":
-			return {"lean": -0.08, "bob": sin(t * 5.0) * 4.0, "front": 0.5, "back": -0.5, "head": -0.06,
+			return {"lean": -0.08 + sin(t * 3.0) * 0.12, "bob": sin(t * 5.0) * 9.0, "front": 0.5, "back": -0.5, "head": -0.06,
 				"tail": 0.6 + sin(t * 8.0) * 0.12, "squash": 0.0}
 		"attack":
 			return {"lean": 0.25, "bob": -8.0, "front": 1.0, "back": -0.6, "head": 0.1, "tail": 0.8, "squash": 0.0}
