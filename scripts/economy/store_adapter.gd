@@ -46,6 +46,12 @@ const PRODUCTS := {
 		"icon": "res://assets/ui/backpack.png",
 		"coming_soon": false,
 	},
+	"tool_starblaster": {
+		"title": "ستاره‌پران",
+		"description": "سلاحی که سه ستاره با هم پرتاب می‌کند. راه اصلی هیچ مرحله‌ای به آن نیاز ندارد.",
+		"icon": "res://assets/ui/backpack.png",
+		"coming_soon": false,
+	},
 	"tool_toolbox": {
 		"title": "جعبه‌ابزار طلایی",
 		"description": "یک جای ابزار سوم در کوله.",

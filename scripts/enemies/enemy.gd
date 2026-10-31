@@ -95,32 +95,54 @@ func touch_player(player: Node) -> void:
 		else:
 			player.take_hit(global_position.x)
 	elif player.dashing > 0.0 and stompable:
-		defeat()
-		AudioManager.play_sfx("stomp", 1.2)
+		defeat("dash")
 	else:
 		player.take_hit(global_position.x)
 
 
-## Frees the creature (stomp, dash, Pilo, a block bumped under it).
-func defeat() -> void:
+## Defeats the creature. A stomp flattens it and it vanishes in a puff of smoke; a shot,
+## Pilo or a dash knock it over and it tumbles off the screen.
+func defeat(how := "stomp") -> void:
 	if freed:
 		return
 	freed = true
 	collision_layer = 0
 	collision_mask = 0
 	_hurtbox.set_deferred("monitoring", false)
-	rig.state = "freed"
-	AudioManager.play_sfx("free")
+	AudioManager.play_sfx("stomp" if how == "stomp" else "impact", randf_range(0.95, 1.1), -2.0 if how == "stomp" else -6.0)
 	if game and game.has_method("on_enemy_freed"):
 		game.on_enemy_freed(self)
-	var tween := create_tween()
-	tween.tween_property(rig, "squash", 1.0, 0.12)
-	tween.tween_property(rig, "squash", 0.0, 0.18)
-	tween.parallel().tween_property(rig, "freed_amount", 1.0, 0.5)
-	tween.tween_property(self, "position:y", position.y - 60.0, 0.35).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(self, "position:y", position.y - 20.0, 0.3).set_ease(Tween.EASE_IN)
-	tween.tween_property(self, "modulate:a", 0.0, 0.6)
-	tween.tween_callback(queue_free)
+	if how == "stomp":
+		var tween := create_tween()
+		tween.tween_property(rig, "squash", 1.0, 0.08)
+		tween.tween_interval(0.22)
+		tween.tween_callback(func():
+			FX.dust_ring(get_parent(), global_position, 0.6, Color(0.9, 0.9, 0.95, 0.8))
+			FX.burst(get_parent(), global_position + Vector2(0, -16), Color(0.95, 0.95, 1.0), 10))
+		tween.tween_property(self, "modulate:a", 0.0, 0.12)
+		tween.tween_callback(queue_free)
+	else:
+		# knocked over: flips, pops up and falls away
+		var knock := Knockout.new()
+		knock.enemy = self
+		knock.velocity = Vector2(signf(global_position.x - (game.player.global_position.x if game and game.player else 0.0)) * 220.0, -620.0)
+		add_child(knock)
+
+
+## Moves a knocked-out creature: it spins upside down and falls out of the level.
+class Knockout extends Node:
+	var enemy: Node2D
+	var velocity := Vector2.ZERO
+	var t := 0.0
+
+	func _physics_process(delta: float) -> void:
+		t += delta
+		velocity.y += 1800.0 * delta
+		enemy.position += velocity * delta
+		enemy.rotation = lerpf(enemy.rotation, PI, minf(1.0, delta * 8.0))
+		enemy.modulate.a = clampf(2.0 - t, 0.0, 1.0)
+		if t > 2.0:
+			enemy.queue_free()
 
 
 ## Is there floor just ahead of the feet? (walkers turn at ledges)

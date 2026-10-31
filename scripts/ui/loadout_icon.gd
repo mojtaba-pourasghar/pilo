@@ -18,6 +18,7 @@ static func make(item_kind: String, item_id: String, icon_size := 96.0, dimmed :
 	icon.id = item_id
 	icon.dim = dimmed
 	icon.custom_minimum_size = Vector2(icon_size, icon_size)
+	icon.size = icon.custom_minimum_size
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return icon
 
@@ -232,6 +233,53 @@ func _tool_balloon() -> void:
 		draw_colored_polygon(points, colors[i])
 	draw_arc(Vector2(0, -12), 30.0, 0, TAU, 32, OUTLINE, 3.0)
 	_shine(Vector2(-12, -30), Vector2(7, 4))
+
+
+func _tool_slingshot() -> void:
+	_stick(Vector2(0, 34), Vector2(0, 4), 9.0, Color("8a5a2e"))
+	_stick(Vector2(0, 6), Vector2(-20, -30), 8.0, Color("8a5a2e"))
+	_stick(Vector2(0, 6), Vector2(20, -30), 8.0, Color("8a5a2e"))
+	var pull := sin(_t * 3.0) * 4.0
+	draw_polyline(PackedVector2Array([Vector2(-20, -30), Vector2(0, -12 + pull), Vector2(20, -30)]), Color("e5533d"), 4.0)
+	_oval(Vector2(0, -14 + pull), Vector2(8, 7), Color("b07a45"))
+
+
+func _tool_bubble() -> void:
+	_rect(Vector2(-10, 10), Vector2(22, 10), Color("3f8fe0"))
+	_rect(Vector2(-26, 22), Vector2(6, 14), Color("2b3354"))
+	_rect(Vector2(16, 10), Vector2(8, 6), Color("8fd0ff"))
+	for i in 3:
+		var k := fmod(_t * 0.7 + i * 0.33, 1.0)
+		var p := Vector2(28 + k * 14.0, -6 - k * 36.0)
+		draw_arc(p, 6.0 + k * 6.0, 0.0, TAU, 20, Color(0.8, 0.95, 1.0, 1.0 - k), 2.5)
+
+
+func _tool_boomerang() -> void:
+	draw_set_transform(size * 0.5, sin(_t * 2.0) * 0.3, Vector2(size.x / 96.0, size.x / 96.0))
+	for s in [-1.0, 1.0]:
+		_poly(PackedVector2Array([Vector2(0, 8), Vector2(s * 36, -18), Vector2(s * 38, -8), Vector2(s * 8, 18)]), Color("f39a2b"))
+	_shine(Vector2(-18, -6), Vector2(8, 3))
+
+
+func _tool_fire_staff() -> void:
+	_stick(Vector2(-14, 38), Vector2(8, -12), 7.0, Color("7a4a2a"))
+	_oval(Vector2(10, -20), Vector2(12, 12), Color("e5533d"))
+	var flicker := 1.0 + sin(_t * 12.0) * 0.12
+	draw_circle(Vector2(10, -26), 16.0 * flicker, Color(1, 0.6, 0.15, 0.45))
+	draw_circle(Vector2(10, -26), 8.0 * flicker, Color(1, 0.95, 0.6))
+
+
+func _tool_star_blaster() -> void:
+	_rect(Vector2(-6, 12), Vector2(26, 11), Color("9b5de5"))
+	_rect(Vector2(-22, 26), Vector2(6, 12), Color("2b3354"))
+	for i in 3:
+		var a := -0.5 + i * 0.5
+		var p := Vector2(30, 6) + Vector2(cos(a), sin(a)) * (14.0 + fmod(_t * 30.0, 14.0))
+		var star := PackedVector2Array()
+		for k in 10:
+			var r := 7.0 if k % 2 == 0 else 3.0
+			star.append(p + Vector2(cos(k * PI / 5.0), sin(k * PI / 5.0)) * r)
+		draw_colored_polygon(star, Color(1, 0.9, 0.35))
 
 
 func _tool_toolbox() -> void:

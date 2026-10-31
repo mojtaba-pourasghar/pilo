@@ -28,7 +28,7 @@ func _ready() -> void:
 	await get_tree().process_frame
 	SaveManager.data.intro_seen = true
 	var only := String(args.get("only", ""))
-	for shot in ["impact", "fire", "sweat", "breath", "storm", "land"]:
+	for shot in ["impact", "fire", "sweat", "breath", "storm", "land", "shoot", "throw"]:
 		if only == "" or only == shot:
 			await call("_" + shot)
 	get_tree().quit()
@@ -103,3 +103,25 @@ func _land() -> void:
 	while not game.player.is_on_floor():
 		await get_tree().physics_frame
 	await _snap(game, "land", 0.1)
+
+
+func _shoot() -> void:
+	SaveManager.data.tools = ["fire_staff"]
+	var game := await _game(1)
+	game.player.facing = 1.0
+	SaveManager.data.weapon = "fire_staff"
+	game.hud.set_weapon("fire_staff")
+	game.player._fire()
+	await get_tree().create_timer(0.25).timeout
+	game.player._fire_cooldown = 0.0
+	SaveManager.data.weapon = "slingshot"
+	game.player._fire()
+	await _snap(game, "shoot", 0.12)
+
+
+func _throw() -> void:
+	var game := await _game(1)
+	game.player.facing = 1.0
+	game.pilo._cooldown = 0.0
+	game.pilo._throw()
+	await _snap(game, "throw", 0.3)

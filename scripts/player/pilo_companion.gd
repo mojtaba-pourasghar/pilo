@@ -136,7 +136,7 @@ func act(game: Node) -> String:
 	var here: Vector2 = target.global_position
 	var enemy := _nearest(get_tree().get_nodes_in_group("enemy"), here, attack_range, func(n): return not n.freed)
 	if enemy:
-		_pounce(enemy.global_position + Vector2(0, -20), func(): enemy.defeat())
+		_pounce(enemy.global_position + Vector2(0, -20), func(): enemy.defeat("pilo"))
 		return "attack"
 	var wall := _nearest(get_tree().get_nodes_in_group("breakable") + _bricks(), here, SMASH_RANGE, func(_n): return true)
 	if wall:
@@ -172,10 +172,74 @@ func act(game: Node) -> String:
 		_happy(0.8)
 		AudioManager.play_sfx("star", 1.3, -6.0)
 		return "fetch"
-	shake()
-	if game and game.has_method("_notice"):
-		game._notice("اینجا کاری از پیلو برنمی‌آید.", UIKit.ORANGE)
-	return ""
+	# nothing close by: Nima throws Pilo forward like a spinning ball of fire; he breaks
+	# whatever is in the way (bricks, cracked walls, creatures) and comes back
+	_throw()
+	return "throw"
+
+
+const THROW_RANGE := 460.0
+
+
+func _throw() -> void:
+	busy = true
+	rig.state = "fly"
+	var facing: float = target.facing
+	rig.scale.x = facing
+	var start: Vector2 = target.global_position + Vector2(facing * 30.0, -10.0)
+	global_position = start
+	AudioManager.play_sfx("whoosh", 1.2)
+	AudioManager.play_sfx("dash", 1.4, -4.0)
+	var trail := CPUParticles2D.new()
+	trail.texture = FX.soft()
+	trail.amount = 30
+	trail.lifetime = 0.35
+	trail.local_coords = false
+	trail.scale_amount_min = 0.5
+	trail.scale_amount_max = 1.0
+	trail.color = Color(1, 0.7, 0.3, 0.6)
+	var add := CanvasItemMaterial.new()
+	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	trail.material = add
+	add_child(trail)
+	var hit_things := {}
+	var flight := func(k: float):
+		var reach := THROW_RANGE * sin(k * PI)          # out and back
+		global_position = target.global_position + Vector2(facing * (30.0 + reach), -10.0 - sin(k * PI) * 16.0) if k > 0.5 else start + Vector2(facing * reach, -sin(k * PI) * 16.0)
+		rig.rotation = k * TAU * 3.0 * facing
+		_throw_hits(hit_things)
+	var tween := create_tween()
+	tween.tween_method(flight, 0.0, 1.0, 0.9)
+	tween.tween_callback(func():
+		rig.rotation = 0.0
+		trail.emitting = false
+		trail.get_tree().create_timer(0.5).timeout.connect(trail.queue_free)
+		busy = false
+		_last_pos = global_position)
+
+
+## Whatever thrown Pilo touches: creatures are knocked out, bricks and cracked walls break.
+func _throw_hits(done: Dictionary) -> void:
+	var here := global_position
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		if not is_instance_valid(enemy) or done.has(enemy):
+			continue
+		if enemy is Enemy and not enemy.freed and enemy.global_position.distance_to(here + Vector2(0, 30)) < 56.0:
+			done[enemy] = true
+			enemy.defeat("pilo")
+			Juice.hit(enemy, here, 0.35)
+		elif enemy is Boss and enemy.global_position.distance_to(here) < 110.0:
+			done[enemy] = true
+			enemy.take_shot(0.5)
+	for wall in get_tree().get_nodes_in_group("breakable") + _bricks():
+		if not is_instance_valid(wall) or done.has(wall):
+			continue
+		var center: Vector2 = wall.global_position + Vector2(32, 32)
+		var cells: int = int(wall.get("cells")) if wall.get("cells") != null else 1
+		if Rect2(wall.global_position, Vector2(64, 64 * cells)).grow(26.0).has_point(here):
+			done[wall] = true
+			wall.smash()
+			Juice.hit(self, center, 0.3)
 
 
 func _bricks() -> Array:

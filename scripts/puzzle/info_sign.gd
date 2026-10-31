@@ -24,15 +24,25 @@ func _ready() -> void:
 	_bubble.add_theme_stylebox_override("panel", style)
 	var label := UIKit.make_label(text, 24)
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.custom_minimum_size = Vector2(340, 0)
+	label.custom_minimum_size = Vector2(560, 0)
 	_bubble.add_child(label)
-	_bubble.z_index = 30
 	_bubble.modulate.a = 0.0
 	_bubble.visible = false
-	add_child(_bubble)
-	_bubble.resized.connect(func(): _bubble.position = Vector2(32 - _bubble.size.x * 0.5, -50 - _bubble.size.y))
+	# the tip is shown on the screen, centred under the counters at the top, so it never
+	# covers the touch buttons or the hero
+	var layer := CanvasLayer.new()
+	layer.layer = 11
+	add_child(layer)
+	layer.add_child(_bubble)
+	_bubble.resized.connect(_place_bubble)
+	get_viewport().size_changed.connect(_place_bubble)
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+
+
+func _place_bubble() -> void:
+	var view := get_viewport().get_visible_rect().size
+	_bubble.position = Vector2((view.x - _bubble.size.x) * 0.5, 122.0)
 
 
 func _on_body_entered(body: Node) -> void:
@@ -40,6 +50,8 @@ func _on_body_entered(body: Node) -> void:
 		if not _bubble.visible and voice_id != "":
 			AudioManager.play_voice(voice_id)
 		_bubble.visible = true
+		_bubble.reset_size()
+		_place_bubble.call_deferred()
 		create_tween().tween_property(_bubble, "modulate:a", 1.0, 0.2)
 
 

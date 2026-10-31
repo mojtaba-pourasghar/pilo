@@ -95,6 +95,7 @@ var _sand := 0                 # quicksand areas Nima is in (slowed when > 0)
 
 @onready var visual: Node2D = $Visual
 var fx: PlayerFX
+var _fire_cooldown := 0.0
 @onready var rig: CharacterRig = $Visual/Rig
 
 
@@ -125,11 +126,14 @@ func _physics_process(delta: float) -> void:
 			_buffer = JUMP_BUFFER
 			if not is_on_floor() and _coyote <= 0.0 and _swim == 0:
 				_air_jump()
+		if Input.is_action_just_pressed("fire") and _fire_cooldown <= 0.0:
+			_fire()
 		if Input.is_action_just_pressed("dash") and _dash_cooldown <= 0.0 and (is_on_floor() or not _air_dash_used):
 			_air_dash_used = not is_on_floor()
 			_start_dash(dir)
 	_buffer -= delta
 	_dash_cooldown -= delta
+	_fire_cooldown -= delta
 	_hurt_lock -= delta
 	_pose_lock -= delta
 	invulnerable = maxf(0.0, invulnerable - delta)
@@ -238,6 +242,19 @@ func _start_dash(dir: float) -> void:
 	Juice.vibrate(12)
 
 
+## Shoots the current weapon (Weapons): a little recoil, a throw pose and a whoosh.
+func _fire() -> void:
+	var id := Weapons.current()
+	_fire_cooldown = float(Weapons.LIST[id].cooldown)
+	Weapons.fire(self, facing)
+	_squash = Vector2(0.9, 1.08)
+	_hold_pose("dash", 0.12)
+	AudioManager.play_sfx("whoosh", 1.4 if id == "slingshot" else 1.0, -4.0)
+	if id == "fire_staff":
+		AudioManager.play_sfx("fire", 1.6, -10.0)
+	Juice.vibrate(8)
+
+
 func _check_collisions() -> void:
 	_on_ice = false
 	_belt = 0.0
@@ -310,7 +327,7 @@ func _process(_delta: float) -> void:
 
 ## True when Nima is falling onto something whose top is at `top_y`.
 func is_stomping(top_y: float) -> bool:
-	return velocity.y > 40.0 and global_position.y + FEET <= top_y + 22.0
+	return velocity.y > 0.0 and global_position.y + FEET <= top_y + 30.0
 
 
 func stomp_bounce() -> void:

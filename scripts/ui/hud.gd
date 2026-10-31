@@ -13,6 +13,8 @@ const TOUCH := {
 	"pilo": "pilo",
 	"time": "time_shift",
 	"down": "down",
+	"fire": "fire",
+	"swap": "swap_weapon",
 }
 const PAST_COLOR := Color("e39a2f")
 const PRESENT_COLOR := Color("2fa6d9")
@@ -32,6 +34,8 @@ var _time_label: Label
 var _hint_button: TextureButton
 var _touch_root: Node2D
 var _touch: Dictionary = {}
+var _weapon_icon: LoadoutIcon
+var _weapon_badge: Node2D
 var _hint_tween: Tween
 var _flash: ColorRect
 var _title: Label
@@ -122,6 +126,13 @@ func _ready() -> void:
 		_touch_root.add_child(button)
 		_touch[key] = button
 
+	# the current weapon, shown on the fire button
+	_weapon_badge = Badge.new()
+	_touch_root.add_child(_weapon_badge)
+	_weapon_icon = LoadoutIcon.make("tool", "slingshot", 58.0)
+	_weapon_icon.position = Vector2(-29, -29)
+	_weapon_badge.add_child(_weapon_icon)
+
 	get_viewport().size_changed.connect(_layout)
 	_layout()
 	_touch.down.visible = false
@@ -182,6 +193,13 @@ func show_boss(boss_name: String, hits: int, total: int) -> void:
 	(_boss_bar.find_child("Value", true, false) as Label).text = text if hits > 0 else boss_name + " آزاد شد!"
 
 
+func set_weapon(id: String) -> void:
+	if _weapon_icon:
+		_weapon_icon.id = id
+		_weapon_icon.queue_redraw()
+	_touch.swap.visible = Weapons.owned().size() > 1
+
+
 func show_down(value: bool) -> void:
 	_touch.down.visible = value and _touch_root.visible
 
@@ -237,6 +255,14 @@ func _layout() -> void:
 	_touch.dash.position = Vector2(view.x - right - 160.0 - 140.0, y + 22.0)
 	_touch.pilo.position = Vector2(view.x - right - 140.0, y - 140.0)
 	_touch.time.position = Vector2(view.x - right - 160.0 - 140.0, y - 108.0)
+	# fire beside the dash, the weapon swap small above it
+	_touch.fire.scale = Vector2(0.75, 0.75)
+	_touch.fire.position = Vector2(view.x - right - 160.0 - 270.0, y + 22.0)
+	_touch.swap.scale = Vector2(0.55, 0.55)
+	_touch.swap.position = Vector2(view.x - right - 160.0 - 255.0, y - 82.0)
+	if _weapon_badge:
+		# the current weapon in a round badge on the fire button's upper corner
+		_weapon_badge.position = _touch.fire.position + Vector2(110, 6)
 
 
 func set_stars(collected: Array) -> void:
@@ -308,3 +334,10 @@ class HudIcon extends Control:
 				Collectible.draw_coin(self, c, 1.1, _t * 0.6)
 			"diamond":
 				Collectible.draw_diamond(self, c, 0.95, _t)
+
+
+## Round badge behind the current weapon's icon.
+class Badge extends Node2D:
+	func _draw() -> void:
+		draw_circle(Vector2.ZERO, 34.0, Color(0.12, 0.13, 0.2, 0.85))
+		draw_arc(Vector2.ZERO, 34.0, 0.0, TAU, 40, Color(1, 0.85, 0.35), 4.0)

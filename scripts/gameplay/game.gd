@@ -113,6 +113,7 @@ func _ready() -> void:
 	add_child(hud)
 	hud.setup(LevelManager.level_title(level_id), info.stars, info.keys > 0 or info.time_key, lens_enabled)
 	hud.set_hearts(player.hearts, player.max_hearts)
+	hud.set_weapon(Weapons.current())
 	hud.set_coins(0)
 	hud.set_diamonds(0, info.diamonds)
 	if info.boss:
@@ -143,6 +144,11 @@ func _physics_process(delta: float) -> void:
 			try_shift()
 		if Input.is_action_just_pressed("pilo"):
 			pilo.act(self)
+		if Input.is_action_just_pressed("swap_weapon"):
+			var weapon := Weapons.next()
+			hud.set_weapon(weapon)
+			AudioManager.play_sfx("click", 1.2)
+			_notice(String(Weapons.LIST[weapon].name), UIKit.BLUE, true)
 		if Engine.get_physics_frames() % 6 == 0:
 			_magnet()
 		var pipe := _warp_pipe_under_player()

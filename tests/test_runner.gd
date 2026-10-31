@@ -24,6 +24,7 @@ func _ready() -> void:
 	await _test_bot_runs_course()
 	await _test_loadout()
 	await _test_effects()
+	await _test_combat()
 	SaveManager.data = backup
 	SaveManager.save_game()
 	print("\n%d checks, %d failed" % [_checks, _failures])
@@ -87,6 +88,39 @@ func _test_effects() -> void:
 	await _wait(0.6)
 	_check(true, "catching fire runs without errors")
 	_stop(game)
+
+
+func _test_combat() -> void:
+	SaveManager.data.weapon = "slingshot"
+	var game := await _start([
+		"..............",
+		"..............",
+		"P.......e.....",
+		"##############",
+	])
+	var enemy: Node = null
+	for e in get_tree().get_nodes_in_group("enemy"):
+		enemy = e
+	game.player.facing = 1.0
+	game.player._fire()
+	await _wait(0.9)
+	_check(enemy == null or not is_instance_valid(enemy) or enemy.freed, "a slingshot acorn knocks a shadow creature out")
+	_stop(game)
+	game = await _start([
+		"..............",
+		"..............",
+		"P.....b.......",
+		"######b#######",
+	])
+	game.player.facing = 1.0
+	var bricks := get_tree().get_nodes_in_group("block").size()
+	game.pilo._cooldown = 0.0
+	var did: String = game.pilo.act(game)
+	await _wait(1.0)
+	_check(did == "smash" or did == "throw", "the Pilo button sends Pilo at the obstacle (%s)" % did)
+	_check(get_tree().get_nodes_in_group("block").size() < bricks, "thrown Pilo breaks a brick")
+	_stop(game)
+	_check(Weapons.owned().has("slingshot") and Weapons.current() == "slingshot", "the slingshot is Nima's from the start")
 
 
 func _check(ok: bool, what: String) -> void:

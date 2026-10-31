@@ -32,8 +32,7 @@ func touch_player(player: Node) -> void:
 	if freed:
 		return
 	if player.dashing > 0.0 and player.dash_frees_spiky:
-		defeat()
-		AudioManager.play_sfx("stomp", 1.2)
+		defeat("dash")
 		return
 	if player.is_stomping(top_y()):
 		player.stomp_bounce()

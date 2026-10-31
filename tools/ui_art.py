@@ -285,9 +285,10 @@ def main():
     circle_button("btn_gear", 140, rgba("8be06a"), rgba("2f9e2f"), rgba("1f7a22"), rgba("f1ffe8"), gear)
 
     def back(d, s):
+        # a plain "back" arrow pointing left (a circular arrow read as "reload")
         c = rgba("7a4a1c")
-        d.arc((s * 0.30, s * 0.28, s * 0.72, s * 0.70), 190, 470, fill=c, width=int(s * 0.085))
-        d.polygon([(s * 0.20, s * 0.47), (s * 0.40, s * 0.32), (s * 0.40, s * 0.60)], fill=c)
+        d.polygon([(s * 0.22, s * 0.48), (s * 0.45, s * 0.27), (s * 0.45, s * 0.69)], fill=c)
+        d.rounded_rectangle((s * 0.40, s * 0.40, s * 0.75, s * 0.56), s * 0.04, fill=c)
     circle_button("btn_back", 140, rgba("ffe27a"), rgba("f5b417"), rgba("c07d00"), rgba("fff8dc"), back)
 
     def pause(d, s):
@@ -338,7 +339,27 @@ def main():
 
 
 W = (255, 255, 255, 245)
+
+
+def _fire(d, s):
+    # a shot flying right with speed lines behind it
+    d.ellipse((s * .52, s * .36, s * .76, s * .60), fill=W)
+    for i, y in enumerate((.40, .48, .56)):
+        d.rounded_rectangle((s * (.22 + .06 * (i % 2)), s * (y - .02), s * .47, s * (y + .02)), s * .02, fill=W)
+
+
+def _swap(d, s):
+    # two arrows chasing each other: switch the weapon
+    w = int(s * .07)
+    d.arc((s * .27, s * .27, s * .73, s * .73), 200, 340, fill=W, width=w)
+    d.arc((s * .27, s * .27, s * .73, s * .73), 20, 160, fill=W, width=w)
+    d.polygon([(s * .70, s * .26), (s * .78, s * .42), (s * .62, s * .40)], fill=W)
+    d.polygon([(s * .30, s * .74), (s * .22, s * .58), (s * .38, s * .60)], fill=W)
+
+
 TOUCH = {
+    "fire": _fire,
+    "swap": _swap,
     "left": lambda d, s: (d.polygon([(s * .27, s * .5), (s * .5, s * .29), (s * .5, s * .71)], fill=W), d.rounded_rectangle((s * .46, s * .42, s * .72, s * .58), s * .03, fill=W)),
     "right": lambda d, s: (d.polygon([(s * .73, s * .5), (s * .5, s * .29), (s * .5, s * .71)], fill=W), d.rounded_rectangle((s * .28, s * .42, s * .54, s * .58), s * .03, fill=W)),
     "jump": lambda d, s: (d.polygon([(s * .5, s * .26), (s * .71, s * .5), (s * .29, s * .5)], fill=W), d.rounded_rectangle((s * .42, s * .46, s * .58, s * .73), s * .03, fill=W)),

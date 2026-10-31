@@ -66,6 +66,7 @@ func _ready() -> void:
 	body.add_child(tabs)
 	_add_tab(tabs, "companions", "همراه‌ها", "companion")
 	_add_tab(tabs, "tools", "ابزارها", "tool")
+	_add_tab(tabs, "weapons", "سلاح‌ها", "weapon")
 	_scroll = ScrollContainer.new()
 	_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -112,7 +113,8 @@ func _add_tab(parent: VBoxContainer, id: String, text: String, icon_kind: String
 	row.add_theme_constant_override("separation", 10)
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	button.add_child(row)
-	row.add_child(LoadoutIcon.make(icon_kind, "squirrel" if icon_kind == "companion" else "hammer", 52))
+	var sample := {"companion": "squirrel", "tool": "hammer", "weapon": "slingshot"}
+	row.add_child(LoadoutIcon.make("companion" if icon_kind == "companion" else "tool", sample[icon_kind], 52))
 	var label := UIKit.make_label(text, 28, Color.WHITE)
 	label.add_theme_font_override("font", UIKit.FONT_BLACK)
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -141,9 +143,14 @@ func _refresh() -> void:
 	if _tab == "companions":
 		for id in Loadout.COMPANIONS:
 			_grid.add_child(_companion_card(id))
+	elif _tab == "weapons":
+		for id in Loadout.TOOLS:
+			if Loadout.is_weapon(id):
+				_grid.add_child(_weapon_card(id))
 	else:
 		for id in Loadout.TOOLS:
-			_grid.add_child(_tool_card(id))
+			if not Loadout.is_weapon(id):
+				_grid.add_child(_tool_card(id))
 	_refresh_slots()
 
 
@@ -230,6 +237,25 @@ func _tool_card(id: String) -> Control:
 	return _card(LoadoutIcon.make("tool", id, 92, not owned), String(entry.name), String(entry.use), button, "sku" in entry and not owned)
 
 
+## Weapons are not in the backpack: every owned one can be picked in a level with the swap
+## button; here you choose which one Nima starts with.
+func _weapon_card(id: String) -> Control:
+	var entry: Dictionary = Loadout.TOOLS[id]
+	var owned := Loadout.owns_tool(id)
+	var button: Button
+	if owned and Weapons.current() == id:
+		button = _price_button("در دست نیما", UIKit.GREEN, false)
+	elif owned:
+		button = _price_button("بردار", UIKit.BLUE, true)
+		button.pressed.connect(func():
+			Weapons.pick(id)
+			_message.text = "%s در دست نیماست. در مرحله با دکمهٔ چرخش، سلاح را عوض کن." % entry.name
+			_refresh())
+	else:
+		button = _buy_button("tool", id, entry)
+	return _card(LoadoutIcon.make("tool", id, 92, not owned), String(entry.name), String(entry.use), button, "sku" in entry and not owned)
+
+
 func _buy_button(kind: String, id: String, entry: Dictionary) -> Button:
 	var button: Button
 	if entry.has("unlock"):
@@ -247,6 +273,8 @@ func _buy_button(kind: String, id: String, entry: Dictionary) -> Button:
 				_message.text = "%s مال تو شد!" % entry.name
 				if kind == "companion":
 					Loadout.pick_companion(id)
+				elif Loadout.is_weapon(id):
+					Weapons.pick(id)
 				else:
 					Loadout.toggle_tool(id)
 			else:

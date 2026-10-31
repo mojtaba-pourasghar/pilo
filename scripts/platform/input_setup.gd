@@ -10,6 +10,8 @@ const KEYS := {
 	"dash": [KEY_C, KEY_K, KEY_SHIFT],
 	"pilo": [KEY_F, KEY_J],
 	"time_shift": [KEY_E, KEY_X],
+	"fire": [KEY_V, KEY_L, KEY_CTRL],
+	"swap_weapon": [KEY_Q, KEY_TAB],
 	"hint": [KEY_H],
 	"pause": [KEY_ESCAPE, KEY_P],
 }
@@ -21,6 +23,8 @@ const PAD_BUTTONS := {
 	"dash": [JOY_BUTTON_B, JOY_BUTTON_RIGHT_SHOULDER],
 	"pilo": [JOY_BUTTON_Y],
 	"time_shift": [JOY_BUTTON_X],
+	"fire": [JOY_BUTTON_LEFT_SHOULDER],
+	"swap_weapon": [JOY_BUTTON_RIGHT_STICK],
 	"hint": [JOY_BUTTON_BACK],
 	"pause": [JOY_BUTTON_START],
 }

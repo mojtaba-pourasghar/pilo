@@ -26,6 +26,7 @@ var facing := -1.0
 var state := "intro"           ## intro, walk, windup, charge, jump, stunned, high, dive, under, hurt, free
 var is_freed := false
 var rig: EnemyRig
+var _shot_damage := 0.0
 
 var _cfg: Dictionary
 var _timer := 1.5
@@ -250,8 +251,21 @@ func _touch(player: Node) -> void:
 
 
 ## A stomp, or Pilo's pounce (he calls defeat on enemies).
-func defeat() -> void:
+func defeat(_how := "stomp") -> void:
 	take_hit()
+
+
+## Shots wear a guardian down: every whole point of damage is one hit.
+func take_shot(amount: float) -> void:
+	if is_freed or state == "under":
+		return
+	_shot_damage += amount
+	rig.set("flash", 0.5)
+	AudioManager.play_sfx("bump", 1.4, -6.0)
+	if _shot_damage >= 1.0:
+		_shot_damage -= 1.0
+		_invulnerable = 0.0
+		take_hit()
 
 
 func take_hit() -> void:

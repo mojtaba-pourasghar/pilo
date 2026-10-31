@@ -37,6 +37,12 @@ const TOOLS := {
 	"skateboard": {"name": "اسکیت موشکی", "use": "دَش بلندتر و تندتر", "sku": "tool_skateboard"},
 	"balloon": {"name": "بالن رنگین‌کمان", "use": "سُر خوردن بی‌پایان", "sku": "tool_balloon"},
 	"toolbox": {"name": "جعبه‌ابزار طلایی", "use": "یک جای ابزار سوم", "sku": "tool_toolbox"},
+	# weapons (Weapons): not in the backpack slots; the swap button picks one, fire shoots it
+	"slingshot": {"name": "تیرکمان", "use": "بلوط پرتاب می‌کند و سایه‌ها را می‌زند", "weapon": true, "free": true},
+	"bubble": {"name": "تفنگ حبابی", "use": "حباب، سایه را به دام می‌اندازد و می‌ترکاند", "weapon": true, "coins": 600},
+	"boomerang": {"name": "بومرنگ", "use": "می‌رود و برمی‌گردد و از همه رد می‌شود", "weapon": true, "coins": 1200, "diamonds": 3},
+	"fire_staff": {"name": "عصای آتش", "use": "گلولهٔ آتش جهنده؛ آجر و دیوار ترک‌دار را می‌شکند", "weapon": true, "coins": 2500, "diamonds": 10},
+	"star_blaster": {"name": "ستاره‌پران", "use": "سه ستاره با هم پرتاب می‌کند", "weapon": true, "sku": "tool_starblaster"},
 }
 
 
@@ -66,6 +72,8 @@ static func owns_companion(id: String) -> bool:
 
 static func owns_tool(id: String) -> bool:
 	var entry: Dictionary = TOOLS.get(id, {})
+	if entry.get("free", false):
+		return true
 	if entry.has("sku"):
 		return StoreAdapter.owns(String(entry.sku))
 	return data().get("tools", []).has(id)
@@ -84,7 +92,13 @@ static func has_tool(id: String) -> bool:
 	return equipped().has(id) and owns_tool(id)
 
 
+static func is_weapon(id: String) -> bool:
+	return bool(TOOLS.get(id, {}).get("weapon", false))
+
+
 static func price_text(entry: Dictionary) -> String:
+	if entry.get("free", false):
+		return "رایگان"
 	if entry.has("unlock"):
 		return "با آزاد کردن نگهبان جهان %s" % String(entry.unlock).split(":")[1]
 	if entry.has("sku"):
