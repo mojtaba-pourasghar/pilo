@@ -95,7 +95,10 @@ def main():
         im = Image.open(src).convert("RGBA")
         post = job.get("post", "cutout")
         if post == "none":
-            dest = os.path.join(STORY if job["id"].startswith("story_") else OUT, job["id"] + ".png")
+            if job["id"].startswith("card_"):
+                dest = os.path.join(ROOT, "assets", "ui", "worlds", job["id"][5:] + ".png")
+            else:
+                dest = os.path.join(STORY if job["id"].startswith("story_") else OUT, job["id"] + ".png")
             im.convert("RGB").save(dest)
         elif post == "cutout":
             out = cutout(im)

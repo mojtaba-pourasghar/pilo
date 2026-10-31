@@ -13,3 +13,4 @@ build/
 tools/audio/.cache/
 __pycache__/
 venv/
+art_src/_old/
