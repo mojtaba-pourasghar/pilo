@@ -306,6 +306,25 @@ static func safe_margins(viewport: Viewport) -> Dictionary:
 	return out
 
 
+## How big the touch buttons are: about the same size on every device in centimetres —
+## bigger on a small phone, a little smaller on a big tablet — times the player's choice in
+## the settings ("buttons": small 0.85, normal 1.0, big 1.18).
+static func touch_scale(viewport: Viewport) -> float:
+	var choice: float = {"small": 0.85, "normal": 1.0, "big": 1.18}.get(String(SaveManager.data.get("settings", {}).get("buttons", "normal")), 1.0)
+	var k := 1.0
+	if OS.has_feature("mobile"):
+		var dpi := float(DisplayServer.screen_get_dpi())
+		var px := Vector2(DisplayServer.window_get_size())
+		if dpi > 0.0 and px.y > 0.0:
+			var inches := px.length() / dpi
+			# a 6" phone gets 1.15, a 10" tablet 0.9
+			k = clampf(1.15 - (inches - 6.0) * 0.0625, 0.85, 1.2)
+	var visible := viewport.get_visible_rect().size
+	# never let the buttons eat more than the bottom 40% of a short screen
+	k = minf(k * choice, visible.y * 0.4 / 300.0)
+	return k
+
+
 static func circle_texture(diameter: int, color: Color) -> ImageTexture:
 	var image := Image.create(diameter, diameter, false, Image.FORMAT_RGBA8)
 	var radius := diameter * 0.5

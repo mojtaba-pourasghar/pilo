@@ -270,28 +270,30 @@ func _layout() -> void:
 	_top.offset_top = 18.0 + safe.top
 	_top.offset_bottom = _top.offset_top + 92.0
 	_title.position = Vector2(view.x * 0.5 - _title.size.x * 0.5, 130)
-	var y: float = view.y - bottom - 160.0
-	_touch.left.position = Vector2(left, y)
-	_touch.left.scale = Vector2(0.9, 0.9)
-	_touch.right.scale = Vector2(0.9, 0.9)
-	_touch.right.position = Vector2(left + 160.0, y)
-	_touch.down.scale = Vector2(0.7, 0.7)
-	_touch.down.position = Vector2(left + 100.0, y - 130.0)
+	# touch buttons: bigger on small phone screens, a little smaller on big tablets, and the
+	# player's own choice in the settings on top (UIKit.touch_scale)
+	var k := UIKit.touch_scale(get_viewport())
+	var y: float = view.y - bottom - 160.0 * k
+	var lx := func(x: float) -> float: return left + x * k
+	var rx := func(x: float) -> float: return view.x - right - x * k
+	var place := func(key: String, pos: Vector2, size: float) -> void:
+		_touch[key].scale = Vector2(size, size) * k
+		_touch[key].position = pos
+	place.call("left", Vector2(lx.call(0.0), y), 0.9)
+	place.call("right", Vector2(lx.call(160.0), y), 0.9)
+	place.call("down", Vector2(lx.call(100.0), y - 130.0 * k), 0.7)
 	# right hand: big jump in the corner, dash beside it, Pilo and the lens above
-	_touch.jump.position = Vector2(view.x - right - 160.0, y - 10.0)
-	for key in ["dash", "pilo", "time"]:
-		_touch[key].scale = Vector2(0.75, 0.75)
-	_touch.dash.position = Vector2(view.x - right - 160.0 - 140.0, y + 22.0)
-	_touch.pilo.position = Vector2(view.x - right - 140.0, y - 140.0)
-	_touch.time.position = Vector2(view.x - right - 160.0 - 140.0, y - 108.0)
+	place.call("jump", Vector2(rx.call(160.0), y - 10.0 * k), 1.0)
+	place.call("dash", Vector2(rx.call(300.0), y + 22.0 * k), 0.75)
+	place.call("pilo", Vector2(rx.call(140.0), y - 140.0 * k), 0.75)
+	place.call("time", Vector2(rx.call(300.0), y - 108.0 * k), 0.75)
 	# fire beside the dash, the weapon swap small above it
-	_touch.fire.scale = Vector2(0.75, 0.75)
-	_touch.fire.position = Vector2(view.x - right - 160.0 - 270.0, y + 22.0)
-	_touch.swap.scale = Vector2(0.55, 0.55)
-	_touch.swap.position = Vector2(view.x - right - 160.0 - 255.0, y - 82.0)
+	place.call("fire", Vector2(rx.call(430.0), y + 22.0 * k), 0.75)
+	place.call("swap", Vector2(rx.call(415.0), y - 82.0 * k), 0.55)
 	if _weapon_badge:
 		# the current weapon in a round badge on the fire button's upper corner
-		_weapon_badge.position = _touch.fire.position + Vector2(110, 6)
+		_weapon_badge.scale = Vector2(k, k)
+		_weapon_badge.position = _touch.fire.position + Vector2(110, 6) * k
 
 
 func set_stars(collected: Array) -> void:

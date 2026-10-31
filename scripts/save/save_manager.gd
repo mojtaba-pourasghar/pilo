@@ -20,7 +20,7 @@ func default_data() -> Dictionary:
 		"version": VERSION,
 		"levels": {},
 		"shards": 0,
-		"settings": {"music": 0.7, "sfx": 0.9, "ambient": 0.8, "voice": 1.0, "hints": "more", "vibration": true},
+		"settings": {"music": 0.7, "sfx": 0.9, "ambient": 0.8, "voice": 1.0, "hints": "more", "vibration": true, "buttons": "normal", "quality": "high"},
 		"purchases": [],
 		"rewards": [],
 		"pilo_color": "classic",

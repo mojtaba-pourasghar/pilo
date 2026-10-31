@@ -35,6 +35,9 @@ func _ready() -> void:
 	box.add_child(hint_row)
 	_refresh_hints()
 
+	box.add_child(_choice_row("اندازهٔ دکمه‌ها", "buttons", [["small", "کوچک"], ["normal", "معمولی"], ["big", "بزرگ"]], "normal"))
+	box.add_child(_choice_row("گرافیک", "quality", [["high", "زیبا"], ["low", "سبک"]], "high"))
+
 	# phone vibration on hits (on by default)
 	var buzz_row := HBoxContainer.new()
 	buzz_row.add_theme_constant_override("separation", 12)
@@ -81,6 +84,36 @@ func _ready() -> void:
 	var close := UIKit.make_button("بستن", UIKit.BLUE, 190, 26)
 	close.pressed.connect(_close)
 	actions.add_child(close)
+
+
+## A row of pill buttons, one chosen (button size, graphics quality).
+func _choice_row(title: String, key: String, options: Array, fallback: String) -> HBoxContainer:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 10)
+	var label := UIKit.make_label(title, 28)
+	label.custom_minimum_size.x = 150
+	row.add_child(label)
+	var buttons: Array = []
+	var show := func():
+		var current := String(SaveManager.data.settings.get(key, fallback))
+		for b in buttons:
+			var on: bool = b.get_meta("id") == current
+			for state in ["normal", "hover", "pressed", "hover_pressed"]:
+				b.add_theme_stylebox_override(state, UIKit.glass("pill_green_s" if on else "pill_grey_s", "pill_s", Vector4(26, 6, 26, 16)))
+	for option in options:
+		var button := UIKit.make_button(option[1], UIKit.GREEN, 130, 24)
+		button.set_meta("id", option[0])
+		button.pressed.connect(func():
+			SaveManager.data.settings[key] = option[0]
+			SaveManager.save_game()
+			show.call()
+			var game := get_tree().get_first_node_in_group("game")
+			if game and game.has_method("apply_display_settings"):
+				game.apply_display_settings())
+		buttons.append(button)
+		row.add_child(button)
+	show.call()
+	return row
 
 
 func _slider_row(title: String, key: String, value: float) -> HBoxContainer:

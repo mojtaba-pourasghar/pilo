@@ -100,6 +100,8 @@ func _ready() -> void:
 	_camera.limit_bottom = int(info.size.y)
 	player.add_child(_camera)
 	_camera.make_current()
+	# phones and tablets: keep the screen awake while playing
+	DisplayServer.screen_set_keep_on(true)
 
 	pilo = PILO_SCENE.instantiate()
 	pilo.target = player
@@ -130,6 +132,7 @@ func _ready() -> void:
 	AudioManager.play_ambient(String(world.get("ambient", "")))
 	weather = Weather.for_level(String(world.id), level_id, int(world.first))
 	_world_root.add_child(weather)
+	weather.set_light(String(SaveManager.data.settings.get("quality", "high")) == "low")
 	layered.set_sway(weather.sway_material())
 	Analytics.log_event("level_start", level_id)
 	_start_story()
@@ -332,6 +335,14 @@ func _apply_loadout() -> void:
 
 ## After a change in the team picker: the new companion, tools and weapon take effect at
 ## once (hearts never go up by switching).
+## Button size and graphics quality changed in the settings.
+func apply_display_settings() -> void:
+	if hud:
+		hud._layout()
+	if weather:
+		weather.set_light(String(SaveManager.data.settings.get("quality", "high")) == "low")
+
+
 func refresh_loadout() -> void:
 	var hearts: int = player.hearts
 	pilo.attack_range = 320.0

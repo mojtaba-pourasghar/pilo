@@ -38,7 +38,11 @@ func _process(delta: float) -> void:
 	offset = Vector2(_look, -40.0) + Vector2(randf_range(-1, 1), randf_range(-1, 1)) * _shake + wobble
 	rotation = _noise.get_noise_2d(_time * 40.0, 99.0) * 0.05 * amount
 	_punch = move_toward(_punch, 0.0, delta * 0.6)
-	zoom = Vector2.ONE * (1.0 + _punch)
+	# taller screens (tablets, 4:3) show more of the level above and below: zoom in a little
+	# so Nima stays as big as on a phone
+	var view := get_viewport().get_visible_rect().size
+	var base := sqrt(maxf(1.0, view.y / 720.0))
+	zoom = Vector2.ONE * (base + _punch)
 
 
 func shake(amount: float) -> void:

@@ -30,6 +30,7 @@ var _steam := 1.0
 var _gust := 0.0
 var _gust_target := 0.0
 var _gust_timer := 3.0
+var _light := false
 
 
 ## The weather of a level: rain on some forest, beach and castle levels, storms over the sky
@@ -120,6 +121,15 @@ func _ready() -> void:
 		add_child(glare_layer)
 
 
+## Light graphics (weaker phones): no rain splashes, steam or heat shimmer, no swaying trees.
+func set_light(light: bool) -> void:
+	_light = light
+	_sway.set_shader_parameter("strength", 0.0 if light else float(SWAY.get(world, 4.0)) * (1.0 + (wind - 1.0) * 0.5))
+	for child in get_children():
+		if child is CanvasLayer and child.layer == -5:
+			child.visible = not light
+
+
 ## The background asks for the wind material for its trees and bushes.
 func sway_material() -> ShaderMaterial:
 	return _sway
@@ -134,7 +144,7 @@ func _process(delta: float) -> void:
 		_gust_timer = randf_range(2.0, 5.0)
 	_gust = lerpf(_gust, _gust_target, 1.0 - exp(-1.5 * delta))
 	_sway.set_shader_parameter("gust", _gust)
-	if rain:
+	if rain and not _light:
 		_splash -= delta
 		while _splash <= 0.0:
 			_splash += 0.035
@@ -144,7 +154,7 @@ func _process(delta: float) -> void:
 		if _lightning <= 0.0:
 			_lightning = randf_range(6.0, 12.0)
 			_strike()
-	if steam:
+	if steam and not _light:
 		_steam -= delta
 		if _steam <= 0.0:
 			_steam = randf_range(0.8, 1.8)
