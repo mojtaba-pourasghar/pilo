@@ -16,9 +16,11 @@ var face_left := false
 var anger := 1.0            ## bosses: speeds the idle motion
 var flash := 0.0            ## bosses: white glow when a move is coming or a hit lands
 
-var _shadow: Sprite2D
-var _free: Sprite2D
+var _shadow: MeshInstance2D
+var _free: MeshInstance2D
 var _holder: Node2D
+var _material: ShaderMaterial
+var _size := Vector2(60, 60)
 
 
 ## Is there generated art for this name (either the shadow/free pair or a single picture)?
@@ -35,6 +37,8 @@ static func make(name: String, game_height: float, kind_of_motion := "walk") -> 
 
 
 func _ready() -> void:
+	_material = ShaderMaterial.new()
+	_material.shader = load("res://assets/vfx/creature.gdshader")
 	_holder = Node2D.new()
 	add_child(_holder)
 	if ResourceLoader.exists(ART % (art + "_shadow")):
@@ -46,23 +50,53 @@ func _ready() -> void:
 		freed_amount = 1.0
 
 
-func _sprite(name: String) -> Sprite2D:
-	var sprite := Sprite2D.new()
-	sprite.texture = load(ART % name)
-	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	var k := height / float(sprite.texture.get_height())
-	sprite.scale = Vector2(k, k)
-	sprite.offset = Vector2(0, -sprite.texture.get_height() * 0.5)
-	sprite.flip_h = face_left
-	_holder.add_child(sprite)
-	return sprite
+## The picture on a grid mesh, so the creature shader can bend it (feet, wings, arms).
+func _sprite(name: String) -> MeshInstance2D:
+	var texture: Texture2D = load(ART % name)
+	var h := height
+	var w := texture.get_width() * h / texture.get_height()
+	var node := MeshInstance2D.new()
+	node.mesh = _grid(w, h, 10)
+	node.texture = texture
+	node.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	node.material = _material
+	if face_left:
+		node.scale.x = -1.0
+	_holder.add_child(node)
+	_size = Vector2(w, h)
+	_material.set_shader_parameter("size", _size)
+	return node
+
+
+static func _grid(w: float, h: float, n: int) -> ArrayMesh:
+	var verts := PackedVector2Array()
+	var uvs := PackedVector2Array()
+	var idx := PackedInt32Array()
+	for j in n + 1:
+		for i in n + 1:
+			var u := float(i) / n
+			var v := float(j) / n
+			verts.append(Vector2((u - 0.5) * w, (v - 1.0) * h))
+			uvs.append(Vector2(u, v))
+	for j in n:
+		for i in n:
+			var a := j * (n + 1) + i
+			idx.append_array([a, a + 1, a + n + 1, a + 1, a + n + 2, a + n + 1])
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = verts
+	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_INDEX] = idx
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
+	return mesh
 
 
 func target_pose(delta: float) -> Dictionary:
 	var rate := 9.0
 	match motion:
 		"fly":
-			rate = 6.0
+			rate = 7.0
 		"boss":
 			rate = 3.0 + anger * 2.0
 	if state == "charge":
@@ -84,9 +118,9 @@ func _process(delta: float) -> void:
 	var stretch := 0.0
 	match motion:
 		"walk":
-			bob = -absf(sin(phase)) * height * 0.06
-			stretch = sin(phase * 2.0) * 0.04
-			tilt = sin(phase) * 0.05
+			bob = -absf(sin(phase)) * height * 0.035
+			stretch = sin(phase * 2.0) * 0.025
+			tilt = sin(phase) * 0.03
 		"fly":
 			bob = -height * 0.15 + sin(phase) * height * 0.1
 			tilt = sin(phase * 0.5) * 0.12
@@ -110,6 +144,15 @@ func _process(delta: float) -> void:
 	if state == "freed" or state == "free":
 		bob = -absf(sin(t * 8.0)) * height * 0.2
 		stretch = 0.0
+	var walking := 1.0 if (motion == "walk" or (motion == "boss" and state in ["walk", "charge"])) and not (state == "freed" or state == "free") else 0.0
+	_material.set_shader_parameter("phase", phase)
+	_material.set_shader_parameter("time_s", t)
+	_material.set_shader_parameter("stride", walking * (1.4 if state == "charge" else 1.0))
+	_material.set_shader_parameter("flap", 1.0 if motion == "fly" else 0.0)
+	_material.set_shader_parameter("sway", _size.x * (0.04 if motion != "fly" else 0.02))
+	_material.set_shader_parameter("breathe", 1.0)
+	_material.set_shader_parameter("arms", 1.0 if motion == "boss" else 0.0)
+	_material.set_shader_parameter("slam", 1.0 if state == "windup" else 0.0)
 	_holder.position = Vector2(0, bob)
 	_holder.rotation = tilt
 	_holder.scale = Vector2(1.0 - stretch, 1.0 + stretch)
