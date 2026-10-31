@@ -2,7 +2,8 @@
 
 Writes data/levels/forest/level_01.json. Run:  python3 tools/levels/forest_01.py
 The map is built from named pieces at tile coordinates so it stays readable and easy to
-change. Routes: ground (main), tree tops (fast, coins, a diamond), underground corridor
+change. Routes: ground (main), a high plank road over the start and over the river, tree
+tops (fast, coins, a diamond), underground corridor
 (the time key is down there: the "right path"), a secret pipe room, a cracked-wall cave.
 """
 import json, os
@@ -135,6 +136,16 @@ put(173, G - 1, "C")
 put(176, G - 1, "i")
 put(185, G - 1, "E")
 text(178, G - 4, "c.c.c")
+
+# H. the high road: planks over the start and the first pit, and over the river and the
+# cracked cave (laid by compose.upper_lane on the ranges chosen here, entered by springs)
+import random, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import compose  # noqa: E402
+_lanes = compose.Level(W, random.Random(101))
+_lanes.g = grid
+compose.upper_lane(_lanes, 8, 46)
+compose.upper_lane(_lanes, 97, 140)
 
 warps = [
     {"from": [34, G - 2], "to": [15, G + 3]},     # surface -> secret room

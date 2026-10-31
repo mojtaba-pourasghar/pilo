@@ -4,6 +4,8 @@
     python3 tools/levels/compose.py            # every level
     python3 tools/levels/compose.py 9 16       # only these ids
 
+Levels 2-3, 9-11, 17-19, ... (the first three of each world) are authored: tools/levels/authored.py
+fixes their pieces, where the high road and the underground corridor run and what is said.
 Every segment is a small, deliberately designed piece of level (an upper, a lower and often
 an underground route, secrets, a puzzle or a hazard to time). A level is a start, a run of
 segments chosen for its world and difficulty, checkpoints, a "key" segment (the time key is
@@ -14,6 +16,7 @@ Every map is checked by tests/validate_levels.py.
 import json, os, random, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from authored import AUTHORED  # noqa: E402
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "tests"))
 
 H, G = 22, 16          # rows; top row of the ground
@@ -23,15 +26,23 @@ WORLDS = ["forest", "coral_beach", "golden_desert", "snow_mountain", "sky_island
           "crystal_caves", "clock_factory", "shadow_castle", "inverted_land"]
 # world-specific segments (on top of the shared ones) and what is special about the world
 SPECIAL = {
-    "forest": ["tree_route", "rafts", "glide_gap"],
-    "coral_beach": ["swim_pool", "swim_pool", "rafts", "tide_steps"],
-    "golden_desert": ["quicksand", "quicksand", "cannon_alley", "glide_gap"],
-    "snow_mountain": ["ice_slide", "ice_slide", "crusher_corridor", "glide_gap"],
-    "sky_islands": ["wind_bridge", "wind_bridge", "storm", "glide_gap"],
-    "crystal_caves": ["crusher_corridor", "moving", "cracked_cave", "lens_river"],
-    "clock_factory": ["conveyor", "conveyor", "crusher_corridor", "moving"],
-    "shadow_castle": ["vanish", "vanish", "storm", "cannon_alley", "lens_river"],
-    "inverted_land": ["vanish", "wind_bridge", "conveyor", "ice_slide", "swim_pool", "quicksand"],
+    "forest": ["tree_route", "rafts", "glide_gap", "mushroom_canopy", "hollow_hill"],
+    "coral_beach": ["swim_pool", "swim_pool", "rafts", "tide_steps", "reef_cave", "shipwreck"],
+    "golden_desert": ["quicksand", "quicksand", "cannon_alley", "glide_gap", "pyramid", "dune_sinks"],
+    "snow_mountain": ["ice_slide", "ice_slide", "crusher_corridor", "glide_gap", "ice_cave", "pine_ladder"],
+    "sky_islands": ["wind_bridge", "wind_bridge", "storm", "glide_gap", "cloud_stairs", "island_hop"],
+    "crystal_caves": ["crusher_corridor", "moving", "cracked_cave", "lens_river", "crystal_mine", "dark_drop"],
+    "clock_factory": ["conveyor", "conveyor", "crusher_corridor", "moving", "gear_tower", "piston_hall"],
+    "shadow_castle": ["vanish", "vanish", "storm", "cannon_alley", "lens_river", "rampart", "spike_hall"],
+    "inverted_land": ["vanish", "wind_bridge", "conveyor", "ice_slide", "swim_pool", "quicksand", "upside_maze", "mirror_steps"],
+}
+# the two signature pieces of each world (the authored levels show them first)
+SIGNATURE = {
+    "forest": ["mushroom_canopy", "hollow_hill"], "coral_beach": ["reef_cave", "shipwreck"],
+    "golden_desert": ["pyramid", "dune_sinks"], "snow_mountain": ["ice_cave", "pine_ladder"],
+    "sky_islands": ["cloud_stairs", "island_hop"], "crystal_caves": ["crystal_mine", "dark_drop"],
+    "clock_factory": ["gear_tower", "piston_hall"], "shadow_castle": ["rampart", "spike_hall"],
+    "inverted_land": ["upside_maze", "mirror_steps"],
 }
 SHARED = ["blocks", "pit", "stairs", "wheel", "cannon_alley", "thorn_jumps", "secret_pipe",
           "cracked_cave", "lens_river", "moving", "crusher_corridor"]
@@ -479,7 +490,329 @@ def seg_vanish(L, c, d, w):
     return 18
 
 
-# --- the time key and the end ----------------------------------------------------
+# --- signature pieces: two per world, each with a high road, a low road and a secret ----
+
+def seg_mushroom_canopy(L, c, d, w):
+    """Forest: bounce up into the caps of giant mushrooms (coins, a diamond block over the
+    highest cap) or take the thorny ground with a hedgehog; a fox den hides at the end."""
+    L.put(c + 2, G - 1, "M")
+    L.row(c + 4, c + 7, G - 7, "o")
+    L.row(c + 10, c + 13, G - 9, "o")
+    L.row(c + 16, c + 19, G - 7, "o")
+    L.text(c + 4, G - 8, "cccc")
+    L.put(c + 11, G - 12, "J")
+    L.text(c + 16, G - 8, "c.c")
+    L.put(c + 14, G - 12, "y")
+    L.row(c + 8, c + 9, G - 1, "A")
+    L.put(c + 13, G - 1, "h")
+    L.row(c + 17, c + 18, G - 1, "A")
+    L.put(c + 22, G - 1, "Y")
+    L.stars.append((c + 18, G - 9))
+    return 25
+
+
+def seg_hollow_hill(L, c, d, w):
+    """Forest: a grassy hill with a hollow inside. Over the top (bees), or dash through the
+    cracked wall into the hollow: coins, a brick of coins and a fox den."""
+    L.rect(c + 4, c + 21, G - 4, G - 1, "#")
+    L.rect(c + 1, c + 2, G - 2, G - 1, "#")
+    L.rect(c + 22, c + 23, G - 2, G - 1, "#")
+    L.rect(c + 5, c + 21, G - 3, G - 1, ".")
+    L.rect(c + 4, c + 4, G - 3, G - 1, "W")
+    L.text(c + 7, G - 1, "cc.cc")
+    L.put(c + 13, G - 1, "Y")
+    L.put(c + 16, G - 3, "$")
+    L.put(c + 18, G - 1, "e")
+    L.text(c + 8, G - 6, "c.c.c")
+    L.put(c + 12, G - 7, "y")
+    L.stars.append((c + 15, G - 2))
+    return 25
+
+
+def seg_reef_cave(L, c, d, w):
+    """Beach: a lagoon with a rock shelf; swim under the shelf for diamonds, or hop across on
+    planks above with crabs on them."""
+    L.rect(c + 3, c + 20, G, H - 2, "s")
+    L.rect(c + 8, c + 15, G, G + 1, "#")
+    L.text(c + 9, H - 3, "c.d.c")
+    L.put(c + 12, H - 2, "d")
+    L.row(c + 4, c + 7, G - 3, "o")
+    L.row(c + 16, c + 19, G - 3, "o")
+    L.put(c + 11, G - 1, "e")
+    L.text(c + 9, G - 3, "cccc")
+    L.put(c + 18, G - 4, "c")
+    L.stars.append((c + 6, G + 4))
+    return 23
+
+
+def seg_shipwreck(L, c, d, w):
+    """Beach: a stranded ship. On deck a cannon and a spring up the mast to the crow's nest
+    (a diamond); break the cracked planks into the hold for coins and a den."""
+    L.rect(c + 4, c + 22, G - 3, G - 1, "#")
+    L.rect(c + 5, c + 21, G - 2, G - 1, ".")
+    L.rect(c + 4, c + 4, G - 2, G - 1, "W")
+    L.rect(c + 22, c + 22, G - 2, G - 1, "W")
+    L.text(c + 8, G - 1, "c.c.c")
+    L.put(c + 13, G - 1, "Y")
+    L.put(c + 16, G - 2, "U")
+    L.put(c + 18, G - 1, "e")
+    L.put(c + 6, G - 4, "N")
+    L.put(c + 9, G - 4, "M")
+    L.put(c + 19, G - 4, "e")
+    L.row(c + 11, c + 16, G - 8, "o")
+    L.row(c + 12, c + 14, G - 11, "o")
+    L.put(c + 13, G - 12, "d")
+    L.text(c + 11, G - 9, "c.c.c")
+    L.stars.append((c + 14, G - 13))
+    return 25
+
+
+def seg_pyramid(L, c, d, w):
+    """Desert: a stepped pyramid. Climb over its top (a diamond block above the summit,
+    vultures) or break in through the cracked stone: a corridor with a den and a scorpion."""
+    for i, h in enumerate([1, 2, 3, 4, 5, 5, 4, 3, 2, 1]):
+        x0 = c + 3 + i * 2
+        L.rect(x0, x0 + 1, G - h, G - 1, "#")
+    L.rect(c + 6, c + 18, G - 2, G - 1, ".")
+    L.rect(c + 5, c + 5, G - 2, G - 1, "W")
+    L.rect(c + 19, c + 19, G - 2, G - 1, "W")
+    L.text(c + 7, G - 1, "c.c")
+    L.put(c + 11, G - 1, "Y")
+    L.put(c + 15, G - 1, "e")
+    L.put(c + 12, G - 9, "J")
+    L.put(c + 9, G - 8, "y")
+    L.text(c + 10, G - 7, "cccc")
+    L.stars.append((c + 17, G - 4))
+    return 25
+
+
+def seg_dune_sinks(L, c, d, w):
+    """Desert: sinking sand between dunes. Jump dune to dune quickly, or bounce up onto the
+    planks over them; a hidden block with a diamond waits over the middle pit."""
+    for x0, x1 in ((c + 3, c + 6), (c + 10, c + 13), (c + 17, c + 20)):
+        L.row(x0, x1, G, "q")
+    L.rect(c + 7, c + 9, G - 2, G - 1, "#")
+    L.rect(c + 14, c + 16, G - 2, G - 1, "#")
+    L.put(c + 1, G - 1, "M")
+    L.row(c + 3, c + 7, G - 7, "o")
+    L.row(c + 11, c + 15, G - 8, "o")
+    L.row(c + 18, c + 21, G - 7, "o")
+    L.put(c + 12, G - 5, "n")
+    L.text(c + 4, G - 8, "ccc")
+    L.put(c + 15, G - 3, "e")
+    L.put(c + 19, G - 10, "y")
+    L.stars.append((c + 20, G - 8))
+    return 23
+
+
+def seg_ice_cave(L, c, d, w):
+    """Snow: a long ice cave under a snowy roof. Inside: slippery ice, icicle crushers and
+    coins; on the roof: snowballs to jump and a diamond."""
+    L.rect(c + 3, c + 22, G - 5, G - 5, "#")
+    L.rect(c + 3, c + 3, G - 4, G - 3, "#")
+    L.rect(c + 22, c + 22, G - 4, G - 3, "#")
+    L.row(c + 4, c + 21, G, "I")
+    L.put(c + 9, G - 4, "T")
+    L.put(c + 16, G - 4, "T")
+    L.text(c + 5, G - 1, "c.c...c.c...c.c")
+    L.put(c + 1, G - 1, "M")
+    L.put(c + 10, G - 6, "h")
+    L.put(c + 17, G - 6, "h")
+    L.put(c + 13, G - 7, "d")
+    L.stars.append((c + 20, G - 7))
+    return 25
+
+
+def seg_pine_ladder(L, c, d, w):
+    """Snow: planks zigzag up a giant pine to a high ledge with a diamond; below, an icy
+    slope that ends in a gap."""
+    L.row(c + 3, c + 6, G - 3, "o")
+    L.row(c + 8, c + 11, G - 6, "o")
+    L.row(c + 3, c + 6, G - 9, "o")
+    L.row(c + 8, c + 13, G - 12, "o")
+    L.put(c + 10, G - 13, "d")
+    L.text(c + 4, G - 10, "ccc")
+    L.put(c + 6, G - 13, "y")
+    L.row(c + 13, c + 18, G, "I")
+    L.pit(c + 19, c + 21)
+    L.text(c + 19, G - 3, "ccc")
+    L.put(c + 15, G - 1, "e")
+    L.stars.append((c + 12, G - 14))
+    return 24
+
+
+def seg_cloud_stairs(L, c, d, w):
+    """Sky: over a deep gap, cloud steps that fade in and out climb to a high cloud (a
+    diamond); a wind column also lifts you there; below, a moving platform crosses low."""
+    L.pit(c + 2, c + 21)
+    for i, (x, y) in enumerate([(c + 3, G - 2), (c + 7, G - 4), (c + 11, G - 6)]):
+        L.row(x, x + 1, y, "v")
+    L.rect(c + 14, c + 14, G - 9, H - 1, "^")
+    L.row(c + 16, c + 21, G - 9, "o")
+    L.put(c + 19, G - 10, "d")
+    L.text(c + 16, G - 10, "cc")
+    L.put(c + 4, G - 1, "m")
+    L.put(c + 18, G - 12, "y")
+    L.stars.append((c + 21, G - 11))
+    return 24
+
+
+def seg_island_hop(L, c, d, w):
+    """Sky: small floating islands over the clouds, a tail wind under them; hop the island
+    tops (a diamond block over the highest) or ride the wind low."""
+    L.pit(c + 2, c + 23)
+    for x0, y0 in ((c + 4, G - 2), (c + 9, G - 4), (c + 14, G - 3), (c + 19, G - 2)):
+        L.rect(x0, x0 + 2, y0, y0 + 1, "#")
+    L.row(c + 3, c + 22, G + 1, ">")
+    L.text(c + 9, G - 5, "ccc")
+    L.put(c + 10, G - 8, "J")
+    L.put(c + 15, G - 4, "e")
+    L.put(c + 12, G - 8, "y")
+    L.stars.append((c + 12, G - 6))
+    return 26
+
+
+def seg_crystal_mine(L, c, d, w):
+    """Caves: drop down a mine shaft into a tunnel of crystals (diamonds, a den), come back up
+    through a pipe; or cross the shaft high on a moving platform."""
+    L.pit(c + 6, c + 8)
+    L.rect(c + 6, c + 8, H - 1, H - 1, "#")
+    L.rect(c + 9, c + 22, G + 1, H - 2, ".")
+    L.text(c + 10, H - 2, "c.d.c")
+    L.put(c + 15, H - 2, "Y")
+    L.put(c + 18, G + 2, "e")
+    L.put(c + 20, H - 3, "p")
+    L.put(c + 20, G - 2, "p")
+    L.warp((c + 20, H - 3), (c + 20, G - 2))
+    L.warp((c + 20, G - 2), (c + 20, H - 3))
+    L.put(c + 4, G - 4, "m")
+    L.text(c + 6, G - 6, "ccc")
+    L.put(c + 14, G - 1, "e")
+    L.stars.append((c + 12, H - 3))
+    return 24
+
+
+def seg_dark_drop(L, c, d, w):
+    """Caves: a crystal pillar; ride the lift up its side to the roof road (diamond), or go
+    round its foot past a thorn wheel."""
+    L.rect(c + 9, c + 12, G - 9, G - 1, "#")
+    L.put(c + 6, G - 2, "u")
+    L.row(c + 13, c + 20, G - 9, "o")
+    L.put(c + 17, G - 10, "d")
+    L.text(c + 9, G - 10, "cccc")
+    L.put(c + 16, G - 3, "F")
+    L.put(c + 21, G - 1, "e")
+    L.rect(c + 13, c + 13, G - 2, G - 1, "#")
+    L.stars.append((c + 19, G - 11))
+    return 24
+
+
+def seg_gear_tower(L, c, d, w):
+    """Factory: belts stacked like a tower, each running the other way, up to a diamond on
+    top; on the floor, two crushers to time."""
+    L.put(c + 1, G - 1, "M")
+    L.row(c + 3, c + 9, G - 6, "=")
+    L.row(c + 11, c + 17, G - 9, "_")
+    L.row(c + 3, c + 9, G - 12, "=")
+    L.put(c + 7, G - 13, "d")
+    L.text(c + 13, G - 10, "ccc")
+    L.put(c + 6, G - 4, "T")
+    L.put(c + 14, G - 4, "T")
+    L.text(c + 4, G - 1, "c...c...c")
+    L.stars.append((c + 5, G - 14))
+    return 22
+
+
+def seg_piston_hall(L, c, d, w):
+    """Factory: a hall of crushers on the floor; the catwalk above has a belt running against
+    you and a cannon at its end; a hidden block holds a diamond."""
+    for x in (c + 4, c + 8, c + 12, c + 16):
+        L.put(x, G - 4, "T")
+    L.text(c + 3, G - 1, "c.c.c.c.c.c.c")
+    L.put(c + 1, G - 1, "M")
+    L.row(c + 3, c + 18, G - 7, "_")
+    L.put(c + 20, G - 8, "N")
+    L.row(c + 19, c + 21, G - 7, "#")
+    L.put(c + 10, G - 10, "n")
+    L.stars.append((c + 14, G - 9))
+    return 23
+
+
+def seg_rampart(L, c, d, w):
+    """Castle: a castle wall. Walk its battlements past a cannon, or break into the dungeon
+    below (thorns, a den, coins)."""
+    L.rect(c + 4, c + 24, G - 4, G - 1, "#")
+    for x in range(c + 4, c + 25, 3):
+        L.put(x, G - 5, "#")
+    L.rect(c + 2, c + 3, G - 2, G - 1, "#")
+    L.rect(c + 5, c + 23, G - 3, G - 1, ".")
+    L.rect(c + 4, c + 4, G - 3, G - 1, "W")
+    L.rect(c + 24, c + 24, G - 3, G - 1, "W")
+    L.row(c + 10, c + 11, G - 1, "A")
+    L.text(c + 6, G - 1, "cc")
+    L.put(c + 15, G - 1, "Y")
+    L.put(c + 19, G - 1, "e")
+    L.text(c + 13, G - 3, "b$b")
+    L.put(c + 12, G - 6, "N")
+    L.put(c + 20, G - 6, "e")
+    L.put(c + 9, G - 8, "y")
+    L.stars.append((c + 17, G - 7))
+    return 27
+
+
+def seg_spike_hall(L, c, d, w):
+    """Castle: a hall floored with shadow thorns. Fading platforms cross it low; planks with
+    bats cross it high; a diamond hangs in the middle."""
+    L.row(c + 3, c + 20, G - 1, "A")
+    L.row(c + 4, c + 5, G - 3, "v")
+    L.row(c + 9, c + 10, G - 4, "v")
+    L.row(c + 14, c + 15, G - 3, "v")
+    L.row(c + 18, c + 19, G - 4, "v")
+    L.put(c + 1, G - 1, "M")
+    L.row(c + 3, c + 7, G - 7, "o")
+    L.row(c + 10, c + 14, G - 8, "o")
+    L.row(c + 17, c + 21, G - 7, "o")
+    L.put(c + 12, G - 9, "d")
+    L.put(c + 8, G - 11, "y")
+    L.put(c + 16, G - 11, "y")
+    L.text(c + 9, G - 6, "ccc")
+    L.stars.append((c + 20, G - 8))
+    return 24
+
+
+def seg_upside_maze(L, c, d, w):
+    """Inverted land: everything at once: a belt running backwards, fading steps, a wind
+    column to a high cloud and a hidden diamond."""
+    L.row(c + 2, c + 8, G, "_")
+    L.row(c + 10, c + 11, G - 3, "v")
+    L.row(c + 13, c + 14, G - 5, "v")
+    L.rect(c + 17, c + 17, G - 9, G - 1, "^")
+    L.row(c + 18, c + 23, G - 9, "o")
+    L.put(c + 21, G - 10, "d")
+    L.put(c + 6, G - 5, "n")
+    L.put(c + 9, G - 1, "e")
+    L.text(c + 2, G - 3, "c.c.c")
+    L.stars.append((c + 23, G - 11))
+    return 25
+
+
+def seg_mirror_steps(L, c, d, w):
+    """Inverted land: steps up and down like a mirror image; a bridge that is only there in
+    the past crosses the water between them; a den under the far side."""
+    for i, h in enumerate([1, 2, 3, 4]):
+        L.rect(c + 3 + i, c + 3 + i, G - h, G - 1, "#")
+    L.row(c + 7, c + 14, G, "B")
+    L.row(c + 7, c + 14, G + 1, "~")
+    for i, h in enumerate([4, 3, 2, 1]):
+        L.rect(c + 15 + i, c + 15 + i, G - h, G - 1, "#")
+    L.put(c + 2, G - 2, "?")
+    L.text(c + 8, G - 3, "cccccc")
+    L.put(c + 11, G - 8, "J")
+    L.put(c + 21, G - 1, "Y")
+    L.put(c + 11, G - 6, "y")
+    L.stars.append((c + 11, G - 4))
+    return 23
+
 
 def seg_key_underground(L, c, d, w):
     """The key lies in a fox den down a pipe; the upper road looks easier but has no key."""
@@ -628,8 +961,13 @@ def _compose(world_index, n, level_id, extra):
     d = min(1.0, 0.15 + 0.11 * (n - 1) + 0.06 * world_index)
     lens = world in ("forest", "sky_islands", "crystal_caves", "shadow_castle", "inverted_land") or n % 2 == 0
     pool = [s for s in SHARED if lens or s != "lens_river"] + SPECIAL[world] * 2
+    authored = AUTHORED.get(level_id)
     plan = ["start"]
-    if n == 8:
+    if authored:
+        plan = list(authored["plan"])
+        for e in extra:
+            plan.insert(len(plan) // 2, e)
+    elif n == 8:
         plan += rng.sample([s for s in pool if s not in ("secret_pipe", "lens_river")], 2) + ["checkpoint", "boss_arena"]
     elif n == 7:
         plan += ["secret_pipe", "rafts" if world != "golden_desert" else "quicksand", "checkpoint",
@@ -658,6 +996,13 @@ def _compose(world_index, n, level_id, extra):
     for p in plan:
         layout.append([p, x])
         x += SEGMENTS[p](L, x, d, world)
+    if authored:
+        # the designed routes first: the high road and the corridor where the design puts them
+        ends = [x0 for _, x0 in layout] + [x]
+        for i, j in authored.get("upper", []):
+            upper_lane(L, ends[i], ends[j + 1] - 1)
+        for i, j in authored.get("under", []):
+            under_lane(L, ends[i], ends[j + 1] - 1, min_len=14)
     if n <= 6:
         enforce_minimum(L, plan, layout)
     # three stars in the harder spots
@@ -671,6 +1016,8 @@ def _compose(world_index, n, level_id, extra):
         else:
             L.put(sx, sy - 1, "*")
     intro, outro = dialogue(world, n, level_id)
+    if authored:
+        intro = [{"who": who, "text": text, "id": "l%02d_intro_%d" % (level_id, i + 1)} for i, (who, text) in enumerate(authored["intro"])]
     data = {
         "id": level_id, "format": 2, "world": world, "title": TITLES[level_id - 1], "lens": True, "start_time": "present",
         "difficulty": round(d, 2), "dark": world in DARK and n != 8, "move_range": 4,
