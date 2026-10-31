@@ -7,6 +7,61 @@
  },
  "jobs": [
   {
+   "id": "npc_grandma",
+   "prompt": "Grandma Cactus, a kind old desert woman with a shawl, round glasses and a little cactus flower in her grey hair, holding a walking stick, full body, three-quarter view",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 768
+  },
+  {
+   "id": "npc_captain",
+   "prompt": "Captain Wave, a funny chubby pirate with a big blue hat, a curly red beard, a striped shirt and a map in his hand, full body, three-quarter view",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 768
+  },
+  {
+   "id": "npc_masked",
+   "prompt": "a mysterious figure in a dark hooded cloak and a smooth silver mask with a clock symbol, full body, kid friendly",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 768
+  },
+  {
+   "id": "npc_zurvan",
+   "prompt": "Zurvan, a tall thin sly former clockmaker apprentice in a long dark purple coat with clock gears, a monocle and a pointed grey beard, holding a strange backward-running pocket watch, full body, three-quarter view, kid friendly",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 768
+  },
+  {
+   "id": "npc_kian",
+   "prompt": "Kian, a confident 10-year-old boy treasure hunter rival: blue bandana, spiky black hair, aviator goggles on his head, blue vest with many pockets, khaki shorts, a small brass mechanical owl on his shoulder, full body, side view facing right, standing",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 768
+  },
+  {
    "id": "item_diamond",
    "prompt": "a single brilliant-cut sky blue diamond gem shown from the side like a classic diamond icon: flat table on top, pointed bottom, sharp facets, sparkling highlights, transparent crystal, game item",
    "style": "sprite",
@@ -2904,6 +2959,193 @@
    ],
    "post": "cutout",
    "max": 512
+  },
+  {
+   "id": "tool_hammer",
+   "prompt": "a small wooden hammer with a steel head, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_umbrella",
+   "prompt": "a red umbrella, open, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_magnet",
+   "prompt": "a red horseshoe magnet with silver tips, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_compass",
+   "prompt": "a golden treasure compass, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_shoes",
+   "prompt": "a pair of blue sneakers with little white wings, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_shield",
+   "prompt": "a shiny transparent blue bubble shield, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_springs",
+   "prompt": "a pair of green boots with metal springs under the soles, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_glasses",
+   "prompt": "purple magic glasses with sparkles, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_watch",
+   "prompt": "a silver stopwatch, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_skateboard",
+   "prompt": "an orange skateboard with a small rocket on the back, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_balloon",
+   "prompt": "a small rainbow hot air balloon, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_toolbox",
+   "prompt": "a golden toolbox, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_slingshot",
+   "prompt": "a wooden slingshot with a red rubber band and an acorn, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_bubble",
+   "prompt": "a blue toy bubble gun with bubbles, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_boomerang",
+   "prompt": "an orange wooden boomerang, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_fire_staff",
+   "prompt": "a wooden magic staff with a glowing fire orb on top, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
+  },
+  {
+   "id": "tool_star_blaster",
+   "prompt": "a purple toy blaster shooting little golden stars, single game item icon, centered",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 256
   }
  ]
 }

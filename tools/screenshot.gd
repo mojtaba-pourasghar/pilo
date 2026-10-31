@@ -65,6 +65,22 @@ func _ready() -> void:
 				scene.diamonds_found = [0, 2, 3]
 				scene.enemies_freed = 9
 				scene.on_exit_reached()
+	for i in int(args.get("taps", "0")):
+		# --taps=N: N taps on the screen (tutorial steps, dialogue)
+		await get_tree().create_timer(0.35).timeout
+		var tap := InputEventMouseButton.new()
+		tap.button_index = MOUSE_BUTTON_LEFT
+		tap.pressed = true
+		tap.position = Vector2(640, 360)
+		Input.parse_input_event(tap)
+		await get_tree().create_timer(0.05).timeout
+		var up := tap.duplicate()
+		up.pressed = false
+		Input.parse_input_event(up)
+	if args.has("team"):
+		var game := get_tree().get_first_node_in_group("game")
+		if game:
+			game.open_team()
 	await get_tree().create_timer(float(args.get("wait", "1.0"))).timeout
 	var image := get_viewport().get_texture().get_image()
 	image.save_png(args.get("out", "user://shot.png"))

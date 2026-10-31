@@ -63,6 +63,13 @@ func _ready() -> void:
 	var store := UIKit.make_button("فروشگاه", UIKit.ORANGE, 190, 26)
 	store.pressed.connect(func(): add_child(StorePopup.new()))
 	actions.add_child(store)
+	var guide := UIKit.make_button("راهنمای بازی", UIKit.BLUE, 200, 24)
+	guide.pressed.connect(func():
+		SaveManager.data.tutorial_seen = false
+		SaveManager.save_game()
+		get_tree().paused = false
+		LevelManager.play_level(1))
+	actions.add_child(guide)
 	var story := UIKit.make_button("دیدن داستان", UIKit.PURPLE, 200, 24)
 	story.pressed.connect(func():
 		get_tree().paused = false

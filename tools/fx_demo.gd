@@ -28,7 +28,7 @@ func _ready() -> void:
 	await get_tree().process_frame
 	SaveManager.data.intro_seen = true
 	var only := String(args.get("only", ""))
-	for shot in ["impact", "fire", "sweat", "breath", "storm", "land", "shoot", "throw"]:
+	for shot in ["impact", "fire", "sweat", "breath", "storm", "land", "shoot", "throw", "rival"]:
 		if only == "" or only == shot:
 			await call("_" + shot)
 	get_tree().quit()
@@ -125,3 +125,11 @@ func _throw() -> void:
 	game.pilo._cooldown = 0.0
 	game.pilo._throw()
 	await _snap(game, "throw", 0.3)
+
+
+func _rival() -> void:
+	var game := await _game(10)
+	var r := Rival.new()
+	r.position = game.player.global_position + Vector2(120, 40)
+	game._world_root.add_child(r)
+	await _snap(game, "rival", 0.6)

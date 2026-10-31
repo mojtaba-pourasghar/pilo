@@ -923,6 +923,146 @@ def seg_boss_arena(L, c, d, w):
 SEGMENTS = {k[4:]: v for k, v in globals().items() if k.startswith("seg_")}
 
 
+# --- companion places: a reward that opens only with one companion -----------------------
+# (the main road never needs them; a sign says which friend to bring, and it is worth coming
+# back with them later)
+
+COMPANION_SIGNS = {
+    "squirrel": "چاه بلند! با سنجابک از دیوارهایش بالا برو؛ بالای آن الماس است.",
+    "turtle": "تونل آبی طولانی. لاکی تند شنا می‌کند!",
+    "mole": "شن روان پر از گنج. با خال‌خالی فرو نمی‌روی.",
+    "penguin": "سُرسُرهٔ یخی. یخک روی یخ لیز نمی‌خورد.",
+    "butterfly": "سکوی دور! با پَرپَری سُر خوردن دو برابر می‌شود.",
+    "owl": "راز پنهان این بالاهاست. پیچ‌پیچ از دور بو می‌کشد.",
+    "spark": "سایه‌ها آن بالا! با جرقه، حملهٔ پیلو دورتر می‌رسد.",
+    "hedgehog": "دیوار آجری! توپولی با دَش آجر را می‌شکند (یا پیلو را پرتاب کن).",
+    "goat": "سکوی خیلی بلند! شاخ‌طلا پرش دوبل دارد.",
+    "cat": "تونل خار! گربهٔ سایه از روی خار بی‌آسیب رد می‌شود.",
+}
+
+
+def _keep(L, x0, x1, y0, y1):
+    L.keep = getattr(L, "keep", set())
+    for y in range(y0, y1 + 1):
+        for x in range(x0, x1 + 1):
+            L.keep.add((x, y))
+
+
+def _companion_sign(L, x, who):
+    L.put(x, G - 1, "i")
+    L.signs.append((x, COMPANION_SIGNS[who]))
+
+
+def seg_comp_squirrel(L, c, d, w):
+    """A tall shaft on stilts: the road runs under it; only a wall-jumper climbs it."""
+    _companion_sign(L, c + 1, "squirrel")
+    L.rect(c + 3, c + 3, G - 11, G - 4, "#")
+    L.rect(c + 7, c + 7, G - 11, G - 4, "#")
+    L.row(c + 4, c + 6, G - 3, "o")
+    L.text(c + 4, G - 4, "c.c")
+    L.row(c + 8, c + 11, G - 11, "o")
+    L.put(c + 9, G - 12, "d")
+    L.put(c + 10, G - 12, "d")
+    L.put(c + 5, G - 13, "J")
+    _keep(L, c + 4, c + 11, G - 14, G - 6)
+    return 13
+
+
+def seg_comp_goat(L, c, d, w):
+    _companion_sign(L, c + 1, "goat")
+    L.row(c + 4, c + 9, G - 7, "o")
+    L.text(c + 4, G - 8, "d.dd.d")
+    L.put(c + 7, G - 1, "e")
+    _keep(L, c + 4, c + 9, G - 8, G - 8)
+    return 12
+
+
+def seg_comp_cat(L, c, d, w):
+    _companion_sign(L, c + 1, "cat")
+    L.rect(c + 3, c + 15, G - 3, G - 3, "#")
+    L.rect(c + 15, c + 15, G - 2, G - 1, "#")
+    L.row(c + 4, c + 13, G - 1, "A")
+    L.put(c + 14, G - 1, "d")
+    L.put(c + 14, G - 2, "d")
+    L.text(c + 6, G - 2, "c.c.c.c")
+    L.text(c + 5, G - 4, "c.c.c")
+    _keep(L, c + 4, c + 14, G - 2, G - 1)
+    return 18
+
+
+def seg_comp_hedgehog(L, c, d, w):
+    """A low treasure room behind a brick wall; the road goes over its roof."""
+    _companion_sign(L, c + 1, "hedgehog")
+    L.rect(c + 3, c + 12, G - 3, G - 3, "#")
+    L.rect(c + 12, c + 12, G - 2, G - 1, "#")
+    L.rect(c + 3, c + 3, G - 2, G - 1, "b")
+    L.text(c + 5, G - 1, "cc.d.cc")
+    L.text(c + 5, G - 2, "c.c.c")
+    _keep(L, c + 4, c + 11, G - 2, G - 1)
+    return 15
+
+
+def seg_comp_turtle(L, c, d, w):
+    _companion_sign(L, c + 1, "turtle")
+    L.rect(c + 3, c + 22, G, H - 2, "s")
+    L.rect(c + 6, c + 19, G, G + 1, "#")
+    L.text(c + 7, H - 2, "c.c.c.c.c.d")
+    L.put(c + 20, H - 2, "d")
+    return 25
+
+
+def seg_comp_mole(L, c, d, w):
+    _companion_sign(L, c + 1, "mole")
+    L.row(c + 3, c + 14, G, "q")
+    L.text(c + 4, G - 1, "c.cd.c.dc.c")
+    return 17
+
+
+def seg_comp_penguin(L, c, d, w):
+    _companion_sign(L, c + 1, "penguin")
+    L.row(c + 2, c + 18, G, "I")
+    L.text(c + 4, G - 1, "c.c.c.d.c.c")
+    L.pit(c + 19, c + 20)
+    L.row(c + 21, c + 22, G, "I")
+    return 24
+
+
+def seg_comp_butterfly(L, c, d, w):
+    _companion_sign(L, c + 1, "butterfly")
+    L.put(c + 3, G - 1, "M")
+    L.row(c + 4, c + 6, G - 8, "o")
+    L.text(c + 9, G - 8, "c.c.c")
+    L.row(c + 18, c + 20, G - 9, "o")
+    L.put(c + 19, G - 10, "d")
+    L.put(c + 20, G - 10, "d")
+    _keep(L, c + 18, c + 20, G - 10, G - 10)
+    return 23
+
+
+def seg_comp_owl(L, c, d, w):
+    _companion_sign(L, c + 1, "owl")
+    L.text(c + 4, G - 4, "n.Q.n")
+    L.text(c + 4, G - 2, "c.c.c")
+    return 11
+
+
+def seg_comp_spark(L, c, d, w):
+    _companion_sign(L, c + 1, "spark")
+    L.put(c + 3, G - 1, "M")
+    L.row(c + 4, c + 10, G - 6, "o")
+    L.put(c + 6, G - 7, "e")
+    L.put(c + 8, G - 7, "h")
+    L.put(c + 7, G - 9, "y")
+    L.put(c + 4, G - 7, "c")
+    L.put(c + 10, G - 7, "d")
+    return 13
+
+
+COMPANION_WORLD = {"squirrel": 1, "turtle": 2, "mole": 3, "penguin": 4, "butterfly": 5, "owl": 6, "spark": 7}
+BOUGHT = ["hedgehog", "goat", "cat"]
+SEGMENTS.update({k[4:]: v for k, v in globals().items() if k.startswith("seg_comp_")})
+
+
 # --- story lines ---------------------------------------------------------------------
 
 STORY = {
@@ -939,6 +1079,11 @@ STORY = {
 
 
 def dialogue(world, n, level_id):
+    import story
+    return story.level_lines(world, n, level_id)
+
+
+def _old_dialogue(world, n, level_id):
     boss, beat = STORY[world]
     pre = f"l{level_id:02d}"
     if n == 1:
@@ -978,11 +1123,11 @@ def compose(world_index, n, level_id):
         if m is None or __import__("routes").meets_minimum(m):
             break
         extra.append("secret_pipe")
-    _drop_unreachable(data)
+    _drop_unreachable(data, getattr(L, "keep", set()))
     return data
 
 
-def _drop_unreachable(data):
+def _drop_unreachable(data, keep=frozenset()):
     """Coins and diamonds the reachability search cannot reach are taken out (a plank road
     may end somewhere only a bird could get to)."""
     import validate_levels as V
@@ -994,7 +1139,7 @@ def _drop_unreachable(data):
         over_gap = all(level.at(d[0], yy) in ".cd*^><" for yy in range(d[1] + 1, min(level.h, d[1] + 5)))
         if over_gap and any(abs(s[0] - d[0]) <= 7 and d[1] - 4 <= s[1] for s in states):
             continue
-        if not V.touches(states, d[0], d[1], level, arc=True):
+        if d not in keep and not V.touches(states, d[0], d[1], level, arc=True):
             rows[d[1]][d[0]] = "."
     data["map"] = ["".join(r).rstrip(".") or "." for r in rows]
 
@@ -1027,6 +1172,10 @@ def _compose(world_index, n, level_id, extra):
             body[0] = SPECIAL[world][0]
         for e in extra:
             body.insert(1 + len(body) // 3, e)
+        if n >= 4:
+            # a place for a companion freed earlier in the story, or one from the village
+            friends = [k for k, wi in COMPANION_WORLD.items() if wi <= world_index + 1] + BOUGHT
+            body.insert(len(body) // 2, "comp_" + rng.choice(friends))
         key = "key_underground" if n % 2 == 1 else "key_high"
         at = len(body) * 2 // 3
         body.insert(at, key)
@@ -1062,6 +1211,9 @@ def _compose(world_index, n, level_id, extra):
     intro, outro = dialogue(world, n, level_id)
     if authored:
         intro = [{"who": who, "text": text, "id": "l%02d_intro_%d" % (level_id, i + 1)} for i, (who, text) in enumerate(authored["intro"])]
+        import story
+        extra_lines = story.LEVELS.get(world, {}).get(n, []) if n != 1 else []
+        intro += [{"who": who, "text": text, "id": "l%02d_intro_%d" % (level_id, len(intro) + i + 1)} for i, (who, text) in enumerate(extra_lines)]
     data = {
         "id": level_id, "format": 2, "world": world, "title": TITLES[level_id - 1], "lens": True, "start_time": "present",
         "difficulty": round(d, 2), "dark": world in DARK and n != 8, "move_range": 4,
@@ -1074,6 +1226,9 @@ def _compose(world_index, n, level_id, extra):
     }
     if n == 8:
         data["boss"] = world
+    import story
+    if (world, n) in story.RACES:
+        data["race"] = "kian"
     return data, L
 
 

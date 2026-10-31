@@ -12,6 +12,7 @@ const KEYS := {
 	"time_shift": [KEY_E, KEY_X],
 	"fire": [KEY_V, KEY_L, KEY_CTRL],
 	"swap_weapon": [KEY_Q, KEY_TAB],
+	"team": [KEY_B, KEY_I],
 	"hint": [KEY_H],
 	"pause": [KEY_ESCAPE, KEY_P],
 }

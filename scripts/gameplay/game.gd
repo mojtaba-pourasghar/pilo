@@ -51,6 +51,7 @@ var _camera: GameCamera
 var _dark := false
 var _follower: Node2D
 var weather: Weather
+var rival: Rival
 var _tint_tween: Tween
 
 
@@ -131,7 +132,42 @@ func _ready() -> void:
 	_world_root.add_child(weather)
 	layered.set_sway(weather.sway_material())
 	Analytics.log_event("level_start", level_id)
-	_play_lines(data.get("intro", []))
+	_start_story()
+
+
+## The chapter card the first time a world opens, then the level's lines, then (in a race
+## level) Kian sets off.
+func _start_story() -> void:
+	if not ChapterCard.seen(String(world.id)) and LevelManager.override_level.is_empty():
+		_set_busy(true)
+		var card := ChapterCard.new()
+		card.world_id = String(world.id)
+		card.card_path = String(world.get("card", ""))
+		card.dialogue = dialogue
+		add_child(card)
+		await card.play()
+		_set_busy(false)
+	await _play_lines(data.get("intro", []))
+	if level_id == 1 and not Tutorial.seen() and LevelManager.override_level.is_empty():
+		var tutorial := Tutorial.new()
+		tutorial.hud = hud
+		add_child(tutorial)
+		await tutorial.finished
+	if String(data.get("race", "")) == "kian":
+		_start_race()
+
+
+func _start_race() -> void:
+	rival = Rival.new()
+	rival.position = info.start + Vector2(70, 40)
+	rival.goal_x = info.exit.global_position.x + 32.0 if info.exit else info.size.x - 200.0
+	_world_root.add_child(rival)
+	rival.arrived.connect(func():
+		if not finished:
+			_notice("کیان زودتر به دروازه رسید! بازهم می‌شود کلید را پیدا کرد.", UIKit.BLUE, true))
+	_notice("مسابقه با کیان! زودتر به دروازه برس.", UIKit.BLUE, true)
+	await get_tree().create_timer(0.8).timeout
+	rival.running = true
 
 
 func _physics_process(delta: float) -> void:
@@ -144,6 +180,8 @@ func _physics_process(delta: float) -> void:
 			try_shift()
 		if Input.is_action_just_pressed("pilo"):
 			pilo.act(self)
+		if Input.is_action_just_pressed("team"):
+			open_team()
 		if Input.is_action_just_pressed("swap_weapon"):
 			var weapon := Weapons.next()
 			hud.set_weapon(weapon)
@@ -290,6 +328,28 @@ func _apply_loadout() -> void:
 		_follower.target = player
 		_follower.position = player.position + Vector2(-120, 0)
 		_world_root.add_child(_follower)
+
+
+## After a change in the team picker: the new companion, tools and weapon take effect at
+## once (hearts never go up by switching).
+func refresh_loadout() -> void:
+	var hearts: int = player.hearts
+	pilo.attack_range = 320.0
+	pilo.sniff_range = 230.0
+	if _follower:
+		_follower.queue_free()
+		_follower = null
+	_apply_loadout()
+	player.hearts = mini(hearts, player.max_hearts)
+	hud.set_hearts(player.hearts, player.max_hearts)
+	hud.set_weapon(Weapons.current())
+
+
+func open_team() -> void:
+	if _busy or finished or get_tree().paused:
+		return
+	get_tree().paused = true
+	add_child(TeamPicker.new())
 
 
 func _magnet() -> void:
@@ -509,6 +569,10 @@ func on_exit_reached() -> void:
 	_set_busy(true)
 	player.velocity.x = 0.0
 	player.celebrate()
+	if rival and not rival.done:
+		rival.running = false
+		add_coins(50, player.global_position, false)
+		_notice("تو از کیان زودتر رسیدی! ۵۰ سکه جایزه.", UIKit.GREEN, true)
 	AudioManager.play_sfx("win")
 	var result := ProgressManager.complete_level(level_id, stars_collected, coins, diamonds_found)
 	Analytics.log_event("level_complete", level_id)

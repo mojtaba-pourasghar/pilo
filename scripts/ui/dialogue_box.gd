@@ -5,11 +5,34 @@ extends CanvasLayer
 
 signal advanced
 
+const ART := "res://assets/art/"
+## Who can speak, and the picture shown in the round portrait (the first one that exists).
 const SPEAKERS := {
 	"nima": {"name": "نیما", "color": Color("e5533d"), "texture": ""},
 	"pilo": {"name": "پیلو", "color": Color("f39a2b"), "texture": ""},
-	"ghubarak": {"name": "غبارک", "color": Color("8e7cc3"), "texture": ""},
-	"squirrel": {"name": "سنجابک", "color": Color("a0663a"), "texture": ""},
+	"ghubarak": {"name": "غبارک", "color": Color("8e7cc3"), "texture": ["npc_ghubarak.png"]},
+	"squirrel": {"name": "سنجابک", "color": Color("a0663a"), "texture": ["companion_squirrel.png"]},
+	"grandpa": {"name": "بابابزرگ ساعت‌ساز", "color": Color("7a5a3a"), "texture": ["npc_grandpa.png"]},
+	"narrator": {"name": "بابابزرگ ساعت‌ساز", "color": Color("7a5a3a"), "texture": ["npc_grandpa.png"]},
+	"kian": {"name": "کیان", "color": Color("2f7fd0"), "texture": ["npc_kian.png", "npc_kian_portrait.png"]},
+	"zurvan": {"name": "زروان", "color": Color("5a3a9a"), "texture": ["npc_zurvan.png", "boss_inverted_land_free.png"]},
+	"masked": {"name": "نقاب‌دار", "color": Color("4a3a6a"), "texture": ["npc_masked.png"]},
+	"shadow_king": {"name": "شاه‌سایه", "color": Color("5a3a9a"), "texture": ["npc_shadow_king.png", "boss_shadow_castle_free.png"]},
+	"captain": {"name": "ناخدا موج", "color": Color("1f6fd0"), "texture": ["npc_captain.png"]},
+	"grandma": {"name": "مادربزرگ کاکتوس", "color": Color("3f8f3a"), "texture": ["npc_grandma.png"]},
+	"bear": {"name": "خرس پیر جنگل", "color": Color("7a4a26"), "texture": ["boss_forest_free.png"]},
+	"octopus": {"name": "اختاپوس بزرگ", "color": Color("e07050"), "texture": ["boss_coral_beach_free.png"]},
+	"worm": {"name": "کرم شنی", "color": Color("c9963a"), "texture": ["boss_golden_desert_free.png"]},
+	"yeti": {"name": "غول یخی", "color": Color("4b98b3"), "texture": ["boss_snow_mountain_free.png"]},
+	"eagle": {"name": "عقاب طوفان", "color": Color("3f8fe0"), "texture": ["boss_sky_islands_free.png"]},
+	"spider": {"name": "عنکبوت بلورین", "color": Color("8f7fd6"), "texture": ["boss_crystal_caves_free.png"]},
+	"turtle": {"name": "لاکی", "color": Color("3f8f5a"), "texture": ["companion_turtle.png"]},
+	"mole": {"name": "خال‌خالی", "color": Color("6e5a72"), "texture": ["companion_mole.png"]},
+	"penguin": {"name": "یخک", "color": Color("2f3e5c"), "texture": ["companion_penguin.png"]},
+	"butterfly": {"name": "پَرپَری", "color": Color("c0508a"), "texture": ["companion_butterfly.png"]},
+	"owl": {"name": "پیچ‌پیچ", "color": Color("9a6a42"), "texture": ["companion_owl.png"]},
+	"spark": {"name": "جرقه", "color": Color("e0a020"), "texture": ["companion_spark.png"]},
+	"dragon": {"name": "اژدهاک", "color": Color("e2544a"), "texture": ["companion_dragon.png"]},
 }
 
 var _root: Control
@@ -81,7 +104,12 @@ func _show(line: Dictionary) -> void:
 	_name.text = speaker.name
 	_name.add_theme_color_override("font_color", speaker.color)
 	_portrait.speaker = String(line.get("who", "pilo"))
-	_portrait.texture = load(speaker.texture) if speaker.texture != "" else null
+	_portrait.texture = null
+	if speaker.texture is Array:
+		for file in speaker.texture:
+			if ResourceLoader.exists(ART + file):
+				_portrait.texture = load(ART + file)
+				break
 	_text.text = String(line.get("text", ""))
 	_text.visible_ratio = 0.0
 	if _typing:
@@ -197,6 +225,13 @@ class Portrait extends Control:
 			var fit := (size.x - 24.0) / maxf(region.size.x, region.size.y)
 			var draw_size := region.size * fit
 			draw_texture_rect_region(texture, Rect2(center - draw_size * 0.5, draw_size), region)
+		elif not (speaker in ["nima", "pilo", "ghubarak", "squirrel"]):
+			# no picture yet: the speaker's initial in their colour
+			var info: Dictionary = SPEAKERS.get(speaker, SPEAKERS.pilo)
+			draw_circle(center, size.x * 0.36, info.color)
+			var font := ThemeDB.fallback_font
+			var letter := String(info.name).substr(0, 1)
+			draw_string(font, center + Vector2(-18, 18), letter, HORIZONTAL_ALIGNMENT_CENTER, 36, 52, Color.WHITE)
 		elif speaker == "ghubarak":
 			Ghubarak.draw_body(self, center, 1.3, t)
 		elif speaker == "squirrel":

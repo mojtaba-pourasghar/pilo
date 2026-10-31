@@ -36,6 +36,7 @@ var _touch_root: Node2D
 var _touch: Dictionary = {}
 var _weapon_icon: LoadoutIcon
 var _weapon_badge: Node2D
+var _team_button: Control
 var _hint_tween: Tween
 var _flash: ColorRect
 var _title: Label
@@ -102,6 +103,20 @@ func _ready() -> void:
 	top.add_child(_time_panel)
 	top.add_child(UIKit.spacer())
 
+	# the team button (companion, backpack, weapon) next to the hint
+	var team := TextureButton.new()
+	team.texture_normal = load("res://assets/ui/backpack.png")
+	team.ignore_texture_size = true
+	team.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
+	team.custom_minimum_size = Vector2(78, 78)
+	team.focus_mode = Control.FOCUS_NONE
+	team.pressed.connect(func():
+		UIKit.play_click()
+		var game := get_tree().get_first_node_in_group("game")
+		if game:
+			game.open_team())
+	top.add_child(team)
+	_team_button = team
 	_hint_button = UIKit.make_round("btn_hint", 84)
 	_hint_button.pressed.connect(func(): hint_pressed.emit())
 	top.add_child(_hint_button)
@@ -190,6 +205,20 @@ func show_boss(boss_name: String, hits: int, total: int) -> void:
 	for i in total:
 		text += "●" if i < hits else "○"
 	(_boss_bar.find_child("Value", true, false) as Label).text = text if hits > 0 else boss_name + " آزاد شد!"
+
+
+## Where a button is on the screen (the tutorial circles it).
+func button_rect(key: String) -> Rect2:
+	if key == "team" and _team_button:
+		return _team_button.get_global_rect()
+	if _touch.has(key):
+		var button: TouchScreenButton = _touch[key]
+		var size := button.texture_normal.get_size() * button.scale
+		var rect := Rect2(button.position, size)
+		if key == "left":
+			rect = rect.merge(Rect2(_touch.right.position, size))
+		return rect
+	return Rect2(Vector2(600, 320), Vector2(80, 80))
 
 
 func set_weapon(id: String) -> void:

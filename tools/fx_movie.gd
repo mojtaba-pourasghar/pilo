@@ -11,14 +11,16 @@ func _ready() -> void:
 		args[parts[0]] = parts[1] if parts.size() > 1 else "1"
 	await get_tree().process_frame
 	SaveManager.data.intro_seen = true
+	SaveManager.data.tutorial_seen = true
+	SaveManager.data.chapters = LevelManager.WORLDS.map(func(w): return w.id)
 	LevelManager.current_level = int(args.get("level", "3"))
 	var game: Node = load("res://scenes/gameplay/game.tscn").instantiate()
 	get_tree().root.add_child(game)
 	await get_tree().create_timer(0.3).timeout
-	for i in 8:
+	for i in 20:
 		if game.dialogue:
 			game.dialogue.advanced.emit()
-		await get_tree().create_timer(0.05).timeout
+		await get_tree().create_timer(0.3).timeout
 	if args.has("fire"):
 		game.player.fx.ignite(2.5)
 	Input.action_press("move_right")

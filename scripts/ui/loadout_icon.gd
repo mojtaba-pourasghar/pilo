@@ -56,6 +56,14 @@ func _process(delta: float) -> void:
 func _draw() -> void:
 	if kind != "tool" or id == "":
 		return
+	var rendered := WorldArt.tex("tool", id)
+	if rendered:
+		# the rendered icon, breathing a little
+		var k := 1.0 + sin(_t * 2.0) * 0.03
+		var fit := minf(size.x / rendered.get_width(), size.y / rendered.get_height()) * 0.92 * k
+		var draw_size := Vector2(rendered.get_width(), rendered.get_height()) * fit
+		draw_texture_rect(rendered, Rect2((size - draw_size) * 0.5, draw_size), false)
+		return
 	var s := size.x / 96.0
 	draw_set_transform(size * 0.5, sin(_t * 2.0) * 0.04, Vector2(s, s))
 	call("_tool_" + id)
