@@ -219,13 +219,59 @@ def under_lane(L, x0, x1, min_len=18):
     L.warp((top_in, H - 3), (top_in, G - 2))
     L.warp((top_out, H - 3), (top_out, G - 2))
     L.warp((top_out, G - 2), (top_out, H - 3))
-    mid = (top_in + top_out) // 2
-    L.text(top_in + 3, H - 2, "cc.cc")
-    L.put(mid, H - 2, "Y")
-    L.text(mid + 2, G + 2, "b$b")
-    L.put(mid + 4, H - 2, "e")
-    L.put(top_out - 3, H - 2, "d")
+    under_danger(L, top_in + 2, top_out - 2)
     return top_out - top_in
+
+
+UNDER_KINDS = ["nest", "thorns", "crushers", "cannons", "flooded", "bats"]
+
+
+def under_danger(L, x0, x1, kind=None, den=True):
+    """Fills an underground corridor (rows G+1..H-2, floor H-1) between x0 and x1 with one of
+    several dangerous designs, so no two tunnels are alike: a nest of creatures (walkers,
+    flyers and spiky ones Pilo has to free), a thorn floor crossed on blocks, crushers in a
+    low hall, cannons firing along it, a half-flooded cave, or bats under the ceiling.
+    Every one ends in treasure (a den with a diamond, coins, a diamond)."""
+    rng = L.rng
+    kind = kind or rng.choice(UNDER_KINDS)
+    floor = H - 2
+    span = x1 - x0
+    if kind == "nest":
+        for i, x in enumerate(range(x0 + 2, x1 - 3, 4)):
+            L.put(x, floor, "ehe"[i % 3])
+        L.put(x0 + span // 2, G + 2, "y")
+        L.text(x0 + 2, G + 1, "c.c.c")
+    elif kind == "thorns":
+        L.row(x0 + 1, x1 - 2, floor, "A")
+        for x in range(x0 + 2, x1 - 2, 4):
+            L.put(x, floor - 1, "b")
+            L.put(x, floor - 2, "c")
+        L.put(x0 + span // 2, G + 1, "y")
+    elif kind == "crushers":
+        for x in range(x0 + 3, x1 - 3, 6):
+            L.put(x, G + 1, "T")
+            L.text(x, floor, "c")
+        L.put(x1 - 3, floor, "e")
+    elif kind == "cannons":
+        L.put(x0 + 1, floor, "N")
+        L.put(x1 - 1, floor, "N")
+        L.text(x0 + 4, floor, "c.c.c")
+        L.text(x0 + span // 2, G + 2, "Q.U")
+        L.put(x0 + span // 2 + 4, floor, "h")
+    elif kind == "flooded":
+        L.rect(x0 + 2, x1 - 2, floor - 1, floor, "s")
+        L.text(x0 + 3, floor, "c.c.c.c")
+        L.put(x0 + span // 2, floor, "d")
+        L.put(x0 + span // 2 - 3, G + 1, "y")
+    elif kind == "bats":
+        for x in range(x0 + 3, x1 - 2, 5):
+            L.put(x, G + 1, "y")
+        L.text(x0 + 2, floor, "cc.cc.cc")
+        L.put(x1 - 4, floor, "h")
+    if den:
+        L.put(x1 - 1 if kind != "flooded" else x0 + 1, floor, "Y")
+    L.put(x0 + span // 3, floor - 1 if kind == "thorns" else floor, "d" if kind != "flooded" else "c")
+    return kind
 
 
 # --- shared segments: each returns its width -------------------------------------------
@@ -822,12 +868,10 @@ def seg_key_underground(L, c, d, w):
     L.put(c + 2, H - 3, "p")
     L.warp((c + 2, G - 2), (c + 2, H - 3))
     L.warp((c + 2, H - 3), (c + 2, G - 2))
-    L.text(c + 7, H - 2, "cc.cc")
-    L.put(c + 10, H - 2, "e")
+    # a dangerous stretch on each side of the key den
+    under_danger(L, c + 5, c + 15, den=False)
     L.put(c + 17, H - 2, "X")
-    L.text(c + 20, G + 2, "Q.b$b")
-    L.put(c + 24, H - 2, "e" if d < 0.6 else "h")
-    L.put(c + 28, H - 2, "d")
+    under_danger(L, c + 19, c + 29, den=False)
     L.put(c + 31, H - 3, "p")
     L.put(c + 29, G - 2, "p")
     L.warp((c + 31, H - 3), (c + 29, G - 2))
