@@ -116,8 +116,17 @@ func _give() -> void:
 			item.game = game
 			item.position = position + Vector2(SIZE * 0.5, SIZE * 0.5)
 			get_parent().add_child(item)
-			item.pop_up(SIZE + 4.0)
 			AudioManager.play_sfx("grow", 1.4)
+			# no room above the block (under a ceiling): the item flies straight to Nima
+			var space := get_world_2d().direct_space_state
+			var probe := PhysicsPointQueryParameters2D.new()
+			probe.position = global_position + Vector2(SIZE * 0.5, -SIZE * 0.5)
+			probe.collision_mask = 1
+			var blocked := not space.intersect_point(probe).is_empty()
+			if blocked and game and game.player:
+				item.fetch_to(game.player)
+			else:
+				item.pop_up(SIZE + 4.0)
 	kind = Kind.USED
 
 

@@ -135,7 +135,6 @@ func _ready() -> void:
 
 	get_viewport().size_changed.connect(_layout)
 	_layout()
-	_touch.down.visible = false
 
 
 func _counter(kind: String) -> PanelContainer:
@@ -200,8 +199,9 @@ func set_weapon(id: String) -> void:
 	_touch.swap.visible = Weapons.owned().size() > 1
 
 
+## The down button is always there (crouch); on a warp pipe it glows to say "go in".
 func show_down(value: bool) -> void:
-	_touch.down.visible = value and _touch_root.visible
+	_touch.down.modulate = Color(1.3, 1.15, 0.6) if value else Color.WHITE
 
 
 func setup(title: String, star_total: int, has_keys: bool, lens_enabled: bool) -> void:

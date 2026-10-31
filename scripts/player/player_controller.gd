@@ -95,6 +95,8 @@ var _sand := 0                 # quicksand areas Nima is in (slowed when > 0)
 
 @onready var visual: Node2D = $Visual
 var fx: PlayerFX
+var crouching := false
+var _shape: CollisionShape2D
 var _fire_cooldown := 0.0
 @onready var rig: CharacterRig = $Visual/Rig
 
@@ -108,6 +110,8 @@ func _ready() -> void:
 		rig.replace_by(painted)
 		rig.queue_free()
 		rig = painted
+	_shape = $CollisionShape2D
+	_shape.shape = _shape.shape.duplicate()
 	fx = PlayerFX.new()
 	add_child(fx)
 	_emote = UIKit.make_label("!", 48, UIKit.RED, 10, Color.WHITE)
@@ -131,6 +135,11 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed("dash") and _dash_cooldown <= 0.0 and (is_on_floor() or not _air_dash_used):
 			_air_dash_used = not is_on_floor()
 			_start_dash(dir)
+	_update_crouch(can_move and Input.is_action_pressed("down") and is_on_floor() and _swim == 0)
+	if crouching:
+		dir *= 0.45
+		if _buffer > 0.0 or Input.is_action_just_pressed("jump"):
+			_buffer = 0.0      # no jumping out of a crawl under a low ceiling
 	_buffer -= delta
 	_dash_cooldown -= delta
 	_fire_cooldown -= delta
@@ -255,6 +264,30 @@ func _fire() -> void:
 	Juice.vibrate(8)
 
 
+## Crouch: a lower body (crawl under low ceilings). Nima only stands up when there is room.
+func _update_crouch(want: bool) -> void:
+	if want == crouching:
+		return
+	var rect := _shape.shape as RectangleShape2D
+	if not want:
+		# room above to stand?
+		var query := PhysicsShapeQueryParameters2D.new()
+		var tall := RectangleShape2D.new()
+		tall.size = Vector2(BODY_SIZE.x - 4.0, BODY_SIZE.y - 4.0)
+		query.shape = tall
+		query.transform = Transform2D(0.0, global_position)
+		query.collision_mask = 1
+		if not get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty():
+			return
+	crouching = want
+	if crouching:
+		rect.size = Vector2(BODY_SIZE.x, 44.0)
+		_shape.position = Vector2(0, 18.0)
+	else:
+		rect.size = BODY_SIZE
+		_shape.position = Vector2.ZERO
+
+
 func _check_collisions() -> void:
 	_on_ice = false
 	_belt = 0.0
@@ -305,12 +338,15 @@ func _animate(delta: float, on_floor: bool, dir: float) -> void:
 		state = "skid"
 	elif absf(velocity.x) > 30.0:
 		state = "run" if absf(velocity.x) > WALK + 20.0 else "walk"
+	if crouching and state in ["idle", "walk", "run", "skid"]:
+		state = "walk" if absf(velocity.x) > 20.0 else "idle"
 	rig.state = state
 	rig.speed = velocity.x
 	rig.run_speed = run_speed
 	if state == "skid" and Engine.get_physics_frames() % 6 == 0:
 		FX.dust(get_parent(), global_position + Vector2(facing * 14.0, FEET))
-	visual.scale = Vector2(facing * _squash.x, _squash.y)
+	var low := Vector2(1.12, 0.58) if crouching else Vector2.ONE
+	visual.scale = Vector2(facing * _squash.x * low.x, _squash.y * low.y)
 	visual.position.y = FEET
 	visual.modulate.a = 0.35 + 0.65 * float(int(invulnerable * 12.0) % 2) if invulnerable > 0.0 else 1.0
 

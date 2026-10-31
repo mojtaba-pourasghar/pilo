@@ -468,7 +468,7 @@ static func _build_secret_rooms(grid: Array, w: int, h: int, root: Node2D, palet
 			var c := String(grid[y])[x]
 			if c == "#":
 				roof = true
-			elif roof and not RUNS.has(c) and c != "W":
+			elif roof and not RUNS.has(c) and c != "W" and not WATERS.has(c) and c != "s":
 				covered[Vector2i(x, y)] = true
 	var seen := {}
 	for start in covered:

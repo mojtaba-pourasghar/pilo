@@ -207,12 +207,20 @@ func on_enemy_freed(enemy: Enemy) -> void:
 	SaveManager.data.pilo_xp = int(SaveManager.data.get("pilo_xp", 0)) + 1
 	FX.burst(_world_root, enemy.global_position + Vector2(0, -30), Color(1, 0.9, 0.5), 14)
 	Juice.hit(enemy, enemy.global_position + Vector2(0, -enemy.body_size.y * 0.6), 0.3)
-	for i in enemy.coins:
-		var coin := Block.CoinPop.new()
-		coin.position = enemy.global_position + Vector2(i * 20.0 - 10.0, -40)
+	# every defeated creature drops real coins: they jump out, then fly to Nima (+N floats up)
+	var amount: int = maxi(2, enemy.coins + 1)
+	for i in amount:
+		var coin := Collectible.new()
+		coin.kind = Collectible.Kind.COIN
+		coin.spill = true
+		coin.game = self
+		coin.position = enemy.global_position + Vector2(0, -30)
+		coin.velocity = Vector2(randf_range(-220, 220), randf_range(-650, -450))
 		_world_root.add_child(coin)
-	if enemy.coins > 0:
-		add_coins(enemy.coins, enemy.global_position)
+		get_tree().create_timer(0.5 + i * 0.08).timeout.connect(func():
+			if is_instance_valid(coin) and not coin.taken:
+				coin.fetch_to(player))
+	FX.float_text(_world_root, enemy.global_position + Vector2(0, -90), "+%d" % amount, UIKit.GOLD)
 
 
 ## Nima was hit: update the hearts and spill a few coins that can be caught again.

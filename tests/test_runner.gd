@@ -25,6 +25,7 @@ func _ready() -> void:
 	await _test_loadout()
 	await _test_effects()
 	await _test_combat()
+	await _test_water_exit()
 	SaveManager.data = backup
 	SaveManager.save_game()
 	print("\n%d checks, %d failed" % [_checks, _failures])
@@ -121,6 +122,34 @@ func _test_combat() -> void:
 	_check(get_tree().get_nodes_in_group("block").size() < bricks, "thrown Pilo breaks a brick")
 	_stop(game)
 	_check(Weapons.owned().has("slingshot") and Weapons.current() == "slingshot", "the slingshot is Nima's from the start")
+
+
+## Nima dropped deep under the reef shelf must be able to swim out and climb onto the bank.
+func _test_water_exit() -> void:
+	var game := await _start([
+		"........................................",
+		"........................................",
+		"..P.....................................",
+		"##############sssss########sssss########",
+		"##############sssss########sssss########",
+		"##############ssssssssssssssssss########",
+		"##############ssssssssssssssssss########",
+		"##############ssssssssssssssssss########",
+		"########################################",
+	])
+	game.player.global_position = Vector2(22 * 64, 7 * 64 + 20)
+	Input.action_press("move_right")
+	var out := false
+	for i in 40:
+		Input.action_press("jump")
+		await _wait(0.12)
+		Input.action_release("jump")
+		await _wait(0.12)
+		if game.player.is_on_floor() and game.player.global_position.y < 3 * 64 + 40 and game.player._swim == 0:
+			out = true
+			break
+	_check(out, "Nima swims out from under the reef shelf onto the bank (at %s)" % game.player.global_position)
+	_stop(game)
 
 
 func _check(ok: bool, what: String) -> void:
@@ -266,7 +295,8 @@ func _test_stomp_and_hurt() -> void:
 	await _wait(0.6)
 	_check(enemy == null or not is_instance_valid(enemy) or enemy.freed, "stomping a shadow mushroom frees it")
 	_check(game.player.hearts == 3, "a stomp costs no heart")
-	_check(game.coins >= 1, "a freed creature leaves a coin")
+	await _wait(1.4)
+	_check(game.coins >= 2, "a defeated creature drops coins that fly to Nima (%d)" % game.coins)
 	# now walk into a second one from the side
 	var second := Shroom.new()
 	second.game = game
