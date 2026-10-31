@@ -2629,6 +2629,182 @@
    ],
    "post": "cutout",
    "max": 384
+  },
+  {
+   "id": "coral_beach_pipe",
+   "prompt": "a hollow upright pipe made of pink coral and seashells with a wide rim at the top, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "coral_beach_cracked_wall",
+   "prompt": "a tall stone block of pale sandstone with cracks, seashells and a starfish stuck to it, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "golden_desert_pipe",
+   "prompt": "a hollow upright pipe of carved orange sandstone with an Egyptian style rim at the top, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "golden_desert_cracked_wall",
+   "prompt": "a tall block of cracked orange sandstone bricks with hieroglyph carvings, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "snow_mountain_pipe",
+   "prompt": "a hollow upright pipe made of clear blue ice with a snowy rim at the top and icicles, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "snow_mountain_cracked_wall",
+   "prompt": "a tall block of cracked blue ice with snow on top, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "sky_islands_pipe",
+   "prompt": "a hollow upright pipe made of white marble with golden trim and a cloud puff around the rim, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "sky_islands_cracked_wall",
+   "prompt": "a tall block of cracked white cloud-stone with small golden stars, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "crystal_caves_pipe",
+   "prompt": "a hollow upright pipe made of glowing violet crystal with a jagged rim, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "crystal_caves_cracked_wall",
+   "prompt": "a tall block of dark cave rock with cracks and glowing cyan crystals, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "clock_factory_pipe",
+   "prompt": "a hollow upright brass pipe with rivets, a valve and a gauge, wide rim at the top, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "clock_factory_cracked_wall",
+   "prompt": "a tall block of riveted rusty iron plates with cracks and small gears, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "shadow_castle_pipe",
+   "prompt": "a hollow upright pipe of dark purple castle stone with an iron rim and glowing purple swirl patterns, no letters, no writing, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "shadow_castle_cracked_wall",
+   "prompt": "a tall block of dark purple castle bricks with cracks and moss, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "inverted_land_pipe",
+   "prompt": "a hollow upright pipe made of swirly pastel candy with a rainbow rim, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "inverted_land_cracked_wall",
+   "prompt": "a tall block of cracked pastel candy rock with sprinkles, front view, whole object, game element",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
   }
  ]
 }
