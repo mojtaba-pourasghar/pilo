@@ -9,6 +9,10 @@ const LOOK_MAX := 220.0
 var target: CharacterBody2D
 var _shake := 0.0
 var _look := 0.0
+var _trauma := 0.0
+var _punch := 0.0
+var _noise := FastNoiseLite.new()
+var _time := 0.0
 
 
 func _ready() -> void:
@@ -17,6 +21,8 @@ func _ready() -> void:
 	drag_vertical_enabled = true
 	drag_top_margin = 0.25
 	drag_bottom_margin = 0.15
+	ignore_rotation = false
+	_noise.frequency = 3.0
 
 
 func _process(delta: float) -> void:
@@ -24,8 +30,22 @@ func _process(delta: float) -> void:
 		var want := clampf(target.velocity.x * LOOK_AHEAD, -LOOK_MAX, LOOK_MAX)
 		_look = lerpf(_look, want, 1.0 - exp(-2.5 * delta))
 	_shake = maxf(0.0, _shake - delta * 30.0)
-	offset = Vector2(_look, -40.0) + Vector2(randf_range(-1, 1), randf_range(-1, 1)) * _shake
+	# trauma shake: smooth noise, grows with trauma squared, a little roll for big hits
+	_time += delta
+	_trauma = maxf(0.0, _trauma - delta * 1.6)
+	var amount := _trauma * _trauma
+	var wobble := Vector2(_noise.get_noise_2d(_time * 60.0, 0.0), _noise.get_noise_2d(0.0, _time * 60.0)) * 38.0 * amount
+	offset = Vector2(_look, -40.0) + Vector2(randf_range(-1, 1), randf_range(-1, 1)) * _shake + wobble
+	rotation = _noise.get_noise_2d(_time * 40.0, 99.0) * 0.05 * amount
+	_punch = move_toward(_punch, 0.0, delta * 0.6)
+	zoom = Vector2.ONE * (1.0 + _punch)
 
 
 func shake(amount: float) -> void:
 	_shake = maxf(_shake, amount)
+	add_trauma(amount / 14.0)
+
+
+func add_trauma(amount: float) -> void:
+	_trauma = minf(1.0, _trauma + amount)
+	_punch = maxf(_punch, amount * 0.04)

@@ -114,7 +114,25 @@ func _draw() -> void:
 			_draw_key(offset)
 
 
+## A rendered item picture centred on c, `size` tall (keeps its proportions).
+static func _picture(canvas: CanvasItem, name: String, c: Vector2, size: float, squeeze := 1.0, tint := Color.WHITE) -> bool:
+	var texture := WorldArt.tex("item", name)
+	if texture == null:
+		return false
+	var h := size
+	var w := texture.get_width() * h / texture.get_height() * squeeze
+	canvas.draw_texture_rect(texture, Rect2(c - Vector2(w, h) * 0.5, Vector2(w, h)), false, tint)
+	return true
+
+
 static func draw_coin(canvas: CanvasItem, c: Vector2, s: float, t: float) -> void:
+	# the rendered coin spins: it narrows to its edge and turns darker on the back
+	var turn := cos(t * 3.2)
+	if _picture(canvas, "coin", c, 36.0 * s, maxf(0.12, absf(turn)), Color(1, 1, 1) if turn >= 0.0 else Color(0.8, 0.7, 0.5)):
+		if absf(turn) > 0.6:
+			var glint := c + Vector2(-8, -9) * s
+			canvas.draw_circle(glint, 3.0 * s * absf(turn), Color(1, 1, 0.9, 0.7))
+		return
 	var w := (3.0 + 13.0 * absf(cos(t * 3.2))) * s
 	var h := 17.0 * s
 	var edge := cos(t * 3.2) < 0.0
@@ -128,6 +146,13 @@ static func draw_coin(canvas: CanvasItem, c: Vector2, s: float, t: float) -> voi
 
 
 static func draw_diamond(canvas: CanvasItem, c: Vector2, s: float, t: float) -> void:
+	if _picture(canvas, "diamond", c, 40.0 * s * (1.0 + sin(t * 2.0) * 0.04)):
+		var shine := maxf(0.0, sin(t * 2.5)) * s
+		if shine > 0.1:
+			var star := c + Vector2(9, -11) * s
+			canvas.draw_line(star - Vector2(10, 0) * shine, star + Vector2(10, 0) * shine, Color.WHITE, 2.0)
+			canvas.draw_line(star - Vector2(0, 10) * shine, star + Vector2(0, 10) * shine, Color.WHITE, 2.0)
+		return
 	var top := [c + Vector2(-17, -6) * s, c + Vector2(-9, -16) * s, c + Vector2(9, -16) * s, c + Vector2(17, -6) * s]
 	var bottom := c + Vector2(0, 19) * s
 	var outline := PackedVector2Array(top + [bottom])
@@ -147,6 +172,8 @@ static func draw_diamond(canvas: CanvasItem, c: Vector2, s: float, t: float) -> 
 
 
 static func draw_heart(canvas: CanvasItem, c: Vector2, s: float) -> void:
+	if _picture(canvas, "heart", c, 38.0 * s):
+		return
 	var pts := PackedVector2Array()
 	for i in 32:
 		var a := TAU * i / 32.0
@@ -164,6 +191,8 @@ static func draw_heart(canvas: CanvasItem, c: Vector2, s: float) -> void:
 func _draw_key(c: Vector2) -> void:
 	# the time key: a golden key whose bow is a little clock
 	draw_circle(c + Vector2(0, 0), 26.0, Color(1, 0.85, 0.3, 0.18 + sin(_t * 4.0) * 0.08))
+	if _picture(self, "key", c, 64.0):
+		return
 	draw_rect(Rect2(c + Vector2(-4, 6), Vector2(8, 26)), OUTLINE)
 	draw_rect(Rect2(c + Vector2(-2, 6), Vector2(4, 24)), GOLD)
 	for y in [20.0, 27.0]:

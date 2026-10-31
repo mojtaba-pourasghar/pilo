@@ -23,6 +23,7 @@ func _ready() -> void:
 	await _test_boss_fight()
 	await _test_bot_runs_course()
 	await _test_loadout()
+	await _test_effects()
 	SaveManager.data = backup
 	SaveManager.save_game()
 	print("\n%d checks, %d failed" % [_checks, _failures])
@@ -65,6 +66,27 @@ func _test_loadout() -> void:
 		add_child(LoadoutIcon.make("tool", id))
 	await _wait(0.1)
 	_check(true, "all 12 companions and 12 tools draw without errors")
+
+
+func _test_effects() -> void:
+	_check(Weather.for_level("forest", 3, 1).rain, "forest level 3 is rainy")
+	_check(Weather.for_level("golden_desert", 17, 17).heat, "the desert shimmers with heat")
+	_check(Weather.for_level("shadow_castle", 58, 57).storm, "castle storms have lightning")
+	_check(not Weather.for_level("crystal_caves", 41, 41).rain, "no rain inside the caves")
+	var game := await _start([
+		"..........",
+		"..........",
+		"P.........",
+		"##########",
+	])
+	_check(game.weather != null and game.player.fx != null, "every level has weather and body effects")
+	Juice.hit(game.player, game.player.global_position, 1.0)
+	await _wait(0.4)
+	_check(Engine.time_scale == 1.0, "the hit-stop ends by itself")
+	game.player.fx.ignite(0.3)
+	await _wait(0.6)
+	_check(true, "catching fire runs without errors")
+	_stop(game)
 
 
 func _check(ok: bool, what: String) -> void:

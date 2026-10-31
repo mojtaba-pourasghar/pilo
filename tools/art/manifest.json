@@ -2431,6 +2431,204 @@
    ],
    "post": "texture",
    "max": 512
+  },
+  {
+   "id": "item_coin",
+   "prompt": "a shiny thick gold coin with an embossed paw print in the center and a raised rim, front view, perfectly round, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 768
+  },
+  {
+   "id": "item_diamond",
+   "prompt": "a sparkling sky-blue cut diamond gem with bright facets and inner light, front view, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "item_heart",
+   "prompt": "a glossy red heart gem, plump and cute, with a soft highlight, front view, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "item_key",
+   "prompt": "an ornate golden key with a small clock in its round head and a blue gem, front view, horizontal, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "item_star",
+   "prompt": "a plump glossy golden five-pointed star with soft rounded points and a gentle glow, front view, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "item_legendary",
+   "prompt": "a magical rainbow crystal diamond glowing with many colors, ornate, front view, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "checkpoint_off",
+   "prompt": "a wooden flag pole with a folded grey cloth flag hanging down limp, side view, full height, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "checkpoint_on",
+   "prompt": "a wooden flag pole with a bright orange flag with a paw print waving proudly, side view, full height, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "sign",
+   "prompt": "a small wooden signpost with a blank rectangular board and an exclamation mark carved on it, front view, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "spring",
+   "prompt": "a big bouncy red mushroom with white spots used as a trampoline, short thick stem, side view, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "cannon",
+   "prompt": "a hollow mossy log cannon with dark purple shadow smoke inside, lying on its side, opening facing left, side view, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "crusher",
+   "prompt": "a heavy square grumpy stone block with an angry carved face, cute, front view, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "falling_platform",
+   "prompt": "a short floating raft of three tied wooden logs, side view, horizontal, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "thorn_ball",
+   "prompt": "a round ball of dark purple thistle thorns with tiny glowing purple sparks, cute game hazard, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "thorn_hub",
+   "prompt": "a round grey stone hub with a carved spiral, front view, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "fox_den",
+   "prompt": "a small cozy burrow hole in a mound of earth with roots and grass around the entrance, front view, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "flower_open",
+   "prompt": "a cute tall pink wildflower in full bloom with green leaves, side view, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
+  },
+  {
+   "id": "flower_bud",
+   "prompt": "a cute closed green flower bud on a stem with leaves, side view, game item",
+   "style": "sprite",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "cutout",
+   "max": 384
   }
  ]
 }

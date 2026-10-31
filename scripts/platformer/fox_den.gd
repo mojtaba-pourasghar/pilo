@@ -53,6 +53,16 @@ func _process(delta: float) -> void:
 func _draw() -> void:
 	# mound of earth with an arched burrow opening, roots and a paw print sign
 	var c := Vector2(32, 64)
+	var den := WorldArt.pic("fox_den")
+	if den:
+		var w := 96.0
+		var h := den.get_height() * w / den.get_width()
+		draw_texture_rect(den, Rect2(Vector2(32 - w * 0.5, 68 - h), Vector2(w, h)), false)
+		if not empty:
+			var glint := 0.5 + 0.5 * sin(_t * 3.0)
+			draw_circle(Vector2(30, 68 - h * 0.35), 3.0, Color(1, 0.95, 0.5, glint))
+			draw_circle(Vector2(38, 68 - h * 0.3), 2.5, Color(0.6, 0.9, 1.0, glint))
+		return
 	draw_circle(c + Vector2(0, 4), 34.0, OUTLINE)
 	draw_circle(c + Vector2(0, 4), 31.0, Color("8d5a34"))
 	draw_circle(c + Vector2(-12, -14), 9.0, Color("a5703f"))

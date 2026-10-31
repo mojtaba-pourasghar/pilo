@@ -123,6 +123,34 @@ sfx['cannon'] = mix(lowpass(noise3(0.5), 40)*decay(n, 9)*5, tone(np.linspace(110
 n = int(SR*0.4)
 sfx['thud'] = mix(lowpass(noise3(0.4), 90)*decay(n, 12)*6, tone(np.linspace(80, 40, n), 0.4, 'sine', vol=0.7)*decay(n, 10))
 sfx['free'] = mix(*[at(tone(f, 0.4, 'bell', vol=0.3), i*0.06) for i, f in enumerate((1047, 1319, 1568, 2093))], at(bp(noise3(0.3), 1, 3)*decay(int(SR*0.3), 12)*0.3, 0.0))
+# --- impacts, weather and body effects (own RNG so the sounds above stay identical) ---
+rng4 = np.random.default_rng(47)
+def noise4(d): return rng4.uniform(-1, 1, int(SR*d))
+# heavy hit: deep punch, a cracking click and a short tail
+n = int(SR*0.45)
+sfx['impact'] = mix(tone(np.linspace(150, 45, n), 0.45, 'sine', a=0.001, r=0.3, vol=0.9)*decay(n, 7),
+                    lowpass(noise4(0.45), 25)*decay(n, 14)*2.0, bp(noise4(0.05), 1, 4)*decay(int(SR*0.05), 80)*1.2)
+# swish of air (dash, swings, gusts)
+n = int(SR*0.35)
+sfx['whoosh'] = bp(noise4(0.35), 3, 18)*np.sin(np.linspace(0, np.pi, n))**3*2.2
+# catching fire: a whoomp, then crackles
+n = int(SR*1.2)
+crackle = np.zeros(n)
+for _ in range(60):
+    m = int(SR*rng4.uniform(0.003, 0.012)); o = int(rng4.uniform(0, n - m))
+    crackle[o:o+m] += rng4.uniform(-1, 1, m)*rng4.uniform(0.3, 1.0)
+sfx['fire'] = mix(lowpass(noise4(1.2), 30)*np.concatenate([np.linspace(0, 1, int(SR*0.08)), np.linspace(1, 0.3, n - int(SR*0.08))])*1.5,
+                  crackle*decay(n, 1.5)*0.8)
+# thunder: a sharp crack rolling into a long low rumble
+n = int(SR*2.6)
+roll = lowpass(lowpass(noise4(2.6), 150), 60)*(decay(n, 1.2)*(0.6 + 0.4*np.sin(np.linspace(0, 9, n))**2))*14
+sfx['thunder'] = mix(bp(noise4(0.25), 1, 6)*decay(int(SR*0.25), 12)*2.5, roll)
+# tired panting: two soft breaths
+breath = lambda d: bp(noise4(d), 4, 30)*np.sin(np.linspace(0, np.pi, int(SR*d)))**2*1.4
+sfx['pant'] = mix(at(breath(0.22), 0.0), at(breath(0.18)*0.8, 0.3))
+# hiss of a flame going out
+n = int(SR*0.6)
+sfx['sizzle'] = bp(noise4(0.6), 1, 3)*decay(n, 5)*0.9
 for k,v in sfx.items(): write(k,v,'sfx')
 def song(scale, prog, kind, bpm, bars, seed, bass_kind='sine'):
     r = np.random.default_rng(seed); beat = 60/bpm; L = bars*4*beat

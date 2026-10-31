@@ -50,6 +50,7 @@ var _background: CanvasLayer
 var _camera: GameCamera
 var _dark := false
 var _follower: Node2D
+var weather: Weather
 var _tint_tween: Tween
 
 
@@ -125,6 +126,9 @@ func _ready() -> void:
 	TimeShift.reset(TimeShift.state_from_name(String(data.get("start_time", "present"))))
 	AudioManager.play_music("boss" if data.has("boss") else world.music)
 	AudioManager.play_ambient(String(world.get("ambient", "")))
+	weather = Weather.for_level(String(world.id), level_id, int(world.first))
+	_world_root.add_child(weather)
+	layered.set_sway(weather.sway_material())
 	Analytics.log_event("level_start", level_id)
 	_play_lines(data.get("intro", []))
 
@@ -196,6 +200,7 @@ func on_enemy_freed(enemy: Enemy) -> void:
 	enemies_freed += 1
 	SaveManager.data.pilo_xp = int(SaveManager.data.get("pilo_xp", 0)) + 1
 	FX.burst(_world_root, enemy.global_position + Vector2(0, -30), Color(1, 0.9, 0.5), 14)
+	Juice.hit(enemy, enemy.global_position + Vector2(0, -enemy.body_size.y * 0.6), 0.3)
 	for i in enemy.coins:
 		var coin := Block.CoinPop.new()
 		coin.position = enemy.global_position + Vector2(i * 20.0 - 10.0, -40)
@@ -207,7 +212,8 @@ func on_enemy_freed(enemy: Enemy) -> void:
 ## Nima was hit: update the hearts and spill a few coins that can be caught again.
 func on_player_hurt(away: float) -> void:
 	hud.set_hearts(player.hearts, player.max_hearts)
-	_camera.shake(5.0)
+	Juice.hit(player, player.global_position + Vector2(0, -20), 0.65, "impact")
+	Juice.flash(self, Color(1.0, 0.15, 0.1, 0.28), 0.35)
 	var spill := mini(coins, 4)
 	coins -= spill
 	hud.set_coins(coins)
@@ -307,7 +313,7 @@ func _make_dark() -> void:
 
 func on_boss_hit(boss: Boss) -> void:
 	hud.show_boss(boss.display_name(), maxi(boss.hp, 0), boss.max_hp)
-	_camera.shake(7.0)
+	Juice.hit(boss, boss.global_position + Vector2(0, -110), 0.85, "impact")
 
 
 func on_boss_freed(boss: Boss) -> void:
@@ -315,6 +321,8 @@ func on_boss_freed(boss: Boss) -> void:
 	for door in get_tree().get_nodes_in_group("boss_door"):
 		door.open()
 	FX.burst(_world_root, boss.global_position + Vector2(0, -80), UIKit.GOLD, 40)
+	Juice.hit(boss, boss.global_position + Vector2(0, -80), 1.0, "thunder")
+	Juice.flash(self, Color(1, 1, 0.9, 0.7), 0.6)
 	_notice("%s آزاد شد! دروازه باز است." % boss.display_name(), UIKit.GREEN, true)
 	SaveManager.data.hearts_of_time = maxi(int(SaveManager.data.get("hearts_of_time", 0)), int(world.index))
 

@@ -24,7 +24,7 @@ const WORLDS := [
 		"first": 9, "last": 16, "free": false, "available": true, "sku": "worlds_pack",
 		"secret_level": 15, "boss_level": 16,
 		"card": "res://assets/ui/worlds/coral_beach.png",
-		"background": "res://assets/environments/bg_sky.jpg", "music": "beach", "ambient": "stream",
+		"background": "res://assets/environments/bg_sky.jpg", "music": "beach", "ambient": "waves",
 		"palette": {"dirt": "e8c98a", "dirt_dark": "c9a35f", "grass": "f4e0a8", "grass_light": "fff3c9", "rock": "d98a7a", "rock_dark": "a85f55", "wood": "b98552", "wood_dark": "7c5330", "vine": "3fc1b0", "vine_dark": "23857a", "flower": "ff7f9f", "water": "2fa7e0", "hills": "58c3d6"},
 	},
 	{
@@ -32,7 +32,7 @@ const WORLDS := [
 		"first": 17, "last": 24, "free": false, "available": true, "sku": "worlds_pack",
 		"secret_level": 23, "boss_level": 24,
 		"card": "res://assets/ui/worlds/golden_desert.png",
-		"background": "res://assets/environments/bg_forest.jpg", "music": "desert", "ambient": "sky",
+		"background": "res://assets/environments/bg_forest.jpg", "music": "desert", "ambient": "desert",
 		"palette": {"dirt": "d9a55a", "dirt_dark": "b07f3a", "grass": "f2c46d", "grass_light": "ffe0a0", "rock": "c98b5a", "rock_dark": "94633b", "wood": "a8743f", "wood_dark": "6e4a25", "vine": "8bb04a", "vine_dark": "5c7a2e", "flower": "ff6f61", "water": "3db8d6", "hills": "e8b36a"},
 	},
 	{
@@ -64,7 +64,7 @@ const WORLDS := [
 		"first": 49, "last": 56, "free": false, "available": true, "sku": "worlds_pack",
 		"secret_level": 55, "boss_level": 56,
 		"card": "res://assets/ui/worlds/clock_factory.png",
-		"background": "res://assets/environments/bg_cave.jpg", "music": "factory", "ambient": "cave",
+		"background": "res://assets/environments/bg_cave.jpg", "music": "factory", "ambient": "factory",
 		"palette": {"dirt": "7a5a44", "dirt_dark": "5a3f2e", "grass": "c98a3a", "grass_light": "f0b860", "rock": "9a8f84", "rock_dark": "6b625a", "wood": "b5793d", "wood_dark": "7a4d22", "vine": "d9a441", "vine_dark": "a6741f", "flower": "ffcf4a", "water": "4a90c0", "hills": "6b4a33"},
 	},
 	{
@@ -72,7 +72,7 @@ const WORLDS := [
 		"first": 57, "last": 64, "free": false, "available": true, "sku": "worlds_pack",
 		"secret_level": 63, "boss_level": 64,
 		"card": "res://assets/ui/worlds/shadow_castle.png",
-		"background": "res://assets/environments/bg_cave.jpg", "music": "castle", "ambient": "cave",
+		"background": "res://assets/environments/bg_cave.jpg", "music": "castle", "ambient": "night",
 		"palette": {"dirt": "3a2f4f", "dirt_dark": "271f38", "grass": "6a4fa0", "grass_light": "9d7fe0", "rock": "6f6889", "rock_dark": "4a4460", "wood": "6e5a7a", "wood_dark": "463852", "vine": "8a5fd0", "vine_dark": "5a3a9a", "flower": "d07fff", "water": "5a4ab0", "hills": "2a1f40"},
 	},
 	{

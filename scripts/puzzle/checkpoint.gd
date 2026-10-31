@@ -39,6 +39,13 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
+	# rendered flag: limp and grey until Nima reaches it, then up and waving in the wind
+	if WorldArt.pic("checkpoint_on"):
+		var sway := sin(_t * 4.0) * 0.04 * _raise
+		draw_set_transform(Vector2(31, 64), sway, Vector2(1.0 + sin(_t * 6.0) * 0.03 * _raise, 1.0))
+		WorldArt.draw(self, "checkpoint_on" if active else "checkpoint_off", Vector2.ZERO, 126.0)
+		draw_set_transform(Vector2.ZERO)
+		return
 	draw_rect(Rect2(28, -44, 6, 108), Color("6b3f1d"))
 	draw_circle(Vector2(31, -46), 6.0, Color("ffd23f"))
 	var top := lerpf(30.0, -40.0, _raise)

@@ -11,11 +11,27 @@ static var _cache := {}
 
 
 static func tex(world: String, part: String) -> Texture2D:
-	var key := world + "_" + part
+	var key := world + "_" + part if part != "" else world
 	if not _cache.has(key):
-		var path := PATH % [world, part]
+		var path := "res://assets/art/%s.png" % key
 		_cache[key] = load(path) if ResourceLoader.exists(path) else null
 	return _cache[key]
+
+
+## A rendered picture (assets/art/<name>.png) or null.
+static func pic(name: String) -> Texture2D:
+	return tex(name.get_slice("_", 0), name.substr(name.find("_") + 1)) if name.contains("_") else tex(name, "")
+
+
+## Draws a rendered picture standing on `feet` (its bottom centre), `height` tall. Returns
+## false when the picture does not exist (the caller then draws its own look).
+static func draw(canvas: CanvasItem, name: String, feet: Vector2, height: float, tint := Color.WHITE) -> bool:
+	var texture := pic(name)
+	if texture == null:
+		return false
+	var w := texture.get_width() * height / texture.get_height()
+	canvas.draw_texture_rect(texture, Rect2(feet - Vector2(w * 0.5, height), Vector2(w, height)), false, tint)
+	return true
 
 
 ## Tall background props (trees, towers, chimneys...).

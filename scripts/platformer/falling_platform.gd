@@ -62,6 +62,10 @@ func _physics_process(delta: float) -> void:
 func _draw() -> void:
 	var wood: Color = palette.get("wood", Color("c08048"))
 	var jitter := Vector2(sin(_shake * 90.0) * 3.0, 0) if _shake > 0.0 else Vector2.ZERO
+	var raft := WorldArt.pic("falling_platform")
+	if raft:
+		draw_texture_rect(raft, Rect2(jitter + Vector2(-6, -10), Vector2(WIDTH + 12, THICK + 22)), false)
+		return
 	for i in 4:
 		var r := Rect2(jitter + Vector2(i * 32.0 + 1.0, 0), Vector2(30, THICK))
 		draw_rect(r, OUTLINE)

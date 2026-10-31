@@ -45,6 +45,19 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
+	var hub := WorldArt.pic("thorn_hub")
+	var ball := WorldArt.pic("thorn_ball")
+	if hub and ball:
+		draw_set_transform(Vector2.ZERO, _t * 0.8)
+		draw_texture_rect(hub, Rect2(-34, -34, 68, 68), false)
+		draw_set_transform(Vector2.ZERO)
+		for i in range(1, length + 1):
+			var pos := Vector2(cos(_angle), sin(_angle)) * (i * 30.0 + 6.0)
+			draw_circle(pos, 24.0, Color(0.55, 0.25, 0.8, 0.14))
+			draw_set_transform(pos, _t * 3.0 + i)
+			draw_texture_rect(ball, Rect2(-22, -22, 44, 44), false)
+			draw_set_transform(Vector2.ZERO)
+		return
 	# hub
 	draw_rect(Rect2(-30, -30, 60, 60), OUTLINE)
 	draw_rect(Rect2(-27, -27, 54, 54), Color("8d929c"))

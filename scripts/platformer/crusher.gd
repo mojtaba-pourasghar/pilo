@@ -76,9 +76,9 @@ func _land(player: CharacterBody2D) -> void:
 	AudioManager.play_sfx("thud")
 	FX.dust(get_parent(), global_position + Vector2(10, SIZE.y), 6)
 	FX.dust(get_parent(), global_position + Vector2(SIZE.x - 10, SIZE.y), 6)
-	var camera := get_viewport().get_camera_2d()
-	if camera and camera.has_method("shake"):
-		camera.shake(6.0)
+	Juice.shake(self, 0.55)
+	Juice.vibrate(60)
+	FX.dust_ring(get_parent(), global_position + Vector2(SIZE.x * 0.5, SIZE.y), 1.0)
 	if player and _player_underneath(player) and player.is_on_floor():
 		player.take_hit(player.global_position.x - player.facing * 10.0)
 
@@ -103,6 +103,12 @@ func _ground_distance(reach: float) -> float:
 
 
 func _draw() -> void:
+	var stone := WorldArt.pic("crusher")
+	if stone:
+		# the rendered grumpy stone; it glows red with anger while it falls and rests
+		var angry_now := phase == Phase.FALL or phase == Phase.REST
+		draw_texture_rect(stone, Rect2(Vector2(-4, -4), SIZE + Vector2(8, 8)), false, Color(1.25, 0.85, 0.8) if angry_now else Color.WHITE)
+		return
 	var r := Rect2(Vector2.ZERO, SIZE)
 	draw_rect(r, OUTLINE)
 	draw_rect(r.grow(-4), Color("8d929c"))

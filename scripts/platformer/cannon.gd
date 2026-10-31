@@ -55,6 +55,16 @@ func _fire() -> void:
 
 
 func _draw() -> void:
+	var barrel := WorldArt.pic("cannon")
+	if barrel:
+		# the rendered hollow log, its mouth turned toward Nima, kicking back when it fires
+		var w := 84.0
+		var h := barrel.get_height() * w / barrel.get_width()
+		var x := 32.0 - _facing * _recoil * 6.0
+		draw_set_transform(Vector2(x, 64.0 - h * 0.5), 0.0, Vector2(-_facing, 1.0))
+		draw_texture_rect(barrel, Rect2(Vector2(-w * 0.5, -h * 0.5), Vector2(w, h)), false)
+		draw_set_transform(Vector2.ZERO)
+		return
 	var c := Vector2(TILE * 0.5, TILE * 0.5)
 	# stump base
 	draw_rect(Rect2(6, 30, 52, 34), OUTLINE)

@@ -30,6 +30,11 @@ func _set_bloom(value: float) -> void:
 
 
 func _draw() -> void:
+	if WorldArt.pic("flower_open"):
+		# rendered: a closed bud in the past, opening into a flower in the present
+		var height := lerpf(30.0, 46.0, _bloom)
+		WorldArt.draw(self, "flower_open" if _bloom > 0.5 else "flower_bud", Vector2(32, 66), height)
+		return
 	var stem := Color("3f8f3a")
 	var petal: Color = palette.get("flower", Color("ff8fb1"))
 	var height := lerpf(10.0, 22.0, _bloom)

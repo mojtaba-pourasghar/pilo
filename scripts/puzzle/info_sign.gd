@@ -51,6 +51,8 @@ func _on_body_exited(body: Node) -> void:
 
 
 func _draw() -> void:
+	if WorldArt.draw(self, "sign", Vector2(32, 66), 80.0):
+		return
 	draw_rect(Rect2(28, 20, 8, 44), Color("6b3f1d"))
 	draw_rect(Rect2(6, -4, 52, 32), Color("c8945a"))
 	draw_rect(Rect2(6, 22, 52, 6), Color("8a5a2c"))

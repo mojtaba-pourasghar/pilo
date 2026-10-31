@@ -124,7 +124,8 @@ func _give() -> void:
 ## Breaks the brick into pieces (from below, or by Pilo).
 func smash() -> void:
 	AudioManager.play_sfx("brick")
-	FX.debris(get_parent(), global_position + Vector2(SIZE, SIZE) * 0.5, Color("c9773b"), 6)
+	FX.debris(get_parent(), global_position + Vector2(SIZE, SIZE) * 0.5, Color("c9773b"), 8)
+	Juice.hit(self, global_position + Vector2(SIZE, SIZE) * 0.5, 0.25)
 	_free_enemies_on_top()
 	collision_layer = 0
 	queue_free()

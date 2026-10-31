@@ -1,6 +1,6 @@
 class_name SettingsPanel
 extends CanvasLayer
-## Volume of the four sound channels, hint level, the opening story, the store and starting the
+## Volume of the four sound channels, hint level, phone vibration, the opening story, the store and starting the
 ## whole game over (behind the parent gate: progress is cleared and the story plays again).
 
 signal closed
@@ -34,6 +34,27 @@ func _ready() -> void:
 		_hint_buttons[id] = button
 	box.add_child(hint_row)
 	_refresh_hints()
+
+	# phone vibration on hits (on by default)
+	var buzz_row := HBoxContainer.new()
+	buzz_row.add_theme_constant_override("separation", 12)
+	var buzz_label := UIKit.make_label("لرزش گوشی", 30)
+	buzz_label.custom_minimum_size.x = 150
+	buzz_row.add_child(buzz_label)
+	var buzz := UIKit.make_button("", UIKit.GREEN, 180, 28)
+	var show_buzz := func():
+		var on := bool(SaveManager.data.settings.get("vibration", true))
+		buzz.text = "روشن" if on else "خاموش"
+		for state in ["normal", "hover", "pressed", "hover_pressed"]:
+			buzz.add_theme_stylebox_override(state, UIKit.glass("pill_green_s" if on else "pill_grey_s", "pill_s", Vector4(26, 6, 26, 16)))
+	buzz.pressed.connect(func():
+		SaveManager.data.settings.vibration = not bool(SaveManager.data.settings.get("vibration", true))
+		SaveManager.save_game()
+		show_buzz.call()
+		Juice.vibrate(40))
+	show_buzz.call()
+	buzz_row.add_child(buzz)
+	box.add_child(buzz_row)
 
 	var actions := HBoxContainer.new()
 	actions.alignment = BoxContainer.ALIGNMENT_CENTER

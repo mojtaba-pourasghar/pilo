@@ -220,9 +220,9 @@ func _throw(player: Node2D, i: int) -> void:
 
 func _land_slam() -> void:
 	AudioManager.play_sfx("thud")
-	var camera := get_viewport().get_camera_2d()
-	if camera and camera.has_method("shake"):
-		camera.shake(9.0)
+	Juice.shake(self, 0.75)
+	Juice.vibrate(90)
+	FX.dust_ring(get_parent(), global_position, 1.6)
 	for dir in [-1.0, 1.0]:
 		var wave := Shockwave.new()
 		wave.dir = dir
@@ -288,8 +288,10 @@ func _free() -> void:
 		game.on_boss_freed(self)
 
 
-## Thrown things: an arc that hurts on touch and breaks on the ground.
+## Thrown things: an arc that hurts on touch and breaks on the ground. In the hot worlds
+## (and the castle) they are fireballs that set Nima alight for a moment.
 class Projectile extends Area2D:
+	const FIRE := {"golden_desert": Color(1.0, 0.55, 0.15), "clock_factory": Color(1.0, 0.6, 0.2), "shadow_castle": Color(0.75, 0.35, 1.0)}
 	var kind := "forest"
 	var velocity := Vector2.ZERO
 	var _t := 0.0
@@ -304,6 +306,24 @@ class Projectile extends Area2D:
 		shape.shape = circle
 		add_child(shape)
 		body_entered.connect(_hit)
+		if FIRE.has(kind):
+			# a fireball: a burning trail behind it
+			var trail := CPUParticles2D.new()
+			trail.texture = FX.soft()
+			trail.amount = 24
+			trail.lifetime = 0.4
+			trail.local_coords = false
+			trail.gravity = Vector2(0, -60)
+			trail.scale_amount_min = 0.5
+			trail.scale_amount_max = 0.9
+			var ramp := Gradient.new()
+			ramp.set_color(0, Color(1, 0.95, 0.6, 0.9))
+			ramp.set_color(1, Color(FIRE[kind], 0.0))
+			trail.color_ramp = ramp
+			var additive := CanvasItemMaterial.new()
+			additive.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+			trail.material = additive
+			add_child(trail)
 
 	func _physics_process(delta: float) -> void:
 		_t += delta
@@ -316,11 +336,21 @@ class Projectile extends Area2D:
 
 	func _hit(body: Node) -> void:
 		if body.is_in_group("player"):
-			body.take_hit(global_position.x)
+			# a guardian's fireball sets Nima alight for a moment
+			if body.take_hit(global_position.x) and FIRE.has(kind) and body.get("fx"):
+				body.fx.ignite()
 		FX.burst(get_parent(), global_position, SkinBook.accent(kind), 8)
+		if FIRE.has(kind):
+			FX.dust_ring(get_parent(), global_position, 0.6, Color(0.3, 0.27, 0.3, 0.6))
 		queue_free()
 
 	func _draw() -> void:
+		if FIRE.has(kind):
+			var flicker := 1.0 + sin(_t * 40.0) * 0.08
+			draw_circle(Vector2.ZERO, 26.0 * flicker, Color(FIRE[kind], 0.35))
+			draw_circle(Vector2.ZERO, 18.0 * flicker, FIRE[kind])
+			draw_circle(Vector2.ZERO, 10.0, Color(1, 0.95, 0.7))
+			return
 		draw_circle(Vector2.ZERO, 20.0, Color("3b2418"))
 		draw_circle(Vector2.ZERO, 17.0, SkinBook.accent(kind))
 		draw_circle(Vector2(-5, -6), 5.0, Color(1, 1, 1, 0.5))

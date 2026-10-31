@@ -34,6 +34,9 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	var squash := _squash * 0.3
 	draw_set_transform(Vector2(32, 64), 0.0, Vector2(1.0 + squash, 1.0 - squash))
+	if WorldArt.draw(self, "spring", Vector2(0, 4), 76.0):
+		draw_set_transform(Vector2.ZERO)
+		return
 	draw_rect(Rect2(-12, -34, 24, 34), Color("f6e7c8"))
 	draw_rect(Rect2(-12, -6, 24, 6), Color("d9c49e"))
 	var cap := PackedVector2Array()

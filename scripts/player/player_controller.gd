@@ -94,6 +94,7 @@ var _swim := 0                 # deep water areas Nima is in (swimming when > 0)
 var _sand := 0                 # quicksand areas Nima is in (slowed when > 0)
 
 @onready var visual: Node2D = $Visual
+var fx: PlayerFX
 @onready var rig: CharacterRig = $Visual/Rig
 
 
@@ -106,6 +107,8 @@ func _ready() -> void:
 		rig.replace_by(painted)
 		rig.queue_free()
 		rig = painted
+	fx = PlayerFX.new()
+	add_child(fx)
 	_emote = UIKit.make_label("!", 48, UIKit.RED, 10, Color.WHITE)
 	_emote.size = Vector2(80, 60)
 	_emote.position = Vector2(-40, -130)
@@ -230,6 +233,9 @@ func _start_dash(dir: float) -> void:
 	_squash = Vector2(1.25, 0.85)
 	dashed.emit()
 	AudioManager.play_sfx("dash")
+	AudioManager.play_sfx("whoosh", 1.1, -6.0)
+	Juice.shake(self, 0.12)
+	Juice.vibrate(12)
 
 
 func _check_collisions() -> void:

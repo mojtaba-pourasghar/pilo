@@ -59,6 +59,7 @@ var _layers: Array = []
 var _front: CanvasLayer
 var _view := Vector2(1280, 720)
 var _tween: Tween
+var _props: Array = []
 
 
 func _ready() -> void:
@@ -110,6 +111,7 @@ func _build_painted(theme: Dictionary, far: Texture2D) -> void:
 	near.seed = 11
 	near.gap = 1.6
 	_add(near, 0.5, 0.25, theme)
+	_props = [back, near]
 	_front = CanvasLayer.new()
 	_front.layer = 5
 	add_child(_front)
@@ -146,6 +148,12 @@ func _process(_delta: float) -> void:
 	for node in _layers:
 		node.camera_x = center.x
 		node.lift = height * node.scroll.y
+
+
+## Wind from the level's weather: the rendered trees and bushes sway with it.
+func set_sway(material: ShaderMaterial) -> void:
+	for layer in _props:
+		layer.material = material
 
 
 func set_tint(color: Color, instant: bool) -> void:

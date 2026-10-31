@@ -12,6 +12,7 @@ const FOLDER := "res://assets/characters/%s/"
 @export var character := "nima"
 
 var glow := Color(0.4, 0.9, 1.0)
+var tired := false             ## after a long run Nima stands panting for a moment
 var _rig: Dictionary = {}
 var _root: Node2D
 var _parts: Node2D
@@ -175,6 +176,11 @@ func target_pose(delta: float) -> Dictionary:
 		"lens":
 			return {"lean": 0.0, "bob": 0.0, "front": 0.1, "back": -0.1, "arm": -0.5, "head": -0.15, "squash": 0.0}
 		_:
+			if tired:
+				# out of breath: fast deep breaths, bent forward, head low
+				var pant := sin(t * 9.0)
+				return {"lean": 0.12, "bob": 1.0 + pant * 1.6, "front": 0.08, "back": -0.08, "arm": 0.15,
+					"head": 0.16 + pant * 0.03, "squash": pant * 0.025}
 			var breath := sin(t * 2.4)
 			return {"lean": 0.0, "bob": breath * 1.2, "front": 0.04, "back": -0.04, "arm": sin(t * 1.2) * 0.05,
 				"head": sin(t * 0.9) * 0.05, "squash": breath * 0.012}
