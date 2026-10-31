@@ -48,6 +48,20 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
+	var texture := WorldArt.tex("time_gate", "locked" if locked else "open")
+	if texture:
+		# the rendered gate, feet on the ground under it; the portal glows and breathes
+		var h := 262.0
+		var w := texture.get_width() * h / texture.get_height()
+		var center := Vector2(32, 64 - h * 0.42)
+		if not locked:
+			draw_circle(center, 62.0 + sin(_t * 3.0) * 6.0, Color(0.7, 0.55, 1.0, 0.18))
+		draw_texture_rect(texture, Rect2(Vector2(32 - w * 0.5, 64 - h), Vector2(w, h)), false)
+		if not locked:
+			for i in 3:
+				var start := _t * (1.4 + i * 0.5) + i * 2.0
+				draw_arc(center + Vector2(0, 8), 16.0 + i * 11.0, start, start + 2.4, 20, Color(1, 0.9, 1, 0.35 - i * 0.08), 4.0)
+		return
 	var stone := Color("a7acb6")
 	var stone_dark := Color("7b818c")
 	var base := Vector2(32, 64)          # middle of the ground under the gate

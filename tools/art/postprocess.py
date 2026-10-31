@@ -6,6 +6,7 @@ of each job in tools/art/manifest.json:
   sheet   → like cutout, then split into the separate views (left to right) → <id>_1.png ...
   tile_x  → left and right edges blended so it repeats sideways          → assets/art/<id>.png
   tile_xy → seamless in both directions                                  → assets/art/<id>.png
+  texture → made seamless by blending with itself shifted by half, resized → assets/art/<id>.png
   none    → copied as it is (story pictures go to assets/story/)
 
 Needs rembg:  python3 -m venv venv && venv/bin/pip install "rembg[cpu]" pillow
@@ -63,6 +64,20 @@ def tile_x(im, blend=0.12):
     return out.crop((0, 0, w - k, h))
 
 
+def seamless(im):
+    """Repeats without a seam: the picture blended with itself shifted by half, the shifted
+    copy taking over towards the edges (where it continues across the wrap)."""
+    import numpy as np
+    a = np.asarray(im).astype(np.float32)
+    h, w = a.shape[:2]
+    shifted = np.roll(np.roll(a, h // 2, axis=0), w // 2, axis=1)
+    wx = np.sin(np.linspace(0, np.pi, w)) ** 0.6
+    wy = np.sin(np.linspace(0, np.pi, h)) ** 0.6
+    weight = (wy[:, None] * wx[None, :])[..., None]
+    out = a * weight + shifted * (1.0 - weight)
+    return Image.fromarray(out.clip(0, 255).astype(np.uint8))
+
+
 def tile_xy(im):
     im = tile_x(im)
     return tile_x(im.rotate(90, expand=True)).rotate(-90, expand=True)
@@ -108,10 +123,24 @@ def main():
             views = split_views(cutout(im))
             for i, view in enumerate(views):
                 view.save(os.path.join(OUT, f"{job['id']}_{i + 1}.png"))
-        elif post == "tile_x":
-            tile_x(im).save(os.path.join(OUT, job["id"] + ".png"))
-        elif post == "tile_xy":
-            tile_xy(im.convert("RGB")).save(os.path.join(OUT, job["id"] + ".png"))
+        elif post == "texture_plain":
+            # panoramas: shown mirrored every other copy in the game, so kept whole
+            out = im.convert("RGB")
+            limit = job.get("max", 1536)
+            out.thumbnail((limit, limit), Image.LANCZOS)
+            out.save(os.path.join(OUT, job["id"] + ".png"))
+        elif post == "texture":
+            out = seamless(im.convert("RGB"))
+            limit = job.get("max", 1024)
+            out.thumbnail((limit, limit), Image.LANCZOS)
+            out.save(os.path.join(OUT, job["id"] + ".png"))
+        elif post in ("tile_x", "tile_xy"):
+            out = tile_x(im.convert("RGB")) if post == "tile_x" else tile_xy(im.convert("RGB"))
+            limit = job.get("max", 1024)
+            if max(out.size) > limit:
+                f = limit / max(out.size)
+                out = out.resize((round(out.width * f), round(out.height * f)), Image.LANCZOS)
+            out.save(os.path.join(OUT, job["id"] + ".png"))
         print("done", job["id"], post)
 
 

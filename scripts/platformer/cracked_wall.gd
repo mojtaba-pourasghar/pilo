@@ -36,6 +36,12 @@ func smash() -> void:
 
 
 func _draw() -> void:
+	var texture := WorldArt.tex(String(palette.get("theme", "forest")), "cracked_wall")
+	if texture:
+		# one rendered cracked stone block per cell
+		for i in cells:
+			draw_texture_rect(texture, Rect2(Vector2(-2, i * TILE - 2), Vector2(TILE + 4, TILE + 4)), false)
+		return
 	var rock: Color = palette.get("rock", Color("9ea3ad"))
 	var dark: Color = palette.get("rock_dark", Color("6f7580"))
 	for i in cells:

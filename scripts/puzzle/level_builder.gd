@@ -300,6 +300,7 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 					root.add_child(den)
 				"p":
 					var pipe := Pipe.new()
+					pipe.theme = String(palette.get("theme", "forest"))
 					var n := 1
 					while y + n < h and not RUNS.has(String(grid[y + n])[x]):
 						n += 1

@@ -35,6 +35,15 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
+	var texture := WorldArt.tex("forest", "thorns")
+	if texture:
+		# rendered shadow brambles, one piece per cell, slightly overlapping and breathing
+		for i in cells:
+			var k := 1.0 + sin(_t * 2.0 + i) * 0.03
+			var h := 40.0 * k
+			draw_texture_rect(texture, Rect2(Vector2(i * TILE - 6, TILE - h), Vector2(TILE + 12, h)), false)
+			draw_circle(Vector2(i * TILE + 32, TILE - 14), 26.0, Color(0.5, 0.2, 0.7, 0.08 + sin(_t * 3.0 + i) * 0.03))
+		return
 	var vine := Color("4b2d5e")
 	var thorn := Color("2a1838")
 	for i in cells:

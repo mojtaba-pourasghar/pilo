@@ -155,6 +155,18 @@ func _draw() -> void:
 				var p := r.get_center() + Vector2(cos(_t * 2.0 + k * 2.1), sin(_t * 2.0 + k * 2.1)) * 22.0
 				draw_circle(p, 3.0, Color(1, 1, 0.8, a + 0.2))
 		return
+	var art := {Kind.QUESTION: "block_question", Kind.BRICK: "block_brick", Kind.USED: "block_used"}
+	var texture := WorldArt.tex("block", String(art.get(kind, "")).trim_prefix("block_")) if art.has(kind) else null
+	if texture:
+		# the rendered block; the ? block still pulses and shines
+		var grow := (sin(_t * 4.0) * 1.5) if kind == Kind.QUESTION else 0.0
+		draw_texture_rect(texture, r.grow(3.0 + grow), false)
+		if kind == Kind.QUESTION:
+			var sweep := fmod(_t * 0.6, 2.0)
+			if sweep < 1.0:
+				var x := r.position.x + sweep * r.size.x
+				draw_line(Vector2(x, r.position.y + 6), Vector2(x - 14, r.end.y - 6), Color(1, 1, 1, 0.3), 6.0)
+		return
 	match kind:
 		Kind.QUESTION:
 			_rounded(r.grow(2), 10.0, OUTLINE)

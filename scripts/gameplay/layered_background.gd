@@ -63,13 +63,53 @@ var _tween: Tween
 
 func _ready() -> void:
 	layer = -10
-	var theme: Dictionary = THEMES.get(world_id, THEMES.forest)
+	var theme: Dictionary = THEMES.get(world_id, THEMES.forest).duplicate()
+	var far := WorldArt.tex(world_id, "far")
+	if far and not WorldArt.trees(world_id).is_empty():
+		_build_painted(theme, far)
+		return
 	_add(SkyLayer.new(), 0.0, 0.0, theme)
 	_add(CloudLayer.new(), 0.05, 0.02, theme)
 	_add(MountainLayer.new(), 0.12, 0.05, theme)
 	_add(HillLayer.new(), 0.25, 0.1, theme)
 	_add(TreeLayer.new(), 0.45, 0.2, theme)
 	_add(BushLayer.new(), 0.7, 0.35, theme)
+	_front = CanvasLayer.new()
+	_front.layer = 5
+	add_child(_front)
+	var front := FrontLayer.new()
+	front.theme = theme
+	front.scroll = Vector2(1.3, 1.0)
+	_front.add_child(front)
+	_layers.append(front)
+	get_viewport().size_changed.connect(_fit)
+	_fit()
+
+
+## The rendered look: the world's panorama far away, two rows of rendered trees and bushes
+## (the far row smaller and hazier), then the level, then light rays and falling bits.
+func _build_painted(theme: Dictionary, far: Texture2D) -> void:
+	theme["painted"] = true
+	var panorama := FarLayer.new()
+	panorama.texture = far
+	_add(panorama, 0.06, 0.04, theme)
+	var trees := WorldArt.trees(world_id)
+	var bushes := WorldArt.bushes(world_id)
+	var back := PropLayer.new()
+	back.textures = trees + trees + bushes
+	back.base = 0.64
+	back.prop_height = 230.0
+	back.haze = Color(THEMES.get(world_id, THEMES.forest).far)
+	back.haze.a = 0.35
+	back.seed = 5
+	_add(back, 0.25, 0.1, theme)
+	var near := PropLayer.new()
+	near.textures = trees + bushes + bushes
+	near.base = 0.7
+	near.prop_height = 330.0
+	near.seed = 11
+	near.gap = 1.6
+	_add(near, 0.5, 0.25, theme)
 	_front = CanvasLayer.new()
 	_front.layer = 5
 	add_child(_front)
@@ -167,6 +207,78 @@ class BgLayer extends Node2D:
 		pts.append(Vector2(x0 + TILE_W, view.y + 500.0))
 		pts.append(Vector2(x0, view.y + 500.0))
 		return pts
+
+
+## The rendered panorama, as tall as the screen and a bit more, repeating sideways; the sky
+## colour of its top edge continues above it when the camera climbs.
+class FarLayer extends BgLayer:
+	var texture: Texture2D
+	var sky := Color("8fc8f0")
+
+	func _ready() -> void:
+		animated = false
+		var image := texture.get_image()
+		if image:
+			if image.is_compressed():
+				image.decompress()
+			sky = image.get_pixel(image.get_width() / 2, 2)
+
+	func _scale() -> float:
+		return view.y * 1.08 / texture.get_height()
+
+	func _process(_delta: float) -> void:
+		# every other copy is mirrored so the copies always meet edge to matching edge
+		var period := texture.get_width() * _scale() * 2.0
+		position = Vector2(-fposmod(camera_x * scroll.x, period), lift)
+
+	func _draw() -> void:
+		var s := _scale()
+		var size := Vector2(texture.get_width(), texture.get_height()) * s
+		var top := view.y - size.y
+		var copies := int(ceil(view.x / size.x)) + 3
+		draw_rect(Rect2(0, top - 3000.0, size.x * copies, 3001.0), sky)
+		for i in copies:
+			var rect := Rect2(Vector2(i * size.x, top), size)
+			if i % 2 == 1:
+				draw_set_transform(Vector2(rect.position.x * 2.0 + size.x, 0), 0.0, Vector2(-1, 1))
+			draw_texture_rect(texture, rect, false)
+			draw_set_transform(Vector2.ZERO)
+
+
+## A row of rendered props (trees, bushes...) standing on a line across the screen.
+class PropLayer extends BgLayer:
+	var textures: Array = []
+	var base := 0.7              ## the props' ground line, as a part of the screen height
+	var prop_height := 300.0
+	var haze := Color(1, 1, 1, 0)
+	var seed := 1
+	var gap := 1.0
+
+	func _ready() -> void:
+		animated = false
+
+	func _draw() -> void:
+		for copy in range(-1, 2):
+			draw_strip(copy * TILE_W)
+
+	func draw_strip(x0: float) -> void:
+		if textures.is_empty():
+			return
+		var rng := RandomNumberGenerator.new()
+		rng.seed = seed
+		var ground := view.y * base
+		var x := rng.randf_range(0.0, 160.0)
+		while x < TILE_W:
+			var texture: Texture2D = textures[rng.randi() % textures.size()]
+			var h := prop_height * rng.randf_range(0.7, 1.1) * (0.55 if texture.get_width() > texture.get_height() else 1.0)
+			var w := texture.get_width() * h / texture.get_height()
+			var flip := rng.randf() < 0.5
+			var rect := Rect2(x0 + x - w * 0.5, ground - h, w, h)
+			if flip:
+				draw_set_transform(Vector2(rect.position.x * 2.0 + w, 0), 0.0, Vector2(-1, 1))
+			draw_texture_rect(texture, rect, false, Color(1, 1, 1).lerp(Color(haze, 1.0), haze.a))
+			draw_set_transform(Vector2.ZERO)
+			x += (w * 0.55 + rng.randf_range(60.0, 220.0)) * gap
 
 
 class SkyLayer extends BgLayer:
@@ -468,8 +580,9 @@ class FrontLayer extends BgLayer:
 				var alpha := 0.05 + 0.03 * sin(t * 0.7 + i)
 				draw_colored_polygon(PackedVector2Array([Vector2(x + shift, -20), Vector2(x + 90 + shift, -20),
 					Vector2(x - 120 + shift, view.y), Vector2(x - 260 + shift, view.y)]), Color(1, 0.97, 0.75, alpha))
-		for copy in 2:
-			draw_strip(copy * TILE_W)
+		if not flag("painted"):
+			for copy in 2:
+				draw_strip(copy * TILE_W)
 		var kind := String(theme.get("bits", "leaf"))
 		for bit in bits:
 			var s: float = bit.s

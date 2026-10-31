@@ -10,6 +10,7 @@ const OUTLINE := Color("3b2418")
 var cells := 2
 var warp_to := Vector2.ZERO
 var is_warp := false
+var theme := "forest"
 var _t := 0.0
 
 
@@ -41,6 +42,28 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
+	var texture := WorldArt.tex(theme, "pipe")
+	if texture:
+		# rendered pipe: its rim keeps its shape, the trunk stretches to the pipe's height
+		var h := TILE * cells
+		var tw := float(texture.get_width())
+		var th := float(texture.get_height())
+		var w := TILE * 2.0 + 16.0
+		var rim_src := th * 0.16
+		var rim_h := rim_src * w / tw
+		draw_texture_rect_region(texture, Rect2(-8, -10, w, rim_h), Rect2(0, 0, tw, rim_src))
+		draw_texture_rect_region(texture, Rect2(-8, -10 + rim_h, w, h + 10 - rim_h), Rect2(0, rim_src, tw, th - rim_src))
+	else:
+		_draw_drawn()
+	if is_warp:
+		var bob := sin(_t * 4.0) * 5.0
+		draw_circle(Vector2(TILE, 8), 34.0, Color(1, 0.9, 0.4, 0.12 + sin(_t * 3.0) * 0.05))
+		var a := Vector2(TILE, -34 + bob)
+		draw_colored_polygon(PackedVector2Array([a + Vector2(-13, -6), a + Vector2(13, -6), a + Vector2(0, 10)]), OUTLINE)
+		draw_colored_polygon(PackedVector2Array([a + Vector2(-9, -4), a + Vector2(9, -4), a + Vector2(0, 6)]), Color("ffd34d"))
+
+
+func _draw_drawn() -> void:
 	var bark := Color("8c5a2e")
 	var bark_light := Color("b07a45")
 	var moss := Color("6cc24a")
@@ -58,7 +81,7 @@ func _draw() -> void:
 	draw_circle(Vector2(12, 4), 7.0, moss)
 	draw_circle(Vector2(22, 2), 5.0, moss.lightened(0.2))
 	draw_circle(Vector2(112, 5), 6.0, moss)
-	if is_warp:
+	if false:
 		# a soft glow and a bobbing arrow tell the child this one goes somewhere
 		var bob := sin(_t * 4.0) * 5.0
 		draw_circle(Vector2(TILE, 8), 34.0, Color(1, 0.9, 0.4, 0.12 + sin(_t * 3.0) * 0.05))

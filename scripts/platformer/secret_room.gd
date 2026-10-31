@@ -52,6 +52,15 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	if _cover <= 0.0:
 		return
+	var soil := WorldArt.tex(String(palette.get("theme", "forest")), "soil")
+	if soil:
+		# the same rendered soil as the ground around it, continuing seamlessly
+		texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+		for cell in cells:
+			var r := Rect2(global_position + Vector2(cell) * TILE, Vector2(TILE, TILE))
+			var origin := Vector2(fposmod(r.position.x * 2.0, soil.get_width()), fposmod(r.position.y * 2.0, soil.get_height()))
+			draw_texture_rect_region(soil, Rect2(Vector2(cell) * TILE, Vector2(TILE, TILE)).grow(0.5), Rect2(origin, Vector2(TILE, TILE) * 2.0), Color(1, 1, 1, _cover))
+		return
 	var dirt: Color = palette.get("dirt", Color("8d5a34"))
 	var dark: Color = palette.get("dirt_dark", Color("6e4325"))
 	for cell in cells:
@@ -67,6 +76,15 @@ class Backdrop extends Node2D:
 	var palette: Dictionary = {}
 
 	func _draw() -> void:
+		var soil := WorldArt.tex(String(palette.get("theme", "forest")), "soil")
+		if soil:
+			# the back wall: the world's soil, in shadow
+			texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+			for cell in cells:
+				var r := Rect2(Vector2(cell) * TILE, Vector2(TILE, TILE))
+				var origin := Vector2(fposmod(r.position.x * 2.0 + 300.0, soil.get_width()), fposmod(r.position.y * 2.0, soil.get_height()))
+				draw_texture_rect_region(soil, r.grow(0.5), Rect2(origin, Vector2(TILE, TILE) * 2.0), Color(0.42, 0.38, 0.42))
+			return
 		var wall := Color("4a3121")
 		var wall_dark := Color("38241a")
 		for cell in cells:

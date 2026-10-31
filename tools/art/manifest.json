@@ -3,7 +3,7 @@
   "default": "high-end 3D CGI character render, Pixar and DreamWorks animated feature film quality, physically based materials, soft subsurface skin, detailed fur and fabric textures, cinematic soft studio key light and rim light, crisp sharp details, vibrant appealing colors",
   "sprite": "high-end 3D CGI character render, Pixar and DreamWorks animated feature film quality, physically based materials, soft subsurface skin, detailed fur and fabric textures, cinematic soft studio key light and rim light, crisp sharp details, vibrant appealing colors, isolated single subject centered, entire subject inside the frame with margin, plain flat light grey background, no ground shadow, no text, no border, not a painting, not an illustration, not 2D, not a sketch",
   "scene": "high-end 3D CGI environment render for a premium side-scrolling platformer, Pixar animated film quality, physically based materials, volumetric light, rich depth and atmospheric perspective, vibrant saturated colors, crisp detail, no characters, no text, not a painting, not an illustration",
-  "texture": "seamless tileable game texture, stylized hand-painted 3D look, top-down orthographic, even lighting, no perspective, no text"
+  "texture": "seamless tileable game material texture, high-end 3D rendered PBR look, Pixar quality, crisp detail, flat even lighting, straight top-down orthographic view, fills the whole frame edge to edge, no objects, no perspective, no text, not a painting"
  },
  "jobs": [
   {
@@ -1225,17 +1225,8 @@
     1536,
     768
    ],
-   "post": "tile_x"
-  },
-  {
-   "id": "forest_mid",
-   "prompt": "A row of distant lush forest treetops and giant colorful mushrooms forming a horizontal band, seen from the side, isolated on plain light grey background, bottom edge flat",
-   "style": "sprite",
-   "size": [
-    1536,
-    640
-   ],
-   "post": "cutout"
+   "post": "texture_plain",
+   "max": 1536
   },
   {
    "id": "forest_tree_1",
@@ -1245,7 +1236,8 @@
     768,
     1024
    ],
-   "post": "cutout"
+   "post": "cutout",
+   "max": 512
   },
   {
    "id": "forest_tree_2",
@@ -1255,7 +1247,8 @@
     768,
     1024
    ],
-   "post": "cutout"
+   "post": "cutout",
+   "max": 512
   },
   {
    "id": "forest_tree_3",
@@ -1265,7 +1258,8 @@
     768,
     1024
    ],
-   "post": "cutout"
+   "post": "cutout",
+   "max": 512
   },
   {
    "id": "forest_mushroom_1",
@@ -1275,7 +1269,8 @@
     768,
     1024
    ],
-   "post": "cutout"
+   "post": "cutout",
+   "max": 512
   },
   {
    "id": "forest_mushroom_2",
@@ -1285,7 +1280,8 @@
     768,
     1024
    ],
-   "post": "cutout"
+   "post": "cutout",
+   "max": 512
   },
   {
    "id": "forest_mushroom_3",
@@ -1295,7 +1291,8 @@
     768,
     1024
    ],
-   "post": "cutout"
+   "post": "cutout",
+   "max": 512
   },
   {
    "id": "forest_bush_1",
@@ -1305,7 +1302,8 @@
     1024,
     768
    ],
-   "post": "cutout"
+   "post": "cutout",
+   "max": 512
   },
   {
    "id": "forest_bush_2",
@@ -1315,7 +1313,8 @@
     1024,
     768
    ],
-   "post": "cutout"
+   "post": "cutout",
+   "max": 512
   },
   {
    "id": "forest_bush_3",
@@ -1325,7 +1324,8 @@
     1024,
     768
    ],
-   "post": "cutout"
+   "post": "cutout",
+   "max": 512
   },
   {
    "id": "forest_rocks",
@@ -1335,57 +1335,19 @@
     1024,
     768
    ],
-   "post": "cutout"
-  },
-  {
-   "id": "forest_front_leaves",
-   "prompt": "big dark green jungle leaves and fern fronds silhouette growing upward from the bottom, for a foreground layer",
-   "style": "sprite",
-   "size": [
-    1024,
-    768
-   ],
-   "post": "cutout"
-  },
-  {
-   "id": "forest_vines",
-   "prompt": "hanging green jungle vines with leaves, hanging down from the top",
-   "style": "sprite",
-   "size": [
-    768,
-    1024
-   ],
-   "post": "cutout"
-  },
-  {
-   "id": "forest_ground_top",
-   "prompt": "A horizontal strip of stylized platform ground seen from the side: lush green grass top edge with small flowers over rich brown soil with small stones, the grass edge runs along the top, side-scroller terrain tile, seamless left to right",
-   "style": "sprite",
-   "size": [
-    1024,
-    512
-   ],
-   "post": "tile_x"
+   "post": "cutout",
+   "max": 512
   },
   {
    "id": "forest_soil",
-   "prompt": "Rich brown soil with small embedded stones and roots",
+   "prompt": "rich brown forest soil with small pebbles and tiny roots",
    "style": "texture",
    "size": [
     1024,
     1024
    ],
-   "post": "tile_xy"
-  },
-  {
-   "id": "forest_plank",
-   "prompt": "A floating wooden plank platform made of three logs tied with rope, with a little moss, side view",
-   "style": "sprite",
-   "size": [
-    1024,
-    512
-   ],
-   "post": "cutout"
+   "post": "texture",
+   "max": 512
   },
   {
    "id": "block_question",
@@ -1425,7 +1387,8 @@
     768,
     1024
    ],
-   "post": "cutout"
+   "post": "cutout",
+   "max": 512
   },
   {
    "id": "forest_cracked_wall",
@@ -1435,7 +1398,8 @@
     768,
     1024
    ],
-   "post": "cutout"
+   "post": "cutout",
+   "max": 512
   },
   {
    "id": "forest_thorns",
@@ -1445,10 +1409,11 @@
     1024,
     512
    ],
-   "post": "cutout"
+   "post": "cutout",
+   "max": 512
   },
   {
-   "id": "time_gate",
+   "id": "time_gate_open",
    "prompt": "A magical stone arch gate with a golden clock on top and a swirling purple time portal inside, mossy stones, front view",
    "style": "sprite",
    "size": [
@@ -1467,7 +1432,7 @@
    ],
    "post": "cutout",
    "refs": [
-    "time_gate"
+    "time_gate_open"
    ]
   },
   {
@@ -1564,6 +1529,908 @@
    "refs": [
     "ref_keyart"
    ]
+  },
+  {
+   "id": "forest_turf",
+   "prompt": "lush green grass with tiny clover and small flowers",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "forest_wood",
+   "prompt": "warm brown wooden planks with visible grain, horizontal",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "coral_beach_far",
+   "prompt": "Wide panoramic side-scrolling game background of a sunny tropical coral beach with turquoise sea, distant islands, a red and white lighthouse and white sand, sky in the upper half, distant scenery along the lower half, no foreground ground, no characters",
+   "style": "scene",
+   "size": [
+    1536,
+    768
+   ],
+   "post": "texture_plain",
+   "max": 1536
+  },
+  {
+   "id": "coral_beach_tree_1",
+   "prompt": "a tall curved coconut palm tree, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "coral_beach_tree_2",
+   "prompt": "a pair of young palm trees, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "coral_beach_tree_3",
+   "prompt": "a broad tropical banana-leaf tree, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "coral_beach_bush_1",
+   "prompt": "a bright pink and orange coral cluster, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "coral_beach_bush_2",
+   "prompt": "a pile of beach rocks with seashells and starfish, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "coral_beach_bush_3",
+   "prompt": "a clump of tall green beach grass with small flowers, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "coral_beach_soil",
+   "prompt": "smooth pale golden beach sand with tiny shells",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "coral_beach_turf",
+   "prompt": "wet golden sand with small pink seashells and sea foam",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "coral_beach_wood",
+   "prompt": "sun-bleached driftwood planks, horizontal",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "golden_desert_far",
+   "prompt": "Wide panoramic side-scrolling game background of a golden desert with tall sand dunes, distant pyramids, a small green oasis and a warm orange sky, sky in the upper half, distant scenery along the lower half, no foreground ground, no characters",
+   "style": "scene",
+   "size": [
+    1536,
+    768
+   ],
+   "post": "texture_plain",
+   "max": 1536
+  },
+  {
+   "id": "golden_desert_tree_1",
+   "prompt": "a tall saguaro cactus with arms, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "golden_desert_tree_2",
+   "prompt": "a date palm tree, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "golden_desert_tree_3",
+   "prompt": "a cluster of round barrel cacti with pink flowers, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "golden_desert_bush_1",
+   "prompt": "a smooth red sandstone rock formation, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "golden_desert_bush_2",
+   "prompt": "a dry desert shrub with small yellow flowers, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "golden_desert_bush_3",
+   "prompt": "a pile of desert stones with an old clay pot, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "golden_desert_soil",
+   "prompt": "layered orange sandstone rock",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "golden_desert_turf",
+   "prompt": "rippled golden desert sand",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "golden_desert_wood",
+   "prompt": "old sun-dried wooden planks with rope, horizontal",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "snow_mountain_far",
+   "prompt": "Wide panoramic side-scrolling game background of snowy mountain peaks, a frozen lake, pine forests covered in snow and a pale winter sky, sky in the upper half, distant scenery along the lower half, no foreground ground, no characters",
+   "style": "scene",
+   "size": [
+    1536,
+    768
+   ],
+   "post": "texture_plain",
+   "max": 1536
+  },
+  {
+   "id": "snow_mountain_tree_1",
+   "prompt": "a tall snow-covered pine tree, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "snow_mountain_tree_2",
+   "prompt": "a round snowy fir tree, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "snow_mountain_tree_3",
+   "prompt": "a frosty bare winter tree with icicles, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "snow_mountain_bush_1",
+   "prompt": "a snow-covered bush with red winter berries, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "snow_mountain_bush_2",
+   "prompt": "a cluster of blue ice crystals, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "snow_mountain_bush_3",
+   "prompt": "snowy round boulders, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "snow_mountain_soil",
+   "prompt": "packed snow over blue ice rock",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "snow_mountain_turf",
+   "prompt": "fresh fluffy white snow with sparkles",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "snow_mountain_wood",
+   "prompt": "frosty wooden planks with snow on top, horizontal",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "sky_islands_far",
+   "prompt": "Wide panoramic side-scrolling game background of floating grassy islands in a bright pastel sky with waterfalls falling into clouds, windmills and a rainbow, sky in the upper half, distant scenery along the lower half, no foreground ground, no characters",
+   "style": "scene",
+   "size": [
+    1536,
+    768
+   ],
+   "post": "texture_plain",
+   "max": 1536
+  },
+  {
+   "id": "sky_islands_tree_1",
+   "prompt": "a round tree with a fluffy cloud-like white canopy, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "sky_islands_tree_2",
+   "prompt": "a small wooden windmill with white sails, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "sky_islands_tree_3",
+   "prompt": "a slender tree with pink blossom, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "sky_islands_bush_1",
+   "prompt": "a fluffy white cloud bush, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "sky_islands_bush_2",
+   "prompt": "a clump of pastel wildflowers, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "sky_islands_bush_3",
+   "prompt": "a floating small rock with grass, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "sky_islands_soil",
+   "prompt": "light grey and beige stone with thin grass roots and small pebbles, uniform rock surface",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "sky_islands_turf",
+   "prompt": "bright spring green grass with daisies",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "sky_islands_wood",
+   "prompt": "white painted wooden planks, horizontal",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "crystal_caves_far",
+   "prompt": "Wide panoramic side-scrolling game background of the inside of a huge underground cave with glowing purple and cyan crystals, stalactites and soft mist, dark background, sky in the upper half, distant scenery along the lower half, no foreground ground, no characters",
+   "style": "scene",
+   "size": [
+    1536,
+    768
+   ],
+   "post": "texture_plain",
+   "max": 1536
+  },
+  {
+   "id": "crystal_caves_tree_1",
+   "prompt": "a tall cave stalagmite with glowing crystals, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "crystal_caves_tree_2",
+   "prompt": "a giant glowing violet crystal cluster, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "crystal_caves_tree_3",
+   "prompt": "a tall glowing blue cave mushroom, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "crystal_caves_bush_1",
+   "prompt": "small glowing cyan crystal shards, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "crystal_caves_bush_2",
+   "prompt": "a mossy cave rock with tiny glowing mushrooms, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "crystal_caves_bush_3",
+   "prompt": "a cluster of pink glowing crystals, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "crystal_caves_soil",
+   "prompt": "dark purple cave stone with small embedded crystals",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "crystal_caves_turf",
+   "prompt": "glowing cyan cave moss",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "crystal_caves_wood",
+   "prompt": "dark wooden mine planks with iron nails, horizontal",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "clock_factory_far",
+   "prompt": "Wide panoramic side-scrolling game background of the inside of a huge warm steampunk clock factory with giant brass gears, pipes, big clock faces and steam, sky in the upper half, distant scenery along the lower half, no foreground ground, no characters",
+   "style": "scene",
+   "size": [
+    1536,
+    768
+   ],
+   "post": "texture_plain",
+   "max": 1536
+  },
+  {
+   "id": "clock_factory_tree_1",
+   "prompt": "a tall brass smokestack chimney with steam, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "clock_factory_tree_2",
+   "prompt": "a tall tower of brass gears, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "clock_factory_tree_3",
+   "prompt": "a vertical copper steam pipe with valves and gauges, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "clock_factory_bush_1",
+   "prompt": "a stack of wooden crates and a barrel, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "clock_factory_bush_2",
+   "prompt": "a pile of brass gears and cogs, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "clock_factory_bush_3",
+   "prompt": "a small steam engine machine, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "clock_factory_soil",
+   "prompt": "riveted brass and copper metal plates",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "clock_factory_turf",
+   "prompt": "brass metal floor grating",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "clock_factory_wood",
+   "prompt": "polished brass metal plate with a row of rivets and fine horizontal brushed lines, uniform warm gold color, horizontal",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "shadow_castle_far",
+   "prompt": "Wide panoramic side-scrolling game background of a mysterious purple night sky with a big moon over a dark fairytale castle with tall spires, kid friendly not scary, sky in the upper half, distant scenery along the lower half, no foreground ground, no characters",
+   "style": "scene",
+   "size": [
+    1536,
+    768
+   ],
+   "post": "texture_plain",
+   "max": 1536
+  },
+  {
+   "id": "shadow_castle_tree_1",
+   "prompt": "a twisted bare purple tree, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "shadow_castle_tree_2",
+   "prompt": "a gothic iron lamp post with a warm glowing lantern, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "shadow_castle_tree_3",
+   "prompt": "a small dark stone tower with a purple flag, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "shadow_castle_bush_1",
+   "prompt": "a purple thorny bush with glowing berries, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "shadow_castle_bush_2",
+   "prompt": "a cute stone gargoyle statue, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "shadow_castle_bush_3",
+   "prompt": "a pile of old castle stones with purple moss, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "shadow_castle_soil",
+   "prompt": "dark purple castle stone bricks",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "shadow_castle_turf",
+   "prompt": "dark purple moss with tiny glowing flowers",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "shadow_castle_wood",
+   "prompt": "dark purple stained wooden planks with iron straps, horizontal",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "inverted_land_far",
+   "prompt": "Wide panoramic side-scrolling game background of a whimsical dreamland with a pink and purple sky, upside down floating islands, floating clocks and swirls of stars, sky in the upper half, distant scenery along the lower half, no foreground ground, no characters",
+   "style": "scene",
+   "size": [
+    1536,
+    768
+   ],
+   "post": "texture_plain",
+   "max": 1536
+  },
+  {
+   "id": "inverted_land_tree_1",
+   "prompt": "a candy colored swirl tree, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "inverted_land_tree_2",
+   "prompt": "a tree with floating clocks in its branches, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "inverted_land_tree_3",
+   "prompt": "a giant lollipop flower, side view, whole object from bottom to top, game environment prop",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "inverted_land_bush_1",
+   "prompt": "pastel puffy bushes, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "inverted_land_bush_2",
+   "prompt": "glowing star shaped crystals, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "inverted_land_bush_3",
+   "prompt": "a cluster of pink mushrooms, side view, whole object, game environment prop",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "cutout",
+   "max": 512
+  },
+  {
+   "id": "inverted_land_soil",
+   "prompt": "pastel lilac candy rock",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "inverted_land_turf",
+   "prompt": "uniform short mint green grass with tiny pastel pink flowers, evenly spread",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
+  },
+  {
+   "id": "inverted_land_wood",
+   "prompt": "pastel pink and blue wooden planks, horizontal",
+   "style": "texture",
+   "size": [
+    1024,
+    1024
+   ],
+   "post": "texture",
+   "max": 512
   }
  ]
 }

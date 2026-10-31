@@ -41,6 +41,8 @@ func _ready() -> void:
 		_shape.position = size * 0.5
 	_shape.shape = rect
 	add_child(_shape)
+	# rendered ground and wood textures repeat across neighbouring blocks
+	texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	set_process(active_mask != 3 or kind == Kind.BELT)
 	if kind == Kind.ICE:
 		add_to_group("ice")
@@ -176,7 +178,52 @@ func _c(key: String, alpha := 1.0) -> Color:
 	return Color(color, color.a * alpha)
 
 
+## Rendered soil and turf of this world, if they have been generated.
+func _draw_textured_ground() -> bool:
+	var soil := WorldArt.tex(_theme(), "soil")
+	if soil == null:
+		return false
+	# the texture is laid out in world space (half size), so neighbouring blocks continue it
+	var k := 2.0
+	var origin := Vector2(fposmod(global_position.x * k, soil.get_width()), fposmod(global_position.y * k, soil.get_height()))
+	draw_texture_rect_region(soil, Rect2(Vector2.ZERO, size), Rect2(origin, size * k))
+	var turf := WorldArt.tex(_theme(), "turf")
+	for i in caps.size():
+		if not caps[i]:
+			continue
+		var x := i * TILE
+		# a band of turf with a soft, wavy lower edge and a shadow under it
+		var left_end: bool = i == 0 or not caps[i - 1]
+		var right_end: bool = i == caps.size() - 1 or not caps[i + 1]
+		var top := PackedVector2Array()
+		var steps := 8
+		for k2 in steps + 1:
+			var px := x + TILE * k2 / steps
+			var gx := global_position.x + px
+			top.append(Vector2(px, 22.0 + sin(gx * 0.11) * 4.0 + sin(gx * 0.27) * 2.0))
+		var band := PackedVector2Array([Vector2(x - (6.0 if left_end else 0.0), -4), Vector2(x + TILE + (6.0 if right_end else 0.0), -4)])
+		for k2 in range(top.size() - 1, -1, -1):
+			band.append(top[k2])
+		var shadow := PackedVector2Array()
+		for point in top:
+			shadow.append(point)
+		for k2 in range(top.size() - 1, -1, -1):
+			shadow.append(top[k2] + Vector2(0, 9))
+		draw_colored_polygon(shadow, Color(0, 0, 0, 0.18))
+		if turf:
+			var uvs := PackedVector2Array()
+			for point in band:
+				uvs.append(Vector2((global_position.x + point.x) * k / turf.get_width(), (global_position.y + point.y) * k / turf.get_height()))
+			draw_colored_polygon(band, Color.WHITE, uvs, turf)
+		else:
+			draw_colored_polygon(band, _c("grass"))
+		draw_line(Vector2(x - (6.0 if left_end else 0.0), -3), Vector2(x + TILE + (6.0 if right_end else 0.0), -3), Color(1, 1, 1, 0.35), 3.0)
+	return true
+
+
 func _draw_ground() -> void:
+	if _draw_textured_ground():
+		return
 	draw_rect(Rect2(Vector2.ZERO, size), _c("dirt"))
 	var row := int(global_position.y / TILE)
 	for i in cells:
@@ -247,6 +294,17 @@ func _draw_rubble(alpha: float) -> void:
 
 
 func _draw_plank() -> void:
+	var wood := WorldArt.tex(_theme(), "wood")
+	if wood:
+		var k := 2.0
+		var origin := Vector2(fposmod(global_position.x * k, wood.get_width()), 0.0)
+		draw_rect(Rect2(-2, 0, size.x + 4, 22), Color(0, 0, 0, 0.45))
+		draw_texture_rect_region(wood, Rect2(0, 2, size.x, 17), Rect2(origin, Vector2(size.x, 17) * k))
+		draw_rect(Rect2(0, 2, size.x, 3), Color(1, 1, 1, 0.25))
+		draw_rect(Rect2(0, 15, size.x, 4), Color(0, 0, 0, 0.25))
+		for x in range(0, int(size.x) + 1, 64):
+			draw_circle(Vector2(clampf(x, 6, size.x - 6), 10), 2.5, Color(0.2, 0.15, 0.1, 0.7))
+		return
 	draw_rect(Rect2(0, 2, size.x, 16), _c("wood"))
 	draw_rect(Rect2(0, 14, size.x, 5), _c("wood_dark"))
 	for x in range(0, int(size.x), 32):
