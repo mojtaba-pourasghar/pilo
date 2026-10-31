@@ -13,6 +13,9 @@ Every map is checked by tests/validate_levels.py.
 """
 import json, os, random, sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "tests"))
+
 H, G = 22, 16          # rows; top row of the ground
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
 
@@ -92,6 +95,126 @@ class Level:
 
     def warp(self, a, b):
         self.warps.append({"from": list(a), "to": list(b)})
+
+
+# --- routes laid over a finished level ----------------------------------------------------
+
+FREE = set(".c")
+
+
+def _clear(L, x, y0, y1):
+    return all(0 <= x < L.w and L.g[y][x] in FREE for y in range(y0, y1 + 1))
+
+
+def upper_lane(L, x0, x1, rich=True):
+    """A high road from x0 to x1 that climbs and dips (planks between rows G-5 and G-9, one
+    or two rows at a step), with gaps of different widths, now and then a wide gap only a
+    glide with Pilo crosses, bees guarding some stretches, a few coins and diamonds. It is
+    entered by a mushroom spring wherever it starts again after something tall was in the
+    way. Returns the number of columns it covers."""
+    rng = L.rng
+    lane = G - 6
+    x = x0
+    covered = 0
+    run_start = True
+    last_end = None
+    since_glide = 0
+    while x <= x1:
+        length = rng.choice([3, 4, 4, 5, 6])
+        # the road wanders: up or down a row or two, within the sky band
+        want = lane + rng.choice([-2, -1, -1, 0, 1, 1, 2])
+        want = max(G - 9, min(G - 5, want))
+        placed = False
+        for y in sorted({want, lane, want - 1, want + 1}, key=lambda r: abs(r - want)):
+            if not (G - 9 <= y <= G - 5) or (not run_start and lane - y > 2):
+                continue
+            if all(_clear(L, cx, y - 3, y + 1) for cx in range(x, min(x + length, x1 + 1))):
+                end = min(x + length - 1, x1)
+                if run_start:
+                    # a spring on the ground just before the first plank
+                    for sx in (x - 2, x - 3, x - 1):
+                        if 0 < sx < L.w and L.g[G][sx] == "#" and L.g[G - 1][sx] in FREE and _clear(L, sx, G - 8, G - 2):
+                            L.put(sx, G - 1, "M")
+                            break
+                    if y < G - 7:
+                        y = G - 7          # a spring reaches up to here
+                L.row(x, end, y, "o")
+                if rich:
+                    roll = rng.random()
+                    if roll < 0.3:
+                        k = rng.randint(2, max(2, end - x))
+                        L.text(x + (end - x + 1 - k) // 2, y - 1, "c" * k)
+                    elif roll < 0.4:
+                        L.put((x + end) // 2, y - 1, "d")
+                    elif roll < 0.62 and end - x >= 3:
+                        L.put((x + end) // 2, y - 3, "y")
+                covered += end - x + 1
+                lane = y
+                last_end = end
+                placed = True
+                run_start = False
+                break
+        if placed:
+            since_glide += 1
+            gap = rng.choice([2, 2, 3, 3, 4])
+            if since_glide >= 6 and rng.random() < 0.5:
+                # a wide gap: jump, hold jump and let Pilo carry you (one row lower on the far side)
+                gap = rng.choice([7, 8])
+                lane = min(G - 5, lane + 1)
+                since_glide = 0
+            x = last_end + 1 + gap
+        else:
+            # something tall is in the way: the road starts again after it, with a spring
+            x += 1
+            run_start = last_end is None or x - last_end > 5
+    return covered
+
+
+def under_lane(L, x0, x1, min_len=18):
+    """A dug corridor under solid ground (rows G+1..H-2) between x0 and x1: a pipe down at
+    its start and a pipe up at its end (both ways), coins, a creature and a fox den with a
+    diamond inside. Picks the longest solid stretch. Returns its length (0 if none fits)."""
+    best = None
+    a = None
+    for x in range(x0, x1 + 2):
+        solid = x <= x1 and all(L.g[y][x] == "#" for y in range(G, H))
+        if solid and a is None:
+            a = x
+        if not solid and a is not None:
+            if best is None or x - a > best[1] - best[0]:
+                best = (a, x)
+            a = None
+    if best is None or best[1] - best[0] < min_len:
+        return 0
+    a, b = best
+    length = min(b - a, 34)
+    b = a + length
+    # the pipes need free ground on the surface
+    def pipe_spot(xs):
+        for px in xs:
+            if all(L.g[y][cx] in FREE for cx in (px, px + 1) for y in (G - 2, G - 1)) and _clear(L, px, G - 4, G - 1) and _clear(L, px + 1, G - 4, G - 1):
+                return px
+        return None
+    top_in = pipe_spot(range(a + 1, a + 6))
+    top_out = pipe_spot(range(b - 4, b - 9, -1))
+    if top_in is None or top_out is None or top_out - top_in < 12:
+        return 0
+    L.rect(top_in, top_out + 1, G + 1, H - 2, ".")
+    L.put(top_in, G - 2, "p")
+    L.put(top_in, H - 3, "p")
+    L.put(top_out, H - 3, "p")
+    L.put(top_out, G - 2, "p")
+    L.warp((top_in, G - 2), (top_in, H - 3))
+    L.warp((top_in, H - 3), (top_in, G - 2))
+    L.warp((top_out, H - 3), (top_out, G - 2))
+    L.warp((top_out, G - 2), (top_out, H - 3))
+    mid = (top_in + top_out) // 2
+    L.text(top_in + 3, H - 2, "cc.cc")
+    L.put(mid, H - 2, "Y")
+    L.text(mid + 2, G + 2, "b$b")
+    L.put(mid + 4, H - 2, "e")
+    L.put(top_out - 3, H - 2, "d")
+    return top_out - top_in
 
 
 # --- shared segments: each returns its width -------------------------------------------
@@ -469,8 +592,39 @@ TITLES = _titles()
 
 
 def compose(world_index, n, level_id):
+    """Builds a level; a regular level that still misses a route after the lanes are laid
+    gets a secret-pipe room swapped in and is built again."""
+    extra = []
+    for attempt in range(4):
+        data, L = _compose(world_index, n, level_id, extra)
+        m = getattr(L, "metrics", None)
+        if m is None or __import__("routes").meets_minimum(m):
+            break
+        extra.append("secret_pipe")
+    _drop_unreachable(data)
+    return data
+
+
+def _drop_unreachable(data):
+    """Coins and diamonds the reachability search cannot reach are taken out (a plank road
+    may end somewhere only a bird could get to)."""
+    import validate_levels as V
+    level = V.Level(data)
+    sx, sy = level.find("P")[0]
+    states = V.explore(level, [(sx, sy, level.start_time, 0, 0)])
+    rows = [list(r.ljust(level.w, ".")) for r in data["map"]]
+    for d in level.find("d") + level.find("c"):
+        over_gap = all(level.at(d[0], yy) in ".cd*^><" for yy in range(d[1] + 1, min(level.h, d[1] + 5)))
+        if over_gap and any(abs(s[0] - d[0]) <= 7 and d[1] - 4 <= s[1] for s in states):
+            continue
+        if not V.touches(states, d[0], d[1], level, arc=True):
+            rows[d[1]][d[0]] = "."
+    data["map"] = ["".join(r).rstrip(".") or "." for r in rows]
+
+
+def _compose(world_index, n, level_id, extra):
     world = WORLDS[world_index]
-    rng = random.Random(level_id * 7919 + 11)
+    rng = random.Random(level_id * 7919 + 11 + 101 * len(extra))
     d = min(1.0, 0.15 + 0.11 * (n - 1) + 0.06 * world_index)
     lens = world in ("forest", "sky_islands", "crystal_caves", "shadow_castle", "inverted_land") or n % 2 == 0
     pool = [s for s in SHARED if lens or s != "lens_river"] + SPECIAL[world] * 2
@@ -489,6 +643,8 @@ def compose(world_index, n, level_id):
         # the first level of a world opens with its special mechanic
         if n == 1:
             body[0] = SPECIAL[world][0]
+        for e in extra:
+            body.insert(1 + len(body) // 3, e)
         key = "key_underground" if n % 2 == 1 else "key_high"
         at = len(body) * 2 // 3
         body.insert(at, key)
@@ -502,6 +658,8 @@ def compose(world_index, n, level_id):
     for p in plan:
         layout.append([p, x])
         x += SEGMENTS[p](L, x, d, world)
+    if n <= 6:
+        enforce_minimum(L, plan, layout)
     # three stars in the harder spots
     spots = L.stars[:]
     rng.shuffle(spots)
@@ -525,7 +683,29 @@ def compose(world_index, n, level_id):
     }
     if n == 8:
         data["boss"] = world
-    return data
+    return data, L
+
+
+def _probe(L):
+    return {"id": 0, "format": 2, "lens": True, "start_time": "present", "move_range": 4,
+            "warps": L.warps, "map": ["".join(r) for r in L.g]}
+
+
+def enforce_minimum(L, plan, layout):
+    """Every regular level must have an upper route, an underground route and a pipe or a den
+    (tools/levels/routes.py measures them on the real reachability search). Missing ones are
+    laid over the level: a plank road across it, a dug corridor under solid ground."""
+    import routes
+    gate = layout[-1][1] if plan[-1] == "gate" else L.w - 16
+    m = routes.measure(_probe(L))
+    if m["upper"] < routes.MIN_UPPER:
+        upper_lane(L, 12, gate - 2)
+        m = routes.measure(_probe(L))
+    if m["under"] < routes.MIN_UNDER or m["secret"] < routes.MIN_SECRET:
+        under_lane(L, 12, gate + 6)
+        m = routes.measure(_probe(L))
+    L.metrics = m
+    return m
 
 
 _WIDTHS = {}
