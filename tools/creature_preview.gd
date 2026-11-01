@@ -29,7 +29,7 @@ func _ready() -> void:
 	if OS.get_cmdline_user_args().has("--big"):
 		for child in get_children():
 			child.queue_free()
-		var names := [["enemy_crab", "walk"], ["enemy_bat", "fly"], ["enemy_knight", "walk"], ["boss_forest", "boss"]]
+		var names := [["enemy_crab", "walk"], ["enemy_scorpion", "walk"], ["enemy_penguin", "walk"], ["boss_forest", "boss"]]
 		for i in names.size():
 			var big := PaintedCreature.make(names[i][0], 230.0, names[i][1])
 			big.position = Vector2(160 + i * 320, 560)
