@@ -3689,7 +3689,7 @@
   },
   {
    "id": "enemy_knight_walk_a",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind, still holding the wooden sword in the front hand",
    "style": "sprite",
    "size": [
     1024,
@@ -3704,7 +3704,7 @@
   },
   {
    "id": "enemy_knight_walk_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised, still holding the wooden sword in the front hand",
    "style": "sprite",
    "size": [
     1024,
@@ -3719,7 +3719,7 @@
   },
   {
    "id": "enemy_knight_walk_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step, still holding the wooden sword in the front hand",
    "style": "sprite",
    "size": [
     1024,
@@ -3824,7 +3824,7 @@
   },
   {
    "id": "enemy_bee_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
    "style": "sprite",
    "size": [
     1024,
@@ -3839,7 +3839,7 @@
   },
   {
    "id": "enemy_bee_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
    "style": "sprite",
    "size": [
     1024,
@@ -3884,7 +3884,7 @@
   },
   {
    "id": "enemy_jelly_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
    "style": "sprite",
    "size": [
     1024,
@@ -3899,7 +3899,7 @@
   },
   {
    "id": "enemy_jelly_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
    "style": "sprite",
    "size": [
     1024,
@@ -3944,7 +3944,7 @@
   },
   {
    "id": "enemy_vulture_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
    "style": "sprite",
    "size": [
     1024,
@@ -3959,7 +3959,7 @@
   },
   {
    "id": "enemy_vulture_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
    "style": "sprite",
    "size": [
     1024,
@@ -4004,7 +4004,7 @@
   },
   {
    "id": "enemy_owl_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
    "style": "sprite",
    "size": [
     1024,
@@ -4019,7 +4019,7 @@
   },
   {
    "id": "enemy_owl_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
    "style": "sprite",
    "size": [
     1024,
@@ -4064,7 +4064,7 @@
   },
   {
    "id": "enemy_stormbird_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
    "style": "sprite",
    "size": [
     1024,
@@ -4079,7 +4079,7 @@
   },
   {
    "id": "enemy_stormbird_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
    "style": "sprite",
    "size": [
     1024,
@@ -4124,7 +4124,7 @@
   },
   {
    "id": "enemy_bat_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
    "style": "sprite",
    "size": [
     1024,
@@ -4139,7 +4139,7 @@
   },
   {
    "id": "enemy_bat_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
    "style": "sprite",
    "size": [
     1024,
@@ -4184,7 +4184,7 @@
   },
   {
    "id": "enemy_drone_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
    "style": "sprite",
    "size": [
     1024,
@@ -4199,7 +4199,7 @@
   },
   {
    "id": "enemy_drone_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
    "style": "sprite",
    "size": [
     1024,
@@ -4244,7 +4244,7 @@
   },
   {
    "id": "enemy_wraith_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
    "style": "sprite",
    "size": [
     1024,
@@ -4259,7 +4259,7 @@
   },
   {
    "id": "enemy_wraith_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
    "style": "sprite",
    "size": [
     1024,
@@ -5084,7 +5084,7 @@
   },
   {
    "id": "boss_sky_islands_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
    "style": "sprite",
    "size": [
     1024,
@@ -5099,7 +5099,7 @@
   },
   {
    "id": "boss_sky_islands_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
    "style": "sprite",
    "size": [
     1024,
@@ -5384,7 +5384,7 @@
   },
   {
    "id": "boss_inverted_land_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
    "style": "sprite",
    "size": [
     1024,
@@ -5399,7 +5399,7 @@
   },
   {
    "id": "boss_inverted_land_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
    "style": "sprite",
    "size": [
     1024,
@@ -5819,7 +5819,7 @@
   },
   {
    "id": "companion_butterfly_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
    "style": "sprite",
    "size": [
     1024,
@@ -5834,7 +5834,7 @@
   },
   {
    "id": "companion_butterfly_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
    "style": "sprite",
    "size": [
     1024,
@@ -5864,7 +5864,7 @@
   },
   {
    "id": "companion_owl_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
    "style": "sprite",
    "size": [
     1024,
@@ -5879,7 +5879,7 @@
   },
   {
    "id": "companion_owl_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
    "style": "sprite",
    "size": [
     1024,
@@ -5909,7 +5909,7 @@
   },
   {
    "id": "companion_spark_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
    "style": "sprite",
    "size": [
     1024,
@@ -5924,7 +5924,7 @@
   },
   {
    "id": "companion_spark_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
    "style": "sprite",
    "size": [
     1024,
@@ -5954,7 +5954,7 @@
   },
   {
    "id": "companion_dragon_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings straight out to the sides",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
    "style": "sprite",
    "size": [
     1024,
@@ -5969,7 +5969,7 @@
   },
   {
    "id": "companion_dragon_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings pushed down below the body",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
    "style": "sprite",
    "size": [
     1024,
