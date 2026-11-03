@@ -251,7 +251,7 @@
   },
   {
    "id": "npc_grandma",
-   "prompt": "a kind cartoon grandmother from the desert with a colorful shawl, round glasses, a flower in her grey hair and a wooden walking stick, smiling, full body, 3D cartoon style",
+   "prompt": "cartoon old lady character with a shawl, glasses and a walking stick, full body, 3D toy style, smiling",
    "style": "sprite",
    "size": [
     768,
@@ -295,7 +295,7 @@
   },
   {
    "id": "npc_kian",
-   "prompt": "Kian, a cheerful cartoon kid explorer with spiky black hair, aviator goggles on his head, a blue vest with pockets, khaki shorts and sneakers, a small brass toy owl on his shoulder, full body, side view facing right, 3D cartoon style",
+   "prompt": "cartoon explorer character with black hair, goggles and a blue vest, full body, side view, 3D toy style",
    "style": "sprite",
    "size": [
     768,
@@ -3344,7 +3344,7 @@
   },
   {
    "id": "enemy_shroom_walk_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "prompt": "the same toy mushroom character as in the reference picture, standing on both feet, side view, 3D toy style",
    "style": "sprite",
    "size": [
     1024,
@@ -3359,7 +3359,7 @@
   },
   {
    "id": "enemy_shroom_walk_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking, mid-stride: the other leg forward, opposite to a normal step",
+   "prompt": "the same toy mushroom character as in the reference picture, taking a step with the other foot, side view, 3D toy style",
    "style": "sprite",
    "size": [
     1024,
@@ -3749,7 +3749,7 @@
   },
   {
    "id": "enemy_cloudling_walk_a",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking, mid-stride: the front leg stepping forward, the back leg pushing off behind",
+   "prompt": "the same fluffy toy cloud character as in the reference picture, hopping forward, side view, 3D toy style",
    "style": "sprite",
    "size": [
     1024,
@@ -3764,7 +3764,7 @@
   },
   {
    "id": "enemy_cloudling_walk_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking, passing pose: both legs under the body, body slightly raised",
+   "prompt": "the same fluffy toy cloud character as in the reference picture, squashed low after a hop, side view, 3D toy style",
    "style": "sprite",
    "size": [
     1024,
@@ -5189,7 +5189,7 @@
   },
   {
    "id": "boss_crystal_caves_windup",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, rearing up with both arms raised high, about to slam the ground, angry face",
+   "prompt": "the same toy crystal spider character as in the reference picture, front legs raised up high, side view, 3D toy style",
    "style": "sprite",
    "size": [
     1024,
