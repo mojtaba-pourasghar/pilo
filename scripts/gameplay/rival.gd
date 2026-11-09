@@ -34,25 +34,58 @@ func _ready() -> void:
 	add_child(_label)
 
 
+const GRAVITY := 2000.0
+const JUMP := 980.0
+
+var _vy := 0.0
+var _floor := false
+var _placed := false
+
+
+## Real running: gravity, landing, and a jump only where the ground ends or a ledge rises ahead
+## (no snapping to the ground in front, which made him jitter).
 func _physics_process(delta: float) -> void:
 	if not running or done:
 		_rig.state = "idle" if not done else "celebrate"
+		_rig.speed = 0.0
 		return
+	var space := get_world_2d().direct_space_state
+	if not _placed:
+		# the first frame: stand on the ground under the start point (it may be inside a tile)
+		_placed = true
+		var start: Variant = _ground(space, global_position.x, global_position.y - 320.0)
+		if start != null:
+			global_position.y = float(start)
+			_floor = true
+	var ground_here: Variant
+	if _floor:
+		var ahead: Variant = _ground(space, global_position.x + 90.0, global_position.y - 260.0)
+		if ahead == null or float(ahead) < global_position.y - 12.0:
+			# a gap or a step up: jump, a little higher for a higher ledge
+			var rise: float = 0.0 if ahead == null else global_position.y - float(ahead)
+			_vy = -minf(JUMP + rise * 2.2, 1500.0)
+			_floor = false
+	_vy = minf(_vy + GRAVITY * delta, 1400.0)
 	position.x += SPEED * delta
+	position.y += _vy * delta
+	ground_here = _ground(space, global_position.x, global_position.y - 40.0)
+	if _vy >= 0.0 and ground_here != null and global_position.y >= float(ground_here) - 2.0:
+		if not _floor:
+			FX.dust(get_parent(), global_position, 4)
+		global_position.y = float(ground_here)
+		_vy = 0.0
+		_floor = true
+	elif ground_here == null or global_position.y < float(ground_here) - 6.0:
+		_floor = false
 	_rig.speed = SPEED
-	# find the ground ahead: he jumps up onto ledges and over gaps
-	var query := PhysicsRayQueryParameters2D.create(Vector2(global_position.x + 24.0, global_position.y - 280.0), Vector2(global_position.x + 24.0, global_position.y + 420.0), 1)
-	var hit := get_world_2d().direct_space_state.intersect_ray(query)
-	if hit.is_empty():
-		# a gap: a long hop
-		_air += delta
-		position.y -= cos(clampf(_air * 3.0, 0.0, PI)) * 260.0 * delta
-		_rig.state = "jump"
-	else:
-		_air = 0.0
-		var ground: float = hit.position.y
-		position.y = lerpf(position.y, ground, 1.0 - exp(-12.0 * delta))
-		_rig.state = "run" if absf(position.y - ground) < 20.0 else "jump"
+	_rig.state = "run" if _floor else ("jump" if _vy < 0.0 else "fall")
 	if global_position.x >= goal_x:
 		done = true
 		arrived.emit()
+
+
+## The top of the ground under x, searched downward from y (null over a pit).
+func _ground(space: PhysicsDirectSpaceState2D, x: float, from_y: float) -> Variant:
+	var query := PhysicsRayQueryParameters2D.create(Vector2(x, from_y), Vector2(x, from_y + 700.0), 1)
+	var hit := space.intersect_ray(query)
+	return null if hit.is_empty() else hit.position.y

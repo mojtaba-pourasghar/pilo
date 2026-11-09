@@ -329,7 +329,11 @@ func _animate(delta: float, on_floor: bool, dir: float) -> void:
 	elif dashing > 0.0:
 		state = "dash"
 	elif _swim > 0:
-		state = "fall" if velocity.y > 0.0 else "jump"
+		# a drawn stroke when there is one (it keeps going slowly while Nima treads water)
+		if rig.has_method("has_cycle") and rig.has_cycle("swim"):
+			state = "swim"
+		else:
+			state = "fall" if velocity.y > 0.0 else "jump"
 	elif gliding:
 		state = "glide"
 	elif not on_floor:

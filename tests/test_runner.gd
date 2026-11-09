@@ -26,6 +26,7 @@ func _ready() -> void:
 	await _test_effects()
 	await _test_combat()
 	await _test_water_exit()
+	await _test_rival_runs()
 	SaveManager.data = backup
 	SaveManager.save_game()
 	print("\n%d checks, %d failed" % [_checks, _failures])
@@ -133,6 +134,34 @@ func _test_combat() -> void:
 	_check(get_tree().get_nodes_in_group("block").size() < bricks, "thrown Pilo breaks a brick")
 	_stop(game)
 	_check(Weapons.owned().has("slingshot") and Weapons.current() == "slingshot", "the slingshot is Nima's from the start")
+
+
+## Kian runs with real physics: on the floor on flat ground (no bobbing), over a gap, to the goal.
+func _test_rival_runs() -> void:
+	var game := await _start([
+		"..............................................",
+		"..............................................",
+		"P.............................................",
+		"##############....############################",
+	])
+	var rival := Rival.new()
+	rival.position = Vector2(2 * 64, 4 * 64)
+	rival.goal_x = 40 * 64
+	game._world_root.add_child(rival)
+	rival.running = true
+	var ys: Array = []
+	var crossed := false
+	for i in 420:
+		await get_tree().physics_frame
+		if rival.global_position.x > 3 * 64 and rival.global_position.x < 10 * 64:
+			ys.append(rival.global_position.y)
+		if rival.global_position.x > 20 * 64 and rival._floor:
+			crossed = true
+	var spread: float = (ys.max() - ys.min()) if not ys.is_empty() else 999.0
+	_check(spread < 2.0, "Kian stays on flat ground without bobbing (%.1f px)" % spread)
+	_check(crossed and rival.global_position.y < 5 * 64, "Kian jumps the gap and lands on the far side")
+	_check(rival.done, "Kian reaches the goal")
+	_stop(game)
 
 
 ## Nima dropped deep under the reef shelf must be able to swim out and climb onto the bank.

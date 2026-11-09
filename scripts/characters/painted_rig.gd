@@ -87,6 +87,7 @@ const CYCLES := {
 	"idle": ["", "idle_b"],
 	"crawl": ["crawl_a", "crawl_b"],
 	"crouch": ["crouch"],
+	"swim": ["swim_a", "swim_c", "swim_b", "swim_c"],     # reach, spread, pull back, spread
 }
 ## When the full cycle is not drawn (Kian has two walking poses): the shorter one.
 const FALLBACK := {"walk": ["walk_a", "walk_b"]}
@@ -236,6 +237,9 @@ func target_pose(delta: float) -> Dictionary:
 		"crawl":
 			phase += delta * lerpf(5.0, 8.0, stride)
 			return {"lean": 0.0, "bob": -absf(sin(phase)) * 2.0, "front": 0.0, "back": 0.0, "arm": 0.0, "head": 0.0, "squash": 0.0}
+		"swim":
+			phase += delta * lerpf(3.5, 7.0, stride)
+			return {"lean": 0.0, "bob": sin(phase * 0.5) * 3.0, "front": 0.0, "back": 0.0, "arm": 0.0, "head": 0.0, "squash": 0.0}
 		"crouch":
 			var breath := sin(t * 2.4)
 			return {"lean": 0.0, "bob": breath * 0.8, "front": 0.0, "back": 0.0, "arm": 0.0, "head": 0.0, "squash": 0.0}
@@ -318,7 +322,9 @@ func _process(delta: float) -> void:
 		var i := int(floorf(at)) % list.size()
 		var blend: float = at - floorf(at)
 		_place(_cycle_sprite, list[i])
-		_cycle_sprite.position = Vector2(0, p("bob") * 0.5)
+		# a swimmer lies flat: the body's middle (not the feet) sits where Nima's middle is
+		var lift := float(_rig.get("height", 128.0)) * 0.3 if anim == "swim" else 0.0
+		_cycle_sprite.position = Vector2(0, p("bob") * 0.5 - lift)
 		_cycle_sprite.modulate.a = 1.0
 		_cycle_sprite.visible = true
 		# the next frame fades in over the last part of this one: the step flows instead of popping

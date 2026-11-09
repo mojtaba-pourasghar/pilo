@@ -6189,6 +6189,51 @@
     "nima_rig"
    ],
    "max": 1024
+  },
+  {
+   "id": "nima_swim_a",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, swimming underwater, body stretched out horizontally, both arms reaching forward together, legs together kicking behind",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "frame",
+   "base": "nima_rig",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "nima_swim_b",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, swimming underwater, body stretched out horizontally, both arms pulled back along the sides, knees bent in a frog kick",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "frame",
+   "base": "nima_rig",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "nima_swim_c",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, swimming underwater, body stretched out horizontally, arms spread wide to the sides in mid-stroke, legs apart",
+   "style": "sprite",
+   "size": [
+    1024,
+    768
+   ],
+   "post": "frame",
+   "base": "nima_rig",
+   "refs": [
+    "nima_rig"
+   ],
+   "max": 1024
   }
  ]
 }

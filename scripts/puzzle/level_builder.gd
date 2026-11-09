@@ -66,11 +66,14 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 		"diamonds": 0, "time_key": false, "enemies": 0, "pipes": {}, "boss": null,
 	}
 	_build_runs(grid, w, h, root, palette)
-	_build_water(grid, w, h, root, game, palette)
+	# cells inside a pool that hold a coin, a diamond or a creature (or nothing) are water too, so
+	# the water is drawn behind them and Nima swims there (the items are still placed normally)
+	var wet := _wet_grid(grid, w, h)
+	_build_water(wet, w, h, root, game, palette)
 	_build_wind(grid, w, h, root, int(TIME_MASKS.get(String(data.get("wind_time", "both")), BOTH)))
 	_build_crumble(grid, w, h, root, palette)
 	_build_thorns(grid, w, h, root)
-	_build_world_pieces(grid, w, h, root, palette)
+	_build_world_pieces(wet, w, h, root, palette)
 	var mechanisms := Mechanisms.new()
 	mechanisms.grid = grid
 	mechanisms.game = game
@@ -327,7 +330,7 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 		info.chaser.stop_x = info.exit.position.x - 96.0
 	root.add_child(mechanisms)
 	info.mechanisms = mechanisms
-	_build_secret_rooms(grid, w, h, root, palette)
+	_build_secret_rooms(wet, w, h, root, palette)    # water (with what floats in it) is never a hidden room
 	_build_pit_shade(grid, w, h, root)
 	return info
 
@@ -363,6 +366,39 @@ static func _build_runs(grid: Array, w: int, h: int, root: Node2D, palette: Dict
 				for i in range(start, x):
 					block.caps.append(y == 0 or String(grid[y - 1])[i] != "#")
 			root.add_child(block)
+
+
+## A copy of the map where every open cell enclosed by water (water on both sides, or water
+## above it) takes that water's letter. Repeated so pockets of several cells fill too.
+static func _wet_grid(grid: Array, w: int, h: int) -> Array:
+	var out: Array = grid.duplicate()
+	var liquid := func(c: String) -> bool: return c == "s" or WATERS.has(c)
+	for _pass in 6:
+		var changed := false
+		for y in h:
+			var row: String = out[y]
+			for x in w:
+				var c := row[x]
+				if liquid.call(c) or RUNS.has(c) or c == "W" or c == "q":
+					continue
+				var left := row[x - 1] if x > 0 else ""
+				var right := row[x + 1] if x + 1 < w else ""
+				var up: String = String(out[y - 1])[x] if y > 0 else ""
+				var down: String = String(out[y + 1])[x] if y + 1 < h else ""
+				var fill := ""
+				if liquid.call(up):
+					fill = up
+				elif liquid.call(left) and liquid.call(right):
+					fill = left
+				elif liquid.call(down) and (liquid.call(left) or liquid.call(right)):
+					fill = down
+				if fill != "":
+					row = row.substr(0, x) + fill + row.substr(x + 1)
+					changed = true
+			out[y] = row
+		if not changed:
+			break
+	return out
 
 
 static func _build_water(grid: Array, w: int, h: int, root: Node2D, game: Node, palette: Dictionary) -> void:

@@ -206,6 +206,33 @@
    741
   ]
  },
+ "nima_swim_a": {
+  "anchor_x": 419.9,
+  "feet_y": 502,
+  "scale": 1.0,
+  "size": [
+   857,
+   503
+  ]
+ },
+ "nima_swim_b": {
+  "anchor_x": 376.0,
+  "feet_y": 506,
+  "scale": 1.0,
+  "size": [
+   754,
+   508
+  ]
+ },
+ "nima_swim_c": {
+  "anchor_x": 337.8,
+  "feet_y": 645,
+  "scale": 1.0,
+  "size": [
+   707,
+   646
+  ]
+ },
  "nima_walk_a": {
   "anchor_x": 172.0,
   "feet_y": 880,
