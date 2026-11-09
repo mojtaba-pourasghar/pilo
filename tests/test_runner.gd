@@ -198,6 +198,23 @@ func _test_audio() -> void:
 			wanted.append(String(line.id))
 	var missing := wanted.filter(func(id): return not ids.has(id))
 	_check(missing.is_empty(), "every voiced id is in voice_lines.json %s" % [missing])
+	# every line has its vowelled form for the voice studio (Avasho), with exactly the letters of
+	# the text (tools/voice/spoken_fa.json)
+	var marks := ["َ", "ُ", "ِ", "ْ", "ّ", "ً"]
+	var bad := []
+	for line in lines.lines:
+		var spoken := String(line.get("spoken", ""))
+		var text := String(line.text)
+		for m in marks:
+			spoken = spoken.replace(m, "")
+			text = text.replace(m, "")
+		if spoken == "" or spoken != text:
+			bad.append(line.id)
+	_check(bad.is_empty(), "every line has a matching vowelled form %s" % [bad.slice(0, 5)])
+	var who_ok := true
+	for line in lines.lines:
+		who_ok = who_ok and lines.characters.has(String(line.who)) and String(lines.characters[line.who].get("speaker", "")) != ""
+	_check(who_ok, "every speaker has an Avasho voice")
 	AudioManager.stop_voice()
 
 

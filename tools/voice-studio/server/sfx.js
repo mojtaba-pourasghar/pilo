@@ -110,7 +110,8 @@ export function createSfx({ app, normalize, say }) {
       const output = path.join(temp, "out" + path.extname(sound.audio));
       try {
         fs.writeFileSync(input, buffer);
-        const done = await normalize(input, output, maxSeconds);
+        // ambient sounds and music are seamless loops; effects are short one-shots
+        const done = await normalize(input, output, maxSeconds, { loop: sound.category !== "sfx" });
         if (!done.ok) throw new Error(`ffmpeg نتوانست فایل را بخواند: ${done.error || "؟"}`);
         if (fs.statSync(output).size < 1024) throw new Error("خروجی تقریباً خالی است — فایل صدا دارد؟");
         fs.mkdirSync(path.dirname(target), { recursive: true });

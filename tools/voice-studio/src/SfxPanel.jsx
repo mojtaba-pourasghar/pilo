@@ -60,7 +60,8 @@ export default function SfxPanel({ ffmpeg }) {
     try {
       const m = meta[sound.id] || {};
       const q = new URLSearchParams({
-        name: file.name, max: String(maxSeconds),
+        // صدای محیط و موسیقی حلقه‌اند: ۲۴ ثانیه نگه داشته می‌شود و انتها در ابتدا محو می‌شود (server/index.js)
+        name: file.name, max: String(sound.category === "sfx" ? maxSeconds : 24),
         source: m.source ?? sound.source?.source ?? "", license: m.license ?? sound.source?.license ?? "",
       });
       await json(await fetch(`/api/sfx/${sound.id}?${q}`, {

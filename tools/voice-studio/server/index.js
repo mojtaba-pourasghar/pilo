@@ -12,7 +12,7 @@ import fs from "node:fs";
 import path from "node:path";
 import os from "node:os";
 import crypto from "node:crypto";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { readManifest, existingKeys, setSpoken, GROUP_LABELS } from "./manifest.js";
 import { createRegistry } from "./tts-registry.js";
@@ -31,6 +31,19 @@ const SAMPLES = path.join(ROOT, "samples");
 const registry = createRegistry(path.join(APP, "docs/voice/tts_generated.json"));
 
 // ── config ───────────────────────────────────────────────────────────────────
+/** { nima: { speaker: "bahar", speed: 1 }, … } from the line list. */
+function charactersFromLines() {
+  try {
+    const file = path.join(APP, "data/voice/voice_lines.json");
+    const all = JSON.parse(fs.readFileSync(file, "utf8")).characters || {};
+    return Object.fromEntries(Object.entries(all)
+      .filter(([, c]) => c.speaker)
+      .map(([who, c]) => [who, { speaker: c.speaker, speed: Number(c.speed) || 1 }]));
+  } catch {
+    return { pilo: { speaker: "pune", speed: 0.9 } };
+  }
+}
+
 const DEFAULTS = {
   token: "",
   // Every line a character says (built by tools/voice/build_voice_lines.py from the level files).
@@ -41,14 +54,10 @@ const DEFAULTS = {
   // Fallback voice for a line whose character has no entry in `characters`.
   speaker: "pune",
   speed: 1,
-  // One voice per character — each line is voiced by its "who". Avasho has no child voices, so
-  // the boy Nima is voiced by a young female voice (as in Persian dubbing of children's films).
-  characters: {
-    nima: { speaker: "bahar", speed: 1 },
-    pilo: { speaker: "pune", speed: 0.9 },
-    ghubarak: { speaker: "ariya", speed: 1.1 },
-    squirrel: { speaker: "sheyda", speed: 1.1 },
-  },
+  // One voice per character — each line is voiced by its "who". The voice and pace of every
+  // character come from data/voice/voice_lines.json ("characters", written by
+  // tools/voice/build_voice_lines.py); a choice saved in the studio overrides them.
+  characters: charactersFromLines(),
   // Every line is a sentence or two, so the short family is the right one.
   endpoint: "short",
   useVowels: true,          // send "spoken" (the respelling with vowels) when a line has one
@@ -205,7 +214,8 @@ function normalizeForApp(src, dst) {
 // with a soft fade-out so a long field recording does not run on under the next question, and
 // brought to −14 LUFS. Only the first minute of the input is read, and ffmpeg is stopped after
 // two minutes whatever happens, so a strange file cannot hang the page.
-function normalizeSfx(src, dst, maxSeconds) {
+function normalizeSfx(src, dst, maxSeconds, { loop = false } = {}) {
+  if (loop) return normalizeLoop(src, dst, maxSeconds);
   const seconds = Math.min(90, Math.max(1, Number(maxSeconds) || 6));
   const filter = "silenceremove=start_periods=1:start_threshold=-50dB:start_silence=0.02,"
     + "areverse,silenceremove=start_periods=1:start_threshold=-50dB:start_silence=0.05,areverse,"
@@ -216,6 +226,39 @@ function normalizeSfx(src, dst, maxSeconds) {
       "-ar", "44100", "-af", filter,
       ...(dst.toLowerCase().endsWith(".ogg") ? ["-c:a", "libvorbis", "-q:a", "5"] : ["-c:a", "libmp3lame", "-b:a", "128k"]),
       dst],
+      { stdio: ["ignore", "ignore", "pipe"] });
+    const timer = setTimeout(() => ff.kill(), 120000);
+    let err = "";
+    ff.stderr.on("data", (d) => { err += d; });
+    ff.on("error", (e) => { clearTimeout(timer); resolve({ ok: false, error: e.message }); });
+    ff.on("close", (code) => {
+      clearTimeout(timer);
+      resolve(code === 0 ? { ok: true } : { ok: false, error: err.trim().slice(-300) || "ffmpeg ایستاد" });
+    });
+  });
+}
+
+/**
+ * Ambient sounds and music are loops: nothing trimmed, the last two seconds cross-faded into the
+ * first ones so the end flows into the beginning with no gap or jump, mono, as quiet as
+ * tools/audio/fetch_ambience.py makes them (−24 LUFS), Ogg Vorbis (Godot loops it gaplessly).
+ * Same as the pokpok studio.
+ */
+function normalizeLoop(src, dst, maxSeconds) {
+  const x = 2;
+  const probe = spawnSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", src],
+    { encoding: "utf8", timeout: 30000 });
+  const length = Number.parseFloat(probe.stdout) || 0;
+  if (length < 4) return Promise.resolve({ ok: false, error: "برای صدای محیط دست‌کم ۴ ثانیه صدا لازم است" });
+  const seconds = Math.min(60, Math.max(2, Number(maxSeconds) || 24), length - x);
+  // the file is read twice (once for the body, once for its tail): splitting one stream stalls ffmpeg
+  const graph = `[0:a]aformat=channel_layouts=mono,atrim=0:${seconds},asetpts=PTS-STARTPTS,afade=t=in:d=${x}:curve=qsin[body];`
+    + `[1:a]aformat=channel_layouts=mono,atrim=${seconds}:${seconds + x},asetpts=PTS-STARTPTS,`
+    + `afade=t=out:d=${x}:curve=qsin,apad[tail];`
+    + "[body][tail]amix=inputs=2:duration=first:normalize=0,loudnorm=I=-24:TP=-3:LRA=11[out]";
+  return new Promise((resolve) => {
+    const ff = spawn("ffmpeg", ["-y", "-loglevel", "error", "-i", src, "-i", src, "-vn", "-filter_complex", graph,
+      "-map", "[out]", "-ac", "1", "-ar", "44100", "-c:a", "libvorbis", "-q:a", "4", "-f", "ogg", dst],
       { stdio: ["ignore", "ignore", "pipe"] });
     const timer = setTimeout(() => ff.kill(), 120000);
     let err = "";
