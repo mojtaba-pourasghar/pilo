@@ -1,21 +1,180 @@
 {
  "note": "Built by tools/voice/build_voice_lines.py — edit dialogue in the level files. Only 'spoken' (TTS respelling) may be edited here; it survives rebuilds.",
  "characters": {
+  "narrator": {
+   "name": "راوی",
+   "about": "قصه‌گوی گرم و مهربان",
+   "voice": "Sulafat",
+   "tag": "warm, gentle storyteller",
+   "style": "a warm, gentle, expressive storyteller for young children, natural pace"
+  },
   "nima": {
    "name": "نیما",
-   "about": "پسر ماجراجوی ۸ ساله؛ کنجکاو، مهربان و پرانرژی"
+   "about": "پسر ماجراجوی ۸ ساله؛ کنجکاو، مهربان و پرانرژی",
+   "voice": "Leda",
+   "tag": "excited, curious young boy",
+   "style": "a brave, curious, excited 8-year-old boy, bright and energetic"
   },
   "pilo": {
    "name": "پیلو",
-   "about": "همراه کوچک و بامزهٔ نیما؛ گرم، شاد و راهنما (جواب را لو نمی‌دهد)"
+   "about": "همراه کوچک و بامزهٔ نیما؛ گرم، شاد و راهنما (جواب را لو نمی‌دهد)",
+   "voice": "Laomedeia",
+   "tag": "cheerful, bouncy, cute",
+   "style": "a tiny cute magical creature, warm, cheerful and encouraging, a little high and bouncy"
   },
   "ghubarak": {
    "name": "غبارک",
-   "about": "موجود غباری بازیگوش؛ شیطون و خنده‌رو، اصلاً ترسناک نیست"
+   "about": "موجود غباری بازیگوش؛ شیطون و خنده‌رو، اصلاً ترسناک نیست",
+   "voice": "Puck",
+   "tag": "mischievous, giggly",
+   "style": "a mischievous giggly little dust sprite, playful and teasing, never scary"
   },
   "squirrel": {
    "name": "سنجابک",
-   "about": "سنجاب کوچولو و تند‌حرف؛ هیجان‌زده و قدردان"
+   "about": "سنجاب کوچولو و تند‌حرف؛ هیجان‌زده و قدردان",
+   "voice": "Sadachbia",
+   "tag": "fast, very excited",
+   "style": "a tiny squirrel who talks fast, very excited and thankful"
+  },
+  "kian": {
+   "name": "کیان",
+   "about": "رقیب نیما؛ مغرور ولی ته دلش خوب",
+   "voice": "Fenrir",
+   "tag": "proud, cocky boy",
+   "style": "a proud, competitive boy showing off, cocky but not mean"
+  },
+  "grandpa": {
+   "name": "بابابزرگ ساعت‌ساز",
+   "about": "ساعت‌ساز پیر و مهربان",
+   "voice": "Algenib",
+   "tag": "kind, wise old man",
+   "style": "a kind, wise old clockmaker grandpa, slow and warm"
+  },
+  "grandma": {
+   "name": "مادربزرگ کاکتوس",
+   "about": "کاکتوس پیر و مهربان بیابان",
+   "voice": "Vindemiatrix",
+   "tag": "sweet, gentle old lady",
+   "style": "a sweet, gentle old grandmother, soft and kind"
+  },
+  "captain": {
+   "name": "ناخدا موج",
+   "about": "ناخدای خوش‌خندهٔ ساحل",
+   "voice": "Rasalgethi",
+   "tag": "jolly, hearty",
+   "style": "a jolly hearty sea captain, loud and friendly"
+  },
+  "zurvan": {
+   "name": "زروان",
+   "about": "جادوگر زمان؛ مرموز",
+   "voice": "Iapetus",
+   "tag": "mysterious, calm, low",
+   "style": "a mysterious calm sorcerer, low and slow, a little spooky but not frightening for kids"
+  },
+  "masked": {
+   "name": "نقاب‌دار",
+   "about": "آدم نقاب‌دار مرموز",
+   "voice": "Umbriel",
+   "tag": "quiet, secretive",
+   "style": "a mysterious masked figure, quiet and secretive, not frightening for kids"
+  },
+  "shadow_king": {
+   "name": "شاه‌سایه",
+   "about": "پادشاه سایه‌ها",
+   "voice": "Alnilam",
+   "tag": "grand, dramatic, deep",
+   "style": "a grand, proud shadow king, deep and dramatic, cartoonish, not frightening for kids"
+  },
+  "bear": {
+   "name": "خرس پیر جنگل",
+   "about": "نگهبان جنگل",
+   "voice": "Orus",
+   "tag": "deep, slow, grateful",
+   "style": "a big old gentle bear, deep, slow and grateful"
+  },
+  "octopus": {
+   "name": "اختاپوس بزرگ",
+   "about": "نگهبان ساحل",
+   "voice": "Aoede",
+   "tag": "kind, relieved",
+   "style": "a kind giant octopus, flowing and relieved"
+  },
+  "worm": {
+   "name": "کرم شنی",
+   "about": "نگهبان بیابان",
+   "voice": "Enceladus",
+   "tag": "slow, breathy, wise",
+   "style": "a huge sand worm, breathy, slow and wise"
+  },
+  "yeti": {
+   "name": "غول یخی",
+   "about": "نگهبان کوهستان",
+   "voice": "Schedar",
+   "tag": "deep, slow, friendly",
+   "style": "a big friendly snow giant, deep and slow"
+  },
+  "eagle": {
+   "name": "عقاب طوفان",
+   "about": "نگهبان آسمان",
+   "voice": "Kore",
+   "tag": "proud, noble",
+   "style": "a proud noble storm eagle, clear and firm"
+  },
+  "spider": {
+   "name": "عنکبوت بلورین",
+   "about": "نگهبان غارها",
+   "voice": "Erinome",
+   "tag": "soft, mysterious, kind",
+   "style": "a crystal spider, soft and mysterious, kind"
+  },
+  "turtle": {
+   "name": "لاکی",
+   "about": "لاک‌پشت همراه",
+   "voice": "Achird",
+   "tag": "calm, happy",
+   "style": "a friendly calm little turtle, happy"
+  },
+  "mole": {
+   "name": "خال‌خالی",
+   "about": "موش‌کور همراه",
+   "voice": "Zubenelgenubi",
+   "tag": "cheerful, funny",
+   "style": "a cheerful little mole, casual and funny"
+  },
+  "penguin": {
+   "name": "یخک",
+   "about": "پنگوئن همراه",
+   "voice": "Despina",
+   "tag": "bubbly, cheerful",
+   "style": "a bubbly little penguin, cheerful"
+  },
+  "butterfly": {
+   "name": "پَرپَری",
+   "about": "پروانهٔ همراه",
+   "voice": "Pulcherrima",
+   "tag": "airy, dreamy, sweet",
+   "style": "a light dreamy butterfly, airy and sweet"
+  },
+  "owl": {
+   "name": "پیچ‌پیچ",
+   "about": "جغد کیان",
+   "voice": "Algieba",
+   "tag": "wise, calm",
+   "style": "a wise friendly owl, smooth and calm"
+  },
+  "spark": {
+   "name": "جرقه",
+   "about": "جرقهٔ همراه",
+   "voice": "Zephyr",
+   "tag": "lively, quick",
+   "style": "a lively little spark, quick and bright"
+  },
+  "dragon": {
+   "name": "اژدهاک",
+   "about": "اژدهای کوچک همراه",
+   "voice": "Sadaltager",
+   "tag": "playful, proud",
+   "style": "a playful little baby dragon, proud and happy"
   }
  },
  "format": {
@@ -28,586 +187,361 @@
  },
  "lines": [
   {
-   "id": "l21_intro_1",
-   "file": "voice/l21_intro_1.mp3",
+   "id": "l49_intro_1",
+   "file": "voice/l49_intro_1.mp3",
+   "who": "pilo",
+   "text": "برج تسمه‌ها! هر تسمه برعکس قبلی می‌چرخد. بالایش الماس است.",
+   "level": 49,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 49"
+  },
+  {
+   "id": "l49_intro_2",
+   "file": "voice/l49_intro_2.mp3",
    "who": "nima",
-   "text": "چه غار قشنگی! بلورها خاموش‌اند.",
-   "level": 21,
+   "text": "و پایین پرس‌ها... باید به‌موقع رد شوم.",
+   "level": 49,
    "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 21"
+   "event": "شروع مرحله — مرحلهٔ 49"
   },
   {
-   "id": "l21_intro_2",
-   "file": "voice/l21_intro_2.mp3",
+   "id": "l49_sign_1",
+   "file": "voice/l49_sign_1.mp3",
    "who": "pilo",
-   "text": "بلورها با نور روشن و محکم می‌شوند. ولی یک چیزی جلوی نور را گرفته...",
-   "level": 21,
+   "text": "تسمه‌ها تو را می‌برند؛ خلاف جهتشان بدو!",
+   "level": 49,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 49"
+  },
+  {
+   "id": "l49_sign_2",
+   "file": "voice/l49_sign_2.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 49,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 49"
+  },
+  {
+   "id": "l50_intro_1",
+   "file": "voice/l50_intro_1.mp3",
+   "who": "pilo",
+   "text": "تالار پرس‌ها! راه بالا تسمه‌ای دارد که خلاف تو می‌چرخد.",
+   "level": 50,
    "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 21"
+   "event": "شروع مرحله — مرحلهٔ 50"
   },
   {
-   "id": "l21_sign_1",
-   "file": "voice/l21_sign_1.mp3",
-   "who": "pilo",
-   "text": "در گذشته بلورهای بزرگ جلوی نور را می‌گرفتند.",
-   "level": 21,
-   "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 21"
-  },
-  {
-   "id": "l21_sign_2",
-   "file": "voice/l21_sign_2.mp3",
-   "who": "pilo",
-   "text": "نور به چشمِ بلوری برسد، دروازه باز می‌شود.",
-   "level": 21,
-   "kind": "sign",
-   "event": "تابلوی 2 مرحلهٔ 21"
-  },
-  {
-   "id": "l22_intro_1",
-   "file": "voice/l22_intro_1.mp3",
-   "who": "pilo",
-   "text": "این آینه نور را برمی‌گرداند. به آن دست بزن تا بچرخد!",
-   "level": 22,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 22"
-  },
-  {
-   "id": "l22_sign_1",
-   "file": "voice/l22_sign_1.mp3",
-   "who": "pilo",
-   "text": "به آینه بخور تا بچرخد؛ نور را به چشمِ بالا برسان.",
-   "level": 22,
-   "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 22"
-  },
-  {
-   "id": "l23_intro_1",
-   "file": "voice/l23_intro_1.mp3",
+   "id": "l50_intro_2",
+   "file": "voice/l50_intro_2.mp3",
    "who": "nima",
-   "text": "بلورهای روی گودال خاموش‌اند. نمی‌شود از رویشان رد شد.",
-   "level": 23,
+   "text": "پس تندتر می‌دوم!",
+   "level": 50,
    "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 23"
+   "event": "شروع مرحله — مرحلهٔ 50"
   },
   {
-   "id": "l23_intro_2",
-   "file": "voice/l23_intro_2.mp3",
+   "id": "l50_intro_3",
+   "file": "voice/l50_intro_3.mp3",
    "who": "pilo",
-   "text": "نور باید از دو آینه بگذرد تا به آن‌ها برسد.",
-   "level": 23,
+   "text": "این تسمه‌ها به قلب کارخانه می‌روند.",
+   "level": 50,
    "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 23"
+   "event": "شروع مرحله — مرحلهٔ 50"
   },
   {
-   "id": "l23_sign_1",
-   "file": "voice/l23_sign_1.mp3",
+   "id": "l50_sign_1",
+   "file": "voice/l50_sign_1.mp3",
    "who": "pilo",
-   "text": "دو آینه را بچرخان تا نور به بلورها برسد.",
-   "level": 23,
+   "text": "تسمه‌ها تو را می‌برند؛ خلاف جهتشان بدو!",
+   "level": 50,
    "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 23"
+   "event": "تابلوی 1 مرحلهٔ 50"
   },
   {
-   "id": "l24_intro_1",
-   "file": "voice/l24_intro_1.mp3",
+   "id": "l50_sign_2",
+   "file": "voice/l50_sign_2.mp3",
    "who": "pilo",
-   "text": "این در دو قفل دارد: یک کلید بلوری و یک پرتوی نور.",
-   "level": 24,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 24"
-  },
-  {
-   "id": "l24_intro_2",
-   "file": "voice/l24_intro_2.mp3",
-   "who": "nima",
-   "text": "یکی در گذشته است و یکی در حال؟",
-   "level": 24,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 24"
-  },
-  {
-   "id": "l24_sign_1",
-   "file": "voice/l24_sign_1.mp3",
-   "who": "pilo",
-   "text": "کلید بلوری روی جزیره است؛ پلِ چوبی فقط در گذشته بود.",
-   "level": 24,
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 50,
    "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 24"
+   "event": "تابلوی 2 مرحلهٔ 50"
   },
   {
-   "id": "l25_intro_1",
-   "file": "voice/l25_intro_1.mp3",
-   "who": "nima",
-   "text": "این سنگ‌ها ترک دارند!",
-   "level": 25,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 25"
-  },
-  {
-   "id": "l25_intro_2",
-   "file": "voice/l25_intro_2.mp3",
+   "id": "l50_sign_3",
+   "file": "voice/l50_sign_3.mp3",
    "who": "pilo",
-   "text": "در حال می‌ریزند... ولی در گذشته هنوز محکم بودند.",
-   "level": 25,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 25"
-  },
-  {
-   "id": "l25_sign_1",
-   "file": "voice/l25_sign_1.mp3",
-   "who": "pilo",
-   "text": "در حال این سنگ‌ها می‌ریزند. در گذشته محکم بودند!",
-   "level": 25,
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 50,
    "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 25"
+   "event": "تابلوی 3 مرحلهٔ 50"
   },
   {
-   "id": "l26_intro_1",
-   "file": "voice/l26_intro_1.mp3",
+   "id": "l51_intro_1",
+   "file": "voice/l51_intro_1.mp3",
    "who": "pilo",
-   "text": "سه چشمِ بلوری، سه پرتوی نور. هر سه باید روشن شوند.",
-   "level": 26,
+   "text": "کارخانه پر از سایه است. کلید زیر کف کارخانه است.",
+   "level": 51,
    "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 26"
+   "event": "شروع مرحله — مرحلهٔ 51"
   },
   {
-   "id": "l26_intro_2",
-   "file": "voice/l26_intro_2.mp3",
+   "id": "l51_intro_2",
+   "file": "voice/l51_intro_2.mp3",
    "who": "nima",
-   "text": "یکی‌یکی! اول اولی.",
-   "level": 26,
+   "text": "صدای تیک‌تاک می‌آید... برویم!",
+   "level": 51,
    "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 26"
+   "event": "شروع مرحله — مرحلهٔ 51"
   },
   {
-   "id": "l26_sign_1",
-   "file": "voice/l26_sign_1.mp3",
+   "id": "l51_sign_1",
+   "file": "voice/l51_sign_1.mp3",
    "who": "pilo",
-   "text": "هر آینه نورش را به یک چشم می‌رساند.",
-   "level": 26,
+   "text": "تسمه‌ها تو را می‌برند؛ خلاف جهتشان بدو!",
+   "level": 51,
    "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 26"
+   "event": "تابلوی 1 مرحلهٔ 51"
   },
   {
-   "id": "l27_intro_1",
-   "file": "voice/l27_intro_1.mp3",
-   "who": "nima",
-   "text": "آب! نمی‌شود از آب رد شد.",
-   "level": 27,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 27"
-  },
-  {
-   "id": "l27_intro_2",
-   "file": "voice/l27_intro_2.mp3",
+   "id": "l51_sign_2",
+   "file": "voice/l51_sign_2.mp3",
    "who": "pilo",
-   "text": "اگر نور به بلورهای روی آب برسد، یک راه امن ساخته می‌شود.",
-   "level": 27,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 27"
-  },
-  {
-   "id": "l27_sign_1",
-   "file": "voice/l27_sign_1.mp3",
-   "who": "pilo",
-   "text": "راه امن از روی بلورهای روشن است.",
-   "level": 27,
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 51,
    "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 27"
+   "event": "تابلوی 2 مرحلهٔ 51"
   },
   {
-   "id": "l28_intro_1",
-   "file": "voice/l28_intro_1.mp3",
+   "id": "l52_intro_1",
+   "file": "voice/l52_intro_1.mp3",
+   "who": "masked",
+   "text": "ساعت وارونه را هیچ‌کس نمی‌تواند بشکند!",
+   "level": 52,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 52"
+  },
+  {
+   "id": "l52_sign_1",
+   "file": "voice/l52_sign_1.mp3",
    "who": "pilo",
-   "text": "این آخرین تکهٔ زمانِ غارهاست! همه‌چیز را با هم لازم داریم.",
-   "level": 28,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 28"
-  },
-  {
-   "id": "l28_intro_2",
-   "file": "voice/l28_intro_2.mp3",
-   "who": "nima",
-   "text": "سنگ‌های لرزان، پل، کلید بلوری، نور... بزن بریم!",
-   "level": 28,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 28"
-  },
-  {
-   "id": "l29_intro_1",
-   "file": "voice/l29_intro_1.mp3",
-   "who": "ghubarak",
-   "text": "کمک! این بار خودم توی حبابِ زمان گیر افتاده‌ام!",
-   "level": 29,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 29"
-  },
-  {
-   "id": "l29_intro_2",
-   "file": "voice/l29_intro_2.mp3",
-   "who": "nima",
-   "text": "غبارک! صبر کن، داریم می‌آییم.",
-   "level": 29,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 29"
-  },
-  {
-   "id": "l29_intro_3",
-   "file": "voice/l29_intro_3.mp3",
-   "who": "pilo",
-   "text": "نور را از دو آینه بگذران تا دروازه باز شود.",
-   "level": 29,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 29"
-  },
-  {
-   "id": "l29_rescue_1",
-   "file": "voice/l29_rescue_1.mp3",
-   "who": "ghubarak",
-   "text": "مرا نجات دادید؟ با این‌همه شیطنتی که کردم؟",
-   "level": 29,
-   "kind": "rescue",
-   "event": "نجات دوست — مرحلهٔ 29"
-  },
-  {
-   "id": "l29_rescue_2",
-   "file": "voice/l29_rescue_2.mp3",
-   "who": "nima",
-   "text": "معلومه! دوست‌ها همدیگر را تنها نمی‌گذارند.",
-   "level": 29,
-   "kind": "rescue",
-   "event": "نجات دوست — مرحلهٔ 29"
-  },
-  {
-   "id": "l29_sign_1",
-   "file": "voice/l29_sign_1.mp3",
-   "who": "pilo",
-   "text": "دو آینه، یکی پایین و یکی بالا.",
-   "level": 29,
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 52,
    "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 29"
+   "event": "تابلوی 1 مرحلهٔ 52"
   },
   {
-   "id": "l30_intro_1",
-   "file": "voice/l30_intro_1.mp3",
+   "id": "l52_sign_2",
+   "file": "voice/l52_sign_2.mp3",
    "who": "pilo",
-   "text": "همهٔ رنگارستان برای جشن جمع شده‌اند! فقط یک دروازهٔ دیگر مانده.",
-   "level": 30,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 30"
+   "text": "تسمه‌ها تو را می‌برند؛ خلاف جهتشان بدو!",
+   "level": 52,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 52"
   },
   {
-   "id": "l30_intro_2",
-   "file": "voice/l30_intro_2.mp3",
-   "who": "ghubarak",
-   "text": "این بار من هم کمک می‌کنم! راه را بلدم.",
-   "level": 30,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 30"
+   "id": "l52_sign_3",
+   "file": "voice/l52_sign_3.mp3",
+   "who": "pilo",
+   "text": "دیوار آجری! توپولی با دَش آجر را می‌شکند (یا پیلو را پرتاب کن).",
+   "level": 52,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 52"
   },
   {
-   "id": "l30_outro_1",
-   "file": "voice/l30_outro_1.mp3",
-   "who": "ghubarak",
-   "text": "همهٔ تکه‌های زمان سر جایشان برگشتند! ببخشید که این‌همه دردسر درست کردم.",
-   "level": 30,
+   "id": "l52_sign_4",
+   "file": "voice/l52_sign_4.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 52,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 52"
+  },
+  {
+   "id": "l53_intro_1",
+   "file": "voice/l53_intro_1.mp3",
+   "who": "pilo",
+   "text": "کلید زمان را پیدا کنیم!",
+   "level": 53,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 53"
+  },
+  {
+   "id": "l53_sign_1",
+   "file": "voice/l53_sign_1.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 53,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 53"
+  },
+  {
+   "id": "l53_sign_2",
+   "file": "voice/l53_sign_2.mp3",
+   "who": "pilo",
+   "text": "سکوی دور! با پَرپَری سُر خوردن دو برابر می‌شود.",
+   "level": 53,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 53"
+  },
+  {
+   "id": "l53_sign_3",
+   "file": "voice/l53_sign_3.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 53,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 53"
+  },
+  {
+   "id": "l54_intro_1",
+   "file": "voice/l54_intro_1.mp3",
+   "who": "nima",
+   "text": "بابابزرگ آن جلوست... طلسم شده.",
+   "level": 54,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 54"
+  },
+  {
+   "id": "l54_sign_1",
+   "file": "voice/l54_sign_1.mp3",
+   "who": "pilo",
+   "text": "تسمه‌ها تو را می‌برند؛ خلاف جهتشان بدو!",
+   "level": 54,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 54"
+  },
+  {
+   "id": "l54_sign_2",
+   "file": "voice/l54_sign_2.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 54,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 54"
+  },
+  {
+   "id": "l54_sign_3",
+   "file": "voice/l54_sign_3.mp3",
+   "who": "pilo",
+   "text": "تونل آبی طولانی. لاکی تند شنا می‌کند!",
+   "level": 54,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 54"
+  },
+  {
+   "id": "l54_sign_4",
+   "file": "voice/l54_sign_4.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 54,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 54"
+  },
+  {
+   "id": "l54_sign_5",
+   "file": "voice/l54_sign_5.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 54,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 54"
+  },
+  {
+   "id": "l55_intro_1",
+   "file": "voice/l55_intro_1.mp3",
+   "who": "pilo",
+   "text": "راه مخفی؛ پر از گنج! الماس افسانه‌ای این جهان همین‌جاست.",
+   "level": 55,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 55"
+  },
+  {
+   "id": "l55_outro_1",
+   "file": "voice/l55_outro_1.mp3",
+   "who": "nima",
+   "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
+   "level": 55,
    "kind": "outro",
-   "event": "پایان مرحله — مرحلهٔ 30"
+   "event": "پایان مرحله — مرحلهٔ 55"
   },
   {
-   "id": "l30_outro_2",
-   "file": "voice/l30_outro_2.mp3",
-   "who": "squirrel",
-   "text": "جشن! جشن! رنگارستان دوباره رنگی شد!",
-   "level": 30,
+   "id": "l55_sign_1",
+   "file": "voice/l55_sign_1.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 55,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 55"
+  },
+  {
+   "id": "l55_sign_2",
+   "file": "voice/l55_sign_2.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 55,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 55"
+  },
+  {
+   "id": "l55_sign_3",
+   "file": "voice/l55_sign_3.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 55,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 55"
+  },
+  {
+   "id": "l55_sign_4",
+   "file": "voice/l55_sign_4.mp3",
+   "who": "pilo",
+   "text": "تسمه‌ها تو را می‌برند؛ خلاف جهتشان بدو!",
+   "level": 55,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 55"
+  },
+  {
+   "id": "l56_intro_1",
+   "file": "voice/l56_intro_1.mp3",
+   "who": "pilo",
+   "text": "ساعت‌ساز طلسم‌شده! طلسم سایه او را عصبانی کرده. روی سرش بپر، تیر بزن یا مرا بفرست تا آزاد شود!",
+   "level": 56,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 56"
+  },
+  {
+   "id": "l56_outro_1",
+   "file": "voice/l56_outro_1.mp3",
+   "who": "grandpa",
+   "text": "نیما! پیلو! بیدار شدم... زروان، شاگرد خودم، ساعت وارونه را ساخت.",
+   "level": 56,
    "kind": "outro",
-   "event": "پایان مرحله — مرحلهٔ 30"
+   "event": "پایان مرحله — مرحلهٔ 56"
   },
   {
-   "id": "l30_outro_3",
-   "file": "voice/l30_outro_3.mp3",
-   "who": "nima",
-   "text": "بهترین ماجرای عمرم بود. ممنون پیلو!",
-   "level": 30,
+   "id": "l56_outro_2",
+   "file": "voice/l56_outro_2.mp3",
+   "who": "spark",
+   "text": "من جرقه‌ام! حملهٔ پیلو با من از دو برابر فاصله می‌رسد.",
+   "level": 56,
    "kind": "outro",
-   "event": "پایان مرحله — مرحلهٔ 30"
+   "event": "پایان مرحله — مرحلهٔ 56"
   },
   {
-   "id": "l30_outro_4",
-   "file": "voice/l30_outro_4.mp3",
+   "id": "l56_outro_3",
+   "file": "voice/l56_outro_3.mp3",
    "who": "pilo",
-   "text": "و برای تو یک هدیه داریم: پیلوی طلایی! هر وقت خواستی، از کمد لباس انتخابش کن.",
-   "level": 30,
+   "text": "از حالا در دهکده یا با دکمهٔ همراه، می‌توانی او را انتخاب کنی.",
+   "level": 56,
    "kind": "outro",
-   "event": "پایان مرحله — مرحلهٔ 30"
-  },
-  {
-   "id": "l30_sign_1",
-   "file": "voice/l30_sign_1.mp3",
-   "who": "pilo",
-   "text": "آخرین بار: آینه، بلور، پل، فنر! همه را بلدی.",
-   "level": 30,
-   "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 30"
-  },
-  {
-   "id": "l01_intro_1",
-   "file": "voice/l01_intro_1.mp3",
-   "who": "pilo",
-   "text": "سلام نیما! من پیلو هستم.",
-   "level": 1,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 1"
-  },
-  {
-   "id": "l01_intro_2",
-   "file": "voice/l01_intro_2.mp3",
-   "who": "nima",
-   "text": "سلام پیلو! چرا جنگل این‌قدر عجیب شده؟",
-   "level": 1,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 1"
-  },
-  {
-   "id": "l01_intro_3",
-   "file": "voice/l01_intro_3.mp3",
-   "who": "pilo",
-   "text": "غبارک تکه‌های زمان را پخش کرده. بیا پیدایشان کنیم!",
-   "level": 1,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 1"
-  },
-  {
-   "id": "l01_outro_1",
-   "file": "voice/l01_outro_1.mp3",
-   "who": "ghubarak",
-   "text": "هی‌هی! ببخشید... دستگاهم یک‌کم قاطی کرد!",
-   "level": 1,
-   "kind": "outro",
-   "event": "پایان مرحله — مرحلهٔ 1"
-  },
-  {
-   "id": "l01_outro_2",
-   "file": "voice/l01_outro_2.mp3",
-   "who": "pilo",
-   "text": "غبارک! صبر کن!",
-   "level": 1,
-   "kind": "outro",
-   "event": "پایان مرحله — مرحلهٔ 1"
-  },
-  {
-   "id": "l01_outro_3",
-   "file": "voice/l01_outro_3.mp3",
-   "who": "nima",
-   "text": "عیبی ندارد. با هم درستش می‌کنیم.",
-   "level": 1,
-   "kind": "outro",
-   "event": "پایان مرحله — مرحلهٔ 1"
-  },
-  {
-   "id": "l01_sign_1",
-   "file": "voice/l01_sign_1.mp3",
-   "who": "pilo",
-   "text": "با دکمه‌های آبی راه برو.",
-   "level": 1,
-   "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 1"
-  },
-  {
-   "id": "l01_sign_2",
-   "file": "voice/l01_sign_2.mp3",
-   "who": "pilo",
-   "text": "با دکمهٔ سبز بپر!",
-   "level": 1,
-   "kind": "sign",
-   "event": "تابلوی 2 مرحلهٔ 1"
-  },
-  {
-   "id": "l01_sign_3",
-   "file": "voice/l01_sign_3.mp3",
-   "who": "pilo",
-   "text": "ستاره‌ها اختیاری‌اند؛ ولی پیلو عاشقشان است!",
-   "level": 1,
-   "kind": "sign",
-   "event": "تابلوی 3 مرحلهٔ 1"
-  },
-  {
-   "id": "l02_intro_1",
-   "file": "voice/l02_intro_1.mp3",
-   "who": "pilo",
-   "text": "این قارچ‌ها فنری‌اند! رویشان بپر.",
-   "level": 2,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 2"
-  },
-  {
-   "id": "l02_sign_1",
-   "file": "voice/l02_sign_1.mp3",
-   "who": "pilo",
-   "text": "روی قارچ قرمز بپر تا بالا بروی!",
-   "level": 2,
-   "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 2"
-  },
-  {
-   "id": "l02_sign_2",
-   "file": "voice/l02_sign_2.mp3",
-   "who": "pilo",
-   "text": "قارچ بزرگ تو را تا بالای صخره می‌برد.",
-   "level": 2,
-   "kind": "sign",
-   "event": "تابلوی 2 مرحلهٔ 2"
-  },
-  {
-   "id": "l03_intro_1",
-   "file": "voice/l03_intro_1.mp3",
-   "who": "pilo",
-   "text": "این لنز زمان است! با آن گذشته و حالِ جنگل را می‌بینی.",
-   "level": 3,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 3"
-  },
-  {
-   "id": "l03_intro_2",
-   "file": "voice/l03_intro_2.mp3",
-   "who": "nima",
-   "text": "پس شاید پلِ شکسته در گذشته سالم بوده!",
-   "level": 3,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 3"
-  },
-  {
-   "id": "l03_sign_1",
-   "file": "voice/l03_sign_1.mp3",
-   "who": "pilo",
-   "text": "دکمهٔ بنفش = لنز زمان. پل در گذشته سالم بود!",
-   "level": 3,
-   "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 3"
-  },
-  {
-   "id": "l03_sign_2",
-   "file": "voice/l03_sign_2.mp3",
-   "who": "pilo",
-   "text": "این سنگ‌ها در گذشته بودند. در حال چه؟",
-   "level": 3,
-   "kind": "sign",
-   "event": "تابلوی 2 مرحلهٔ 3"
-  },
-  {
-   "id": "l04_intro_1",
-   "file": "voice/l04_intro_1.mp3",
-   "who": "nima",
-   "text": "اینجا فقط چند جوانهٔ کوچک هست...",
-   "level": 4,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 4"
-  },
-  {
-   "id": "l04_intro_2",
-   "file": "voice/l04_intro_2.mp3",
-   "who": "pilo",
-   "text": "جوانه‌ها با گذشت زمان بزرگ می‌شوند!",
-   "level": 4,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 4"
-  },
-  {
-   "id": "l04_sign_1",
-   "file": "voice/l04_sign_1.mp3",
-   "who": "pilo",
-   "text": "در گذشته اینجا جوانه بود. در حال چه شکلی است؟",
-   "level": 4,
-   "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 4"
-  },
-  {
-   "id": "l05_intro_1",
-   "file": "voice/l05_intro_1.mp3",
-   "who": "pilo",
-   "text": "آن درِ گردویی قفل است. کلیدش باید همین نزدیکی باشد!",
-   "level": 5,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 5"
-  },
-  {
-   "id": "l05_sign_1",
-   "file": "voice/l05_sign_1.mp3",
-   "who": "pilo",
-   "text": "کلید را پیدا کن تا در گردویی باز شود.",
-   "level": 5,
-   "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 5"
-  },
-  {
-   "id": "l06_intro_1",
-   "file": "voice/l06_intro_1.mp3",
-   "who": "pilo",
-   "text": "بو می‌کشم... بوی ستاره می‌آید! شاید از آن بالا؟",
-   "level": 6,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 6"
-  },
-  {
-   "id": "l06_sign_1",
-   "file": "voice/l06_sign_1.mp3",
-   "who": "pilo",
-   "text": "راه اصلی پایین است؛ ولی بالای سرت را هم نگاه کن!",
-   "level": 6,
-   "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 6"
-  },
-  {
-   "id": "l07_intro_1",
-   "file": "voice/l07_intro_1.mp3",
-   "who": "nima",
-   "text": "آب راه را بسته!",
-   "level": 7,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 7"
-  },
-  {
-   "id": "l07_intro_2",
-   "file": "voice/l07_intro_2.mp3",
-   "who": "pilo",
-   "text": "آب همیشه همین‌جا نبوده. با لنز نگاه کن.",
-   "level": 7,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 7"
-  },
-  {
-   "id": "l07_sign_1",
-   "file": "voice/l07_sign_1.mp3",
-   "who": "pilo",
-   "text": "آب در گذشته کجا بود؟ با لنز نگاه کن.",
-   "level": 7,
-   "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 7"
-  },
-  {
-   "id": "l08_intro_1",
-   "file": "voice/l08_intro_1.mp3",
-   "who": "pilo",
-   "text": "این سکوهای برگی آرام تکان می‌خورند. صبر کن تا نزدیک شوند.",
-   "level": 8,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 8"
-  },
-  {
-   "id": "l08_sign_1",
-   "file": "voice/l08_sign_1.mp3",
-   "who": "pilo",
-   "text": "عجله نکن! صبر کن تا سکو بیاید.",
-   "level": 8,
-   "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 8"
+   "event": "پایان مرحله — مرحلهٔ 56"
   },
   {
    "id": "l09_intro_1",
    "file": "voice/l09_intro_1.mp3",
-   "who": "squirrel",
-   "text": "کمک! من این بالا توی حباب زمان گیر افتاده‌ام!",
+   "who": "pilo",
+   "text": "تالاب مرجانی! زیر صخره شنا کن؛ آنجا الماس هست.",
    "level": 9,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 9"
@@ -616,79 +550,88 @@
    "id": "l09_intro_2",
    "file": "voice/l09_intro_2.mp3",
    "who": "nima",
-   "text": "نگران نباش سنجابک، داریم می‌آییم!",
+   "text": "یا از روی تخته‌ها می‌پرم و خیس نمی‌شوم!",
    "level": 9,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 9"
   },
   {
-   "id": "l09_rescue_1",
-   "file": "voice/l09_rescue_1.mp3",
-   "who": "squirrel",
-   "text": "ممنونم نیما! ممنونم پیلو!",
-   "level": 9,
-   "kind": "rescue",
-   "event": "نجات دوست — مرحلهٔ 9"
-  },
-  {
    "id": "l09_sign_1",
    "file": "voice/l09_sign_1.mp3",
    "who": "pilo",
-   "text": "سنجابک آن بالا گیر افتاده! کمکش کن.",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
    "level": 9,
    "kind": "sign",
    "event": "تابلوی 1 مرحلهٔ 9"
   },
   {
+   "id": "l09_sign_2",
+   "file": "voice/l09_sign_2.mp3",
+   "who": "pilo",
+   "text": "آب عمیق! با دکمهٔ پرش شنا کن و رو به بالا برو.",
+   "level": 9,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 9"
+  },
+  {
    "id": "l10_intro_1",
    "file": "voice/l10_intro_1.mp3",
    "who": "pilo",
-   "text": "آخرین تکهٔ زمانِ جنگل همین‌جاست. هرچه یاد گرفتی را به کار ببر!",
+   "text": "یک کشتی شکسته! دیوار ترک‌دار انبارش را با دَش بشکن.",
    "level": 10,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 10"
   },
   {
-   "id": "l10_outro_1",
-   "file": "voice/l10_outro_1.mp3",
-   "who": "ghubarak",
-   "text": "وای... همهٔ تکه‌های جنگل را پیدا کردید!",
-   "level": 10,
-   "kind": "outro",
-   "event": "پایان مرحله — مرحلهٔ 10"
-  },
-  {
-   "id": "l10_outro_2",
-   "file": "voice/l10_outro_2.mp3",
-   "who": "ghubarak",
-   "text": "ببخشید که این‌همه دردسر درست کردم. می‌شود کمکتان کنم؟",
-   "level": 10,
-   "kind": "outro",
-   "event": "پایان مرحله — مرحلهٔ 10"
-  },
-  {
-   "id": "l10_outro_3",
-   "file": "voice/l10_outro_3.mp3",
+   "id": "l10_intro_2",
+   "file": "voice/l10_intro_2.mp3",
    "who": "nima",
-   "text": "معلومه! با هم بقیهٔ رنگارستان را درست می‌کنیم.",
+   "text": "یا از دکل بالا بروم و الماس سبد دیده‌بانی را بردارم!",
    "level": 10,
-   "kind": "outro",
-   "event": "پایان مرحله — مرحلهٔ 10"
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 10"
   },
   {
-   "id": "l10_outro_4",
-   "file": "voice/l10_outro_4.mp3",
-   "who": "pilo",
-   "text": "جزیره‌های ابری منتظر ما هستند!",
+   "id": "l10_intro_3",
+   "file": "voice/l10_intro_3.mp3",
+   "who": "kian",
+   "text": "مسابقه تا دروازهٔ زمان! هر کس زودتر برسد، برنده است.",
    "level": 10,
-   "kind": "outro",
-   "event": "پایان مرحله — مرحلهٔ 10"
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 10"
+  },
+  {
+   "id": "l10_intro_4",
+   "file": "voice/l10_intro_4.mp3",
+   "who": "nima",
+   "text": "قبول!",
+   "level": 10,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 10"
+  },
+  {
+   "id": "l10_sign_1",
+   "file": "voice/l10_sign_1.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 10,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 10"
+  },
+  {
+   "id": "l10_sign_2",
+   "file": "voice/l10_sign_2.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 10,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 10"
   },
   {
    "id": "l11_intro_1",
    "file": "voice/l11_intro_1.mp3",
    "who": "pilo",
-   "text": "به جزیره‌های ابری رسیدیم! اینجا ابرها هم سکو هستند.",
+   "text": "موج‌ها بالا آمده‌اند. راه بالا امن‌تر است، ولی کلید پایین است.",
    "level": 11,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 11"
@@ -697,16 +640,7 @@
    "id": "l11_intro_2",
    "file": "voice/l11_intro_2.mp3",
    "who": "nima",
-   "text": "وای! جزیره‌ها توی هوا شناورند!",
-   "level": 11,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 11"
-  },
-  {
-   "id": "l11_intro_3",
-   "file": "voice/l11_intro_3.mp3",
-   "who": "pilo",
-   "text": "تکه‌های زمانِ اینجا هم پخش شده‌اند. مواظب لبه‌ها باش.",
+   "text": "پس اول بالا، بعد پایین!",
    "level": 11,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 11"
@@ -715,43 +649,16 @@
    "id": "l11_sign_1",
    "file": "voice/l11_sign_1.mp3",
    "who": "pilo",
-   "text": "روی سکوی برگی بپر؛ تو را می‌برد.",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
    "level": 11,
    "kind": "sign",
    "event": "تابلوی 1 مرحلهٔ 11"
   },
   {
-   "id": "l11_sign_2",
-   "file": "voice/l11_sign_2.mp3",
-   "who": "pilo",
-   "text": "ابرها در «حال» هستند. اگر در گذشته‌ای، برگرد!",
-   "level": 11,
-   "kind": "sign",
-   "event": "تابلوی 2 مرحلهٔ 11"
-  },
-  {
    "id": "l12_intro_1",
    "file": "voice/l12_intro_1.mp3",
-   "who": "pilo",
-   "text": "حس می‌کنی؟ باد از پشت سرمان می‌وزد!",
-   "level": 12,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 12"
-  },
-  {
-   "id": "l12_intro_2",
-   "file": "voice/l12_intro_2.mp3",
-   "who": "nima",
-   "text": "پس اگر با باد بپرم، دورتر می‌روم؟",
-   "level": 12,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 12"
-  },
-  {
-   "id": "l12_intro_3",
-   "file": "voice/l12_intro_3.mp3",
-   "who": "pilo",
-   "text": "آفرین! و بادی که رو به بالاست، تو را بالا می‌برد.",
+   "who": "captain",
+   "text": "اهوی! من ناخدا موجم. نقشهٔ گنج‌های این ساحل را دارم؛ دنبال الماس‌ها بگرد!",
    "level": 12,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 12"
@@ -760,7 +667,7 @@
    "id": "l12_sign_1",
    "file": "voice/l12_sign_1.mp3",
    "who": "pilo",
-   "text": "با باد بپر! باد تو را تا آن طرف می‌برد.",
+   "text": "سکوی خیلی بلند! شاخ‌طلا پرش دوبل دارد.",
    "level": 12,
    "kind": "sign",
    "event": "تابلوی 1 مرحلهٔ 12"
@@ -769,25 +676,34 @@
    "id": "l12_sign_2",
    "file": "voice/l12_sign_2.mp3",
    "who": "pilo",
-   "text": "توی ستونِ باد برو؛ تو را بالا می‌برد.",
+   "text": "آب عمیق! با دکمهٔ پرش شنا کن و رو به بالا برو.",
    "level": 12,
    "kind": "sign",
    "event": "تابلوی 2 مرحلهٔ 12"
   },
   {
-   "id": "l13_intro_1",
-   "file": "voice/l13_intro_1.mp3",
-   "who": "nima",
-   "text": "نصف راه ابر است و نصفش پلِ نور!",
-   "level": 13,
-   "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 13"
+   "id": "l12_sign_3",
+   "file": "voice/l12_sign_3.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 12,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 12"
   },
   {
-   "id": "l13_intro_2",
-   "file": "voice/l13_intro_2.mp3",
+   "id": "l12_sign_4",
+   "file": "voice/l12_sign_4.mp3",
    "who": "pilo",
-   "text": "ابرها در حال‌اند و پلِ نور در گذشته. روی تخته‌ها زمان را عوض کن.",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 12,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 12"
+  },
+  {
+   "id": "l13_intro_1",
+   "file": "voice/l13_intro_1.mp3",
+   "who": "pilo",
+   "text": "کلید زمان را پیدا کنیم!",
    "level": 13,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 13"
@@ -796,16 +712,25 @@
    "id": "l13_sign_1",
    "file": "voice/l13_sign_1.mp3",
    "who": "pilo",
-   "text": "روی تخته‌های چوبی امن است؛ همان‌جا زمان را عوض کن.",
+   "text": "سکوی خیلی بلند! شاخ‌طلا پرش دوبل دارد.",
    "level": 13,
    "kind": "sign",
    "event": "تابلوی 1 مرحلهٔ 13"
   },
   {
+   "id": "l13_sign_2",
+   "file": "voice/l13_sign_2.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 13,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 13"
+  },
+  {
    "id": "l14_intro_1",
    "file": "voice/l14_intro_1.mp3",
-   "who": "pilo",
-   "text": "این دروازه با آسیاب بادی باز می‌شود. آسیاب کجاست؟",
+   "who": "kian",
+   "text": "قلب زمان ساحل مال من است!",
    "level": 14,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 14"
@@ -813,8 +738,8 @@
   {
    "id": "l14_intro_2",
    "file": "voice/l14_intro_2.mp3",
-   "who": "nima",
-   "text": "آن بالا روی جزیره! ولی چطور برسم؟",
+   "who": "pilo",
+   "text": "باید زودتر به اختاپوس برسیم!",
    "level": 14,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 14"
@@ -823,79 +748,871 @@
    "id": "l14_sign_1",
    "file": "voice/l14_sign_1.mp3",
    "who": "pilo",
-   "text": "آسیاب را روشن کن تا دروازه باز شود.",
+   "text": "آب عمیق! با دکمهٔ پرش شنا کن و رو به بالا برو.",
    "level": 14,
    "kind": "sign",
    "event": "تابلوی 1 مرحلهٔ 14"
   },
   {
+   "id": "l14_sign_2",
+   "file": "voice/l14_sign_2.mp3",
+   "who": "pilo",
+   "text": "تونل آبی طولانی. لاکی تند شنا می‌کند!",
+   "level": 14,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 14"
+  },
+  {
+   "id": "l14_sign_3",
+   "file": "voice/l14_sign_3.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 14,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 14"
+  },
+  {
    "id": "l15_intro_1",
    "file": "voice/l15_intro_1.mp3",
    "who": "pilo",
-   "text": "قارچ‌های فنری این‌جا روی ستون‌ها هستند. یکی‌یکی!",
+   "text": "راه مخفی؛ پر از گنج! الماس افسانه‌ای این جهان همین‌جاست.",
    "level": 15,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 15"
   },
   {
+   "id": "l15_outro_1",
+   "file": "voice/l15_outro_1.mp3",
+   "who": "nima",
+   "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
+   "level": 15,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 15"
+  },
+  {
    "id": "l15_sign_1",
    "file": "voice/l15_sign_1.mp3",
    "who": "pilo",
-   "text": "از روی فنرها یکی‌یکی بپر؛ هر فنر تو را به بعدی می‌رساند.",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
    "level": 15,
    "kind": "sign",
    "event": "تابلوی 1 مرحلهٔ 15"
   },
   {
+   "id": "l15_sign_2",
+   "file": "voice/l15_sign_2.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 15,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 15"
+  },
+  {
+   "id": "l15_sign_3",
+   "file": "voice/l15_sign_3.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 15,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 15"
+  },
+  {
+   "id": "l15_sign_4",
+   "file": "voice/l15_sign_4.mp3",
+   "who": "pilo",
+   "text": "آب عمیق! با دکمهٔ پرش شنا کن و رو به بالا برو.",
+   "level": 15,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 15"
+  },
+  {
    "id": "l16_intro_1",
    "file": "voice/l16_intro_1.mp3",
    "who": "pilo",
-   "text": "دو راه داریم: پایین از روی ابرها، یا بالا از پلِ نور.",
+   "text": "اختاپوس بزرگ! طلسم سایه او را عصبانی کرده. روی سرش بپر، تیر بزن یا مرا بفرست تا آزاد شود!",
    "level": 16,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 16"
   },
   {
-   "id": "l16_intro_2",
-   "file": "voice/l16_intro_2.mp3",
+   "id": "l16_outro_1",
+   "file": "voice/l16_outro_1.mp3",
+   "who": "octopus",
+   "text": "از طلسم آزادم کردید. آن پسر، کیان، فریب خورده؛ کمکش کنید.",
+   "level": 16,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 16"
+  },
+  {
+   "id": "l16_outro_2",
+   "file": "voice/l16_outro_2.mp3",
+   "who": "turtle",
+   "text": "من لاکی‌ام! زیر آب تند شنا می‌کنم؛ تونل‌های آبی کار من است.",
+   "level": 16,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 16"
+  },
+  {
+   "id": "l16_outro_3",
+   "file": "voice/l16_outro_3.mp3",
+   "who": "pilo",
+   "text": "از حالا در دهکده یا با دکمهٔ همراه، می‌توانی او را انتخاب کنی.",
+   "level": 16,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 16"
+  },
+  {
+   "id": "l41_intro_1",
+   "file": "voice/l41_intro_1.mp3",
+   "who": "pilo",
+   "text": "معدن بلور! از چاه پایین برو؛ تونلش پر از الماس است.",
+   "level": 41,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 41"
+  },
+  {
+   "id": "l41_intro_2",
+   "file": "voice/l41_intro_2.mp3",
    "who": "nima",
-   "text": "بالا چی هست؟",
-   "level": 16,
+   "text": "تاریک است... چراغم را روشن نگه می‌دارم.",
+   "level": 41,
    "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 16"
+   "event": "شروع مرحله — مرحلهٔ 41"
   },
   {
-   "id": "l16_intro_3",
-   "file": "voice/l16_intro_3.mp3",
+   "id": "l41_sign_1",
+   "file": "voice/l41_sign_1.mp3",
    "who": "pilo",
-   "text": "کسی نمی‌داند... برای همین اسمش جزیرهٔ گمشده است!",
-   "level": 16,
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 41,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 41"
+  },
+  {
+   "id": "l41_sign_2",
+   "file": "voice/l41_sign_2.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 41,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 41"
+  },
+  {
+   "id": "l42_intro_1",
+   "file": "voice/l42_intro_1.mp3",
+   "who": "pilo",
+   "text": "آسانسور کنار ستون بلور تو را به راه بالا می‌برد.",
+   "level": 42,
    "kind": "intro",
-   "event": "شروع مرحله — مرحلهٔ 16"
+   "event": "شروع مرحله — مرحلهٔ 42"
   },
   {
-   "id": "l16_sign_1",
-   "file": "voice/l16_sign_1.mp3",
-   "who": "pilo",
-   "text": "راه پایین با ابرهاست، راه بالا با باد و پلِ نور.",
-   "level": 16,
-   "kind": "sign",
-   "event": "تابلوی 1 مرحلهٔ 16"
+   "id": "l42_intro_2",
+   "file": "voice/l42_intro_2.mp3",
+   "who": "nima",
+   "text": "و پایین چرخ خار است. بالا را انتخاب می‌کنم!",
+   "level": 42,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 42"
   },
   {
-   "id": "l16_sign_2",
-   "file": "voice/l16_sign_2.mp3",
+   "id": "l42_intro_3",
+   "file": "voice/l42_intro_3.mp3",
+   "who": "kian",
+   "text": "مسابقهٔ سوم... ولی دلم با مسابقه نیست.",
+   "level": 42,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 42"
+  },
+  {
+   "id": "l42_intro_4",
+   "file": "voice/l42_intro_4.mp3",
+   "who": "nima",
+   "text": "چیزی شده کیان؟",
+   "level": 42,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 42"
+  },
+  {
+   "id": "l42_sign_1",
+   "file": "voice/l42_sign_1.mp3",
    "who": "pilo",
-   "text": "جزیرهٔ گمشده! ستاره‌ها این‌جا پنهان بودند.",
-   "level": 16,
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 42,
    "kind": "sign",
-   "event": "تابلوی 2 مرحلهٔ 16"
+   "event": "تابلوی 1 مرحلهٔ 42"
+  },
+  {
+   "id": "l42_sign_2",
+   "file": "voice/l42_sign_2.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 42,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 42"
+  },
+  {
+   "id": "l42_sign_3",
+   "file": "voice/l42_sign_3.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 42,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 42"
+  },
+  {
+   "id": "l43_intro_1",
+   "file": "voice/l43_intro_1.mp3",
+   "who": "pilo",
+   "text": "غار پیچ‌درپیچ است. هر راهی رازی دارد.",
+   "level": 43,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 43"
+  },
+  {
+   "id": "l43_intro_2",
+   "file": "voice/l43_intro_2.mp3",
+   "who": "nima",
+   "text": "همه را پیدا می‌کنیم!",
+   "level": 43,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 43"
+  },
+  {
+   "id": "l43_sign_1",
+   "file": "voice/l43_sign_1.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 43,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 43"
+  },
+  {
+   "id": "l43_sign_2",
+   "file": "voice/l43_sign_2.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 43,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 43"
+  },
+  {
+   "id": "l43_sign_3",
+   "file": "voice/l43_sign_3.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 43,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 43"
+  },
+  {
+   "id": "l44_intro_1",
+   "file": "voice/l44_intro_1.mp3",
+   "who": "kian",
+   "text": "در گذشتهٔ این غار... دهکدهٔ من را دیدم!",
+   "level": 44,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 44"
+  },
+  {
+   "id": "l44_intro_2",
+   "file": "voice/l44_intro_2.mp3",
+   "who": "pilo",
+   "text": "پس هنوز می‌شود نجاتش داد!",
+   "level": 44,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 44"
+  },
+  {
+   "id": "l44_sign_1",
+   "file": "voice/l44_sign_1.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 44,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 44"
+  },
+  {
+   "id": "l44_sign_2",
+   "file": "voice/l44_sign_2.mp3",
+   "who": "pilo",
+   "text": "شن روان پر از گنج. با خال‌خالی فرو نمی‌روی.",
+   "level": 44,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 44"
+  },
+  {
+   "id": "l44_sign_3",
+   "file": "voice/l44_sign_3.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 44,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 44"
+  },
+  {
+   "id": "l45_intro_1",
+   "file": "voice/l45_intro_1.mp3",
+   "who": "pilo",
+   "text": "کلید زمان را پیدا کنیم!",
+   "level": 45,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 45"
+  },
+  {
+   "id": "l45_sign_1",
+   "file": "voice/l45_sign_1.mp3",
+   "who": "pilo",
+   "text": "سکوی خیلی بلند! شاخ‌طلا پرش دوبل دارد.",
+   "level": 45,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 45"
+  },
+  {
+   "id": "l45_sign_2",
+   "file": "voice/l45_sign_2.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 45,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 45"
+  },
+  {
+   "id": "l46_intro_1",
+   "file": "voice/l46_intro_1.mp3",
+   "who": "kian",
+   "text": "پیچ‌پیچ، با نیما برو. ما یک تیمیم.",
+   "level": 46,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 46"
+  },
+  {
+   "id": "l46_sign_1",
+   "file": "voice/l46_sign_1.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 46,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 46"
+  },
+  {
+   "id": "l46_sign_2",
+   "file": "voice/l46_sign_2.mp3",
+   "who": "pilo",
+   "text": "چاه بلند! با سنجابک از دیوارهایش بالا برو؛ بالای آن الماس است.",
+   "level": 46,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 46"
+  },
+  {
+   "id": "l46_sign_3",
+   "file": "voice/l46_sign_3.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 46,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 46"
+  },
+  {
+   "id": "l46_sign_4",
+   "file": "voice/l46_sign_4.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 46,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 46"
+  },
+  {
+   "id": "l47_intro_1",
+   "file": "voice/l47_intro_1.mp3",
+   "who": "pilo",
+   "text": "راه مخفی؛ پر از گنج! الماس افسانه‌ای این جهان همین‌جاست.",
+   "level": 47,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 47"
+  },
+  {
+   "id": "l47_outro_1",
+   "file": "voice/l47_outro_1.mp3",
+   "who": "nima",
+   "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
+   "level": 47,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 47"
+  },
+  {
+   "id": "l47_sign_1",
+   "file": "voice/l47_sign_1.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 47,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 47"
+  },
+  {
+   "id": "l47_sign_2",
+   "file": "voice/l47_sign_2.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 47,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 47"
+  },
+  {
+   "id": "l47_sign_3",
+   "file": "voice/l47_sign_3.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 47,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 47"
+  },
+  {
+   "id": "l48_intro_1",
+   "file": "voice/l48_intro_1.mp3",
+   "who": "pilo",
+   "text": "عنکبوت بلورین! طلسم سایه او را عصبانی کرده. روی سرش بپر، تیر بزن یا مرا بفرست تا آزاد شود!",
+   "level": 48,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 48"
+  },
+  {
+   "id": "l48_outro_1",
+   "file": "voice/l48_outro_1.mp3",
+   "who": "spider",
+   "text": "در تاریکی دیدم که نقاب‌دار از کارخانه آمد.",
+   "level": 48,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 48"
+  },
+  {
+   "id": "l48_outro_2",
+   "file": "voice/l48_outro_2.mp3",
+   "who": "owl",
+   "text": "من پیچ‌پیچم، جغد کیان! در تاریکی می‌بینم و از دور راز را بو می‌کشم.",
+   "level": 48,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 48"
+  },
+  {
+   "id": "l48_outro_3",
+   "file": "voice/l48_outro_3.mp3",
+   "who": "pilo",
+   "text": "از حالا در دهکده یا با دکمهٔ همراه، می‌توانی او را انتخاب کنی.",
+   "level": 48,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 48"
+  },
+  {
+   "id": "l48_sign_1",
+   "file": "voice/l48_sign_1.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 48,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 48"
+  },
+  {
+   "id": "l01_intro_1",
+   "file": "voice/l01_intro_1.mp3",
+   "who": "pilo",
+   "text": "نیما! سایه‌ها جنگل را گرفته‌اند. باید کلید زمان را پیدا کنیم!",
+   "level": 1,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 1"
+  },
+  {
+   "id": "l01_intro_2",
+   "file": "voice/l01_intro_2.mp3",
+   "who": "nima",
+   "text": "کجاست؟",
+   "level": 1,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 1"
+  },
+  {
+   "id": "l01_intro_3",
+   "file": "voice/l01_intro_3.mp3",
+   "who": "pilo",
+   "text": "یکی از راه‌ها به کلید می‌رسد. همه را بگردیم!",
+   "level": 1,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 1"
+  },
+  {
+   "id": "l01_outro_1",
+   "file": "voice/l01_outro_1.mp3",
+   "who": "pilo",
+   "text": "دروازه باز شد! سایه‌ها دارند از جنگل می‌روند.",
+   "level": 1,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 1"
+  },
+  {
+   "id": "l01_outro_2",
+   "file": "voice/l01_outro_2.mp3",
+   "who": "nima",
+   "text": "بعدی کجاست، پیلو؟",
+   "level": 1,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 1"
+  },
+  {
+   "id": "l01_sign_1",
+   "file": "voice/l01_sign_1.mp3",
+   "who": "pilo",
+   "text": "دکمهٔ آبی: راه برو. نگه داری تندتر می‌دوی!",
+   "level": 1,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 1"
+  },
+  {
+   "id": "l01_sign_2",
+   "file": "voice/l01_sign_2.mp3",
+   "who": "pilo",
+   "text": "روی سر قارچ‌سایه بپر تا آزاد شود. به جعبه‌ها از زیر ضربه بزن!",
+   "level": 1,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 1"
+  },
+  {
+   "id": "l01_sign_3",
+   "file": "voice/l01_sign_3.mp3",
+   "who": "pilo",
+   "text": "خارپشت سایه تیغ دارد! دکمهٔ پیلو را بزن تا آزادش کند. وسط پرش، پرش را نگه دار تا پیلو تو را ببرد!",
+   "level": 1,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 1"
+  },
+  {
+   "id": "l01_sign_4",
+   "file": "voice/l01_sign_4.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 1,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 1"
+  },
+  {
+   "id": "l01_sign_5",
+   "file": "voice/l01_sign_5.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار؟ با دکمهٔ دَش بدو و بشکنش!",
+   "level": 1,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 1"
+  },
+  {
+   "id": "l01_sign_6",
+   "file": "voice/l01_sign_6.mp3",
+   "who": "pilo",
+   "text": "دروازه قفل است. کلید زمان زیر زمین، در لانهٔ روباه است؛ از لوله پایین برو و پیلو را بفرست!",
+   "level": 1,
+   "kind": "sign",
+   "event": "تابلوی 6 مرحلهٔ 1"
+  },
+  {
+   "id": "l02_intro_1",
+   "file": "voice/l02_intro_1.mp3",
+   "who": "pilo",
+   "text": "این جنگل سه راه دارد: بالای کلاهک قارچ‌ها، روی زمین، و تونل زیر تپه.",
+   "level": 2,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 2"
+  },
+  {
+   "id": "l02_intro_2",
+   "file": "voice/l02_intro_2.mp3",
+   "who": "nima",
+   "text": "من از قارچ‌ها بالا می‌روم!",
+   "level": 2,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 2"
+  },
+  {
+   "id": "l02_sign_1",
+   "file": "voice/l02_sign_1.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 2,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 2"
+  },
+  {
+   "id": "l02_sign_2",
+   "file": "voice/l02_sign_2.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 2,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 2"
+  },
+  {
+   "id": "l03_intro_1",
+   "file": "voice/l03_intro_1.mp3",
+   "who": "pilo",
+   "text": "کلید زمان زیر زمین است، در لانهٔ روباه. از لوله پایین برو.",
+   "level": 3,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 3"
+  },
+  {
+   "id": "l03_intro_2",
+   "file": "voice/l03_intro_2.mp3",
+   "who": "nima",
+   "text": "و اگر از بالا بروم؟",
+   "level": 3,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 3"
+  },
+  {
+   "id": "l03_intro_3",
+   "file": "voice/l03_intro_3.mp3",
+   "who": "pilo",
+   "text": "سکه‌ها بیشترند، ولی کلید آن بالا نیست!",
+   "level": 3,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 3"
+  },
+  {
+   "id": "l03_sign_1",
+   "file": "voice/l03_sign_1.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 3,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 3"
+  },
+  {
+   "id": "l03_sign_2",
+   "file": "voice/l03_sign_2.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 3,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 3"
+  },
+  {
+   "id": "l04_intro_1",
+   "file": "voice/l04_intro_1.mp3",
+   "who": "pilo",
+   "text": "سنجابک گفته کلید همیشه در راهی است که کمتر کسی می‌رود.",
+   "level": 4,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 4"
+  },
+  {
+   "id": "l04_sign_1",
+   "file": "voice/l04_sign_1.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 4,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 4"
+  },
+  {
+   "id": "l04_sign_2",
+   "file": "voice/l04_sign_2.mp3",
+   "who": "pilo",
+   "text": "سکوی خیلی بلند! شاخ‌طلا پرش دوبل دارد.",
+   "level": 4,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 4"
+  },
+  {
+   "id": "l04_sign_3",
+   "file": "voice/l04_sign_3.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 4,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 4"
+  },
+  {
+   "id": "l04_sign_4",
+   "file": "voice/l04_sign_4.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 4,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 4"
+  },
+  {
+   "id": "l05_intro_1",
+   "file": "voice/l05_intro_1.mp3",
+   "who": "nima",
+   "text": "صدای خرس می‌آید... نزدیکیم!",
+   "level": 5,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 5"
+  },
+  {
+   "id": "l05_sign_1",
+   "file": "voice/l05_sign_1.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 5,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 5"
+  },
+  {
+   "id": "l05_sign_2",
+   "file": "voice/l05_sign_2.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 5,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 5"
+  },
+  {
+   "id": "l05_sign_3",
+   "file": "voice/l05_sign_3.mp3",
+   "who": "pilo",
+   "text": "چاه بلند! با سنجابک از دیوارهایش بالا برو؛ بالای آن الماس است.",
+   "level": 5,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 5"
+  },
+  {
+   "id": "l05_sign_4",
+   "file": "voice/l05_sign_4.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 5,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 5"
+  },
+  {
+   "id": "l06_intro_1",
+   "file": "voice/l06_intro_1.mp3",
+   "who": "pilo",
+   "text": "آخرین مرحلهٔ جنگل. بعد از این خرس پیر است!",
+   "level": 6,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 6"
+  },
+  {
+   "id": "l06_sign_1",
+   "file": "voice/l06_sign_1.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 6,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 6"
+  },
+  {
+   "id": "l06_sign_2",
+   "file": "voice/l06_sign_2.mp3",
+   "who": "pilo",
+   "text": "سکوی خیلی بلند! شاخ‌طلا پرش دوبل دارد.",
+   "level": 6,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 6"
+  },
+  {
+   "id": "l06_sign_3",
+   "file": "voice/l06_sign_3.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 6,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 6"
+  },
+  {
+   "id": "l06_sign_4",
+   "file": "voice/l06_sign_4.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 6,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 6"
+  },
+  {
+   "id": "l07_intro_1",
+   "file": "voice/l07_intro_1.mp3",
+   "who": "pilo",
+   "text": "راه مخفی؛ پر از گنج! الماس افسانه‌ای این جهان همین‌جاست.",
+   "level": 7,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 7"
+  },
+  {
+   "id": "l07_outro_1",
+   "file": "voice/l07_outro_1.mp3",
+   "who": "nima",
+   "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
+   "level": 7,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 7"
+  },
+  {
+   "id": "l07_sign_1",
+   "file": "voice/l07_sign_1.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 7,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 7"
+  },
+  {
+   "id": "l07_sign_2",
+   "file": "voice/l07_sign_2.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 7,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 7"
+  },
+  {
+   "id": "l07_sign_3",
+   "file": "voice/l07_sign_3.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 7,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 7"
+  },
+  {
+   "id": "l08_intro_1",
+   "file": "voice/l08_intro_1.mp3",
+   "who": "pilo",
+   "text": "خرس پیر جنگل! طلسم سایه او را عصبانی کرده. روی سرش بپر، تیر بزن یا مرا بفرست تا آزاد شود!",
+   "level": 8,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 8"
+  },
+  {
+   "id": "l08_outro_1",
+   "file": "voice/l08_outro_1.mp3",
+   "who": "bear",
+   "text": "سایه‌ها دستور کسی را اجرا می‌کنند... مراقب باشید. این قلب زمان مال شماست.",
+   "level": 8,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 8"
+  },
+  {
+   "id": "l08_outro_2",
+   "file": "voice/l08_outro_2.mp3",
+   "who": "squirrel",
+   "text": "من سنجابکم! از تنهٔ درخت و دیوار بالا می‌روم؛ هر جا دیوار بلندی بود، مرا انتخاب کن.",
+   "level": 8,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 8"
+  },
+  {
+   "id": "l08_outro_3",
+   "file": "voice/l08_outro_3.mp3",
+   "who": "pilo",
+   "text": "از حالا در دهکده یا با دکمهٔ همراه، می‌توانی او را انتخاب کنی.",
+   "level": 8,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 8"
   },
   {
    "id": "l17_intro_1",
    "file": "voice/l17_intro_1.mp3",
-   "who": "nima",
-   "text": "باد نمی‌وزد! چطور از این شکاف رد شوم؟",
+   "who": "pilo",
+   "text": "هرم! از رویش برو، یا سنگ ترک‌دار را بشکن و از وسطش رد شو.",
    "level": 17,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 17"
@@ -903,8 +1620,17 @@
   {
    "id": "l17_intro_2",
    "file": "voice/l17_intro_2.mp3",
+   "who": "nima",
+   "text": "وسط هرم چه هست؟",
+   "level": 17,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 17"
+  },
+  {
+   "id": "l17_intro_3",
+   "file": "voice/l17_intro_3.mp3",
    "who": "pilo",
-   "text": "شاید باد مالِ زمانِ دیگری است...",
+   "text": "برویم ببینیم!",
    "level": 17,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 17"
@@ -913,16 +1639,25 @@
    "id": "l17_sign_1",
    "file": "voice/l17_sign_1.mp3",
    "who": "pilo",
-   "text": "باد فقط در گذشته می‌وزید.",
+   "text": "شن روان! تند بپر، وگرنه فرو می‌روی.",
    "level": 17,
    "kind": "sign",
    "event": "تابلوی 1 مرحلهٔ 17"
   },
   {
+   "id": "l17_sign_2",
+   "file": "voice/l17_sign_2.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 17,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 17"
+  },
+  {
    "id": "l18_intro_1",
    "file": "voice/l18_intro_1.mp3",
-   "who": "ghubarak",
-   "text": "هی‌هی! این تکهٔ زمان مال من است... شوخی کردم! اگر می‌توانی مرا بگیر!",
+   "who": "pilo",
+   "text": "شن روان بین تپه‌ها! تند بپر، یا با قارچ فنری برو روی تخته‌ها.",
    "level": 18,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 18"
@@ -930,26 +1665,62 @@
   {
    "id": "l18_intro_2",
    "file": "voice/l18_intro_2.mp3",
-   "who": "pilo",
-   "text": "دنبالش برو! عجله نکن؛ کنار دروازه منتظر می‌ماند.",
+   "who": "nima",
+   "text": "بالای چاله وسطی یک جعبهٔ پنهان هست؟",
    "level": 18,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 18"
   },
   {
-   "id": "l18_rescue_1",
-   "file": "voice/l18_rescue_1.mp3",
-   "who": "ghubarak",
-   "text": "گرفتی! باشه، باشه... تکهٔ زمان را با هم برمی‌گردانیم.",
+   "id": "l18_intro_3",
+   "file": "voice/l18_intro_3.mp3",
+   "who": "grandma",
+   "text": "اولین الماس افسانه‌ای در مرحلهٔ مخفی این بیابان است.",
    "level": 18,
-   "kind": "rescue",
-   "event": "نجات دوست — مرحلهٔ 18"
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 18"
+  },
+  {
+   "id": "l18_sign_1",
+   "file": "voice/l18_sign_1.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 18,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 18"
+  },
+  {
+   "id": "l18_sign_2",
+   "file": "voice/l18_sign_2.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 18,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 18"
+  },
+  {
+   "id": "l18_sign_3",
+   "file": "voice/l18_sign_3.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 18,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 18"
+  },
+  {
+   "id": "l18_sign_4",
+   "file": "voice/l18_sign_4.mp3",
+   "who": "pilo",
+   "text": "شن روان! تند بپر، وگرنه فرو می‌روی.",
+   "level": 18,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 18"
   },
   {
    "id": "l19_intro_1",
    "file": "voice/l19_intro_1.mp3",
-   "who": "squirrel",
-   "text": "پیلو! نیما! یک ابرِ کوچولو توی حبابِ زمان گیر افتاده!",
+   "who": "pilo",
+   "text": "دو هرم و یک بیابان شن روان. کلید زیر زمین است.",
    "level": 19,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 19"
@@ -958,34 +1729,43 @@
    "id": "l19_intro_2",
    "file": "voice/l19_intro_2.mp3",
    "who": "nima",
-   "text": "آن بالا روی جزیره است. اول باید دروازه را باز کنیم.",
+   "text": "گرم است... عرق کردم!",
    "level": 19,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 19"
   },
   {
-   "id": "l19_rescue_1",
-   "file": "voice/l19_rescue_1.mp3",
-   "who": "pilo",
-   "text": "ابرِ کوچولو آزاد شد! ببین چقدر خوشحال است!",
-   "level": 19,
-   "kind": "rescue",
-   "event": "نجات دوست — مرحلهٔ 19"
-  },
-  {
    "id": "l19_sign_1",
    "file": "voice/l19_sign_1.mp3",
    "who": "pilo",
-   "text": "آسیاب، دروازه را باز می‌کند.",
+   "text": "شن روان! تند بپر، وگرنه فرو می‌روی.",
    "level": 19,
    "kind": "sign",
    "event": "تابلوی 1 مرحلهٔ 19"
   },
   {
+   "id": "l19_sign_2",
+   "file": "voice/l19_sign_2.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 19,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 19"
+  },
+  {
+   "id": "l19_sign_3",
+   "file": "voice/l19_sign_3.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 19,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 19"
+  },
+  {
    "id": "l20_intro_1",
    "file": "voice/l20_intro_1.mp3",
-   "who": "pilo",
-   "text": "دروازهٔ آسمان! آخرین تکهٔ زمانِ جزیره‌ها پشتِ آن است.",
+   "who": "nima",
+   "text": "گرم است... عرق کردم!",
    "level": 20,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 20"
@@ -993,38 +1773,2009 @@
   {
    "id": "l20_intro_2",
    "file": "voice/l20_intro_2.mp3",
-   "who": "nima",
-   "text": "هرچه یاد گرفتیم: باد، ابر، پلِ نور، آسیاب!",
+   "who": "pilo",
+   "text": "سایه بیاندازیم و جلو برویم.",
    "level": 20,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 20"
   },
   {
-   "id": "l20_outro_1",
-   "file": "voice/l20_outro_1.mp3",
-   "who": "ghubarak",
-   "text": "دروازهٔ آسمان باز شد! ولی... چند تکه از دستم توی غارهای بلورین افتاد.",
-   "level": 20,
-   "kind": "outro",
-   "event": "پایان مرحله — مرحلهٔ 20"
-  },
-  {
-   "id": "l20_outro_2",
-   "file": "voice/l20_outro_2.mp3",
-   "who": "nima",
-   "text": "غار؟ تاریک نیست؟",
-   "level": 20,
-   "kind": "outro",
-   "event": "پایان مرحله — مرحلهٔ 20"
-  },
-  {
-   "id": "l20_outro_3",
-   "file": "voice/l20_outro_3.mp3",
+   "id": "l20_sign_1",
+   "file": "voice/l20_sign_1.mp3",
    "who": "pilo",
-   "text": "نگران نباش؛ آن‌جا بلورها با نور روشن می‌شوند. به‌سوی غارها!",
+   "text": "شن روان! تند بپر، وگرنه فرو می‌روی.",
    "level": 20,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 20"
+  },
+  {
+   "id": "l20_sign_2",
+   "file": "voice/l20_sign_2.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 20,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 20"
+  },
+  {
+   "id": "l20_sign_3",
+   "file": "voice/l20_sign_3.mp3",
+   "who": "pilo",
+   "text": "دیوار آجری! توپولی با دَش آجر را می‌شکند (یا پیلو را پرتاب کن).",
+   "level": 20,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 20"
+  },
+  {
+   "id": "l20_sign_4",
+   "file": "voice/l20_sign_4.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 20,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 20"
+  },
+  {
+   "id": "l21_intro_1",
+   "file": "voice/l21_intro_1.mp3",
+   "who": "pilo",
+   "text": "کلید زمان را پیدا کنیم!",
+   "level": 21,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 21"
+  },
+  {
+   "id": "l21_sign_1",
+   "file": "voice/l21_sign_1.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 21,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 21"
+  },
+  {
+   "id": "l21_sign_2",
+   "file": "voice/l21_sign_2.mp3",
+   "who": "pilo",
+   "text": "شن روان! تند بپر، وگرنه فرو می‌روی.",
+   "level": 21,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 21"
+  },
+  {
+   "id": "l21_sign_3",
+   "file": "voice/l21_sign_3.mp3",
+   "who": "pilo",
+   "text": "سکوی خیلی بلند! شاخ‌طلا پرش دوبل دارد.",
+   "level": 21,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 21"
+  },
+  {
+   "id": "l21_sign_4",
+   "file": "voice/l21_sign_4.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 21,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 21"
+  },
+  {
+   "id": "l21_sign_5",
+   "file": "voice/l21_sign_5.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 21,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 21"
+  },
+  {
+   "id": "l22_intro_1",
+   "file": "voice/l22_intro_1.mp3",
+   "who": "pilo",
+   "text": "کرم شنی زیر شن حرکت می‌کند. آماده باش!",
+   "level": 22,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 22"
+  },
+  {
+   "id": "l22_sign_1",
+   "file": "voice/l22_sign_1.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 22,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 22"
+  },
+  {
+   "id": "l22_sign_2",
+   "file": "voice/l22_sign_2.mp3",
+   "who": "pilo",
+   "text": "تونل خار! گربهٔ سایه از روی خار بی‌آسیب رد می‌شود.",
+   "level": 22,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 22"
+  },
+  {
+   "id": "l22_sign_3",
+   "file": "voice/l22_sign_3.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 22,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 22"
+  },
+  {
+   "id": "l22_sign_4",
+   "file": "voice/l22_sign_4.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 22,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 22"
+  },
+  {
+   "id": "l22_sign_5",
+   "file": "voice/l22_sign_5.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 22,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 22"
+  },
+  {
+   "id": "l23_intro_1",
+   "file": "voice/l23_intro_1.mp3",
+   "who": "pilo",
+   "text": "راه مخفی؛ پر از گنج! الماس افسانه‌ای این جهان همین‌جاست.",
+   "level": 23,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 23"
+  },
+  {
+   "id": "l23_outro_1",
+   "file": "voice/l23_outro_1.mp3",
+   "who": "nima",
+   "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
+   "level": 23,
    "kind": "outro",
-   "event": "پایان مرحله — مرحلهٔ 20"
+   "event": "پایان مرحله — مرحلهٔ 23"
+  },
+  {
+   "id": "l23_sign_1",
+   "file": "voice/l23_sign_1.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 23,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 23"
+  },
+  {
+   "id": "l23_sign_2",
+   "file": "voice/l23_sign_2.mp3",
+   "who": "pilo",
+   "text": "شن روان! تند بپر، وگرنه فرو می‌روی.",
+   "level": 23,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 23"
+  },
+  {
+   "id": "l23_sign_3",
+   "file": "voice/l23_sign_3.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 23,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 23"
+  },
+  {
+   "id": "l23_sign_4",
+   "file": "voice/l23_sign_4.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 23,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 23"
+  },
+  {
+   "id": "l24_intro_1",
+   "file": "voice/l24_intro_1.mp3",
+   "who": "pilo",
+   "text": "کرم شنی! طلسم سایه او را عصبانی کرده. روی سرش بپر، تیر بزن یا مرا بفرست تا آزاد شود!",
+   "level": 24,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 24"
+  },
+  {
+   "id": "l24_outro_1",
+   "file": "voice/l24_outro_1.mp3",
+   "who": "worm",
+   "text": "زیر شن، تصویر یک نقاب‌دار بود... او همهٔ این‌ها را می‌خواهد.",
+   "level": 24,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 24"
+  },
+  {
+   "id": "l24_outro_2",
+   "file": "voice/l24_outro_2.mp3",
+   "who": "mole",
+   "text": "من خال‌خالی‌ام! در شن روان فرو نمی‌روم و جعبه‌های پنهان را حس می‌کنم.",
+   "level": 24,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 24"
+  },
+  {
+   "id": "l24_outro_3",
+   "file": "voice/l24_outro_3.mp3",
+   "who": "pilo",
+   "text": "از حالا در دهکده یا با دکمهٔ همراه، می‌توانی او را انتخاب کنی.",
+   "level": 24,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 24"
+  },
+  {
+   "id": "l65_intro_1",
+   "file": "voice/l65_intro_1.mp3",
+   "who": "pilo",
+   "text": "اینجا همه‌چیز وارونه است: تسمهٔ برعکس، پله‌های محو، ستون باد.",
+   "level": 65,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 65"
+  },
+  {
+   "id": "l65_intro_2",
+   "file": "voice/l65_intro_2.mp3",
+   "who": "nima",
+   "text": "سرم گیج می‌رود!",
+   "level": 65,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 65"
+  },
+  {
+   "id": "l65_sign_1",
+   "file": "voice/l65_sign_1.mp3",
+   "who": "pilo",
+   "text": "تسمه‌ها تو را می‌برند؛ خلاف جهتشان بدو!",
+   "level": 65,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 65"
+  },
+  {
+   "id": "l65_sign_2",
+   "file": "voice/l65_sign_2.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 65,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 65"
+  },
+  {
+   "id": "l65_sign_3",
+   "file": "voice/l65_sign_3.mp3",
+   "who": "pilo",
+   "text": "سکوهای سایه پیدا و ناپیدا می‌شوند. صبر کن و به‌موقع بپر!",
+   "level": 65,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 65"
+  },
+  {
+   "id": "l66_intro_1",
+   "file": "voice/l66_intro_1.mp3",
+   "who": "pilo",
+   "text": "پله‌های آینه‌ای! پل وسطشان فقط در گذشته هست.",
+   "level": 66,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 66"
+  },
+  {
+   "id": "l66_intro_2",
+   "file": "voice/l66_intro_2.mp3",
+   "who": "nima",
+   "text": "عدسی زمان آماده است!",
+   "level": 66,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 66"
+  },
+  {
+   "id": "l66_intro_3",
+   "file": "voice/l66_intro_3.mp3",
+   "who": "zurvan",
+   "text": "زمان مال من است!",
+   "level": 66,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 66"
+  },
+  {
+   "id": "l66_intro_4",
+   "file": "voice/l66_intro_4.mp3",
+   "who": "nima",
+   "text": "زمان مال همه است.",
+   "level": 66,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 66"
+  },
+  {
+   "id": "l66_sign_1",
+   "file": "voice/l66_sign_1.mp3",
+   "who": "pilo",
+   "text": "شن روان! تند بپر، وگرنه فرو می‌روی.",
+   "level": 66,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 66"
+  },
+  {
+   "id": "l66_sign_2",
+   "file": "voice/l66_sign_2.mp3",
+   "who": "pilo",
+   "text": "یخ لیز است! زودتر ترمز کن.",
+   "level": 66,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 66"
+  },
+  {
+   "id": "l66_sign_3",
+   "file": "voice/l66_sign_3.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 66,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 66"
+  },
+  {
+   "id": "l66_sign_4",
+   "file": "voice/l66_sign_4.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 66,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 66"
+  },
+  {
+   "id": "l66_sign_5",
+   "file": "voice/l66_sign_5.mp3",
+   "who": "pilo",
+   "text": "باد تو را می‌برد؛ ستون باد رو به بالا هلت می‌دهد.",
+   "level": 66,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 66"
+  },
+  {
+   "id": "l67_intro_1",
+   "file": "voice/l67_intro_1.mp3",
+   "who": "pilo",
+   "text": "همهٔ سرزمین‌ها اینجا قاطی شده‌اند. کلید زیر زمین وارونه است.",
+   "level": 67,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 67"
+  },
+  {
+   "id": "l67_intro_2",
+   "file": "voice/l67_intro_2.mp3",
+   "who": "nima",
+   "text": "آخرین قدم‌ها تا ساعت وارونه!",
+   "level": 67,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 67"
+  },
+  {
+   "id": "l67_sign_1",
+   "file": "voice/l67_sign_1.mp3",
+   "who": "pilo",
+   "text": "آب عمیق! با دکمهٔ پرش شنا کن و رو به بالا برو.",
+   "level": 67,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 67"
+  },
+  {
+   "id": "l67_sign_2",
+   "file": "voice/l67_sign_2.mp3",
+   "who": "pilo",
+   "text": "باد تو را می‌برد؛ ستون باد رو به بالا هلت می‌دهد.",
+   "level": 67,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 67"
+  },
+  {
+   "id": "l67_sign_3",
+   "file": "voice/l67_sign_3.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 67,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 67"
+  },
+  {
+   "id": "l67_sign_4",
+   "file": "voice/l67_sign_4.mp3",
+   "who": "pilo",
+   "text": "تسمه‌ها تو را می‌برند؛ خلاف جهتشان بدو!",
+   "level": 67,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 67"
+  },
+  {
+   "id": "l67_sign_5",
+   "file": "voice/l67_sign_5.mp3",
+   "who": "pilo",
+   "text": "سکوهای سایه پیدا و ناپیدا می‌شوند. صبر کن و به‌موقع بپر!",
+   "level": 67,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 67"
+  },
+  {
+   "id": "l68_intro_1",
+   "file": "voice/l68_intro_1.mp3",
+   "who": "kian",
+   "text": "دهکده‌ام... دارم صدایش را می‌شنوم!",
+   "level": 68,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 68"
+  },
+  {
+   "id": "l68_sign_1",
+   "file": "voice/l68_sign_1.mp3",
+   "who": "pilo",
+   "text": "یخ لیز است! زودتر ترمز کن.",
+   "level": 68,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 68"
+  },
+  {
+   "id": "l68_sign_2",
+   "file": "voice/l68_sign_2.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 68,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 68"
+  },
+  {
+   "id": "l68_sign_3",
+   "file": "voice/l68_sign_3.mp3",
+   "who": "pilo",
+   "text": "شن روان! تند بپر، وگرنه فرو می‌روی.",
+   "level": 68,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 68"
+  },
+  {
+   "id": "l68_sign_4",
+   "file": "voice/l68_sign_4.mp3",
+   "who": "pilo",
+   "text": "تونل خار! گربهٔ سایه از روی خار بی‌آسیب رد می‌شود.",
+   "level": 68,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 68"
+  },
+  {
+   "id": "l68_sign_5",
+   "file": "voice/l68_sign_5.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 68,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 68"
+  },
+  {
+   "id": "l68_sign_6",
+   "file": "voice/l68_sign_6.mp3",
+   "who": "pilo",
+   "text": "باد تو را می‌برد؛ ستون باد رو به بالا هلت می‌دهد.",
+   "level": 68,
+   "kind": "sign",
+   "event": "تابلوی 6 مرحلهٔ 68"
+  },
+  {
+   "id": "l68_sign_7",
+   "file": "voice/l68_sign_7.mp3",
+   "who": "pilo",
+   "text": "آب عمیق! با دکمهٔ پرش شنا کن و رو به بالا برو.",
+   "level": 68,
+   "kind": "sign",
+   "event": "تابلوی 7 مرحلهٔ 68"
+  },
+  {
+   "id": "l69_intro_1",
+   "file": "voice/l69_intro_1.mp3",
+   "who": "pilo",
+   "text": "کلید زمان را پیدا کنیم!",
+   "level": 69,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 69"
+  },
+  {
+   "id": "l69_sign_1",
+   "file": "voice/l69_sign_1.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 69,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 69"
+  },
+  {
+   "id": "l69_sign_2",
+   "file": "voice/l69_sign_2.mp3",
+   "who": "pilo",
+   "text": "شن روان! تند بپر، وگرنه فرو می‌روی.",
+   "level": 69,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 69"
+  },
+  {
+   "id": "l69_sign_3",
+   "file": "voice/l69_sign_3.mp3",
+   "who": "pilo",
+   "text": "تونل خار! گربهٔ سایه از روی خار بی‌آسیب رد می‌شود.",
+   "level": 69,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 69"
+  },
+  {
+   "id": "l69_sign_4",
+   "file": "voice/l69_sign_4.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 69,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 69"
+  },
+  {
+   "id": "l69_sign_5",
+   "file": "voice/l69_sign_5.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 69,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 69"
+  },
+  {
+   "id": "l69_sign_6",
+   "file": "voice/l69_sign_6.mp3",
+   "who": "pilo",
+   "text": "سکوهای سایه پیدا و ناپیدا می‌شوند. صبر کن و به‌موقع بپر!",
+   "level": 69,
+   "kind": "sign",
+   "event": "تابلوی 6 مرحلهٔ 69"
+  },
+  {
+   "id": "l69_sign_7",
+   "file": "voice/l69_sign_7.mp3",
+   "who": "pilo",
+   "text": "آب عمیق! با دکمهٔ پرش شنا کن و رو به بالا برو.",
+   "level": 69,
+   "kind": "sign",
+   "event": "تابلوی 7 مرحلهٔ 69"
+  },
+  {
+   "id": "l70_intro_1",
+   "file": "voice/l70_intro_1.mp3",
+   "who": "pilo",
+   "text": "ساعت وارونه آن بالاست!",
+   "level": 70,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 70"
+  },
+  {
+   "id": "l70_sign_1",
+   "file": "voice/l70_sign_1.mp3",
+   "who": "pilo",
+   "text": "آب عمیق! با دکمهٔ پرش شنا کن و رو به بالا برو.",
+   "level": 70,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 70"
+  },
+  {
+   "id": "l70_sign_2",
+   "file": "voice/l70_sign_2.mp3",
+   "who": "pilo",
+   "text": "یخ لیز است! زودتر ترمز کن.",
+   "level": 70,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 70"
+  },
+  {
+   "id": "l70_sign_3",
+   "file": "voice/l70_sign_3.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 70,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 70"
+  },
+  {
+   "id": "l70_sign_4",
+   "file": "voice/l70_sign_4.mp3",
+   "who": "pilo",
+   "text": "سکوی خیلی بلند! شاخ‌طلا پرش دوبل دارد.",
+   "level": 70,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 70"
+  },
+  {
+   "id": "l70_sign_5",
+   "file": "voice/l70_sign_5.mp3",
+   "who": "pilo",
+   "text": "باد تو را می‌برد؛ ستون باد رو به بالا هلت می‌دهد.",
+   "level": 70,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 70"
+  },
+  {
+   "id": "l70_sign_6",
+   "file": "voice/l70_sign_6.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 70,
+   "kind": "sign",
+   "event": "تابلوی 6 مرحلهٔ 70"
+  },
+  {
+   "id": "l71_intro_1",
+   "file": "voice/l71_intro_1.mp3",
+   "who": "pilo",
+   "text": "راه مخفی؛ پر از گنج! الماس افسانه‌ای این جهان همین‌جاست.",
+   "level": 71,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 71"
+  },
+  {
+   "id": "l71_outro_1",
+   "file": "voice/l71_outro_1.mp3",
+   "who": "nima",
+   "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
+   "level": 71,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 71"
+  },
+  {
+   "id": "l71_sign_1",
+   "file": "voice/l71_sign_1.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 71,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 71"
+  },
+  {
+   "id": "l71_sign_2",
+   "file": "voice/l71_sign_2.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 71,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 71"
+  },
+  {
+   "id": "l71_sign_3",
+   "file": "voice/l71_sign_3.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 71,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 71"
+  },
+  {
+   "id": "l71_sign_4",
+   "file": "voice/l71_sign_4.mp3",
+   "who": "pilo",
+   "text": "تسمه‌ها تو را می‌برند؛ خلاف جهتشان بدو!",
+   "level": 71,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 71"
+  },
+  {
+   "id": "l72_intro_1",
+   "file": "voice/l72_intro_1.mp3",
+   "who": "pilo",
+   "text": "زروان! طلسم سایه او را عصبانی کرده. روی سرش بپر، تیر بزن یا مرا بفرست تا آزاد شود!",
+   "level": 72,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 72"
+  },
+  {
+   "id": "l72_outro_1",
+   "file": "voice/l72_outro_1.mp3",
+   "who": "zurvan",
+   "text": "ساعت شکست... حق با استاد بود. من دهکده را تعمیر می‌کنم.",
+   "level": 72,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 72"
+  },
+  {
+   "id": "l72_outro_2",
+   "file": "voice/l72_outro_2.mp3",
+   "who": "dragon",
+   "text": "من اژدهاکم، هدیهٔ پایان! با من بدون پایین آمدن سُر می‌خوری.",
+   "level": 72,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 72"
+  },
+  {
+   "id": "l72_outro_3",
+   "file": "voice/l72_outro_3.mp3",
+   "who": "pilo",
+   "text": "از حالا در دهکده یا با دکمهٔ همراه، می‌توانی او را انتخاب کنی.",
+   "level": 72,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 72"
+  },
+  {
+   "id": "l72_sign_1",
+   "file": "voice/l72_sign_1.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 72,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 72"
+  },
+  {
+   "id": "l57_intro_1",
+   "file": "voice/l57_intro_1.mp3",
+   "who": "pilo",
+   "text": "دیوار قلعه! از روی کنگره‌ها برو یا دیوار ترک‌دار سیاهچال را بشکن.",
+   "level": 57,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 57"
+  },
+  {
+   "id": "l57_intro_2",
+   "file": "voice/l57_intro_2.mp3",
+   "who": "nima",
+   "text": "سیاهچال؟ پر از خار است؟",
+   "level": 57,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 57"
+  },
+  {
+   "id": "l57_intro_3",
+   "file": "voice/l57_intro_3.mp3",
+   "who": "pilo",
+   "text": "و پر از سکه!",
+   "level": 57,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 57"
+  },
+  {
+   "id": "l57_sign_1",
+   "file": "voice/l57_sign_1.mp3",
+   "who": "pilo",
+   "text": "سکوهای سایه پیدا و ناپیدا می‌شوند. صبر کن و به‌موقع بپر!",
+   "level": 57,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 57"
+  },
+  {
+   "id": "l57_sign_2",
+   "file": "voice/l57_sign_2.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 57,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 57"
+  },
+  {
+   "id": "l58_intro_1",
+   "file": "voice/l58_intro_1.mp3",
+   "who": "pilo",
+   "text": "تالار خارها: سکوهای سایه پایین، تخته‌ها و خفاش‌ها بالا.",
+   "level": 58,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 58"
+  },
+  {
+   "id": "l58_intro_2",
+   "file": "voice/l58_intro_2.mp3",
+   "who": "nima",
+   "text": "هر دو سخت است... بالا را امتحان می‌کنم.",
+   "level": 58,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 58"
+  },
+  {
+   "id": "l58_intro_3",
+   "file": "voice/l58_intro_3.mp3",
+   "who": "kian",
+   "text": "نگهبان‌ها پشت سرمان‌اند. نترس!",
+   "level": 58,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 58"
+  },
+  {
+   "id": "l58_sign_1",
+   "file": "voice/l58_sign_1.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 58,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 58"
+  },
+  {
+   "id": "l58_sign_2",
+   "file": "voice/l58_sign_2.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 58,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 58"
+  },
+  {
+   "id": "l58_sign_3",
+   "file": "voice/l58_sign_3.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 58,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 58"
+  },
+  {
+   "id": "l58_sign_4",
+   "file": "voice/l58_sign_4.mp3",
+   "who": "pilo",
+   "text": "سکوهای سایه پیدا و ناپیدا می‌شوند. صبر کن و به‌موقع بپر!",
+   "level": 58,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 58"
+  },
+  {
+   "id": "l59_intro_1",
+   "file": "voice/l59_intro_1.mp3",
+   "who": "pilo",
+   "text": "شاه‌سایه نزدیک است. کلید زیر قلعه است.",
+   "level": 59,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 59"
+  },
+  {
+   "id": "l59_intro_2",
+   "file": "voice/l59_intro_2.mp3",
+   "who": "nima",
+   "text": "نمی‌ترسم! با هم می‌رویم.",
+   "level": 59,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 59"
+  },
+  {
+   "id": "l59_sign_1",
+   "file": "voice/l59_sign_1.mp3",
+   "who": "pilo",
+   "text": "سکوهای سایه پیدا و ناپیدا می‌شوند. صبر کن و به‌موقع بپر!",
+   "level": 59,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 59"
+  },
+  {
+   "id": "l59_sign_2",
+   "file": "voice/l59_sign_2.mp3",
+   "who": "pilo",
+   "text": "ابر رعدی! وقتی برق زد صبر کن، بعد بدو.",
+   "level": 59,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 59"
+  },
+  {
+   "id": "l59_sign_3",
+   "file": "voice/l59_sign_3.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 59,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 59"
+  },
+  {
+   "id": "l59_sign_4",
+   "file": "voice/l59_sign_4.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 59,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 59"
+  },
+  {
+   "id": "l60_intro_1",
+   "file": "voice/l60_intro_1.mp3",
+   "who": "shadow_king",
+   "text": "چرا آمده‌اید؟ اینجا همه‌چیز ساکت و بی‌رنگ است.",
+   "level": 60,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 60"
+  },
+  {
+   "id": "l60_intro_2",
+   "file": "voice/l60_intro_2.mp3",
+   "who": "nima",
+   "text": "چون رنگ‌ها را برمی‌گردانیم!",
+   "level": 60,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 60"
+  },
+  {
+   "id": "l60_sign_1",
+   "file": "voice/l60_sign_1.mp3",
+   "who": "pilo",
+   "text": "سکوهای سایه پیدا و ناپیدا می‌شوند. صبر کن و به‌موقع بپر!",
+   "level": 60,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 60"
+  },
+  {
+   "id": "l60_sign_2",
+   "file": "voice/l60_sign_2.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 60,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 60"
+  },
+  {
+   "id": "l60_sign_3",
+   "file": "voice/l60_sign_3.mp3",
+   "who": "pilo",
+   "text": "تونل خار! گربهٔ سایه از روی خار بی‌آسیب رد می‌شود.",
+   "level": 60,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 60"
+  },
+  {
+   "id": "l60_sign_4",
+   "file": "voice/l60_sign_4.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 60,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 60"
+  },
+  {
+   "id": "l60_sign_5",
+   "file": "voice/l60_sign_5.mp3",
+   "who": "pilo",
+   "text": "ابر رعدی! وقتی برق زد صبر کن، بعد بدو.",
+   "level": 60,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 60"
+  },
+  {
+   "id": "l60_sign_6",
+   "file": "voice/l60_sign_6.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 60,
+   "kind": "sign",
+   "event": "تابلوی 6 مرحلهٔ 60"
+  },
+  {
+   "id": "l61_intro_1",
+   "file": "voice/l61_intro_1.mp3",
+   "who": "pilo",
+   "text": "کلید زمان را پیدا کنیم!",
+   "level": 61,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 61"
+  },
+  {
+   "id": "l61_sign_1",
+   "file": "voice/l61_sign_1.mp3",
+   "who": "pilo",
+   "text": "سکوهای سایه پیدا و ناپیدا می‌شوند. صبر کن و به‌موقع بپر!",
+   "level": 61,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 61"
+  },
+  {
+   "id": "l61_sign_2",
+   "file": "voice/l61_sign_2.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 61,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 61"
+  },
+  {
+   "id": "l61_sign_3",
+   "file": "voice/l61_sign_3.mp3",
+   "who": "pilo",
+   "text": "سکوی خیلی بلند! شاخ‌طلا پرش دوبل دارد.",
+   "level": 61,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 61"
+  },
+  {
+   "id": "l61_sign_4",
+   "file": "voice/l61_sign_4.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 61,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 61"
+  },
+  {
+   "id": "l62_intro_1",
+   "file": "voice/l62_intro_1.mp3",
+   "who": "pilo",
+   "text": "تالار شاه‌سایه همین بالاست. همهٔ همراه‌ها آماده‌اند!",
+   "level": 62,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 62"
+  },
+  {
+   "id": "l62_sign_1",
+   "file": "voice/l62_sign_1.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 62,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 62"
+  },
+  {
+   "id": "l62_sign_2",
+   "file": "voice/l62_sign_2.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 62,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 62"
+  },
+  {
+   "id": "l62_sign_3",
+   "file": "voice/l62_sign_3.mp3",
+   "who": "pilo",
+   "text": "سایه‌ها آن بالا! با جرقه، حملهٔ پیلو دورتر می‌رسد.",
+   "level": 62,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 62"
+  },
+  {
+   "id": "l62_sign_4",
+   "file": "voice/l62_sign_4.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 62,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 62"
+  },
+  {
+   "id": "l63_intro_1",
+   "file": "voice/l63_intro_1.mp3",
+   "who": "pilo",
+   "text": "راه مخفی؛ پر از گنج! الماس افسانه‌ای این جهان همین‌جاست.",
+   "level": 63,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 63"
+  },
+  {
+   "id": "l63_outro_1",
+   "file": "voice/l63_outro_1.mp3",
+   "who": "nima",
+   "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
+   "level": 63,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 63"
+  },
+  {
+   "id": "l63_sign_1",
+   "file": "voice/l63_sign_1.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 63,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 63"
+  },
+  {
+   "id": "l63_sign_2",
+   "file": "voice/l63_sign_2.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 63,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 63"
+  },
+  {
+   "id": "l63_sign_3",
+   "file": "voice/l63_sign_3.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 63,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 63"
+  },
+  {
+   "id": "l64_intro_1",
+   "file": "voice/l64_intro_1.mp3",
+   "who": "pilo",
+   "text": "شاه‌سایه! طلسم سایه او را عصبانی کرده. روی سرش بپر، تیر بزن یا مرا بفرست تا آزاد شود!",
+   "level": 64,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 64"
+  },
+  {
+   "id": "l64_outro_1",
+   "file": "voice/l64_outro_1.mp3",
+   "who": "shadow_king",
+   "text": "سال‌ها تنها بودم... ممنون که آزادم کردید. از حالا نگهبان شب رنگارستانم.",
+   "level": 64,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 64"
+  },
+  {
+   "id": "l33_intro_1",
+   "file": "voice/l33_intro_1.mp3",
+   "who": "pilo",
+   "text": "پله‌های ابری پیدا و ناپیدا می‌شوند. ستون باد هم تو را بالا می‌برد.",
+   "level": 33,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 33"
+  },
+  {
+   "id": "l33_intro_2",
+   "file": "voice/l33_intro_2.mp3",
+   "who": "nima",
+   "text": "مثل پرواز!",
+   "level": 33,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 33"
+  },
+  {
+   "id": "l33_sign_1",
+   "file": "voice/l33_sign_1.mp3",
+   "who": "pilo",
+   "text": "باد تو را می‌برد؛ ستون باد رو به بالا هلت می‌دهد.",
+   "level": 33,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 33"
+  },
+  {
+   "id": "l33_sign_2",
+   "file": "voice/l33_sign_2.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 33,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 33"
+  },
+  {
+   "id": "l33_sign_3",
+   "file": "voice/l33_sign_3.mp3",
+   "who": "pilo",
+   "text": "ابر رعدی! وقتی برق زد صبر کن، بعد بدو.",
+   "level": 33,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 33"
+  },
+  {
+   "id": "l34_intro_1",
+   "file": "voice/l34_intro_1.mp3",
+   "who": "pilo",
+   "text": "جزیره‌های کوچک روی ابر! از رویشان بپر یا باد را سوار شو.",
+   "level": 34,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 34"
+  },
+  {
+   "id": "l34_intro_2",
+   "file": "voice/l34_intro_2.mp3",
+   "who": "nima",
+   "text": "باد از پشت سرم می‌وزد!",
+   "level": 34,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 34"
+  },
+  {
+   "id": "l34_intro_3",
+   "file": "voice/l34_intro_3.mp3",
+   "who": "ghubarak",
+   "text": "از ابرهای بالا برو؛ باد تو را می‌برد.",
+   "level": 34,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 34"
+  },
+  {
+   "id": "l34_sign_1",
+   "file": "voice/l34_sign_1.mp3",
+   "who": "pilo",
+   "text": "ابر رعدی! وقتی برق زد صبر کن، بعد بدو.",
+   "level": 34,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 34"
+  },
+  {
+   "id": "l34_sign_2",
+   "file": "voice/l34_sign_2.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 34,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 34"
+  },
+  {
+   "id": "l34_sign_3",
+   "file": "voice/l34_sign_3.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 34,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 34"
+  },
+  {
+   "id": "l34_sign_4",
+   "file": "voice/l34_sign_4.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 34,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 34"
+  },
+  {
+   "id": "l34_sign_5",
+   "file": "voice/l34_sign_5.mp3",
+   "who": "pilo",
+   "text": "باد تو را می‌برد؛ ستون باد رو به بالا هلت می‌دهد.",
+   "level": 34,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 34"
+  },
+  {
+   "id": "l35_intro_1",
+   "file": "voice/l35_intro_1.mp3",
+   "who": "pilo",
+   "text": "طوفان نزدیک است. کلید زیر یکی از جزیره‌هاست.",
+   "level": 35,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 35"
+  },
+  {
+   "id": "l35_intro_2",
+   "file": "voice/l35_intro_2.mp3",
+   "who": "nima",
+   "text": "رعد و برق! زود باشیم.",
+   "level": 35,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 35"
+  },
+  {
+   "id": "l35_sign_1",
+   "file": "voice/l35_sign_1.mp3",
+   "who": "pilo",
+   "text": "باد تو را می‌برد؛ ستون باد رو به بالا هلت می‌دهد.",
+   "level": 35,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 35"
+  },
+  {
+   "id": "l35_sign_2",
+   "file": "voice/l35_sign_2.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 35,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 35"
+  },
+  {
+   "id": "l35_sign_3",
+   "file": "voice/l35_sign_3.mp3",
+   "who": "pilo",
+   "text": "ابر رعدی! وقتی برق زد صبر کن، بعد بدو.",
+   "level": 35,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 35"
+  },
+  {
+   "id": "l35_sign_4",
+   "file": "voice/l35_sign_4.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 35,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 35"
+  },
+  {
+   "id": "l36_intro_1",
+   "file": "voice/l36_intro_1.mp3",
+   "who": "pilo",
+   "text": "رعد و برق! صبر کن تا ابر آرام شود.",
+   "level": 36,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 36"
+  },
+  {
+   "id": "l36_sign_1",
+   "file": "voice/l36_sign_1.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 36,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 36"
+  },
+  {
+   "id": "l36_sign_2",
+   "file": "voice/l36_sign_2.mp3",
+   "who": "pilo",
+   "text": "باد تو را می‌برد؛ ستون باد رو به بالا هلت می‌دهد.",
+   "level": 36,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 36"
+  },
+  {
+   "id": "l36_sign_3",
+   "file": "voice/l36_sign_3.mp3",
+   "who": "pilo",
+   "text": "تونل آبی طولانی. لاکی تند شنا می‌کند!",
+   "level": 36,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 36"
+  },
+  {
+   "id": "l36_sign_4",
+   "file": "voice/l36_sign_4.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 36,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 36"
+  },
+  {
+   "id": "l36_sign_5",
+   "file": "voice/l36_sign_5.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 36,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 36"
+  },
+  {
+   "id": "l36_sign_6",
+   "file": "voice/l36_sign_6.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 36,
+   "kind": "sign",
+   "event": "تابلوی 6 مرحلهٔ 36"
+  },
+  {
+   "id": "l37_intro_1",
+   "file": "voice/l37_intro_1.mp3",
+   "who": "pilo",
+   "text": "کلید زمان را پیدا کنیم!",
+   "level": 37,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 37"
+  },
+  {
+   "id": "l37_sign_1",
+   "file": "voice/l37_sign_1.mp3",
+   "who": "pilo",
+   "text": "باد تو را می‌برد؛ ستون باد رو به بالا هلت می‌دهد.",
+   "level": 37,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 37"
+  },
+  {
+   "id": "l37_sign_2",
+   "file": "voice/l37_sign_2.mp3",
+   "who": "pilo",
+   "text": "سُرسُرهٔ یخی. یخک روی یخ لیز نمی‌خورد.",
+   "level": 37,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 37"
+  },
+  {
+   "id": "l37_sign_3",
+   "file": "voice/l37_sign_3.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 37,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 37"
+  },
+  {
+   "id": "l37_sign_4",
+   "file": "voice/l37_sign_4.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 37,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 37"
+  },
+  {
+   "id": "l37_sign_5",
+   "file": "voice/l37_sign_5.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 37,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 37"
+  },
+  {
+   "id": "l38_intro_1",
+   "file": "voice/l38_intro_1.mp3",
+   "who": "ghubarak",
+   "text": "برج طوفان همین بالاست.",
+   "level": 38,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 38"
+  },
+  {
+   "id": "l38_sign_1",
+   "file": "voice/l38_sign_1.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 38,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 38"
+  },
+  {
+   "id": "l38_sign_2",
+   "file": "voice/l38_sign_2.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 38,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 38"
+  },
+  {
+   "id": "l38_sign_3",
+   "file": "voice/l38_sign_3.mp3",
+   "who": "pilo",
+   "text": "چاه بلند! با سنجابک از دیوارهایش بالا برو؛ بالای آن الماس است.",
+   "level": 38,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 38"
+  },
+  {
+   "id": "l38_sign_4",
+   "file": "voice/l38_sign_4.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 38,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 38"
+  },
+  {
+   "id": "l38_sign_5",
+   "file": "voice/l38_sign_5.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 38,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 38"
+  },
+  {
+   "id": "l39_intro_1",
+   "file": "voice/l39_intro_1.mp3",
+   "who": "pilo",
+   "text": "راه مخفی؛ پر از گنج! الماس افسانه‌ای این جهان همین‌جاست.",
+   "level": 39,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 39"
+  },
+  {
+   "id": "l39_outro_1",
+   "file": "voice/l39_outro_1.mp3",
+   "who": "nima",
+   "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
+   "level": 39,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 39"
+  },
+  {
+   "id": "l39_sign_1",
+   "file": "voice/l39_sign_1.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 39,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 39"
+  },
+  {
+   "id": "l39_sign_2",
+   "file": "voice/l39_sign_2.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 39,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 39"
+  },
+  {
+   "id": "l39_sign_3",
+   "file": "voice/l39_sign_3.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 39,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 39"
+  },
+  {
+   "id": "l39_sign_4",
+   "file": "voice/l39_sign_4.mp3",
+   "who": "pilo",
+   "text": "باد تو را می‌برد؛ ستون باد رو به بالا هلت می‌دهد.",
+   "level": 39,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 39"
+  },
+  {
+   "id": "l40_intro_1",
+   "file": "voice/l40_intro_1.mp3",
+   "who": "pilo",
+   "text": "عقاب طوفان! طلسم سایه او را عصبانی کرده. روی سرش بپر، تیر بزن یا مرا بفرست تا آزاد شود!",
+   "level": 40,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 40"
+  },
+  {
+   "id": "l40_outro_1",
+   "file": "voice/l40_outro_1.mp3",
+   "who": "eagle",
+   "text": "این نقشهٔ قلعهٔ سایه است. راه از بالای ابرهاست.",
+   "level": 40,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 40"
+  },
+  {
+   "id": "l40_outro_2",
+   "file": "voice/l40_outro_2.mp3",
+   "who": "butterfly",
+   "text": "من پَرپَری‌ام! سُر خوردنت با من دو برابر طول می‌کشد؛ دره‌های پهن را با من رد شو.",
+   "level": 40,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 40"
+  },
+  {
+   "id": "l40_outro_3",
+   "file": "voice/l40_outro_3.mp3",
+   "who": "pilo",
+   "text": "از حالا در دهکده یا با دکمهٔ همراه، می‌توانی او را انتخاب کنی.",
+   "level": 40,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 40"
+  },
+  {
+   "id": "l40_sign_1",
+   "file": "voice/l40_sign_1.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 40,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 40"
+  },
+  {
+   "id": "l40_sign_2",
+   "file": "voice/l40_sign_2.mp3",
+   "who": "pilo",
+   "text": "باد تو را می‌برد؛ ستون باد رو به بالا هلت می‌دهد.",
+   "level": 40,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 40"
+  },
+  {
+   "id": "l25_intro_1",
+   "file": "voice/l25_intro_1.mp3",
+   "who": "pilo",
+   "text": "غار یخی! داخلش لیز است و قندیل‌ها می‌افتند. رویش برف است و گلوله‌برفی.",
+   "level": 25,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 25"
+  },
+  {
+   "id": "l25_intro_2",
+   "file": "voice/l25_intro_2.mp3",
+   "who": "nima",
+   "text": "نفسم بخار می‌شود! برویم.",
+   "level": 25,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 25"
+  },
+  {
+   "id": "l25_sign_1",
+   "file": "voice/l25_sign_1.mp3",
+   "who": "pilo",
+   "text": "یخ لیز است! زودتر ترمز کن.",
+   "level": 25,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 25"
+  },
+  {
+   "id": "l25_sign_2",
+   "file": "voice/l25_sign_2.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 25,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 25"
+  },
+  {
+   "id": "l26_intro_1",
+   "file": "voice/l26_intro_1.mp3",
+   "who": "pilo",
+   "text": "از کاج بزرگ بالا برو؛ آن بالا الماس است.",
+   "level": 26,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 26"
+  },
+  {
+   "id": "l26_intro_2",
+   "file": "voice/l26_intro_2.mp3",
+   "who": "nima",
+   "text": "و پایین یخ لیز و یک دره!",
+   "level": 26,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 26"
+  },
+  {
+   "id": "l26_intro_3",
+   "file": "voice/l26_intro_3.mp3",
+   "who": "kian",
+   "text": "مسابقهٔ دوم! این بار تا قله.",
+   "level": 26,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 26"
+  },
+  {
+   "id": "l26_intro_4",
+   "file": "voice/l26_intro_4.mp3",
+   "who": "nima",
+   "text": "مراقب یخ‌ها باش!",
+   "level": 26,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 26"
+  },
+  {
+   "id": "l26_sign_1",
+   "file": "voice/l26_sign_1.mp3",
+   "who": "pilo",
+   "text": "یخ لیز است! زودتر ترمز کن.",
+   "level": 26,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 26"
+  },
+  {
+   "id": "l26_sign_2",
+   "file": "voice/l26_sign_2.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 26,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 26"
+  },
+  {
+   "id": "l26_sign_3",
+   "file": "voice/l26_sign_3.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 26,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 26"
+  },
+  {
+   "id": "l26_sign_4",
+   "file": "voice/l26_sign_4.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 26,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 26"
+  },
+  {
+   "id": "l27_intro_1",
+   "file": "voice/l27_intro_1.mp3",
+   "who": "pilo",
+   "text": "کوه سخت‌تر شده. سه راه هست؛ کلید زیر برف.",
+   "level": 27,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 27"
+  },
+  {
+   "id": "l27_intro_2",
+   "file": "voice/l27_intro_2.mp3",
+   "who": "nima",
+   "text": "دنبالم بیا پیلو!",
+   "level": 27,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 27"
+  },
+  {
+   "id": "l27_sign_1",
+   "file": "voice/l27_sign_1.mp3",
+   "who": "pilo",
+   "text": "یخ لیز است! زودتر ترمز کن.",
+   "level": 27,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 27"
+  },
+  {
+   "id": "l27_sign_2",
+   "file": "voice/l27_sign_2.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 27,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 27"
+  },
+  {
+   "id": "l27_sign_3",
+   "file": "voice/l27_sign_3.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 27,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 27"
+  },
+  {
+   "id": "l28_intro_1",
+   "file": "voice/l28_intro_1.mp3",
+   "who": "kian",
+   "text": "بهمن! نیما، از این طرف!",
+   "level": 28,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 28"
+  },
+  {
+   "id": "l28_intro_2",
+   "file": "voice/l28_intro_2.mp3",
+   "who": "nima",
+   "text": "با هم فرار کنیم!",
+   "level": 28,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 28"
+  },
+  {
+   "id": "l28_sign_1",
+   "file": "voice/l28_sign_1.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 28,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 28"
+  },
+  {
+   "id": "l28_sign_2",
+   "file": "voice/l28_sign_2.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 28,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 28"
+  },
+  {
+   "id": "l28_sign_3",
+   "file": "voice/l28_sign_3.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 28,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 28"
+  },
+  {
+   "id": "l28_sign_4",
+   "file": "voice/l28_sign_4.mp3",
+   "who": "pilo",
+   "text": "شن روان پر از گنج. با خال‌خالی فرو نمی‌روی.",
+   "level": 28,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 28"
+  },
+  {
+   "id": "l28_sign_5",
+   "file": "voice/l28_sign_5.mp3",
+   "who": "pilo",
+   "text": "یخ لیز است! زودتر ترمز کن.",
+   "level": 28,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 28"
+  },
+  {
+   "id": "l28_sign_6",
+   "file": "voice/l28_sign_6.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 28,
+   "kind": "sign",
+   "event": "تابلوی 6 مرحلهٔ 28"
+  },
+  {
+   "id": "l29_intro_1",
+   "file": "voice/l29_intro_1.mp3",
+   "who": "pilo",
+   "text": "کلید زمان را پیدا کنیم!",
+   "level": 29,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 29"
+  },
+  {
+   "id": "l29_sign_1",
+   "file": "voice/l29_sign_1.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 29,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 29"
+  },
+  {
+   "id": "l29_sign_2",
+   "file": "voice/l29_sign_2.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 29,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 29"
+  },
+  {
+   "id": "l29_sign_3",
+   "file": "voice/l29_sign_3.mp3",
+   "who": "pilo",
+   "text": "دیوار آجری! توپولی با دَش آجر را می‌شکند (یا پیلو را پرتاب کن).",
+   "level": 29,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 29"
+  },
+  {
+   "id": "l29_sign_4",
+   "file": "voice/l29_sign_4.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 29,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 29"
+  },
+  {
+   "id": "l29_sign_5",
+   "file": "voice/l29_sign_5.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 29,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 29"
+  },
+  {
+   "id": "l30_intro_1",
+   "file": "voice/l30_intro_1.mp3",
+   "who": "ghubarak",
+   "text": "نقاب‌دار مرا فریب داد... من در برج را باز گذاشتم.",
+   "level": 30,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 30"
+  },
+  {
+   "id": "l30_intro_2",
+   "file": "voice/l30_intro_2.mp3",
+   "who": "pilo",
+   "text": "مهم این است که حالا با مایی.",
+   "level": 30,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 30"
+  },
+  {
+   "id": "l30_sign_1",
+   "file": "voice/l30_sign_1.mp3",
+   "who": "pilo",
+   "text": "یخ لیز است! زودتر ترمز کن.",
+   "level": 30,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 30"
+  },
+  {
+   "id": "l30_sign_2",
+   "file": "voice/l30_sign_2.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 30,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 30"
+  },
+  {
+   "id": "l30_sign_3",
+   "file": "voice/l30_sign_3.mp3",
+   "who": "pilo",
+   "text": "دیوار آجری! توپولی با دَش آجر را می‌شکند (یا پیلو را پرتاب کن).",
+   "level": 30,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 30"
+  },
+  {
+   "id": "l30_sign_4",
+   "file": "voice/l30_sign_4.mp3",
+   "who": "pilo",
+   "text": "کلید زمان جایی پنهان است. پیلو بو می‌کشد؛ دنبالش برو!",
+   "level": 30,
+   "kind": "sign",
+   "event": "تابلوی 4 مرحلهٔ 30"
+  },
+  {
+   "id": "l30_sign_5",
+   "file": "voice/l30_sign_5.mp3",
+   "who": "pilo",
+   "text": "پل فقط در گذشته هست. عدسی زمان را بزن!",
+   "level": 30,
+   "kind": "sign",
+   "event": "تابلوی 5 مرحلهٔ 30"
+  },
+  {
+   "id": "l31_intro_1",
+   "file": "voice/l31_intro_1.mp3",
+   "who": "pilo",
+   "text": "راه مخفی؛ پر از گنج! الماس افسانه‌ای این جهان همین‌جاست.",
+   "level": 31,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 31"
+  },
+  {
+   "id": "l31_outro_1",
+   "file": "voice/l31_outro_1.mp3",
+   "who": "nima",
+   "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
+   "level": 31,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 31"
+  },
+  {
+   "id": "l31_sign_1",
+   "file": "voice/l31_sign_1.mp3",
+   "who": "pilo",
+   "text": "روی لولهٔ درخشان ↓ را بزن.",
+   "level": 31,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 31"
+  },
+  {
+   "id": "l31_sign_2",
+   "file": "voice/l31_sign_2.mp3",
+   "who": "pilo",
+   "text": "دیوار ترک‌دار با دَش یا پیلو می‌شکند.",
+   "level": 31,
+   "kind": "sign",
+   "event": "تابلوی 2 مرحلهٔ 31"
+  },
+  {
+   "id": "l31_sign_3",
+   "file": "voice/l31_sign_3.mp3",
+   "who": "pilo",
+   "text": "دره خیلی پهن است! بپر و پرش را نگه دار تا پیلو تو را ببرد.",
+   "level": 31,
+   "kind": "sign",
+   "event": "تابلوی 3 مرحلهٔ 31"
+  },
+  {
+   "id": "l32_intro_1",
+   "file": "voice/l32_intro_1.mp3",
+   "who": "pilo",
+   "text": "غول یخی! طلسم سایه او را عصبانی کرده. روی سرش بپر، تیر بزن یا مرا بفرست تا آزاد شود!",
+   "level": 32,
+   "kind": "intro",
+   "event": "شروع مرحله — مرحلهٔ 32"
+  },
+  {
+   "id": "l32_outro_1",
+   "file": "voice/l32_outro_1.mp3",
+   "who": "yeti",
+   "text": "بهمن تمام شد. دوستی شما از یخ هم محکم‌تر است.",
+   "level": 32,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 32"
+  },
+  {
+   "id": "l32_outro_2",
+   "file": "voice/l32_outro_2.mp3",
+   "who": "penguin",
+   "text": "من یخکم! روی یخ لیز نمی‌خورم؛ سُرسُره‌ها را با من برو.",
+   "level": 32,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 32"
+  },
+  {
+   "id": "l32_outro_3",
+   "file": "voice/l32_outro_3.mp3",
+   "who": "pilo",
+   "text": "از حالا در دهکده یا با دکمهٔ همراه، می‌توانی او را انتخاب کنی.",
+   "level": 32,
+   "kind": "outro",
+   "event": "پایان مرحله — مرحلهٔ 32"
+  },
+  {
+   "id": "l32_sign_1",
+   "file": "voice/l32_sign_1.mp3",
+   "who": "pilo",
+   "text": "یخ لیز است! زودتر ترمز کن.",
+   "level": 32,
+   "kind": "sign",
+   "event": "تابلوی 1 مرحلهٔ 32"
   },
   {
    "id": "app_unsafe",
@@ -1088,6 +3839,456 @@
    "level": 0,
    "kind": "app",
    "event": "پایان مرحلهٔ آخر دنیا"
+  },
+  {
+   "id": "app_race_start",
+   "file": "voice/app_race_start.mp3",
+   "who": "pilo",
+   "text": "مسابقه با کیان! زودتر به دروازه برس.",
+   "level": 0,
+   "kind": "app",
+   "event": "شروع مسابقه با کیان"
+  },
+  {
+   "id": "app_race_lost",
+   "file": "voice/app_race_lost.mp3",
+   "who": "pilo",
+   "text": "کیان زودتر به دروازه رسید! باز هم می‌شود کلید را پیدا کرد.",
+   "level": 0,
+   "kind": "app",
+   "event": "کیان برد"
+  },
+  {
+   "id": "app_race_won",
+   "file": "voice/app_race_won.mp3",
+   "who": "pilo",
+   "text": "تو از کیان زودتر رسیدی! پنجاه سکه جایزه.",
+   "level": 0,
+   "kind": "app",
+   "event": "نیما برد"
+  },
+  {
+   "id": "app_time_key",
+   "file": "voice/app_time_key.mp3",
+   "who": "pilo",
+   "text": "کلید زمان! حالا دروازه باز می‌شود.",
+   "level": 0,
+   "kind": "app",
+   "event": "کلید زمان پیدا شد"
+  },
+  {
+   "id": "app_gate_locked",
+   "file": "voice/app_gate_locked.mp3",
+   "who": "pilo",
+   "text": "دروازه قفل است؛ کلید زمان را پیدا کن!",
+   "level": 0,
+   "kind": "app",
+   "event": "دروازهٔ قفل بدون کلید زمان"
+  },
+  {
+   "id": "app_try_again",
+   "file": "voice/app_try_again.mp3",
+   "who": "pilo",
+   "text": "اوه! دوباره امتحان کنیم.",
+   "level": 0,
+   "kind": "app",
+   "event": "افتادن یا از دست دادن قلب‌ها"
+  },
+  {
+   "id": "app_freed_forest",
+   "file": "voice/app_freed_forest.mp3",
+   "who": "pilo",
+   "text": "خرس پیر جنگل آزاد شد! دروازه باز است.",
+   "level": 0,
+   "kind": "app",
+   "event": "آزاد شدن نگهبان"
+  },
+  {
+   "id": "app_freed_coral_beach",
+   "file": "voice/app_freed_coral_beach.mp3",
+   "who": "pilo",
+   "text": "اختاپوس بزرگ آزاد شد! دروازه باز است.",
+   "level": 0,
+   "kind": "app",
+   "event": "آزاد شدن نگهبان"
+  },
+  {
+   "id": "app_freed_golden_desert",
+   "file": "voice/app_freed_golden_desert.mp3",
+   "who": "pilo",
+   "text": "کرم شنی آزاد شد! دروازه باز است.",
+   "level": 0,
+   "kind": "app",
+   "event": "آزاد شدن نگهبان"
+  },
+  {
+   "id": "app_freed_snow_mountain",
+   "file": "voice/app_freed_snow_mountain.mp3",
+   "who": "pilo",
+   "text": "غول یخی آزاد شد! دروازه باز است.",
+   "level": 0,
+   "kind": "app",
+   "event": "آزاد شدن نگهبان"
+  },
+  {
+   "id": "app_freed_sky_islands",
+   "file": "voice/app_freed_sky_islands.mp3",
+   "who": "pilo",
+   "text": "عقاب طوفان آزاد شد! دروازه باز است.",
+   "level": 0,
+   "kind": "app",
+   "event": "آزاد شدن نگهبان"
+  },
+  {
+   "id": "app_freed_crystal_caves",
+   "file": "voice/app_freed_crystal_caves.mp3",
+   "who": "pilo",
+   "text": "عنکبوت بلورین آزاد شد! دروازه باز است.",
+   "level": 0,
+   "kind": "app",
+   "event": "آزاد شدن نگهبان"
+  },
+  {
+   "id": "app_freed_clock_factory",
+   "file": "voice/app_freed_clock_factory.mp3",
+   "who": "pilo",
+   "text": "ساعت‌ساز طلسم‌شده آزاد شد! دروازه باز است.",
+   "level": 0,
+   "kind": "app",
+   "event": "آزاد شدن نگهبان"
+  },
+  {
+   "id": "app_freed_shadow_castle",
+   "file": "voice/app_freed_shadow_castle.mp3",
+   "who": "pilo",
+   "text": "شاه‌سایه آزاد شد! دروازه باز است.",
+   "level": 0,
+   "kind": "app",
+   "event": "آزاد شدن نگهبان"
+  },
+  {
+   "id": "app_freed_inverted_land",
+   "file": "voice/app_freed_inverted_land.mp3",
+   "who": "pilo",
+   "text": "زروان آزاد شد! دروازه باز است.",
+   "level": 0,
+   "kind": "app",
+   "event": "آزاد شدن نگهبان"
+  },
+  {
+   "id": "ch_forest_1",
+   "file": "voice/ch_forest_1.mp3",
+   "who": "narrator",
+   "text": "شاه‌سایه هشت قلب زمان را دزدید. رنگ‌ها از رنگارستان پریدند و ساعت بزرگ ایستاد.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل forest"
+  },
+  {
+   "id": "ch_forest_2",
+   "file": "voice/ch_forest_2.mp3",
+   "who": "narrator",
+   "text": "ولی در جنگل، نیما یک تخم درخشان پیدا کرد... و پیلو، آخرین نگهبان زمان، از آن بیرون آمد.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل forest"
+  },
+  {
+   "id": "ch_forest_3",
+   "file": "voice/ch_forest_3.mp3",
+   "who": "pilo",
+   "text": "سایه‌ها جنگل را گرفته‌اند. قلب زمان اول پیش خرس پیر است!",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل forest"
+  },
+  {
+   "id": "ch_coral_beach_1",
+   "file": "voice/ch_coral_beach_1.mp3",
+   "who": "narrator",
+   "text": "خرس پیر گفت: «سایه‌ها دستور کسی را اجرا می‌کنند.» ولی دستور چه کسی؟",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل coral_beach"
+  },
+  {
+   "id": "ch_coral_beach_2",
+   "file": "voice/ch_coral_beach_2.mp3",
+   "who": "kian",
+   "text": "سلام! من کیانم، گنج‌یاب. تکه‌های زمان مال من‌اند؛ می‌خواهم دهکدهٔ گم‌شده‌ام را برگردانم!",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل coral_beach"
+  },
+  {
+   "id": "ch_coral_beach_3",
+   "file": "voice/ch_coral_beach_3.mp3",
+   "who": "nima",
+   "text": "یک رقیب؟ پس مسابقه!",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل coral_beach"
+  },
+  {
+   "id": "ch_golden_desert_1",
+   "file": "voice/ch_golden_desert_1.mp3",
+   "who": "narrator",
+   "text": "کیان قلب زمان ساحل را زودتر برداشت، ولی اختاپوس آزاد شد و لاکی به تیم پیوست.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل golden_desert"
+  },
+  {
+   "id": "ch_golden_desert_2",
+   "file": "voice/ch_golden_desert_2.mp3",
+   "who": "grandma",
+   "text": "خوش آمدید بچه‌ها. روی دیوار هرم فراموش‌شده نقش یک ساعت وارونه هست... و یک راز.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل golden_desert"
+  },
+  {
+   "id": "ch_golden_desert_3",
+   "file": "voice/ch_golden_desert_3.mp3",
+   "who": "pilo",
+   "text": "ساعت وارونه؟ برویم ببینیم!",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل golden_desert"
+  },
+  {
+   "id": "ch_snow_mountain_1",
+   "file": "voice/ch_snow_mountain_1.mp3",
+   "who": "narrator",
+   "text": "در هرم، اولین الماس افسانه‌ای و نقش یک نقاب‌دار پیدا شد. کیان ساکت ماند.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل snow_mountain"
+  },
+  {
+   "id": "ch_snow_mountain_2",
+   "file": "voice/ch_snow_mountain_2.mp3",
+   "who": "kian",
+   "text": "مسابقهٔ دوم! این بار تا قله.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل snow_mountain"
+  },
+  {
+   "id": "ch_snow_mountain_3",
+   "file": "voice/ch_snow_mountain_3.mp3",
+   "who": "ghubarak",
+   "text": "صبر کنید... من باید چیزی بگویم. ولی... بعداً.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل snow_mountain"
+  },
+  {
+   "id": "ch_sky_islands_1",
+   "file": "voice/ch_sky_islands_1.mp3",
+   "who": "narrator",
+   "text": "بهمن نیما و کیان را با هم گیر انداخت و با هم فرار کردند. غبارک اعتراف کرد: نقاب‌دار فریبش داده بود.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل sky_islands"
+  },
+  {
+   "id": "ch_sky_islands_2",
+   "file": "voice/ch_sky_islands_2.mp3",
+   "who": "ghubarak",
+   "text": "من در برج را باز گذاشتم... متأسفم. حالا راه برج طوفان را نشانتان می‌دهم.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل sky_islands"
+  },
+  {
+   "id": "ch_sky_islands_3",
+   "file": "voice/ch_sky_islands_3.mp3",
+   "who": "pilo",
+   "text": "دوست تازه! از ابرها بالا برویم.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل sky_islands"
+  },
+  {
+   "id": "ch_crystal_caves_1",
+   "file": "voice/ch_crystal_caves_1.mp3",
+   "who": "narrator",
+   "text": "عقاب طوفان آزاد شد و نقشهٔ قلعهٔ سایه را داد. ولی در غارها، کیان پیام تازه‌ای از نقاب‌دار گرفت.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل crystal_caves"
+  },
+  {
+   "id": "ch_crystal_caves_2",
+   "file": "voice/ch_crystal_caves_2.mp3",
+   "who": "masked",
+   "text": "کیان، تکه‌ها را برایم بیاور... وگرنه دهکده‌ات را هرگز نمی‌بینی.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل crystal_caves"
+  },
+  {
+   "id": "ch_crystal_caves_3",
+   "file": "voice/ch_crystal_caves_3.mp3",
+   "who": "kian",
+   "text": "او به من دروغ گفته؟ نیما... باید با هم برویم.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل crystal_caves"
+  },
+  {
+   "id": "ch_clock_factory_1",
+   "file": "voice/ch_clock_factory_1.mp3",
+   "who": "narrator",
+   "text": "کیان و جغدش پیچ‌پیچ به تیم پیوستند. در گذشتهٔ غار، دهکدهٔ کیان دیده شد؛ هنوز می‌شود نجاتش داد.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل clock_factory"
+  },
+  {
+   "id": "ch_clock_factory_2",
+   "file": "voice/ch_clock_factory_2.mp3",
+   "who": "pilo",
+   "text": "صدای تیک‌تاک... بابابزرگ اینجاست! ولی طلسم شده.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل clock_factory"
+  },
+  {
+   "id": "ch_clock_factory_3",
+   "file": "voice/ch_clock_factory_3.mp3",
+   "who": "masked",
+   "text": "دیر رسیدید. ساعت وارونه مال من است.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل clock_factory"
+  },
+  {
+   "id": "ch_shadow_castle_1",
+   "file": "voice/ch_shadow_castle_1.mp3",
+   "who": "narrator",
+   "text": "نقاب افتاد: زروان بود، شاگرد قدیمی من، سازندهٔ ساعت وارونه. او با ساعت به قلعه فرار کرد.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل shadow_castle"
+  },
+  {
+   "id": "ch_shadow_castle_2",
+   "file": "voice/ch_shadow_castle_2.mp3",
+   "who": "grandpa",
+   "text": "شاه‌سایه بدجنس نیست؛ نگهبان تنهای شب بود که ساعت وارونه او را سایه کرد.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل shadow_castle"
+  },
+  {
+   "id": "ch_shadow_castle_3",
+   "file": "voice/ch_shadow_castle_3.mp3",
+   "who": "kian",
+   "text": "همهٔ نگهبان‌ها و همراه‌ها کمک می‌کنند. برویم!",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل shadow_castle"
+  },
+  {
+   "id": "ch_inverted_land_1",
+   "file": "voice/ch_inverted_land_1.mp3",
+   "who": "narrator",
+   "text": "شاه‌سایه نگهبان شب شد و ساعت بزرگ دوباره چرخید... ولی زروان با ساعت وارونه به سرزمین وارونه گریخت.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل inverted_land"
+  },
+  {
+   "id": "ch_inverted_land_2",
+   "file": "voice/ch_inverted_land_2.mp3",
+   "who": "pilo",
+   "text": "هشت الماس افسانه‌ای راه را باز کردند. اینجا همه‌چیز وارونه است!",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل inverted_land"
+  },
+  {
+   "id": "ch_inverted_land_3",
+   "file": "voice/ch_inverted_land_3.mp3",
+   "who": "nima",
+   "text": "ساعت وارونه را می‌شکنیم و دهکدهٔ کیان را برمی‌گردانیم.",
+   "level": 0,
+   "kind": "chapter",
+   "event": "کارت فصل inverted_land"
+  },
+  {
+   "id": "tutorial_1",
+   "file": "voice/tutorial_1.mp3",
+   "who": "pilo",
+   "text": "با این دو دکمه راه برو. اگر نگه داری، نیما تندتر می‌دود.",
+   "level": 0,
+   "kind": "tutorial",
+   "event": "راهنمای شروع: left"
+  },
+  {
+   "id": "tutorial_2",
+   "file": "voice/tutorial_2.mp3",
+   "who": "pilo",
+   "text": "پرش. روی سر سایه‌ها بپر تا شکست بخورند و سکه بدهند. وسط پرش، پرش را نگه دار تا پیلو تو را ببرد و سُر بخوری.",
+   "level": 0,
+   "kind": "tutorial",
+   "event": "راهنمای شروع: jump"
+  },
+  {
+   "id": "tutorial_3",
+   "file": "voice/tutorial_3.mp3",
+   "who": "pilo",
+   "text": "دکمهٔ پیلو! نزدیک دشمن: پیلو می‌پرد و آزادش می‌کند. نزدیک آجر یا دیوار ترک‌دار: آن را می‌شکند. نزدیک لانهٔ روباه: کلید زمان یا الماس را بیرون می‌آورد. اگر چیزی نزدیک نباشد، پیلو را مثل گلولهٔ آتش جلو پرتاب می‌کنی.",
+   "level": 0,
+   "kind": "tutorial",
+   "event": "راهنمای شروع: pilo"
+  },
+  {
+   "id": "tutorial_4",
+   "file": "voice/tutorial_4.mp3",
+   "who": "pilo",
+   "text": "شلیک! تیرکمان از اول مال توست. سلاح‌های بیشتر را در دهکده بخر و با دکمهٔ کوچک بالایش عوضشان کن.",
+   "level": 0,
+   "kind": "tutorial",
+   "event": "راهنمای شروع: fire"
+  },
+  {
+   "id": "tutorial_5",
+   "file": "voice/tutorial_5.mp3",
+   "who": "pilo",
+   "text": "دَش: یک جهش تند به جلو. دیوار ترک‌دار را می‌شکند و از روی سایه‌ها رد می‌شود.",
+   "level": 0,
+   "kind": "tutorial",
+   "event": "راهنمای شروع: dash"
+  },
+  {
+   "id": "tutorial_6",
+   "file": "voice/tutorial_6.mp3",
+   "who": "pilo",
+   "text": "عدسی زمان: بین گذشته و حال جابه‌جا شو. بعضی پل‌ها فقط در گذشته هستند.",
+   "level": 0,
+   "kind": "tutorial",
+   "event": "راهنمای شروع: time"
+  },
+  {
+   "id": "tutorial_7",
+   "file": "voice/tutorial_7.mp3",
+   "who": "pilo",
+   "text": "پایین: خم شو تا از زیر سقف کوتاه رد شوی. روی لولهٔ درخشان، با این دکمه داخلش برو.",
+   "level": 0,
+   "kind": "tutorial",
+   "event": "راهنمای شروع: down"
+  },
+  {
+   "id": "tutorial_8",
+   "file": "voice/tutorial_8.mp3",
+   "who": "pilo",
+   "text": "کوله: وسط بازی همراهت (مثل سنجابک)، ابزارهای کوله و سلاح را عوض کن. هر همراه راه تازه‌ای باز می‌کند.",
+   "level": 0,
+   "kind": "tutorial",
+   "event": "راهنمای شروع: team"
   }
  ]
 }

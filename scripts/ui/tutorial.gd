@@ -56,6 +56,7 @@ func _ready() -> void:
 func _next() -> void:
 	_step += 1
 	if _step >= STEPS.size():
+		AudioManager.stop_voice()
 		SaveManager.data.tutorial_seen = true
 		SaveManager.save_game()
 		get_tree().paused = false
@@ -64,6 +65,9 @@ func _next() -> void:
 		return
 	var key: String = STEPS[_step][0]
 	_text.text = STEPS[_step][1]
+	# Pilo reads the step aloud (assets/audio/voice/tutorial_N, tools/voice/build_voice_lines.py)
+	AudioManager.stop_voice()
+	AudioManager.play_voice("tutorial_%d" % (_step + 1))
 	var rect: Rect2 = hud.button_rect(key) if hud else Rect2(640, 360, 100, 100)
 	_ring.target = rect
 	_ring.queue_redraw()

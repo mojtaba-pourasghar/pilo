@@ -167,8 +167,8 @@ func _start_race() -> void:
 	_world_root.add_child(rival)
 	rival.arrived.connect(func():
 		if not finished:
-			_notice("کیان زودتر به دروازه رسید! بازهم می‌شود کلید را پیدا کرد.", UIKit.BLUE, true))
-	_notice("مسابقه با کیان! زودتر به دروازه برس.", UIKit.BLUE, true)
+			_notice("کیان زودتر به دروازه رسید! بازهم می‌شود کلید را پیدا کرد.", UIKit.BLUE, true, "app_race_lost"))
+	_notice("مسابقه با کیان! زودتر به دروازه برس.", UIKit.BLUE, true, "app_race_start")
 	await get_tree().create_timer(0.8).timeout
 	rival.running = true
 
@@ -232,7 +232,7 @@ func on_collect(item: Collectible) -> void:
 			hud.set_keys(1)
 			if info.exit and friend_rescued:
 				info.exit.set_locked(false)
-			_notice("کلید زمان! حالا دروازه باز می‌شود.", UIKit.GREEN, true)
+			_notice("کلید زمان! حالا دروازه باز می‌شود.", UIKit.GREEN, true, "app_time_key")
 
 
 func add_coins(amount: int, pos: Vector2, from_block := true) -> void:
@@ -291,7 +291,7 @@ func _player_down() -> void:
 	_respawning = true
 	fails += 1
 	player.controls_enabled = false
-	_notice("اوه! دوباره امتحان کنیم.", UIKit.ORANGE, true)
+	_notice("اوه! دوباره امتحان کنیم.", UIKit.ORANGE, true, "app_try_again")
 	pilo.shake()
 	await get_tree().create_timer(0.7).timeout
 	AudioManager.play_sfx("respawn")
@@ -408,7 +408,7 @@ func on_boss_freed(boss: Boss) -> void:
 	FX.burst(_world_root, boss.global_position + Vector2(0, -80), UIKit.GOLD, 40)
 	Juice.hit(boss, boss.global_position + Vector2(0, -80), 1.0, "thunder")
 	Juice.flash(self, Color(1, 1, 0.9, 0.7), 0.6)
-	_notice("%s آزاد شد! دروازه باز است." % boss.display_name(), UIKit.GREEN, true)
+	_notice("%s آزاد شد! دروازه باز است." % boss.display_name(), UIKit.GREEN, true, "app_freed_" + boss.kind)
 	SaveManager.data.hearts_of_time = maxi(int(SaveManager.data.get("hearts_of_time", 0)), int(world.index))
 
 
@@ -568,7 +568,7 @@ func on_exit_reached() -> void:
 	if finished:
 		return
 	if info.time_key and not has_time_key:
-		_notice("دروازه قفل است؛ کلید زمان را پیدا کن!", UIKit.ORANGE, false)
+		_notice("دروازه قفل است؛ کلید زمان را پیدا کن!", UIKit.ORANGE, false, "app_gate_locked")
 		return
 	if not friend_rescued:
 		if info.chaser:
@@ -583,7 +583,7 @@ func on_exit_reached() -> void:
 	if rival and not rival.done:
 		rival.running = false
 		add_coins(50, player.global_position, false)
-		_notice("تو از کیان زودتر رسیدی! ۵۰ سکه جایزه.", UIKit.GREEN, true)
+		_notice("تو از کیان زودتر رسیدی! ۵۰ سکه جایزه.", UIKit.GREEN, true, "app_race_won")
 	AudioManager.play_sfx("win")
 	var result := ProgressManager.complete_level(level_id, stars_collected, coins, diamonds_found)
 	Analytics.log_event("level_complete", level_id)

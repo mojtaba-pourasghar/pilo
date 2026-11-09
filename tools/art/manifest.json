@@ -251,7 +251,7 @@
   },
   {
    "id": "npc_grandma",
-   "prompt": "cartoon old lady character with a shawl, glasses and a walking stick, full body, 3D toy style, smiling",
+   "prompt": "a friendly old cactus character: a round green cactus with a pink flower on top, wearing a knitted lavender shawl and round glasses, holding a little wooden cane, kind smile, tiny arms, full body, 3D toy style",
    "style": "sprite",
    "size": [
     768,
@@ -581,7 +581,7 @@
   },
   {
    "id": "enemy_bat_free",
-   "prompt": "a small purple bat with oversized ears and a fang smile, flying, bright natural happy colors, cute but mischievous game enemy for a premium kids platformer, big expressive eyes, chunky readable silhouette, strong personality, full body, side view facing right, standing on the ground",
+   "prompt": "a small round purple bat with huge pointed ears, a cream belly, big lime-green eyes and one tiny fang, two large clearly separate leathery wings spread wide open, bright happy colors, cute but mischievous game enemy for a premium kids platformer, chunky readable silhouette, full body, side view facing right, flying",
    "style": "sprite",
    "size": [
     1024,
@@ -3344,7 +3344,7 @@
   },
   {
    "id": "enemy_shroom_walk_b",
-   "prompt": "the same toy mushroom character as in the reference picture, standing on both feet, side view, 3D toy style",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking, legs passing each other: both feet close together under the body, one foot lifted a little",
    "style": "sprite",
    "size": [
     1024,
@@ -3353,13 +3353,13 @@
    "post": "frame",
    "base": "enemy_shroom_free",
    "refs": [
-    "enemy_shroom_free"
+    "enemy_shroom_walk_a"
    ],
    "max": 384
   },
   {
    "id": "enemy_shroom_walk_c",
-   "prompt": "the same toy mushroom character as in the reference picture, taking a step with the other foot, side view, 3D toy style",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking, mid-stride the other way: the back leg reaching forward, the front leg pushing off behind",
    "style": "sprite",
    "size": [
     1024,
@@ -3368,7 +3368,7 @@
    "post": "frame",
    "base": "enemy_shroom_free",
    "refs": [
-    "enemy_shroom_free"
+    "enemy_shroom_walk_a"
    ],
    "max": 384
   },
@@ -4109,7 +4109,7 @@
   },
   {
    "id": "enemy_bat_fly_a",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings raised high above the body",
+   "prompt": "the same cute bat character as in the reference picture, same design and colors, 3D style, full body, side view facing right, both wings stretched straight up above its head, wing tips almost touching, forming a tall V shape",
    "style": "sprite",
    "size": [
     1024,
@@ -4124,7 +4124,7 @@
   },
   {
    "id": "enemy_bat_fly_b",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, wings spread flat and wide to both sides, seen fully open",
+   "prompt": "the same cute bat character as in the reference picture, same design and colors, 3D style, full body, side view facing right, both wings spread flat and wide to both sides, level with its body",
    "style": "sprite",
    "size": [
     1024,
@@ -4139,7 +4139,7 @@
   },
   {
    "id": "enemy_bat_fly_c",
-   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, flying, both wings swept far down below the belly, tips pointing at the ground",
+   "prompt": "the same cute bat character as in the reference picture, same design and colors, 3D style, full body, side view facing right, both wings pulled down and wrapped forward around its body like a cape, only the tips showing below",
    "style": "sprite",
    "size": [
     1024,
@@ -5981,6 +5981,139 @@
     "companion_dragon"
    ],
    "max": 320
+  },
+  {
+   "id": "kian_rig",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, standing",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "npc_kian"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "kian_run_a",
+   "prompt": "the same cartoon character as in the reference picture, same design and colors, 3D toy style, full body, side view facing right, in a big running stride: front boot reaching far forward, back boot kicking up behind, arms swinging",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "frame",
+   "base": "kian_rig",
+   "refs": [
+    "kian_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "kian_run_b",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, running fast: both feet off the ground in mid-stride, arms swinging",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "frame",
+   "base": "kian_rig",
+   "refs": [
+    "kian_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "kian_run_c",
+   "prompt": "the same cartoon character as in the reference picture, same design and colors, 3D toy style, full body, side view facing right, in a big running stride with the opposite leg forward, arms swinging the other way",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "frame",
+   "base": "kian_rig",
+   "refs": [
+    "kian_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "kian_run_d",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, running fast: passing pose, one knee raised high",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "frame",
+   "base": "kian_rig",
+   "refs": [
+    "kian_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "kian_walk_a",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking calmly, right leg forward",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "frame",
+   "base": "kian_rig",
+   "refs": [
+    "kian_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "kian_walk_b",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking calmly, left leg forward",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "frame",
+   "base": "kian_rig",
+   "refs": [
+    "kian_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "kian_idle_b",
+   "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, standing relaxed, breathing in, shoulders slightly raised, a small smile",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "frame",
+   "base": "kian_rig",
+   "refs": [
+    "kian_rig"
+   ],
+   "max": 1024
+  },
+  {
+   "id": "kian_jump",
+   "prompt": "the same cartoon explorer character as in the reference picture (black hair, round goggles, blue vest, cream shirt, olive trousers, brown boots), same design and colors, 3D style, full body, side view facing right, jumping high, knees tucked up, one arm raised",
+   "style": "sprite",
+   "size": [
+    768,
+    1024
+   ],
+   "post": "cutout",
+   "refs": [
+    "kian_rig"
+   ],
+   "max": 1024
   }
  ]
 }

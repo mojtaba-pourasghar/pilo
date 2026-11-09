@@ -1,6 +1,150 @@
 {
   "note": "clips made with the TTS service — temporary until a voice actor records them",
   "files": {
+    "ch_clock_factory_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-11-09T07:18:36Z"
+    },
+    "ch_clock_factory_2": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:18:56Z"
+    },
+    "ch_clock_factory_3": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Umbriel",
+      "at": "2026-11-09T07:19:16Z"
+    },
+    "ch_coral_beach_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-11-09T07:16:03Z"
+    },
+    "ch_coral_beach_2": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Fenrir",
+      "at": "2026-11-09T07:16:56Z"
+    },
+    "ch_coral_beach_3": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:16:59Z"
+    },
+    "ch_crystal_caves_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-11-09T07:18:21Z"
+    },
+    "ch_crystal_caves_2": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Umbriel",
+      "at": "2026-11-09T07:18:26Z"
+    },
+    "ch_crystal_caves_3": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Fenrir",
+      "at": "2026-11-09T07:18:29Z"
+    },
+    "ch_forest_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-11-09T07:14:16Z"
+    },
+    "ch_forest_2": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-11-09T07:14:23Z"
+    },
+    "ch_forest_3": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:14:27Z"
+    },
+    "ch_golden_desert_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-11-09T07:17:06Z"
+    },
+    "ch_golden_desert_2": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Vindemiatrix",
+      "at": "2026-11-09T07:17:12Z"
+    },
+    "ch_inverted_land_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-11-09T07:19:59Z"
+    },
+    "ch_inverted_land_2": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:20:19Z"
+    },
+    "ch_inverted_land_3": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:20:23Z"
+    },
+    "ch_shadow_castle_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-11-09T07:19:26Z"
+    },
+    "ch_shadow_castle_2": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Algenib",
+      "at": "2026-11-09T07:19:31Z"
+    },
+    "ch_shadow_castle_3": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Fenrir",
+      "at": "2026-11-09T07:19:35Z"
+    },
+    "ch_sky_islands_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-11-09T07:18:04Z"
+    },
+    "ch_sky_islands_2": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Puck",
+      "at": "2026-11-09T07:18:11Z"
+    },
+    "ch_sky_islands_3": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:18:14Z"
+    },
+    "ch_snow_mountain_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Sulafat",
+      "at": "2026-11-09T07:17:21Z"
+    },
     "intro_1": {
       "service": "gemini",
       "model": "gemini-2.5-flash-preview-tts",
@@ -48,6 +192,498 @@
       "model": "gemini-2.5-flash-preview-tts",
       "voice": "Sulafat",
       "at": "2026-10-29T08:43:43Z"
+    },
+    "l01_intro_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:29:20Z"
+    },
+    "l01_intro_2": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:31:04Z"
+    },
+    "l01_intro_3": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:31:08Z"
+    },
+    "l02_intro_2": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:31:17Z"
+    },
+    "l03_intro_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:31:22Z"
+    },
+    "l03_intro_2": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:31:25Z"
+    },
+    "l04_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:31:32Z"
+    },
+    "l07_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:31:39Z"
+    },
+    "l08_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:31:42Z"
+    },
+    "l09_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:22:38Z"
+    },
+    "l09_intro_2": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:22:41Z"
+    },
+    "l10_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:22:45Z"
+    },
+    "l10_intro_2": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:23:03Z"
+    },
+    "l10_intro_3": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Fenrir",
+      "at": "2026-11-09T07:23:07Z"
+    },
+    "l10_intro_4": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:23:55Z"
+    },
+    "l11_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:23:59Z"
+    },
+    "l12_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Rasalgethi",
+      "at": "2026-11-09T07:24:07Z"
+    },
+    "l13_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:24:09Z"
+    },
+    "l14_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Fenrir",
+      "at": "2026-11-09T07:24:57Z"
+    },
+    "l15_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:25:03Z"
+    },
+    "l16_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:25:07Z"
+    },
+    "l17_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:31:45Z"
+    },
+    "l18_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:32:07Z"
+    },
+    "l18_intro_2": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:32:55Z"
+    },
+    "l18_intro_3": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Vindemiatrix",
+      "at": "2026-11-09T07:32:58Z"
+    },
+    "l19_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:33:00Z"
+    },
+    "l20_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:33:03Z"
+    },
+    "l21_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:33:53Z"
+    },
+    "l22_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:33:55Z"
+    },
+    "l23_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:33:58Z"
+    },
+    "l33_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:38:55Z"
+    },
+    "l41_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:25:11Z"
+    },
+    "l42_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:25:16Z"
+    },
+    "l42_intro_2": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:26:51Z"
+    },
+    "l42_intro_3": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Fenrir",
+      "at": "2026-11-09T07:26:54Z"
+    },
+    "l42_intro_4": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:26:56Z"
+    },
+    "l43_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:26:59Z"
+    },
+    "l44_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Fenrir",
+      "at": "2026-11-09T07:27:20Z"
+    },
+    "l44_intro_2": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:27:23Z"
+    },
+    "l45_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:27:25Z"
+    },
+    "l47_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:29:08Z"
+    },
+    "l48_intro_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:29:16Z"
+    },
+    "l49_intro_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:20:28Z"
+    },
+    "l49_intro_2": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:20:31Z"
+    },
+    "l50_intro_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:20:35Z"
+    },
+    "l50_intro_3": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:21:27Z"
+    },
+    "l51_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:21:30Z"
+    },
+    "l51_intro_2": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:21:32Z"
+    },
+    "l52_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Umbriel",
+      "at": "2026-11-09T07:21:36Z"
+    },
+    "l53_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:21:38Z"
+    },
+    "l54_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:22:27Z"
+    },
+    "l55_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:22:31Z"
+    },
+    "l56_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:22:35Z"
+    },
+    "l57_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:36:06Z"
+    },
+    "l58_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:37:44Z"
+    },
+    "l58_intro_2": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:37:47Z"
+    },
+    "l58_intro_3": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Fenrir",
+      "at": "2026-11-09T07:37:48Z"
+    },
+    "l59_intro_2": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:38:06Z"
+    },
+    "l60_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Alnilam",
+      "at": "2026-11-09T07:38:09Z"
+    },
+    "l60_intro_2": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:38:11Z"
+    },
+    "l61_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:38:13Z"
+    },
+    "l62_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:38:16Z"
+    },
+    "l63_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:38:18Z"
+    },
+    "l64_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:38:36Z"
+    },
+    "l65_intro_2": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:34:05Z"
+    },
+    "l66_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:34:54Z"
+    },
+    "l66_intro_3": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Iapetus",
+      "at": "2026-11-09T07:34:58Z"
+    },
+    "l66_intro_4": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:34:59Z"
+    },
+    "l67_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:35:17Z"
+    },
+    "l67_intro_2": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Leda",
+      "at": "2026-11-09T07:35:20Z"
+    },
+    "l68_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Fenrir",
+      "at": "2026-11-09T07:35:37Z"
+    },
+    "l69_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:35:54Z"
+    },
+    "l70_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:35:56Z"
+    },
+    "l71_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:36:00Z"
+    },
+    "l72_intro_1": {
+      "service": "gemini",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:36:03Z"
+    },
+    "tutorial_1": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:14:39Z"
+    },
+    "tutorial_2": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:15:01Z"
+    },
+    "tutorial_3": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:15:29Z"
+    },
+    "tutorial_4": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:15:36Z"
+    },
+    "tutorial_5": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:15:41Z"
+    },
+    "tutorial_7": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:15:51Z"
+    },
+    "tutorial_8": {
+      "service": "gemini",
+      "model": "gemini-2.5-flash-preview-tts",
+      "voice": "Laomedeia",
+      "at": "2026-11-09T07:15:58Z"
     }
   }
 }

@@ -79,12 +79,19 @@ func _base_name() -> String:
 func _load_frames() -> void:
 	var base := _base_name()
 	for anim in FRAMES:
+		var names: Array = FRAMES[anim]
+		# a walk with only its first step drawn: step, stand, step, stand (the standing
+		# picture is the passing pose)
+		if anim == "walk" and not ResourceLoader.exists(ART % (base + "_walk_c")):
+			names = ["walk_a", "walk_b"]
 		var list: Array = []
-		for f in FRAMES[anim]:
+		for f in names:
 			var path := ART % (base + "_" + f)
+			if not ResourceLoader.exists(path) and f == "walk_b":
+				path = ART % (base + "_free")
 			if ResourceLoader.exists(path):
 				list.append(load(path))
-		if list.size() == FRAMES[anim].size():
+		if list.size() == names.size():
 			_frames[anim] = list
 	for single in ["hurt", "windup", "stunned"]:
 		if ResourceLoader.exists(ART % (base + "_" + single)):

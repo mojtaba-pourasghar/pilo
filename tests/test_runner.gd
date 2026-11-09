@@ -183,6 +183,21 @@ func _test_audio() -> void:
 				_check(AudioManager.play_voice(line.id), "voice %s plays" % line.id)
 				break
 	print("     %d of %d voice lines have audio" % [recorded, lines.lines.size()])
+	# every line the game asks for by id is in the list the voices are made from
+	var ids := {}
+	for line in lines.lines:
+		ids[line.id] = true
+	var wanted := ["app_race_start", "app_race_lost", "app_race_won", "app_time_key", "app_gate_locked", "app_try_again"]
+	for kind in Boss.KINDS:
+		wanted.append("app_freed_" + kind)
+	for n in Tutorial.STEPS.size():
+		wanted.append("tutorial_%d" % (n + 1))
+	var chapters: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/story/chapters.json"))
+	for world in chapters:
+		for line in chapters[world].lines:
+			wanted.append(String(line.id))
+	var missing := wanted.filter(func(id): return not ids.has(id))
+	_check(missing.is_empty(), "every voiced id is in voice_lines.json %s" % [missing])
 	AudioManager.stop_voice()
 
 

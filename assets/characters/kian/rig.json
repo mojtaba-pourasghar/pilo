@@ -1,0 +1,71 @@
+{
+ "height": 128,
+ "src": "kian_rig",
+ "scale": 0.4,
+ "feet": [
+  66,
+  320
+ ],
+ "parts": {
+  "leg": {
+   "box": [
+    30,
+    221
+   ],
+   "pivot": [
+    25,
+    0
+   ]
+  },
+  "arm": {
+   "box": [
+    22,
+    128
+   ],
+   "pivot": [
+    16,
+    7
+   ]
+  },
+  "head": {
+   "box": [
+    0,
+    0
+   ],
+   "pivot": [
+    59,
+    116
+   ]
+  },
+  "body": {
+   "box": [
+    21,
+    100
+   ],
+   "pivot": [
+    38,
+    108
+   ]
+  }
+ },
+ "hip_front": [
+  57,
+  221
+ ],
+ "hip_back": [
+  54,
+  221
+ ],
+ "poses": {
+  "jump": {
+   "file": "pose_jump.png",
+   "scale": 1.0,
+   "lift": 0
+  },
+  "celebrate": {
+   "file": "pose_celebrate.png",
+   "scale": 1.0,
+   "lift": 0
+  }
+ }
+}
