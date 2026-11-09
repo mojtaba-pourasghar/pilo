@@ -6,16 +6,32 @@ extends CanvasLayer
 
 signal closed
 
-const CARD_SIZE := Vector2(190, 214)
+const CARD_SIZE := Vector2(196, 262)
+## The products in each tab ("colors" is Pilo's look). Companions and tools show their own picture.
+const TABS := {
+	"packs": ["worlds_pack", "pilo_colors"],
+	"companions": ["companion_dragon", "companion_lion"],
+	"tools": ["tool_skateboard", "tool_balloon", "tool_toolbox", "tool_starblaster"],
+}
+## sku -> [loadout kind, id] for the picture
+const PICTURE := {
+	"companion_dragon": ["companion", "dragon"], "companion_lion": ["companion", "lion"],
+	"tool_skateboard": ["tool", "skateboard"], "tool_balloon": ["tool", "balloon"],
+	"tool_toolbox": ["tool", "toolbox"], "tool_starblaster": ["tool", "star_blaster"],
+}
 
-var _tab := "packs"
+var _tab := "packs"   ## (STORE_TAB in the environment opens another tab; for screenshots)
 var _tabs: Dictionary = {}
 var _grid: GridContainer
 var _message: Label
 var _counter: PanelContainer
+var _scroll: ScrollContainer
+var _drag_from := -1.0
 
 
 func _ready() -> void:
+	if OS.has_environment("STORE_TAB"):
+		_tab = OS.get_environment("STORE_TAB")
 	layer = 55
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	var root := Control.new()
@@ -72,14 +88,24 @@ func _ready() -> void:
 	tabs.add_theme_constant_override("separation", 14)
 	body.add_child(tabs)
 	_add_tab(tabs, "packs", "بسته‌ها", "res://assets/ui/crystal.png")
+	_add_tab(tabs, "companions", "همراه‌ها", "companion:dragon")
+	_add_tab(tabs, "tools", "ابزارها", "tool:skateboard")
 	_add_tab(tabs, "colors", "ظاهر پیلو", "pilo")
+	# the products scroll (finger drag on phones, the wheel on a computer)
+	_scroll = ScrollContainer.new()
+	_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_scroll.custom_minimum_size = Vector2(0, 360)
+	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_scroll.scroll_deadzone = 12
+	body.add_child(_scroll)
 	var grid_holder := CenterContainer.new()
 	grid_holder.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	body.add_child(grid_holder)
+	_scroll.add_child(grid_holder)
 	_grid = GridContainer.new()
 	_grid.columns = 3
-	_grid.add_theme_constant_override("h_separation", 16)
-	_grid.add_theme_constant_override("v_separation", 16)
+	_grid.add_theme_constant_override("h_separation", 18)
+	_grid.add_theme_constant_override("v_separation", 18)
 	grid_holder.add_child(_grid)
 
 	var footer := HBoxContainer.new()
@@ -112,7 +138,12 @@ func _add_tab(parent: VBoxContainer, id: String, text: String, icon: String) -> 
 	label.add_theme_font_override("font", UIKit.FONT_BLACK)
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	label.name = "Label"
-	row.add_child(RigIcon.make("pilo", 48) if icon == "pilo" else UIKit.make_icon(icon, 48))
+	if icon == "pilo":
+		row.add_child(RigIcon.make("pilo", 48))
+	elif icon.contains(":"):
+		row.add_child(LoadoutIcon.make(icon.get_slice(":", 0), icon.get_slice(":", 1), 48))
+	else:
+		row.add_child(UIKit.make_icon(icon, 48))
 	row.add_child(label)
 	parent.add_child(button)
 	_tabs[id] = button
@@ -138,15 +169,47 @@ func _refresh() -> void:
 	for child in _grid.get_children():
 		child.queue_free()
 	(_counter.find_child("Value", true, false) as Label).text = str(int(SaveManager.data.shards))
-	if _tab == "packs":
-		for sku in StoreAdapter.PRODUCTS:
-			_grid.add_child(_pack_card(sku))
-	else:
+	if _tab == "colors":
 		for color_id in StoreAdapter.PILO_COLORS:
 			_grid.add_child(_color_card(color_id))
+	else:
+		for sku in TABS.get(_tab, []):
+			if StoreAdapter.PRODUCTS.has(sku):
+				_grid.add_child(_pack_card(sku))
+	_scroll.scroll_vertical = 0
+	_pass_drags(_grid)
 
 
-func _card(icon: Control, title: String, button: Button, ribbon := "") -> Control:
+## Cards and their insides let a finger drag through to the scroll list (a drag that starts on
+## a card still scrolls; a tap still presses the button).
+func _pass_drags(node: Node) -> void:
+	await get_tree().process_frame
+	for child in node.find_children("*", "Control", true, false):
+		if child is Button:
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		elif child is Control:
+			child.mouse_filter = Control.MOUSE_FILTER_PASS if child is Container else Control.MOUSE_FILTER_IGNORE
+
+
+func _input(event: InputEvent) -> void:
+	# touch scrolling that works whatever is under the finger
+	if _scroll == null or not _scroll.get_global_rect().has_point(_pointer(event)):
+		if event is InputEventScreenTouch and not event.pressed:
+			_drag_from = -1.0
+		return
+	if event is InputEventScreenTouch:
+		_drag_from = event.position.y if event.pressed else -1.0
+	elif event is InputEventScreenDrag and _drag_from >= 0.0:
+		_scroll.scroll_vertical -= int(event.relative.y)
+
+
+func _pointer(event: InputEvent) -> Vector2:
+	if event is InputEventScreenTouch or event is InputEventScreenDrag or event is InputEventMouse:
+		return event.position
+	return Vector2(-1, -1)
+
+
+func _card(icon: Control, title: String, button: Button, ribbon := "", note := "") -> Control:
 	var card := PanelContainer.new()
 	card.custom_minimum_size = CARD_SIZE
 	card.add_theme_stylebox_override("panel", UIKit.glass("card_white", "card", Vector4(14, 14, 14, 16)))
@@ -159,19 +222,27 @@ func _card(icon: Control, title: String, button: Button, ribbon := "") -> Contro
 	var label := UIKit.make_label(title, 24, Color("3a2614"))
 	label.add_theme_font_override("font", UIKit.FONT_BLACK)
 	label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	label.custom_minimum_size.x = 160
+	label.custom_minimum_size.x = 170
 	box.add_child(label)
+	if note != "":
+		var small := UIKit.make_label(note, 16, Color("8a6a4a"))
+		small.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		small.custom_minimum_size = Vector2(170, 0)
+		small.max_lines_visible = 3
+		box.add_child(small)
 	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	box.add_child(button)
 	if ribbon != "":
 		var tag := PanelContainer.new()
 		tag.add_theme_stylebox_override("panel", UIKit.glass("ribbon_red", "pill_s", Vector4(14, 2, 14, 10)))
 		tag.add_child(UIKit.make_label(ribbon, 18, Color.WHITE, 4, Color("8a1a1a")))
-		tag.position = Vector2(-14, -16)
+		# the ribbon hangs over the card's corner, inside the scroll area (so it is never cut off)
+		tag.position = Vector2(-2, 0)
 		tag.rotation = -0.12
 		tag.z_index = 2
 		var holder := Control.new()
-		holder.custom_minimum_size = CARD_SIZE
+		holder.custom_minimum_size = CARD_SIZE + Vector2(0, 18)
+		card.position = Vector2(0, 18)
 		holder.add_child(card)
 		holder.add_child(tag)
 		return holder
@@ -197,7 +268,14 @@ func _pack_card(sku: String) -> Control:
 		button.text = "خرید"
 		button.pressed.connect(func(): _buy(sku))
 	var ribbon := "ویژه" if sku == "pilo_colors" and not StoreAdapter.owns(sku) else ""
-	return _card(UIKit.make_icon(product.icon, 96), product.title, button, ribbon)
+	var picture: Control
+	if PICTURE.has(sku):
+		picture = LoadoutIcon.make(PICTURE[sku][0], PICTURE[sku][1], 96)
+	elif sku == "pilo_colors":
+		picture = RigIcon.make("pilo", 96, 0.33, "happy")
+	else:
+		picture = UIKit.make_icon(product.icon, 96)
+	return _card(picture, product.title, button, ribbon, String(product.get("description", "")))
 
 
 func _color_card(color_id: String) -> Control:
