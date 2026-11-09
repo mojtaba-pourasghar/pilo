@@ -141,6 +141,7 @@ func _refresh() -> void:
 	for child in _grid.get_children():
 		child.queue_free()
 	if _tab == "companions":
+		_grid.add_child(_pilo_card())
 		for id in Loadout.COMPANIONS:
 			_grid.add_child(_companion_card(id))
 	elif _tab == "weapons":
@@ -176,7 +177,11 @@ func _slot(kind: String, id: String) -> Control:
 	style.set_border_width_all(3)
 	for state in ["normal", "hover", "pressed", "focus"]:
 		button.add_theme_stylebox_override(state, style)
-	if id != "":
+	if kind == "companion" and id == "":
+		var pilo := LoadoutIcon.make(kind, "", 58)     # Pilo is out
+		pilo.position = Vector2(4, 4)
+		button.add_child(pilo)
+	elif id != "":
 		var icon := LoadoutIcon.make(kind, id, 58)
 		icon.position = Vector2(4, 4)
 		button.add_child(icon)
@@ -197,6 +202,21 @@ func _slot(kind: String, id: String) -> Control:
 
 # --- Cards ---------------------------------------------------------------------
 
+## Pilo's own card: he is the companion who is out when no other one is picked.
+func _pilo_card() -> Control:
+	var button: Button
+	if Loadout.companion() == "":
+		button = _price_button("همراه نیماست", UIKit.GREEN, false)
+	else:
+		button = _price_button("انتخاب", UIKit.BLUE, true)
+		button.pressed.connect(func():
+			Loadout.pick_companion("")
+			_message.text = "پیلو همراه نیما شد!"
+			_refresh())
+	return _card(LoadoutIcon.make("companion", "", 92), "پیلو",
+		"سُر دادن نیما، بو کشیدن رازها، لانهٔ روباه، پرتاب شدن و شکستن", button, false)
+
+
 func _companion_card(id: String) -> Control:
 	var entry: Dictionary = Loadout.COMPANIONS[id]
 	var owned := Loadout.owns_companion(id)
@@ -207,7 +227,7 @@ func _companion_card(id: String) -> Control:
 		button = _price_button("انتخاب", UIKit.BLUE, true)
 		button.pressed.connect(func():
 			Loadout.pick_companion(id)
-			_message.text = "%s با نیما و پیلو همراه شد!" % entry.name
+			_message.text = "%s همراه نیما شد! (پیلو در کوله می‌ماند؛ وسط بازی با دکمهٔ کوچک عوضش کن)" % entry.name
 			_refresh())
 	else:
 		button = _buy_button("companion", id, entry)

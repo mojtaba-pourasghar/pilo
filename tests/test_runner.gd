@@ -58,7 +58,18 @@ func _test_loadout() -> void:
 	])
 	_check(game.player.wall_jump and game.player.dash_breaks_bricks, "the squirrel and the hammer work in the level")
 	_check(game._follower != null and game._follower.id == "squirrel", "the picked companion follows along")
+	_check(not game.pilo.visible, "only one companion is out: Pilo rides in the backpack")
+	_check(game.player.can_glide == (Loadout.has_tool("umbrella") or Loadout.has_tool("balloon")),
+		"without Pilo (or a flyer) Nima glides only with the umbrella or the balloon")
 	await _wait(0.5)
+	# switching from the screen: back to Pilo, who is out again with his own button
+	game.cycle_companion()
+	await _wait(0.1)
+	_check(Loadout.companion() != "squirrel", "the switch button changes the companion")
+	while Loadout.companion() != "":
+		game.cycle_companion()
+	await _wait(0.1)
+	_check(game.pilo.visible and game._follower == null and game.player.can_glide, "Pilo is out again and Nima can glide")
 	_stop(game)
 	for id in Loadout.COMPANIONS:
 		var rig := CompanionRig.new()

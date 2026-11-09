@@ -26,6 +26,16 @@ static func make(item_kind: String, item_id: String, icon_size := 96.0, dimmed :
 func _ready() -> void:
 	if dim:
 		modulate = Color(0.55, 0.55, 0.62)
+	if kind == "companion" and id == "":
+		# Pilo himself (the companion who is out when no other one is picked)
+		var pic := TextureRect.new()
+		pic.texture = load("res://assets/art/pilo_rig.png")
+		pic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		pic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		pic.set_anchors_preset(Control.PRESET_FULL_RECT)
+		pic.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(pic)
+		return
 	if kind == "companion" and id != "" and PaintedCreature.available("companion_" + id):
 		var painted := PaintedCreature.make("companion_" + id, custom_minimum_size.y * 0.9, "idle")
 		add_child(painted)

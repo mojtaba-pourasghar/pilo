@@ -16,6 +16,7 @@ const STEPS := [
 	["time", "عدسی زمان: بین گذشته و حال جابه‌جا شو. بعضی پل‌ها فقط در گذشته هستند."],
 	["down", "پایین: خم شو تا از زیر سقف کوتاه رد شوی. روی لولهٔ درخشان، با این دکمه داخلش برو."],
 	["team", "کوله: وسط بازی همراهت (مثل سنجابک)، ابزارهای کوله و سلاح را عوض کن. هر همراه راه تازه‌ای باز می‌کند."],
+	["buddy", "همراه: فقط یکی با توست. این دکمهٔ کوچک پیلو یا همراه دیگرت را جلو می‌آورد؛ دکمهٔ پنجه کارِ همان همراه را می‌کند."],
 ]
 
 var hud: Node
@@ -74,9 +75,12 @@ func _next() -> void:
 	_card.reset_size()
 	await get_tree().process_frame
 	var view := get_viewport().get_visible_rect().size
-	# the card sits away from the circled button (above it, or below for the top bar)
-	var y := rect.position.y - _card.size.y - 30.0 if rect.position.y > view.y * 0.4 else rect.end.y + 30.0
-	_card.position = Vector2(clampf(rect.get_center().x - _card.size.x * 0.5, 20.0, view.x - _card.size.x - 20.0), clampf(y, 20.0, view.y - _card.size.y - 20.0))
+	# the card never covers a control: for the touch buttons (low on the screen) it sits in the
+	# upper middle, for the top bar just under the circled item
+	var low := rect.position.y > view.y * 0.4
+	var y := view.y * 0.2 if low else rect.end.y + 30.0
+	var x := view.x * 0.5 - _card.size.x * 0.5 if low else rect.get_center().x - _card.size.x * 0.5
+	_card.position = Vector2(clampf(x, 20.0, view.x - _card.size.x - 20.0), clampf(y, 20.0, view.y - _card.size.y - 20.0))
 	UIKit.play_click()
 
 

@@ -13,6 +13,7 @@ const KEYS := {
 	"fire": [KEY_V, KEY_L, KEY_CTRL],
 	"swap_weapon": [KEY_Q, KEY_TAB],
 	"team": [KEY_B, KEY_I],
+	"swap_companion": [KEY_G, KEY_U],
 	"hint": [KEY_H],
 	"pause": [KEY_ESCAPE, KEY_P],
 }
@@ -26,6 +27,7 @@ const PAD_BUTTONS := {
 	"time_shift": [JOY_BUTTON_X],
 	"fire": [JOY_BUTTON_LEFT_SHOULDER],
 	"swap_weapon": [JOY_BUTTON_RIGHT_STICK],
+	"swap_companion": [JOY_BUTTON_LEFT_STICK],
 	"hint": [JOY_BUTTON_BACK],
 	"pause": [JOY_BUTTON_START],
 }

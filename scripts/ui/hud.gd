@@ -15,7 +15,10 @@ const TOUCH := {
 	"down": "down",
 	"fire": "fire",
 	"swap": "swap_weapon",
+	"buddy": "swap_companion",
 }
+## Button pictures (the companion switch reuses the round switch picture).
+const TEXTURE := {"buddy": "swap"}
 const PAST_COLOR := Color("e39a2f")
 const PRESENT_COLOR := Color("2fa6d9")
 
@@ -36,6 +39,8 @@ var _touch_root: Node2D
 var _touch: Dictionary = {}
 var _weapon_icon: LoadoutIcon
 var _weapon_badge: Node2D
+var _buddy_badge: Node2D
+var _buddy_icon: LoadoutIcon
 var _team_button: Control
 var _hint_tween: Tween
 var _flash: ColorRect
@@ -130,7 +135,7 @@ func _ready() -> void:
 	add_child(_touch_root)
 	for key in TOUCH:
 		var button := TouchScreenButton.new()
-		var texture: Texture2D = load(UIKit.GLASS + "touch_%s.png" % key)
+		var texture: Texture2D = load(UIKit.GLASS + "touch_%s.png" % TEXTURE.get(key, key))
 		button.texture_normal = texture
 		button.texture_pressed = texture
 		button.action = TOUCH[key]
@@ -147,6 +152,11 @@ func _ready() -> void:
 	_weapon_icon = LoadoutIcon.make("tool", "slingshot", 58.0)
 	_weapon_icon.position = Vector2(-29, -29)
 	_weapon_badge.add_child(_weapon_icon)
+
+	# the companion that is out, shown on its switch button
+	_buddy_badge = Badge.new()
+	_touch_root.add_child(_buddy_badge)
+	set_companion("")
 
 	get_viewport().size_changed.connect(_layout)
 	_layout()
@@ -273,27 +283,49 @@ func _layout() -> void:
 	# touch buttons: bigger on small phone screens, a little smaller on big tablets, and the
 	# player's own choice in the settings on top (UIKit.touch_scale)
 	var k := UIKit.touch_scale(get_viewport())
-	var y: float = view.y - bottom - 160.0 * k
-	var lx := func(x: float) -> float: return left + x * k
-	var rx := func(x: float) -> float: return view.x - right - x * k
-	var place := func(key: String, pos: Vector2, size: float) -> void:
-		_touch[key].scale = Vector2(size, size) * k
-		_touch[key].position = pos
-	place.call("left", Vector2(lx.call(0.0), y), 0.9)
-	place.call("right", Vector2(lx.call(160.0), y), 0.9)
-	place.call("down", Vector2(lx.call(100.0), y - 130.0 * k), 0.7)
-	# right hand: big jump in the corner, dash beside it, Pilo and the lens above
-	place.call("jump", Vector2(rx.call(160.0), y - 10.0 * k), 1.0)
-	place.call("dash", Vector2(rx.call(300.0), y + 22.0 * k), 0.75)
-	place.call("pilo", Vector2(rx.call(140.0), y - 140.0 * k), 0.75)
-	place.call("time", Vector2(rx.call(300.0), y - 108.0 * k), 0.75)
-	# fire beside the dash, the weapon swap small above it
-	place.call("fire", Vector2(rx.call(430.0), y + 22.0 * k), 0.75)
-	place.call("swap", Vector2(rx.call(415.0), y - 82.0 * k), 0.55)
+	# every button is placed by its centre, for the thumbs:
+	#  left thumb : ◀ ▶ big at the bottom, ↓ (crouch, pipes) above between them
+	#  right thumb: the big jump in the corner, the three main actions in an arc around it
+	#               (shoot, dash, companion), each one thumb-stretch away; the time lens a bit
+	#               further; weapon and companion switches as small badges on their buttons
+	var size := 170.0
+	var place := func(key: String, centre: Vector2, scale: float) -> void:
+		_touch[key].scale = Vector2(scale, scale) * k
+		_touch[key].position = centre - Vector2(size, size) * 0.5 * scale * k
+	var foot: float = view.y - bottom
+	var l1 := Vector2(left + 95.0 * k, foot - 95.0 * k)
+	place.call("left", l1, 1.05)
+	place.call("right", l1 + Vector2(190.0, 0.0) * k, 1.05)
+	place.call("down", l1 + Vector2(95.0, -170.0) * k, 0.8)
+	var j := Vector2(view.x - right - 108.0 * k, foot - 108.0 * k)
+	var r := 178.0
+	place.call("jump", j, 1.15)
+	place.call("dash", j + Vector2(-r, 18.0) * k, 0.82)
+	var fire := j + Vector2(-r * 0.76, -r * 0.8) * k
+	place.call("fire", fire, 0.82)
+	var paw := j + Vector2(0.0, -r - 8.0) * k
+	place.call("pilo", paw, 0.82)
+	place.call("time", j + Vector2(-r * 0.72, -r * 1.68) * k, 0.62)
+	var swap := fire + Vector2(-64.0, -60.0) * k
+	place.call("swap", swap, 0.46)
+	var buddy := paw + Vector2(-64.0, -60.0) * k
+	place.call("buddy", buddy, 0.46)
+	# the current weapon and companion pictures sit on their switch buttons
 	if _weapon_badge:
-		# the current weapon in a round badge on the fire button's upper corner
-		_weapon_badge.scale = Vector2(k, k)
-		_weapon_badge.position = _touch.fire.position + Vector2(110, 6) * k
+		_weapon_badge.scale = Vector2(k, k) * 0.62
+		_weapon_badge.position = swap
+	if _buddy_badge:
+		_buddy_badge.scale = Vector2(k, k) * 0.62
+		_buddy_badge.position = buddy
+
+
+## The companion that is out ("" = Pilo), on the companion switch button.
+func set_companion(id: String) -> void:
+	if _buddy_icon:
+		_buddy_icon.queue_free()
+	_buddy_icon = LoadoutIcon.make("companion", id, 58.0)
+	_buddy_icon.position = Vector2(-29, -29)
+	_buddy_badge.add_child(_buddy_icon)
 
 
 func set_stars(collected: Array) -> void:

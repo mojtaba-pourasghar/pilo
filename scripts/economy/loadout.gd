@@ -1,8 +1,9 @@
 class_name Loadout
 extends RefCounted
 ## The companion team and the tool bag (see the scenario document):
-## - Pilo is always with Nima; one more companion can be picked in the village. Each one has a
-##   real ability. Seven join through the story (one per freed guardian), the others are bought
+## - Only one companion is out at a time: Pilo (companion() == "") or one picked in the village
+##   or switched to during a level; Pilo then rides in the backpack. The one that is out gives its
+##   passive ability and does its own thing on the paw button (CompanionFollower.act). Seven join through the story (one per freed guardian), the others are bought
 ##   with coins, coins + diamonds, or (two of them) real money behind the parent gate.
 ## - Two tool slots (three with the golden toolbox). Tools are bought with coins, coins +
 ##   diamonds, or real money.
@@ -10,18 +11,18 @@ extends RefCounted
 ## and comfort. Coins and diamonds are never sold for money.
 
 const COMPANIONS := {
-	"squirrel": {"name": "سنجابک", "ability": "از دیوارها بالا می‌پرد (پرش از دیوار)", "unlock": "world:1"},
+	"squirrel": {"name": "سنجابک", "ability": "پرش از دیوار؛ دکمه: سکه‌های اطراف را جمع می‌کند", "unlock": "world:1"},
 	"turtle": {"name": "لاکی", "ability": "شنای تند و بی‌خستگی در آب", "unlock": "world:2"},
-	"mole": {"name": "خال‌خالی", "ability": "شن روان کندش نمی‌کند و جعبه‌های پنهان را حس می‌کند", "unlock": "world:3"},
+	"mole": {"name": "خال‌خالی", "ability": "شن روان کندش نمی‌کند؛ دکمه: لانهٔ روباه را می‌کند و جعبهٔ پنهان را پیدا می‌کند", "unlock": "world:3"},
 	"penguin": {"name": "یخک", "ability": "روی یخ لیز نمی‌خورد", "unlock": "world:4"},
-	"butterfly": {"name": "پَرپَری", "ability": "سُر خوردن با پیلو دو برابر طول می‌کشد", "unlock": "world:5"},
-	"owl": {"name": "پیچ‌پیچ", "ability": "نور بیشتر در تاریکی و بوکشیدن از دورتر", "unlock": "world:6"},
-	"spark": {"name": "جرقه", "ability": "حملهٔ پیلو از دو برابر فاصله", "unlock": "world:7"},
-	"hedgehog": {"name": "توپولی", "ability": "دَش، خارپشت‌ها را هم آزاد می‌کند و آجرها را می‌شکند", "coins": 800},
-	"goat": {"name": "شاخ‌طلا", "ability": "پرش دوبل", "coins": 2000, "diamonds": 8},
+	"butterfly": {"name": "پَرپَری", "ability": "نیما را می‌برد و سُر خوردن دو برابر طول می‌کشد؛ دکمه: راز نزدیک را نشان می‌دهد", "unlock": "world:5"},
+	"owl": {"name": "پیچ‌پیچ", "ability": "نور بیشتر در تاریکی و سُر دادن نیما؛ دکمه: راز را از دور پیدا می‌کند", "unlock": "world:6"},
+	"spark": {"name": "جرقه", "ability": "دکمه: صاعقه به سایه‌ای که دور است", "unlock": "world:7"},
+	"hedgehog": {"name": "توپولی", "ability": "دَش خارپشت‌ها را آزاد می‌کند و آجر را می‌شکند؛ دکمه: دیوار را می‌شکند", "coins": 800},
+	"goat": {"name": "شاخ‌طلا", "ability": "پرش دوبل؛ دکمه: با شاخ دیوار و آجر را می‌شکند", "coins": 2000, "diamonds": 8},
 	"cat": {"name": "گربهٔ سایه", "ability": "خار و تیغ آسیبش نمی‌زند", "coins": 3500, "diamonds": 20},
-	"dragon": {"name": "اژدهاک", "ability": "سُر خوردن بدون پایین آمدن", "sku": "companion_dragon"},
-	"lion": {"name": "شیرک بالدار", "ability": "یک قلب بیشتر", "sku": "companion_lion"},
+	"dragon": {"name": "اژدهاک", "ability": "نیما را بی‌پایین آمدن می‌برد؛ دکمه: نفس آتشین", "sku": "companion_dragon"},
+	"lion": {"name": "شیرک بالدار", "ability": "یک قلب بیشتر؛ دکمه: غرش، سایه‌های اطراف را آزاد می‌کند", "sku": "companion_lion"},
 }
 
 const TOOLS := {
