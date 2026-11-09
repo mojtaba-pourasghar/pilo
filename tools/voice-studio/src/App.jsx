@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import SfxPanel from "./SfxPanel.jsx";
+import ToolsPanel from "./ToolsPanel.jsx";
 
 const fa = (n) => Number(n || 0).toLocaleString("fa-IR");
 const api = async (path, options) => {
@@ -226,6 +227,9 @@ export default function App() {
         <button className={tab === "sfx" ? "chip sel" : "chip"} onClick={() => setTab("sfx")}>
           صداهای بازی و محیط
         </button>
+        <button className={tab === "tools" ? "chip sel" : "chip"} onClick={() => setTab("tools")}>
+          ابزارها (تصویر و صدای محیط)
+        </button>
         <button className={tab === "diag" ? "chip sel" : "chip"} onClick={() => setTab("diag")}>
           تستِ وب‌سرویس
         </button>
@@ -427,6 +431,8 @@ export default function App() {
       </>)}
 
       {tab === "sfx" && <SfxPanel ffmpeg={config.ffmpeg} />}
+
+      {tab === "tools" && <ToolsPanel />}
 
 
       {tab === "diag" && (

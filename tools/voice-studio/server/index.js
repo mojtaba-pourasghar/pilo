@@ -17,6 +17,7 @@ import { fileURLToPath } from "node:url";
 import { readManifest, existingKeys, setSpoken, GROUP_LABELS } from "./manifest.js";
 import { createRegistry } from "./tts-registry.js";
 import { speak, SPEAKERS, VOICES, RateLimited } from "./avasho.js";
+import { createTools } from "./tools.js";
 import { createSfx } from "./sfx.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -475,6 +476,7 @@ app.use(express.json({ limit: "64mb" }));   // a worksheet PDF arrives as base64
 const publicConfig = () => ({
   ...config,
   token: undefined,
+  cloudflare: undefined,     // the Cloudflare keys never go to the page (the tools tab shows hints)
   tokenSet: Boolean(config.token),
   tokenHint: config.token ? `${config.token.slice(0, 6)}…${config.token.slice(-4)}` : "",
   configFile: CONFIG_FILE,
@@ -912,6 +914,32 @@ app.get("/api/events", (req, res) => {
 // cleaned up by ffmpeg and written over the .ogg the game already plays (assets/audio/sfx, ambient,
 // music) — inside the project, so the next export carries it. Nothing is uploaded anywhere.
 const sfx = createSfx({ app: APP, normalize: normalizeSfx, say });
+
+// ── the tools tab: Cloudflare keys, pictures, real ambient recordings (server/tools.js) ──
+const tools = createTools({
+  app: APP,
+  getConfig: () => config,
+  saveConfig: (patch) => { Object.assign(config, patch); saveConfig(); },
+  say,
+});
+const answer = (res, work) => Promise.resolve().then(work)
+  .then((body) => res.json(body))
+  .catch((err) => res.status(400).json({ error: err.message }));
+app.get("/api/tools", (_req, res) => answer(res, () => tools.status()));
+app.post("/api/tools/keys", (req, res) => answer(res, () => (req.body?.text === "" ? tools.clearKeys() : tools.setKeys(req.body?.text))));
+app.post("/api/tools/python", (req, res) => answer(res, () => tools.setPython(req.body?.python)));
+app.get("/api/tools/art", (_req, res) => answer(res, () => tools.art()));
+// long jobs start and answer at once; their progress goes to the log
+const start = (promise) => { promise.catch((err) => say("err", err.message)); return tools.status(); };
+app.post("/api/tools/art", (req, res) => answer(res, () => start(tools.remakeArt(req.body?.ids))));
+app.get("/api/tools/ambient", (_req, res) => answer(res, () => tools.ambient()));
+app.post("/api/tools/ambient", (req, res) => answer(res, () => start(tools.fetchAmbient(req.body?.keys, req.body?.force))));
+app.get("/api/art/:id", (req, res) => {
+  const id = String(req.params.id);
+  const file = path.join(APP, "assets/art", id + ".png");
+  if (!/^[\w-]+$/.test(id) || !fs.existsSync(file)) return res.status(404).end();
+  res.sendFile(file);
+});
 
 app.get("/api/sfx", (_req, res) => {
   try {
