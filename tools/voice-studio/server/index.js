@@ -476,7 +476,8 @@ app.use(express.json({ limit: "64mb" }));   // a worksheet PDF arrives as base64
 const publicConfig = () => ({
   ...config,
   token: undefined,
-  cloudflare: undefined,     // the Cloudflare keys never go to the page (the tools tab shows hints)
+  cloudflare: undefined,     // the Cloudflare and Freesound keys never go to the page (the tools tab shows hints)
+  freesound: undefined,
   tokenSet: Boolean(config.token),
   tokenHint: config.token ? `${config.token.slice(0, 6)}…${config.token.slice(-4)}` : "",
   configFile: CONFIG_FILE,
@@ -921,6 +922,7 @@ const tools = createTools({
   getConfig: () => config,
   saveConfig: (patch) => { Object.assign(config, patch); saveConfig(); },
   say,
+  makeLoop: normalizeLoop,
 });
 const answer = (res, work) => Promise.resolve().then(work)
   .then((body) => res.json(body))
@@ -934,6 +936,16 @@ const start = (promise) => { promise.catch((err) => say("err", err.message)); re
 app.post("/api/tools/art", (req, res) => answer(res, () => start(tools.remakeArt(req.body?.ids))));
 app.get("/api/tools/ambient", (_req, res) => answer(res, () => tools.ambient()));
 app.post("/api/tools/ambient", (req, res) => answer(res, () => start(tools.fetchAmbient(req.body?.keys, req.body?.force))));
+app.post("/api/tools/freesound-key", (req, res) => answer(res, () => tools.setFreesoundKey(req.body?.key)));
+app.get("/api/tools/ambient-targets", (_req, res) => answer(res, () => tools.ambientTargets()));
+app.get("/api/tools/freesound", (req, res) => answer(res, () => tools.searchFreesound(req.query.q)));
+app.post("/api/tools/freesound", (req, res) => answer(res, () => tools.useFreesound(req.body?.name, req.body?.id, req.body?.start)));
+app.get("/api/ambient/:name", (req, res) => {
+  const name = String(req.params.name);
+  const file = path.join(APP, "assets/audio/ambient", name + ".ogg");
+  if (!/^\w+$/.test(name) || !fs.existsSync(file)) return res.status(404).end();
+  res.sendFile(file);
+});
 app.get("/api/art/:id", (req, res) => {
   const id = String(req.params.id);
   const file = path.join(APP, "assets/art", id + ".png");
