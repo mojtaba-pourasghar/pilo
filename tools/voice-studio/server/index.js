@@ -18,6 +18,8 @@ import { readManifest, existingKeys, setSpoken, GROUP_LABELS } from "./manifest.
 import { createRegistry } from "./tts-registry.js";
 import { speak, SPEAKERS, VOICES, RateLimited } from "./avasho.js";
 import { createTools } from "./tools.js";
+import { MODES, textFor, normalizeMode, stripMarks } from "./vowels.js";
+import { editLine, clearSpoken } from "./edit.js";
 import { createSfx } from "./sfx.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -61,7 +63,10 @@ const DEFAULTS = {
   characters: charactersFromLines(),
   // Every line is a sentence or two, so the short family is the right one.
   endpoint: "short",
-  useVowels: true,          // send "spoken" (the respelling with vowels) when a line has one
+  useVowels: true,          // (old setting, kept for saved configs; `vowels` decides)
+  // What goes to Avasho: "plain" written text, "light" only the ezafe kasra and shadda, or
+  // "full" every vowel mark (server/vowels.js). Compare them by ear in the test tab.
+  vowels: "light",
   concurrency: 2,
   delayMs: 400,
   retries: 3,
@@ -103,7 +108,10 @@ function speedOf(value, fallback = 1) {
 }
 
 /** One sentence Pilo really says, so a sample is judged on the real thing. */
-const SAMPLE_TEXT = "سَلام نیما! مَن پیلو هَستَم. غُبارَک تِکّه‌هایِ زَمان را پَخش کَردِه؛ بیا پِیداشان کُنیم!";
+/** One sentence Pilo really says, in its fully vowelled form; each mode makes its own text of it. */
+const SAMPLE_SPOKEN = "سَلام نیما! مَن پیلو هَستَم. غُبارَک تِکّه‌هایِ زَمان را پَخش کَردِه؛ بیا پِیداشان کُنیم!";
+const SAMPLE_LINE = { written: stripMarks(SAMPLE_SPOKEN), spoken: SAMPLE_SPOKEN };
+const sampleText = () => textFor(SAMPLE_LINE, config.vowels);
 
 /** _sample-pune-090 — the speed in the name, so two paces never overwrite each other. */
 const sampleKey = (speaker, speed) =>
@@ -133,6 +141,7 @@ try {
   console.error("config خوانده نشد:", err.message);
 }
 config.endpoint = normalizeEndpoint(config.endpoint);
+config.vowels = normalizeMode(config.vowels, config.useVowels !== false);
 config.speaker = normalizeSpeaker(config.speaker);
 
 let savedAt = fs.existsSync(CONFIG_FILE) ? fs.statSync(CONFIG_FILE).mtimeMs : 0;
@@ -290,7 +299,7 @@ async function recordOne(line, { force = false } = {}) {
       if (fs.existsSync(old)) fs.unlinkSync(old);
     }
   }
-  const text = config.useVowels ? line.spoken : line.written;
+  const text = textFor(line, config.vowels);
   const voice = voiceFor(line);
   let attempt = 0;
 
@@ -486,6 +495,7 @@ const publicConfig = () => ({
   voices: VOICES.filter((v) => SPEAKERS.includes(v.name)),
   groupLabels: GROUP_LABELS,
   ffmpeg: hasFfmpeg,
+  vowelModes: MODES,
 });
 
 app.get("/api/config", (_req, res) => res.json(publicConfig()));
@@ -514,6 +524,7 @@ app.post("/api/config", (req, res) => {
   for (const key of ["speed", "concurrency", "delayMs", "retries"]) {
     if (body[key] !== undefined && body[key] !== "") config[key] = Number(body[key]);
   }
+  if (typeof body.vowels === "string") config.vowels = normalizeMode(body.vowels);
   for (const key of ["useVowels", "normalize"]) {
     if (typeof body[key] === "boolean") config[key] = body[key];
   }
@@ -579,7 +590,7 @@ app.post("/api/diag", async (req, res) => {
   // the same two guards the job uses, so the two sections can never drift apart again
   const speaker = normalizeSpeaker(req.body?.speaker || config.speaker);
   const endpoint = normalizeEndpoint(req.body?.endpoint);
-  const text = String(req.body?.text || SAMPLE_TEXT);
+  const text = String(req.body?.text || sampleText());
   const speed = speedOf(req.body?.speed, config.speed);
   const timestamps = req.body?.timestamps === true;
 
@@ -671,7 +682,7 @@ app.post("/api/diag/sample", async (req, res) => {
   if (sampler.running) return res.status(409).json({ error: "یک نمونه‌گیری در حال اجراست" });
 
   const mode = req.body?.mode === "speeds" ? "speeds" : "voices";
-  const text = String(req.body?.text || SAMPLE_TEXT);
+  const text = String(req.body?.text || sampleText());
   const endpoint = normalizeEndpoint(req.body?.endpoint);
   const speed = speedOf(req.body?.speed, config.speed);
   const speaker = normalizeSpeaker(req.body?.speaker || config.speaker);
@@ -809,19 +820,22 @@ function patchManifestLine(key, spoken) {
 
 app.get("/api/overrides", (_req, res) => res.json({ file: OVERRIDES, overrides: readOverrides() }));
 
+// A line's text changed in the studio: { key, written?, spoken? }. The written text changes in
+// every game file that has it (server/edit.js), the vowelled form in tools/voice/spoken_fa.json,
+// and every line with the same words changes together. The answer names the clips to remake.
 app.post("/api/text", (req, res) => {
   const key = String(req.body?.key || "").trim();
-  const spoken = String(req.body?.spoken || "").trim();
-  if (!key || !spoken) return res.status(400).json({ error: "کلید و متن لازم است" });
-  if (spoken.includes("|")) return res.status(400).json({ error: "متن نباید | داشته باشد" });
-
+  if (!key) return res.status(400).json({ error: "کلید لازم است" });
+  if (!config.manifestPath.toLowerCase().endsWith(".json")) {
+    return res.status(400).json({ error: "ویرایش متن فقط با data/voice/voice_lines.json کار می‌کند" });
+  }
   try {
-    const overrides = readOverrides();
-    overrides[key] = spoken;
-    fs.writeFileSync(OVERRIDES, JSON.stringify(overrides, null, 2), "utf8");
-    const patched = patchManifestLine(key, spoken);
-    say("ok", `متنِ ${key} عوض شد${patched ? "" : " (در منیفست پیدا نشد)"} — در voice-overrides.json ماند`);
-    res.json({ ok: true, patched, file: OVERRIDES });
+    const written = typeof req.body?.written === "string" ? req.body.written : undefined;
+    const spoken = typeof req.body?.spoken === "string" ? req.body.spoken : undefined;
+    const result = editLine(APP, config.manifestPath, key, { written, spoken });
+    say("ok", `متن عوض شد (${result.keys.length} جمله: ${result.keys.slice(0, 6).join("، ")}${result.keys.length > 6 ? "…" : ""})`
+      + (result.files.length ? ` — در ${result.files.length} فایل بازی: ${result.files.join("، ")}` : ""));
+    res.json({ ok: true, ...result });
   } catch (err) {
     say("error", `متن ذخیره نشد: ${err.message}`);
     res.status(400).json({ error: err.message });
@@ -829,12 +843,9 @@ app.post("/api/text", (req, res) => {
 });
 
 app.delete("/api/text/:key", (req, res) => {
-  const overrides = readOverrides();
-  delete overrides[req.params.key];
-  fs.writeFileSync(OVERRIDES, JSON.stringify(overrides, null, 2), "utf8");
-  if (config.manifestPath.toLowerCase().endsWith(".json")) setSpoken(config.manifestPath, req.params.key, null);
-  say("warn", `تلفظِ ویژه‌ی ${req.params.key} برداشته شد — متنِ اصلی خوانده می‌شود`);
-  res.json({ ok: true });
+  const keys = clearSpoken(APP, config.manifestPath, req.params.key);
+  say("warn", `اعرابِ ${req.params.key} برداشته شد — متنِ نوشته خوانده می‌شود (${keys.length} جمله)`);
+  res.json({ ok: true, keys });
 });
 
 app.post("/api/generate", async (req, res) => {
@@ -861,7 +872,10 @@ app.post("/api/test", async (req, res) => {
   if (!config.token) return res.status(400).json({ error: "توکن خالی است" });
   const who = String(req.body?.who || "pilo");
   const voice = voiceFor({ who });
-  const text = String(req.body?.text || SAMPLE_TEXT);
+  // a line of this character, in the chosen mode (the same text the generation would send)
+  const found = req.body?.key ? readManifest(config.manifestPath).find((l) => l.key === req.body.key) : null;
+  const text = found ? textFor(found, config.vowels) : String(req.body?.text || sampleText());
+  say("info", `تست ${who} (${MODES[config.vowels]}): ${text}`);
   try {
     const { buffer, ext, raw } = await speak({
       token: config.token, text, speaker: voice.speaker,
@@ -877,6 +891,32 @@ app.post("/api/test", async (req, res) => {
     say("error", `تستِ صدا نشد: ${err.message}`);
     res.status(502).json({ error: err.message });
   }
+});
+
+// The same line in each of the three modes, to choose the mode by ear: { who, key? }.
+app.post("/api/test-modes", async (req, res) => {
+  if (!config.token) return res.status(400).json({ error: "توکن خالی است" });
+  const who = String(req.body?.who || "pilo");
+  const voice = voiceFor({ who });
+  const found = req.body?.key ? readManifest(config.manifestPath).find((l) => l.key === req.body.key) : null;
+  const line = found || SAMPLE_LINE;
+  const out = [];
+  fs.mkdirSync(SAMPLES, { recursive: true });
+  for (const mode of Object.keys(MODES)) {
+    const text = textFor(line, mode);
+    try {
+      const { buffer, ext } = await speak({ token: config.token, text, speaker: voice.speaker,
+        speed: voice.speed, endpoint: config.endpoint });
+      const key = `_mode-${mode}`;
+      for (const e of [".mp3", ".wav", ".ogg"]) fs.rmSync(path.join(SAMPLES, key + e), { force: true });
+      fs.writeFileSync(path.join(SAMPLES, key + ext), buffer);
+      out.push({ mode, title: MODES[mode], text, key });
+    } catch (err) {
+      out.push({ mode, title: MODES[mode], text, error: err.message });
+    }
+  }
+  say("ok", `سه حالت ساخته شد — گوش کنید و بهترین را در تنظیمات انتخاب کنید`);
+  res.json({ ok: true, items: out });
 });
 
 // play a produced file back in the browser

@@ -53,7 +53,8 @@ export default function App() {
   const [busy, setBusy] = useState(false);
   const [filter, setFilter] = useState({ group: "all", chapter: "all", state: "all", q: "" });
   const [showLog, setShowLog] = useState(true);
-  const [editing, setEditing] = useState(null);      // { key, spoken }
+  const [editing, setEditing] = useState(null);      // { key, written, spoken }
+  const [modes, setModes] = useState({});            // { who: [{ mode, title, text, key, error }] }
   const [testStamp, setTestStamp] = useState({});   // { who: time } — reloads that character's sample
   const [pickFor, setPickFor] = useState("pilo");   // which character a picked sample becomes
   const [tab, setTab] = useState("studio");
@@ -169,13 +170,31 @@ export default function App() {
     setBusy(false);
   };
 
-  /** Save a corrected line. It lands in tools/voice-overrides.json, which goes into git. */
-  const saveText = async (key, spoken) => {
+  /**
+   * Saves a line's written text and/or its vowelled form. The written text changes in every game
+   * file that has it, and every line with the same words changes too; the answer lists their keys
+   * (so «save and remake» remakes all of them).
+   */
+  const saveText = async (key, written, spoken) => {
     setBusy(true);
+    let keys = [];
     try {
-      await api("/text", { method: "POST", body: JSON.stringify({ key, spoken }) });
+      const reply = await api("/text", { method: "POST", body: JSON.stringify({ key, written, spoken }) });
+      keys = reply?.keys || [key];
       setEditing(null);
       await load();
+    } catch (err) { setError(err.message); }
+    setBusy(false);
+    return keys;
+  };
+
+  /** The same line in the three modes (plain, light, full), to choose by ear. */
+  const compareModes = async (who) => {
+    setBusy(true);
+    try {
+      const line = lines.find((l) => l.who === who);
+      const reply = await api("/test-modes", { method: "POST", body: JSON.stringify({ who, key: line?.key }) });
+      setModes((old) => ({ ...old, [who]: (reply.items || []).map((i) => ({ ...i, t: Date.now() })) }));
     } catch (err) { setError(err.message); }
     setBusy(false);
   };
@@ -186,7 +205,7 @@ export default function App() {
     setBusy(true);
     try {
       const line = lines.find((l) => l.who === who);
-      await api("/test", { method: "POST", body: JSON.stringify({ who, text: line ? line.spoken : undefined }) });
+      await api("/test", { method: "POST", body: JSON.stringify({ who, key: line?.key }) });
       setTestStamp((old) => ({ ...old, [who]: Date.now() }));   // makes the player reload the new file
       load();
     } catch (err) { setError(err.message); }
@@ -308,11 +327,14 @@ export default function App() {
             <input type="number" min="0" max="8" value={form.retries}
                    onChange={(e) => setForm({ ...form, retries: e.target.value })} />
           </div>
-          <label className="check">
-            <input type="checkbox" checked={form.useVowels}
-                   onChange={(e) => setForm({ ...form, useVowels: e.target.checked })} />
-            متنِ تلفظی (spoken) برای جمله‌هایی که دارند
-          </label>
+          <div>
+            <label>متنی که به آواشو می‌رود</label>
+            <select value={form.vowels || "light"} onChange={(e) => setForm({ ...form, vowels: e.target.value })}>
+              {Object.entries(config.vowelModes || {}).map(([mode, title]) => (
+                <option key={mode} value={mode}>{title}</option>
+              ))}
+            </select>
+          </div>
           <label className="check">
             <input type="checkbox" checked={form.normalize}
                    onChange={(e) => setForm({ ...form, normalize: e.target.checked })} />
@@ -355,6 +377,15 @@ export default function App() {
               تست با یک جمله‌ی خودش
             </button>
             {testStamp[who] > 0 && <audio controls src={`/api/audio/_test-${who}?t=${testStamp[who]}`} />}
+            <button className="ghost" disabled={busy || !config.tokenSet} onClick={() => compareModes(who)}
+                    title="همان جمله با سه حالت: بی‌اعراب، اعراب سبک، اعراب کامل">مقایسهٔ سه حالت</button>
+            {(modes[who] || []).map((m) => (
+              <span key={m.mode} className="row" title={m.text}>
+                <small>{m.title}</small>
+                {m.error ? <span className="err">{m.error}</span>
+                  : <audio controls src={`/api/audio/${m.key}?t=${m.t}`} />}
+              </span>
+            ))}
           </div>
         ))}
         <p className="note">
@@ -710,13 +741,25 @@ export default function App() {
               <span className="key">{l.key}{l.edited ? " ✎" : ""}</span>
               {editing?.key === l.key ? (
                 <span style={{ gridColumn: "2 / 4" }}>
-                  <textarea rows={3} value={editing.spoken} style={{ width: "100%" }}
+                  <label>متن نوشته (در بازی همین نشان داده می‌شود؛ همه‌جا عوض می‌شود)</label>
+                  <textarea rows={2} value={editing.written} style={{ width: "100%" }}
+                            onChange={(e) => setEditing({ ...editing, written: e.target.value })} />
+                  <label>متن تلفظی (همان حروف، با اعراب؛ برای آواشو)</label>
+                  <textarea rows={2} value={editing.spoken} style={{ width: "100%" }}
                             onChange={(e) => setEditing({ ...editing, spoken: e.target.value })} />
+                  <small>
+                    اگر متن نوشته را عوض کنید و متن تلفظی را دست نزنید، متن تازه بی‌اعراب خوانده می‌شود.
+                    به آواشو می‌رود: {config.vowelModes?.[config.vowels] || ""}
+                  </small>
                   <span className="row" style={{ marginTop: 6 }}>
                     <button className="tiny go" disabled={busy}
-                            onClick={() => saveText(l.key, editing.spoken)}>ذخیره‌ی متن</button>
-                    <button className="tiny go" disabled={busy || status.running}
-                            onClick={() => saveText(l.key, editing.spoken).then(() => generate([l.key], 0, true))}>
+                            onClick={() => saveText(l.key, editing.written,
+                              editing.spoken !== l.spoken || editing.written === l.written ? editing.spoken : undefined)}>
+                      ذخیره‌ی متن</button>
+                    <button className="tiny go" disabled={busy || status.running || !config.tokenSet}
+                            onClick={() => saveText(l.key, editing.written,
+                              editing.spoken !== l.spoken || editing.written === l.written ? editing.spoken : undefined)
+                              .then((keys) => keys.length && generate(keys, 0, true))}>
                       ذخیره و بساز از نو
                     </button>
                     <button className="tiny ghost" onClick={() => setEditing(null)}>بی‌خیال</button>
@@ -731,8 +774,10 @@ export default function App() {
                 </span>
               ) : (
                 <>
-                  <span className="say" title={config.useVowels ? l.spoken : l.written}>
-                    {config.useVowels ? l.spoken : l.written}
+                  <span className="say" title={l.spoken}>
+                    {l.written}
+                    {config.vowels !== "plain" && l.spoken !== l.written &&
+                      <><br /><small style={{ opacity: 0.7 }}>{l.spoken}</small></>}
                   </span>
                   <span className="row">
                     {/* the stamp changes when the clip is remade, so «از نو» is not answered
@@ -747,7 +792,7 @@ export default function App() {
                           </span>
                         : <span className="tag">بی‌فایل</span>}
                     <button className="tiny ghost"
-                            onClick={() => setEditing({ key: l.key, spoken: l.spoken })}>متن</button>
+                            onClick={() => setEditing({ key: l.key, written: l.written, spoken: l.spoken })}>متن</button>
                     {/* a human recording is never replaced or deleted from here */}
                     {(!l.done || l.tts) && (
                       <button className="tiny go" disabled={busy || status.running || !config.tokenSet}
