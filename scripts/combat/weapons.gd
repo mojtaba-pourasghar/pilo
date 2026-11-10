@@ -52,19 +52,53 @@ static func fire(shooter: Node2D, facing: float) -> Array:
 	var id := current()
 	var cfg: Dictionary = LIST[id]
 	var shots: Array = []
+	var origin := shooter.global_position + Vector2(facing * 34.0, -6.0)
+	# aim assist: the shot goes for the nearest creature in front (above or below too), so on a
+	# phone one tap is enough; with nothing in front it flies straight ahead
+	var target := aim_target(shooter, facing)
+	var speed := float(cfg.speed)
+	var aim := Vector2(facing, 0)
+	if target:
+		var to: Vector2 = target.global_position + Vector2(0, -24) - origin
+		aim = to.normalized()
+		if absf(aim.angle_to(Vector2(facing, 0))) > deg_to_rad(55.0):
+			aim = Vector2(facing, 0).rotated(clampf(Vector2(facing, 0).angle_to(aim), -deg_to_rad(55.0), deg_to_rad(55.0)))
 	var angles := [0.0] if id != "star_blaster" else [-0.18, 0.0, 0.18]
 	for a in angles:
 		var shot := Shot.new()
 		shot.kind = id
 		shot.owner_node = shooter
-		var dir := Vector2(facing, 0).rotated(a * facing)
-		shot.velocity = dir * float(cfg.speed) + (Vector2(0, -150) if id == "slingshot" else Vector2.ZERO)
+		var dir := aim.rotated(a * facing)
+		shot.velocity = dir * speed
+		if id == "slingshot":
+			# an arc that lands on the target: lift by half the drop over the flight time
+			var flight := (target.global_position.distance_to(origin) / speed) if target else 0.45
+			shot.velocity.y -= 0.5 * float(cfg.gravity) * flight
 		shot.fall = float(cfg.gravity)
 		shot.life = float(cfg.life)
-		shot.position = shooter.global_position + Vector2(facing * 34.0, -6.0)
+		shot.homing = target if id != "boomerang" else null
+		shot.position = origin
 		shooter.get_parent().add_child(shot)
 		shots.append(shot)
+	FX.burst(shooter.get_parent(), origin, Color(1, 0.95, 0.7), 8)
 	return shots
+
+
+## The creature a shot should go for: the nearest one in front, within reach, not too far up or down.
+static func aim_target(shooter: Node2D, facing: float) -> Node2D:
+	var best: Node2D = null
+	var best_d := 760.0
+	for enemy in shooter.get_tree().get_nodes_in_group("enemy"):
+		if not is_instance_valid(enemy) or enemy.get("freed"):
+			continue
+		var d: Vector2 = enemy.global_position - shooter.global_position
+		if d.x * facing < 10.0 or absf(d.y) > 300.0:
+			continue
+		var score := d.length() + absf(d.y) * 0.8
+		if score < best_d:
+			best_d = score
+			best = enemy
+	return best
 
 
 ## A shot in flight.
@@ -79,6 +113,7 @@ class Shot extends Area2D:
 	var _returning := false
 	var _hit: Array = []
 	var _trapped: Node2D
+	var homing: Node2D      ## a gentle curve towards this creature (aim assist)
 
 	func _ready() -> void:
 		collision_layer = 0
@@ -90,6 +125,17 @@ class Shot extends Area2D:
 		shape.shape = circle
 		add_child(shape)
 		body_entered.connect(_on_body)
+		if kind != "fire_staff" and kind != "star_blaster":
+			# a soft trail, so every shot can be followed by eye
+			var soft := CPUParticles2D.new()
+			soft.texture = FX.soft()
+			soft.amount = 12
+			soft.lifetime = 0.22
+			soft.local_coords = false
+			soft.scale_amount_min = 0.2
+			soft.scale_amount_max = 0.35
+			soft.color = Color(1, 1, 1, 0.45) if kind != "bubble" else Color(0.7, 0.9, 1.0, 0.5)
+			add_child(soft)
 		if kind == "fire_staff" or kind == "star_blaster":
 			var trail := CPUParticles2D.new()
 			trail.texture = FX.soft()
@@ -114,6 +160,10 @@ class Shot extends Area2D:
 				_pop_trap()
 			queue_redraw()
 			return
+		if homing and is_instance_valid(homing) and not homing.get("freed") and kind != "slingshot":
+			# steer gently towards the target, keeping the speed
+			var want := (homing.global_position + Vector2(0, -24) - global_position).normalized() * velocity.length()
+			velocity = velocity.lerp(want, 1.0 - exp(-4.0 * delta))
 		if kind == "boomerang":
 			if not _returning and _t > 0.45:
 				_returning = true

@@ -35,6 +35,11 @@ static func available(name: String) -> bool:
 	return FileAccess.file_exists(FOLDER % name + "rig.json")
 
 
+## Does this character have drawn frames for a state (e.g. "crouch", "crawl")?
+func has_cycle(anim: String) -> bool:
+	return _cycles.has(anim)
+
+
 static func make(name: String) -> PaintedRig:
 	var rig := PaintedRig.new()
 	rig.character = name
@@ -78,9 +83,21 @@ func _ready() -> void:
 ## the states they cover; every pose keeps the base picture's scale (tools/art "frame").
 const CYCLES := {
 	"run": ["run_a", "run_b", "run_c", "run_d"],
-	"walk": ["walk_a", "walk_b"],
+	"walk": ["walk_a", "walk_c", "walk_b", "walk_d"],    # step, pass, step, pass
 	"idle": ["", "idle_b"],
+	"crawl": ["crawl_a", "crawl_b"],
+	"crouch": ["crouch"],
+	"swim": ["swim_a", "swim_c", "swim_b", "swim_c"],     # reach, spread, pull back, spread
 }
+## When the full cycle is not drawn (Kian has two walking poses): the shorter one.
+const FALLBACK := {"walk": ["walk_a", "walk_b"]}
+## Where each frame stands in its picture (tools/art/frame_anchors.py): every frame is scaled so
+## the head is the same size and moved so the head (or body) sits over the feet, so swapping
+## frames never makes the body jump.
+const ANCHORS_FILE := "res://assets/art/frame_anchors.json"
+static var _anchors: Dictionary = {}
+
+var _cycle_next: Sprite2D    ## the next frame, faded in over the current one
 
 
 func _load_cycles() -> void:
@@ -89,23 +106,46 @@ func _load_cycles() -> void:
 	if not ResourceLoader.exists(base_path):
 		return
 	var base: Texture2D = load(base_path)
+	if _anchors.is_empty() and FileAccess.file_exists(ANCHORS_FILE):
+		_anchors = JSON.parse_string(FileAccess.get_file_as_string(ANCHORS_FILE))
 	for anim in CYCLES:
-		var list: Array = []
-		for f in CYCLES[anim]:
-			var path := base_path if f == "" else "res://assets/art/%s_%s.png" % [character, f]
-			if ResourceLoader.exists(path):
-				list.append(load(path))
-		if list.size() == CYCLES[anim].size():
-			_cycles[anim] = list
+		for names in [CYCLES[anim], FALLBACK.get(anim, [])]:
+			var list: Array = []
+			for f in names:
+				var path := base_path if f == "" else "res://assets/art/%s_%s.png" % [character, f]
+				if ResourceLoader.exists(path):
+					var texture: Texture2D = load(path)
+					texture.set_meta("frame", src if f == "" else "%s_%s" % [character, f])
+					list.append(texture)
+			if not names.is_empty() and list.size() == names.size():
+				_cycles[anim] = list
+				break
 	if _cycles.is_empty():
 		return
 	_cycle_scale = float(_rig.get("height", 128.0)) / float(base.get_height())
-	_cycle_sprite = Sprite2D.new()
-	_cycle_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
-	_cycle_sprite.visible = false
+	_cycle_sprite = _frame_sprite()
+	_cycle_next = _frame_sprite()
+
+
+func _frame_sprite() -> Sprite2D:
+	var sprite := Sprite2D.new()
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+	sprite.centered = false
+	sprite.visible = false
 	if character == "pilo":
-		_cycle_sprite.material = _hue_material
-	add_child(_cycle_sprite)
+		sprite.material = _hue_material
+	add_child(sprite)
+	return sprite
+
+
+## Shows one frame lined up by its anchor: feet on the origin, head over the feet.
+func _place(sprite: Sprite2D, texture: Texture2D) -> void:
+	sprite.texture = texture
+	var a: Dictionary = _anchors.get(String(texture.get_meta("frame", "")), {})
+	var k := _cycle_scale * float(a.get("scale", 1.0))
+	sprite.scale = Vector2(k, k)
+	sprite.offset = Vector2(-float(a.get("anchor_x", texture.get_width() * 0.5)),
+		-float(a.get("feet_y", texture.get_height())))
 
 
 func _part(part: String, parent: Node, at: Vector2, shade := 1.0) -> Sprite2D:
@@ -194,6 +234,15 @@ func target_pose(delta: float) -> Dictionary:
 			var amp := lerpf(0.45, 0.75, stride)
 			return {"lean": lerpf(0.05, 0.14, stride), "bob": -absf(sin(phase)) * lerpf(5.0, 11.0, stride),
 				"front": s * amp, "back": -s * amp, "arm": -s * amp * 0.6, "head": sin(phase * 2.0) * 0.03 - 0.03, "squash": 0.0}
+		"crawl":
+			phase += delta * lerpf(5.0, 8.0, stride)
+			return {"lean": 0.0, "bob": -absf(sin(phase)) * 2.0, "front": 0.0, "back": 0.0, "arm": 0.0, "head": 0.0, "squash": 0.0}
+		"swim":
+			phase += delta * lerpf(3.5, 7.0, stride)
+			return {"lean": 0.0, "bob": sin(phase * 0.5) * 3.0, "front": 0.0, "back": 0.0, "arm": 0.0, "head": 0.0, "squash": 0.0}
+		"crouch":
+			var breath := sin(t * 2.4)
+			return {"lean": 0.0, "bob": breath * 0.8, "front": 0.0, "back": 0.0, "arm": 0.0, "head": 0.0, "squash": 0.0}
 		"jump":
 			return {"lean": -0.06, "bob": 0.0, "front": 0.7, "back": -0.35, "arm": -0.5, "head": -0.1, "squash": 0.0}
 		"fall":
@@ -268,16 +317,27 @@ func _process(delta: float) -> void:
 		anim = "run"
 	if pose_sprite == null and _cycles.has(anim) and not tired:
 		var list: Array = _cycles[anim]
-		var i := int(t * 2.0) % list.size() if anim == "idle" else int(phase / (PI * 0.5)) % list.size()
-		var texture: Texture2D = list[i]
-		_cycle_sprite.texture = texture
-		_cycle_sprite.scale = Vector2(_cycle_scale, _cycle_scale)
-		_cycle_sprite.offset = Vector2(0, -texture.get_height() * 0.5)
-		_cycle_sprite.position = Vector2(0, p("bob") * 0.5)
+		# where in the cycle we are: the frame, and how far towards the next one
+		var at: float = t * 2.0 if anim == "idle" else phase / (PI * 0.5)
+		var i := int(floorf(at)) % list.size()
+		var blend: float = at - floorf(at)
+		_place(_cycle_sprite, list[i])
+		# a swimmer lies flat: the body's middle (not the feet) sits where Nima's middle is
+		var lift := float(_rig.get("height", 128.0)) * 0.3 if anim == "swim" else 0.0
+		_cycle_sprite.position = Vector2(0, p("bob") * 0.5 - lift)
+		_cycle_sprite.modulate.a = 1.0
 		_cycle_sprite.visible = true
+		# the next frame fades in over the last part of this one: the step flows instead of popping
+		var fade := smoothstep(0.55, 1.0, blend) if list.size() > 1 else 0.0
+		_cycle_next.visible = fade > 0.01
+		if _cycle_next.visible:
+			_place(_cycle_next, list[(i + 1) % list.size()])
+			_cycle_next.position = _cycle_sprite.position
+			_cycle_next.modulate.a = fade
 		_parts.visible = false
 	elif _cycle_sprite:
 		_cycle_sprite.visible = false
+		_cycle_next.visible = false
 	if pose_sprite:
 		pose_sprite.rotation = p("lean") * 0.5
 		pose_sprite.position.y = -float(pose_sprite.get_meta("lift")) + p("bob") / _s

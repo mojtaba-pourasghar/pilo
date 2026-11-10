@@ -117,6 +117,7 @@ func _ready() -> void:
 	hud.setup(LevelManager.level_title(level_id), info.stars, info.keys > 0 or info.time_key, lens_enabled)
 	hud.set_hearts(player.hearts, player.max_hearts)
 	hud.set_weapon(Weapons.current())
+	hud.set_companion(Loadout.companion())
 	hud.set_coins(0)
 	hud.set_diamonds(0, info.diamonds)
 	if info.boss:
@@ -182,7 +183,12 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed("time_shift"):
 			try_shift()
 		if Input.is_action_just_pressed("pilo"):
-			pilo.act(self)
+			if Loadout.companion() == "" or _follower == null:
+				pilo.act(self)
+			else:
+				_follower.act(self)
+		if Input.is_action_just_pressed("swap_companion"):
+			cycle_companion()
 		if Input.is_action_just_pressed("team"):
 			open_team()
 		if Input.is_action_just_pressed("swap_weapon"):
@@ -308,10 +314,8 @@ func _player_down() -> void:
 func _apply_loadout() -> void:
 	player.apply_loadout()
 	var c := Loadout.companion()
-	if c == "owl":
-		pilo.sniff_range *= 2.0
-	if c == "spark":
-		pilo.attack_range *= 2.0
+	# only one companion is out at a time: Pilo, or the one picked (Pilo then rides in the backpack)
+	_set_pilo_out(c == "")
 	if Loadout.has_tool("compass"):
 		pilo.sniff_range *= 1.5
 		for item in get_tree().get_nodes_in_group("collectible"):
@@ -343,6 +347,36 @@ func apply_display_settings() -> void:
 		weather.set_light(String(SaveManager.data.settings.get("quality", "high")) == "low")
 
 
+## Pilo out with Nima, or in the backpack while another companion is out.
+func _set_pilo_out(out: bool) -> void:
+	pilo.visible = out
+	pilo.process_mode = Node.PROCESS_MODE_INHERIT if out else Node.PROCESS_MODE_DISABLED
+	if out:
+		pilo.global_position = player.global_position + Vector2(-80.0 * player.facing, -40.0)
+
+
+## The next companion (Pilo first, then the ones Nima owns), straight from the screen.
+func cycle_companion() -> void:
+	if _busy or finished:
+		return
+	var team: Array = [""]
+	for id in Loadout.COMPANIONS:
+		if Loadout.owns_companion(id):
+			team.append(id)
+	if team.size() < 2:
+		_notice("هنوز همراه دیگری نداری؛ در دهکده پیدایش کن.", UIKit.ORANGE, true)
+		return
+	var next: String = team[(team.find(Loadout.companion()) + 1) % team.size()]
+	Loadout.pick_companion(next)
+	refresh_loadout()
+	var name := "پیلو" if next == "" else String(Loadout.COMPANIONS[next].name)
+	_notice(name + " همراهت شد!", UIKit.GREEN, true)
+	FX.burst(_world_root, player.global_position + Vector2(-80.0 * player.facing, -40.0), Color(1, 0.9, 0.5), 18)
+	AudioManager.play_sfx("star", 1.2, -4.0)
+	if hud:
+		hud.set_companion(next)
+
+
 func refresh_loadout() -> void:
 	var hearts: int = player.hearts
 	pilo.attack_range = 320.0
@@ -354,6 +388,7 @@ func refresh_loadout() -> void:
 	player.hearts = mini(hearts, player.max_hearts)
 	hud.set_hearts(player.hearts, player.max_hearts)
 	hud.set_weapon(Weapons.current())
+	hud.set_companion(Loadout.companion())
 
 
 func open_team() -> void:
@@ -512,7 +547,10 @@ func request_hint() -> void:
 		if point.x > player.global_position.x - 32.0:
 			best = point
 			break
-	pilo.show_hint(best)
+	if not pilo.visible and _follower:
+		_follower._mark(best)      # Pilo is in the backpack: the companion that is out shows it
+	else:
+		pilo.show_hint(best)
 	if SaveManager.data.settings.hints == "more":
 		get_tree().call_group("time_visual", "hint_flash", best, 420.0)
 	Analytics.log_event("hint", level_id)

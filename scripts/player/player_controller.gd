@@ -329,7 +329,11 @@ func _animate(delta: float, on_floor: bool, dir: float) -> void:
 	elif dashing > 0.0:
 		state = "dash"
 	elif _swim > 0:
-		state = "fall" if velocity.y > 0.0 else "jump"
+		# a drawn stroke when there is one (it keeps going slowly while Nima treads water)
+		if rig.has_method("has_cycle") and rig.has_cycle("swim"):
+			state = "swim"
+		else:
+			state = "fall" if velocity.y > 0.0 else "jump"
 	elif gliding:
 		state = "glide"
 	elif not on_floor:
@@ -338,14 +342,19 @@ func _animate(delta: float, on_floor: bool, dir: float) -> void:
 		state = "skid"
 	elif absf(velocity.x) > 30.0:
 		state = "run" if absf(velocity.x) > WALK + 20.0 else "walk"
+	# crouching: the drawn crouch, and the crawl on hands and knees when moving (if drawn)
+	var drawn_crouch: bool = rig.has_method("has_cycle") and rig.has_cycle("crouch")
 	if crouching and state in ["idle", "walk", "run", "skid"]:
-		state = "walk" if absf(velocity.x) > 20.0 else "idle"
+		if drawn_crouch:
+			state = "crawl" if absf(velocity.x) > 20.0 and rig.has_cycle("crawl") else "crouch"
+		else:
+			state = "walk" if absf(velocity.x) > 20.0 else "idle"
 	rig.state = state
 	rig.speed = velocity.x
 	rig.run_speed = run_speed
 	if state == "skid" and Engine.get_physics_frames() % 6 == 0:
 		FX.dust(get_parent(), global_position + Vector2(facing * 14.0, FEET))
-	var low := Vector2(1.12, 0.58) if crouching else Vector2.ONE
+	var low := Vector2(1.12, 0.58) if crouching and not drawn_crouch else Vector2.ONE
 	visual.scale = Vector2(facing * _squash.x * low.x, _squash.y * low.y)
 	visual.position.y = FEET
 	visual.modulate.a = 0.35 + 0.65 * float(int(invulnerable * 12.0) % 2) if invulnerable > 0.0 else 1.0
@@ -428,6 +437,9 @@ func apply_loadout() -> void:
 	swim_fast = c == "turtle"
 	sand_free = c == "mole"
 	ice_grip = c == "penguin"
+	# gliding: Pilo carries Nima; without Pilo only a flying companion (butterfly, dragon, owl)
+	# can, or the umbrella and the balloon
+	can_glide = c in ["", "butterfly", "dragon", "owl"] or Loadout.has_tool("umbrella") or Loadout.has_tool("balloon")
 	glide_time = GLIDE_TIME * (2.0 if c == "butterfly" else 1.0) * (1.5 if Loadout.has_tool("umbrella") else 1.0)
 	if Loadout.has_tool("balloon"):
 		glide_time = 9999.0

@@ -34,12 +34,12 @@ func _ready() -> void:
 func _refresh() -> void:
 	for child in _rows.get_children():
 		child.queue_free()
-	# companions (and "none")
+	# companions: Pilo ("") or one of the others; only one is out at a time
 	var companions: Array = [""]
 	for id in Loadout.COMPANIONS:
 		if Loadout.owns_companion(id):
 			companions.append(id)
-	_rows.add_child(_row("همراه", companions, "companion", func(id): return Loadout.companion() == id))
+	_rows.add_child(_row("همراه (یکی)", companions, "companion", func(id): return Loadout.companion() == id))
 	var tools: Array = []
 	var weapons: Array = []
 	for id in Loadout.TOOLS:
@@ -76,12 +76,13 @@ func _row(title: String, ids: Array, kind: String, chosen: Callable) -> Control:
 		style.set_border_width_all(4 if on else 2)
 		for state in ["normal", "hover", "pressed"]:
 			button.add_theme_stylebox_override(state, style)
-		if id == "":
+		if id == "" and kind != "companion":
 			var none := UIKit.make_label("هیچ", 22, Color("7a5a3a"))
 			none.set_anchors_preset(Control.PRESET_FULL_RECT)
 			none.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			button.add_child(none)
 		else:
+			# for companions, "" is Pilo: only one companion is out at a time
 			var icon := LoadoutIcon.make("companion" if kind == "companion" else "tool", id, 80)
 			icon.position = Vector2(8, 8)
 			button.add_child(icon)
