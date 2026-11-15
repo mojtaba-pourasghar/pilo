@@ -131,7 +131,7 @@ tools/levels/   compose.py, story.py, routes.py, authored.py (موجود) → خ
 ## ۸. قهرمان و همراه
 
 - `HeroDef` ثابت‌های حرکت را **روی** `PlayerController` اعمال می‌کند (ضرب سرعت، پرش، قابلیت‌ها: `glide, swim, wall_jump, teleport_short, gravity_flip, roll`).
-- لنز: فقط آرسام `lens_free=true`؛ بقیه `lens_charge` (نوار ۰..۱۰۰؛ هر تعویض ۲۵؛ پر شدن با «ساعت کوچک» و زمان).
+- لنز: همهٔ قهرمان‌ها (آرسام هم) `lens_charge`؛ بدون `lens_free` (نوار ۰..۱۰۰؛ هر تعویض ۲۵؛ پر شدن با «ساعت کوچک» و زمان).
 - `CompanionTeam`: ۳ جا (فعال + ۲ ذخیره)؛ تعویض بدون وقفهٔ مرحله، با هم‌افزایی با همراه مخصوص.
 - رنگ‌مایه، نقش، کلاه، آویز: `CompanionCustom{palette, pattern, hat, charm, name_key, voice_tone}`.
 
