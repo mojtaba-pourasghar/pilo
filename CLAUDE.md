@@ -1,6 +1,6 @@
-# سفر پیلو — راهنمای کار روی پروژه
+# نگهبانان زمان (پیش‌تر «سفر پیلو») — قواعد دائمی پروژه (هر نشست بخوان)
 
-## قانون طراحی (از طرف صاحب پروژه)
+## قانون طراحی (از طرف صاحب پروژه) — تغییرناپذیر
 
 صاحب پروژه **قبل از پیاده‌سازی، طرح هر صفحه را خودش طراحی می‌کند و تصویرش را می‌دهد.**
 انتظار این است که **عین همان طرح** پیاده شود:
@@ -8,10 +8,11 @@
 - همان چیدمان و جای دقیق عناصر (چپ/راست/بالا/پایین)، همان اندازه‌ها و تناسب‌ها.
 - همان رنگ‌ها و همان سبک عناصر (مثلاً دکمه‌های شیشه‌ای/براق، قاب‌ها، ربان‌ها، آیکون‌ها).
 - همان متن‌ها و همان ترتیب گزینه‌ها.
-- کیفیت در حد محصول قابل فروش؛ استفاده از جایگزین تخت، ساده یا «موقت» به‌جای طرح، قابل قبول نیست.
+- کیفیت در حد محصول قابل فروش؛ جایگزین تخت، ساده یا «موقت» به‌جای طرح قابل قبول نیست.
 - طرح را بازطراحی یا «بهتر» نکن. اگر بخشی از طرح با یک محدودیت فنی یا قانون محصول تضاد دارد،
   نزدیک‌ترین نسخهٔ وفادار را بساز و صریحاً گزارش بده و بپرس.
 - قبل از تحویل، از صفحهٔ ساخته‌شده اسکرین‌شات بگیر و کنار تصویر طرح مقایسه کن.
+- **اگر طرح یک صفحه نیامده، آن صفحه را نساز؛** درخواست را در `comms/DECISION_QUEUE.md` بنویس.
 
 ## Design rule (from the project owner)
 
@@ -20,13 +21,37 @@ design**: same layout and positions, sizes and proportions, colors, element styl
 glass buttons), texts and option order, at sellable quality. Do not redesign, simplify or ship
 flat placeholders. If something in the design conflicts with a technical or product rule, build
 the closest faithful version, say so explicitly and ask. Compare a screenshot of the result
-side by side with the design before handing it over.
+side by side with the design before handing it over. If no design image exists for a screen yet,
+do not build that screen; ask in `comms/DECISION_QUEUE.md`.
+
+## قواعد ثابت محصول (تصمیم صاحب پروژه؛ تغییر فقط با دستور صریح او و ثبت در `docs/DECISIONS.md`)
+
+1. **نام بازی:** «نگهبانان زمان». قهرمان پیش‌فرض «آرسام»؛ بازیکن در ابتدای بازی می‌تواند نامش را عوض کند. نام «نیما» و شخصیت «کیان» حذف شده‌اند؛ در متن جدید ننویس.
+2. **گذشته و حال جدا نیستند:** هر فصل، مرحله و صحنه هر دو را با هم دارد (دو لایهٔ هم‌زمان؛ لایهٔ غایب شبح). فصل یا مرحلهٔ «فقط گذشته/فقط حال» ممنوع.
+3. **کلید زمان هر بار جای دیگر** (۳ جای ممکن برای هر کلید، seed) و هر مرحله **پاسدار با راز** دارد؛ هر فصل نگهبان با فاز. دشمن «آزاد» می‌شود، نه کشته.
+4. **سن ۸ تا ۱۵:** بدون خشونت واقعی؛ بدون چت آزاد (فقط استیکر/پیام آماده)؛ نام نمایشی آنلاین از فهرست آماده.
+5. **رقیب = بازیکنان دیگر** (مسابقهٔ روح، دوئل، میان‌زمان). هیچ شخصیت رقیب ثابتی نیست؛ آفلاین: روح ساختگی.
+6. **اقتصاد:** سکه و الماس با پول واقعی فروخته می‌شوند؛ جان محدود؛ **مسیر اصلی هرگز خرید نمی‌خواهد**؛ تبلیغ پاداشی اختیاری؛ **جعبه‌شانس با پول واقعی ممنوع**؛ ورود به مرحله ارزان و جبران‌پذیر.
+7. **بخش «بزرگ‌ترها» حذف شده** (تصمیم صاحب پروژه)؛ سد ساده‌ٔ تأیید خرید می‌ماند.
+8. **سلاح و ابزار ارتقاپذیر و سفارشی**؛ جاهایی سطح لازم است (جدول `docs/content/07_combat_weapons_upgrades.md`)؛ نبودن سطح مسیر را قفل نمی‌کند، هشدار + کاهش آسیب.
+9. **هیچ چیز از بازی دیگر کپی نشود** (به‌ویژه سبک «ساختمان‌شکن‌ها» فقط الهام کلی است؛ تصویرشان به مدل تصویر داده نشود).
+10. **هنرِ ساخته‌شده با کد فقط جانگهدار است** (`art/drafts/`)؛ هرگز «نهایی» ندان.
+11. **متن‌ها فارسی راست‌به‌چپ** و از `data/strings_fa.json`؛ متن داخل تصویر ممنوع.
+12. **کلید/توکن هرگز در مخزن، لاگ یا کامیت نیاید.**
+
+## ساختار کار
+
+- مرجع داستان: `docs/SCENARIO.md`؛ محتوا: `docs/content/`؛ دستور ساخت: `docs/BUILD_BRIEF.md`؛ مشخصات فنی: `docs/02_godot_spec.md`؛ فهرست اسناد: `README_FOR_CLAUDE_CODE.md`.
+- ارتباط با مدیر پروژه: `comms/` (هر بار شروع و قبل از هر کامیت `git pull` و آن پوشه را بخوان).
+- **موتور فعلی (v3) کار می‌کند؛ تکاملش بده، از صفر ننویس.**
+- کارنامهٔ ساخت: `docs/15_work_log_claude_code.md` (اول کار بخوان؛ بعد از هر گام به‌روز کن). کارنامهٔ v3: `docs/WORK_LOG.md`.
+- هر چیز تازه: کامیت «گام N: …» و پوش. روی شاخهٔ `feat/v4-*`؛ ادغام در master با تأیید صاحب پروژه.
+- اگر مشخصات تناقض داشت **بایست و بپرس** (`comms/DECISION_QUEUE.md`).
+
+## دستورها
 
 - طرح‌های مرجع: `assets/reference/` (منوها: `ui_menus_design.webp`).
-- هنر رابط کاربری با `python3 tools/ui_art.py .` ساخته می‌شود؛ اسکرین‌شات با `tools/screenshot.tscn` (README).
-- قبل از commit: `python3 tests/validate_levels.py` و `godot --headless --path . res://tests/test_runner.tscn`.
-- صدای شخصیت‌ها: دیالوگ را در فایل مرحله بنویس، بعد `python3 tools/voice/build_voice_lines.py` و
-  `python3 tools/voice/make_recording_script.py`. صدا با استودیوی `tools/voice-studio` (آواشو، هر شخصیت صدای خودش) ساخته می‌شود؛
-  ضبط انسانی (فایل‌های خارج از `docs/voice/tts_generated.json`) هرگز بازنویسی نشود.
-- صدای محیط: ضبط واقعی از Commons با `tools/audio/fetch_ambience.py` (منبع و مجوز در `docs/audio/sound_sources.json`)،
-  وگرنه با `tools/audio/synth_ambience.py`؛ بقیهٔ جلوه‌ها با `tools/audio.py`.
+- هنر رابط: `python3 tools/ui_art.py .`؛ اسکرین‌شات: `tools/screenshot.tscn` (README).
+- **قبل از commit:** `python3 tests/validate_levels.py` و `godot --headless --path . res://tests/test_runner.tscn`.
+- صدای شخصیت‌ها: دیالوگ را در فایل مرحله/داده بنویس، بعد `python3 tools/voice/build_voice_lines.py` و `python3 tools/voice/make_recording_script.py`. صدا با استودیوی `tools/voice-studio` (آواشو، هر شخصیت صدای خودش)؛ **صداگذاری نام قهرمان را نمی‌گوید**؛ ضبط انسانی (فایل‌های خارج از `docs/voice/tts_generated.json`) هرگز بازنویسی نشود.
+- صدای محیط: ضبط واقعی از Commons با `tools/audio/fetch_ambience.py` (منبع و مجوز در `docs/audio/sound_sources.json`)، وگرنه `tools/audio/synth_ambience.py`؛ بقیهٔ جلوه‌ها `tools/audio.py`.
