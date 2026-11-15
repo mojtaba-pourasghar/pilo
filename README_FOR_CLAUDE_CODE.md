@@ -14,7 +14,7 @@
 5. `docs/03_levels_ch1-15.md` — مرحله‌ها
 6. `docs/content/` — فصل‌ها، قهرمان‌ها، همراه‌ها، کلید، سلاح، اقتصاد، آنلاین
 7. `docs/screenplay/` — فیلم‌نامهٔ هر فصل
-8. `docs/18_gameplay_design.md`، `docs/content/12_hero_behavior.md`، `13_companion_system.md`، `14_weapons_tools_detail.md`
+8. `docs/18_gameplay_design.md`، `docs/content/12_hero_behavior.md`، `13_companion_system.md`، `14_weapons_tools_detail.md`، `15_enemies_and_keepers.md`، `16_guardians_bosses.md`، `docs/dialogue/`، `docs/19_effects_catalog.md`، `docs/20_sound_catalog.md`
 9. `docs/04_art_and_sound_bible.md`، `docs/17_ui_screens_design.md`
 9. `docs/05_release_v1_plan.md`، `docs/06_side_games.md`، `docs/07_memories_and_collectibles.md`، `docs/08_combat_and_overworld.md`
 10. `docs/DECISIONS.md`، `docs/STATUS.md`، `docs/WORKFLOW.md`

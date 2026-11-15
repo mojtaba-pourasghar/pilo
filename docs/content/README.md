@@ -18,5 +18,7 @@
 | [12_hero_behavior.md](12_hero_behavior.md) | رفتار و کارهای هر قهرمان |
 | [13_companion_system.md](13_companion_system.md) | همراه‌ها: کارها، تبدیل، تجهیز |
 | [14_weapons_tools_detail.md](14_weapons_tools_detail.md) | سلاح و ابزار: کار، ارتقا، جا |
+| [15_enemies_and_keepers.md](15_enemies_and_keepers.md) | دشمن‌ها و ۹۰ پاسدار |
+| [16_guardians_bosses.md](16_guardians_bosses.md) | ۱۵ نگهبان فصل |
 
 نسخهٔ قدیمی سناریو: [../archive/SCENARIO_V3_EXTRACTED.md](../archive/SCENARIO_V3_EXTRACTED.md)
