@@ -15,5 +15,8 @@
 | [09_economy_shop.md](09_economy_shop.md) | سکه، الماس، جان، فروشگاه |
 | [10_social_daily_endless.md](10_social_daily_endless.md) | اجتماعی، روزانه، برج، شکاف‌ها |
 | [11_hub_menus_flow.md](11_hub_menus_flow.md) | هاب و فهرست صفحه‌ها (بدون شکل) |
+| [12_hero_behavior.md](12_hero_behavior.md) | رفتار و کارهای هر قهرمان |
+| [13_companion_system.md](13_companion_system.md) | همراه‌ها: کارها، تبدیل، تجهیز |
+| [14_weapons_tools_detail.md](14_weapons_tools_detail.md) | سلاح و ابزار: کار، ارتقا، جا |
 
 نسخهٔ قدیمی سناریو: [../archive/SCENARIO_V3_EXTRACTED.md](../archive/SCENARIO_V3_EXTRACTED.md)

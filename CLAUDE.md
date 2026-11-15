@@ -41,6 +41,8 @@ do not build that screen; ask in `comms/DECISION_QUEUE.md`.
 
 ## ساختار کار
 
+- **برنامهٔ گام‌به‌گام:** `docs/STEP.md` (اول بخوان؛ فقط گام «بعدی»؛ بعد از هر گام وضعیت را به‌روز کن).
+
 - مرجع داستان: `docs/SCENARIO.md`؛ محتوا: `docs/content/`؛ دستور ساخت: `docs/BUILD_BRIEF.md`؛ مشخصات فنی: `docs/02_godot_spec.md`؛ فهرست اسناد: `README_FOR_CLAUDE_CODE.md`.
 - ارتباط با مدیر پروژه: `comms/` (هر بار شروع و قبل از هر کامیت `git pull` و آن پوشه را بخوان).
 - **موتور فعلی (v3) کار می‌کند؛ تکاملش بده، از صفر ننویس.**
