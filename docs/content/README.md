@@ -20,5 +20,6 @@
 | [14_weapons_tools_detail.md](14_weapons_tools_detail.md) | سلاح و ابزار: کار، ارتقا، جا |
 | [15_enemies_and_keepers.md](15_enemies_and_keepers.md) | دشمن‌ها و ۹۰ پاسدار |
 | [16_guardians_bosses.md](16_guardians_bosses.md) | ۱۵ نگهبان فصل |
+| [17_combat_scenario.md](17_combat_scenario.md) | سناریوی جنگ و مبارزه، دام‌ها، فریم‌دیتا |
 
 نسخهٔ قدیمی سناریو: [../archive/SCENARIO_V3_EXTRACTED.md](../archive/SCENARIO_V3_EXTRACTED.md)
