@@ -34,3 +34,10 @@
 | P9 | صفحه: HUD حین بازی | [MAHbDHTyoIk](https://www.canva.com/M/MAHbDHTyoIk) | p9_screen_hud_v1.png |
 | P9 | صفحه: انتخاب قهرمان/همراه/سلاح (کارگاه) | [MAHbDANAYmg](https://www.canva.com/M/MAHbDANAYmg) | p9_screen_loadout_v1.png |
 | P11 | استوری‌بورد ۲: نبرد نگهبان و آزادسازی | [MAHbDIQuccA](https://www.canva.com/M/MAHbDIQuccA) | p11_storyboard_part2_v1.png |
+
+## دستهٔ ۳ (در جریان)
+| پارت | محتوا | Canva media | وضعیت QA |
+|---|---|---|---|
+| P2 | پیلو ۳ شکل + ۴ تجهیز (کلاه، گردنبند، بال، نشان) | [MAHbDG3A4Jg](https://www.canva.com/M/MAHbDG3A4Jg) | ✅ قبول |
+| P6 | پارالاکس فصل ۱ گذشته/حال | در حال ساخت | ⏳ |
+| ۷ طرح دیگر | K1، قطعات خرس، مکث/تنظیمات، فروشگاه، نتیجه، دیالوگ، هاب | `prompts/queue/` | ⏳ سهمیهٔ Canva؛ تلاش مجدد خودکار |
