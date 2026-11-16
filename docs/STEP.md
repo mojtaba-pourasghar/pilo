@@ -23,11 +23,11 @@
 | A10 | دیالوگ کامل ۱۵ فصل و هاب | `docs/dialogue/*` | [x] پیش‌نویس ۱ |
 | A11 | فهرست کامل افکت و صدا | `docs/19_effects_catalog.md`، `docs/20_sound_catalog.md` | [x] پیش‌نویس ۱ |
 
-## فاز B — طراحی ظاهر (۱۰ پارت؛ 🗂 طراحی + 👤 تأیید)
+## فاز B — طراحی ظاهر (۱۱ پارت؛ 🗂 طراحی + 👤 تأیید)
 
 > **روش:** هر پارت: برگهٔ طراحی متنی در `docs/design_sheets/` ← تولید تصویر (Canva یا `tools/art`) ← ذخیره در `assets/art/<پارت>/<id>.png` ← ثبت در `assets/manifest/assets.csv` (`status: draft`) ← تأیید صاحب پروژه (`final`). **فهرست یکتا و نام‌گذاری:** [`ASSET_PIPELINE.md`](ASSET_PIPELINE.md)، [`ASSET_LIST.md`](ASSET_LIST.md).
 > **اولویت:** **P0** = برش عمودی فصل ۱ (همین حالا؛ برای T8) ← **P1** = پردهٔ ۱ ← **P2** = بقیه. صحنه‌ها فعلاً **فقط فصل ۱** (+ انیمیشن داستان‌گویی).
-> **سبک:** [`design_sheets/00_style_lock.md`](design_sheets/00_style_lock.md) (الهام از ویدئوی مرجع به‌صورت توصیف؛ بدون کپی). **چهرهٔ آرسام:** [`design_sheets/01_arsam.md`](design_sheets/01_arsam.md).
+> **سبک:** [`design_sheets/00_style_lock.md`](design_sheets/00_style_lock.md) (الهام از ویدئوی مرجع به‌صورت توصیف؛ بدون کپی). **پرامپت پایهٔ سبک (ذخیره‌شده):** [`design_sheets/02_style_prompt.md`](design_sheets/02_style_prompt.md) — در **همهٔ** طراحی‌ها اعمال شود. **مدیریت کارها:** [`PM_TASKS.md`](PM_TASKS.md). **چهرهٔ آرسام:** [`design_sheets/01_arsam.md`](design_sheets/01_arsam.md).
 
 | گام | پارت | کار | خروجی | وضعیت |
 |---|---|---|---|---|
@@ -41,7 +41,8 @@
 | B7 | ۷ | جزئیات زنده و متحرک صحنه‌ها (فصل ۱ اول) | `assets/art/p7_living/*` | [ ] |
 | B8 | ۸ | همهٔ افکت‌های صحنه و اشیای صحنه | `assets/art/p8_fx/*` | [ ] |
 | B9 | ۹ | ظاهر برنامه و منوها و همهٔ بخش‌ها (کیت رابط؛ **عین طرح صاحب پروژه**) | `assets/art/p9_ui/*`، `comms/ui_screens/` | [ ] 👤 |
-| B10 | ۱۰ | انیمیشن پیش‌نمایش هر فصل + استوری‌بورد/انیمیشن داستان‌گویی (**فصل ۱ اول**) | `assets/art/p10_preview/*` | [ ] |
+| B10 | ۱۰ | انیمیشن پیش‌نمایش هر فصل (**فصل ۱ اول**) | `assets/art/p10_preview/*` | [ ] |
+| B11 | ۱۱ | **صحنه‌ها و انیمیشن داستان‌سرایی** (کات‌سین‌های هر فصل؛ **فصل ۱ اول**) | `assets/art/p11_story/*` | [ ] |
 
 > هر پارت: اول P0 ← تأیید ← P1 ← P2. تحویل به Claude Code هر وقت یک پارت `draft` شد، با `status` در manifest.
 

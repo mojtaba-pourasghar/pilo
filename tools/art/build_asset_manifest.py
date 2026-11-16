@@ -173,7 +173,7 @@ def prio(r):
                 if k in i: return 'P1'
             return 'P2'
         return 'P0' if any(x in i for x in ('spikes','falling_rock','fog')) else 'P1'
-    if part in ('p6_scenes','p7_living','p10_preview'):
+    if part in ('p6_scenes','p7_living','p10_preview','p11_story'):
         if '_ch01_' in i or i.startswith('p10_') and 'ch01' in i or i.startswith('p6_hub') or i.startswith('p6_memory'): return 'P0'
         for c in ('ch02','ch03','ch04','ch05'):
             if f'_{c}_' in i or i.endswith(c): return 'P1'
@@ -181,6 +181,12 @@ def prio(r):
     if part=='p8_fx':
         return 'P0' if any(x in i for x in ('time_','element_','key_','_obj_','ui_coin','ui_heart','ui_star','enemy_','keeper_','boss_')) else 'P1'
     return 'P2'
+# پارت ۱۱: صحنه‌ها و انیمیشن داستان‌سرایی (کات‌سین‌ها)
+for cid,en,fa in CH:
+    n = 14 if cid=='ch01' else 8
+    for i in range(1,n+1):
+        add('p11_story', f'p11_story_{cid}_scene{i:02d}', f'صحنهٔ داستان {fa} — {i}', 'story_scene', 'illustration 1280x720 (+layers)', '1280x720', 'v1' if cid=='ch01' else 'later')
+    add('p11_story', f'p11_story_{cid}_anim', f'انیمیشن داستان {fa}', 'story_anim', 'frames/tween sheet', '1280x720', 'v1' if cid=='ch01' else 'later')
 for r in rows: r['priority']=prio(r)
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 with open(OUT,'w',encoding='utf-8',newline='') as f:

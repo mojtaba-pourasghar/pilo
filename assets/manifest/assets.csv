@@ -2634,3 +2634,144 @@ p10_preview_ch14,p10_preview,P2,انیمیشن پیش‌نمایش سرزمین 
 p10_story_ch14_storyboard,p10_preview,P2,استوری‌بورد داستان سرزمین وارونه,storyboard,6-12 panels,1280x720,assets/art/p10_preview/p10_story_ch14_storyboard.png,todo,later
 p10_preview_ch15,p10_preview,P2,انیمیشن پیش‌نمایش قلب ساعت,chapter_preview,video/anim 8-12s 1280x720,1280x720,assets/art/p10_preview/p10_preview_ch15.png,todo,later
 p10_story_ch15_storyboard,p10_preview,P2,استوری‌بورد داستان قلب ساعت,storyboard,6-12 panels,1280x720,assets/art/p10_preview/p10_story_ch15_storyboard.png,todo,later
+p11_story_ch01_scene01,p11_story,P0,صحنهٔ داستان جنگل رنگارستان — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch01_scene01.png,todo,v1
+p11_story_ch01_scene02,p11_story,P0,صحنهٔ داستان جنگل رنگارستان — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch01_scene02.png,todo,v1
+p11_story_ch01_scene03,p11_story,P0,صحنهٔ داستان جنگل رنگارستان — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch01_scene03.png,todo,v1
+p11_story_ch01_scene04,p11_story,P0,صحنهٔ داستان جنگل رنگارستان — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch01_scene04.png,todo,v1
+p11_story_ch01_scene05,p11_story,P0,صحنهٔ داستان جنگل رنگارستان — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch01_scene05.png,todo,v1
+p11_story_ch01_scene06,p11_story,P0,صحنهٔ داستان جنگل رنگارستان — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch01_scene06.png,todo,v1
+p11_story_ch01_scene07,p11_story,P0,صحنهٔ داستان جنگل رنگارستان — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch01_scene07.png,todo,v1
+p11_story_ch01_scene08,p11_story,P0,صحنهٔ داستان جنگل رنگارستان — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch01_scene08.png,todo,v1
+p11_story_ch01_scene09,p11_story,P0,صحنهٔ داستان جنگل رنگارستان — 9,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch01_scene09.png,todo,v1
+p11_story_ch01_scene10,p11_story,P0,صحنهٔ داستان جنگل رنگارستان — 10,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch01_scene10.png,todo,v1
+p11_story_ch01_scene11,p11_story,P0,صحنهٔ داستان جنگل رنگارستان — 11,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch01_scene11.png,todo,v1
+p11_story_ch01_scene12,p11_story,P0,صحنهٔ داستان جنگل رنگارستان — 12,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch01_scene12.png,todo,v1
+p11_story_ch01_scene13,p11_story,P0,صحنهٔ داستان جنگل رنگارستان — 13,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch01_scene13.png,todo,v1
+p11_story_ch01_scene14,p11_story,P0,صحنهٔ داستان جنگل رنگارستان — 14,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch01_scene14.png,todo,v1
+p11_story_ch01_anim,p11_story,P0,انیمیشن داستان جنگل رنگارستان,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch01_anim.png,todo,v1
+p11_story_ch02_scene01,p11_story,P1,صحنهٔ داستان ساحل مرجانی — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch02_scene01.png,todo,later
+p11_story_ch02_scene02,p11_story,P1,صحنهٔ داستان ساحل مرجانی — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch02_scene02.png,todo,later
+p11_story_ch02_scene03,p11_story,P1,صحنهٔ داستان ساحل مرجانی — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch02_scene03.png,todo,later
+p11_story_ch02_scene04,p11_story,P1,صحنهٔ داستان ساحل مرجانی — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch02_scene04.png,todo,later
+p11_story_ch02_scene05,p11_story,P1,صحنهٔ داستان ساحل مرجانی — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch02_scene05.png,todo,later
+p11_story_ch02_scene06,p11_story,P1,صحنهٔ داستان ساحل مرجانی — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch02_scene06.png,todo,later
+p11_story_ch02_scene07,p11_story,P1,صحنهٔ داستان ساحل مرجانی — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch02_scene07.png,todo,later
+p11_story_ch02_scene08,p11_story,P1,صحنهٔ داستان ساحل مرجانی — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch02_scene08.png,todo,later
+p11_story_ch02_anim,p11_story,P1,انیمیشن داستان ساحل مرجانی,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch02_anim.png,todo,later
+p11_story_ch03_scene01,p11_story,P1,صحنهٔ داستان بیابان طلایی — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch03_scene01.png,todo,later
+p11_story_ch03_scene02,p11_story,P1,صحنهٔ داستان بیابان طلایی — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch03_scene02.png,todo,later
+p11_story_ch03_scene03,p11_story,P1,صحنهٔ داستان بیابان طلایی — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch03_scene03.png,todo,later
+p11_story_ch03_scene04,p11_story,P1,صحنهٔ داستان بیابان طلایی — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch03_scene04.png,todo,later
+p11_story_ch03_scene05,p11_story,P1,صحنهٔ داستان بیابان طلایی — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch03_scene05.png,todo,later
+p11_story_ch03_scene06,p11_story,P1,صحنهٔ داستان بیابان طلایی — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch03_scene06.png,todo,later
+p11_story_ch03_scene07,p11_story,P1,صحنهٔ داستان بیابان طلایی — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch03_scene07.png,todo,later
+p11_story_ch03_scene08,p11_story,P1,صحنهٔ داستان بیابان طلایی — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch03_scene08.png,todo,later
+p11_story_ch03_anim,p11_story,P1,انیمیشن داستان بیابان طلایی,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch03_anim.png,todo,later
+p11_story_ch04_scene01,p11_story,P1,صحنهٔ داستان کوهستان برفی — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch04_scene01.png,todo,later
+p11_story_ch04_scene02,p11_story,P1,صحنهٔ داستان کوهستان برفی — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch04_scene02.png,todo,later
+p11_story_ch04_scene03,p11_story,P1,صحنهٔ داستان کوهستان برفی — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch04_scene03.png,todo,later
+p11_story_ch04_scene04,p11_story,P1,صحنهٔ داستان کوهستان برفی — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch04_scene04.png,todo,later
+p11_story_ch04_scene05,p11_story,P1,صحنهٔ داستان کوهستان برفی — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch04_scene05.png,todo,later
+p11_story_ch04_scene06,p11_story,P1,صحنهٔ داستان کوهستان برفی — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch04_scene06.png,todo,later
+p11_story_ch04_scene07,p11_story,P1,صحنهٔ داستان کوهستان برفی — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch04_scene07.png,todo,later
+p11_story_ch04_scene08,p11_story,P1,صحنهٔ داستان کوهستان برفی — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch04_scene08.png,todo,later
+p11_story_ch04_anim,p11_story,P1,انیمیشن داستان کوهستان برفی,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch04_anim.png,todo,later
+p11_story_ch05_scene01,p11_story,P1,صحنهٔ داستان جزیره‌های آسمانی — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch05_scene01.png,todo,later
+p11_story_ch05_scene02,p11_story,P1,صحنهٔ داستان جزیره‌های آسمانی — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch05_scene02.png,todo,later
+p11_story_ch05_scene03,p11_story,P1,صحنهٔ داستان جزیره‌های آسمانی — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch05_scene03.png,todo,later
+p11_story_ch05_scene04,p11_story,P1,صحنهٔ داستان جزیره‌های آسمانی — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch05_scene04.png,todo,later
+p11_story_ch05_scene05,p11_story,P1,صحنهٔ داستان جزیره‌های آسمانی — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch05_scene05.png,todo,later
+p11_story_ch05_scene06,p11_story,P1,صحنهٔ داستان جزیره‌های آسمانی — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch05_scene06.png,todo,later
+p11_story_ch05_scene07,p11_story,P1,صحنهٔ داستان جزیره‌های آسمانی — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch05_scene07.png,todo,later
+p11_story_ch05_scene08,p11_story,P1,صحنهٔ داستان جزیره‌های آسمانی — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch05_scene08.png,todo,later
+p11_story_ch05_anim,p11_story,P1,انیمیشن داستان جزیره‌های آسمانی,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch05_anim.png,todo,later
+p11_story_ch06_scene01,p11_story,P2,صحنهٔ داستان بازار قدیم — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch06_scene01.png,todo,later
+p11_story_ch06_scene02,p11_story,P2,صحنهٔ داستان بازار قدیم — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch06_scene02.png,todo,later
+p11_story_ch06_scene03,p11_story,P2,صحنهٔ داستان بازار قدیم — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch06_scene03.png,todo,later
+p11_story_ch06_scene04,p11_story,P2,صحنهٔ داستان بازار قدیم — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch06_scene04.png,todo,later
+p11_story_ch06_scene05,p11_story,P2,صحنهٔ داستان بازار قدیم — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch06_scene05.png,todo,later
+p11_story_ch06_scene06,p11_story,P2,صحنهٔ داستان بازار قدیم — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch06_scene06.png,todo,later
+p11_story_ch06_scene07,p11_story,P2,صحنهٔ داستان بازار قدیم — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch06_scene07.png,todo,later
+p11_story_ch06_scene08,p11_story,P2,صحنهٔ داستان بازار قدیم — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch06_scene08.png,todo,later
+p11_story_ch06_anim,p11_story,P2,انیمیشن داستان بازار قدیم,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch06_anim.png,todo,later
+p11_story_ch07_scene01,p11_story,P2,صحنهٔ داستان غارهای بلور — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch07_scene01.png,todo,later
+p11_story_ch07_scene02,p11_story,P2,صحنهٔ داستان غارهای بلور — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch07_scene02.png,todo,later
+p11_story_ch07_scene03,p11_story,P2,صحنهٔ داستان غارهای بلور — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch07_scene03.png,todo,later
+p11_story_ch07_scene04,p11_story,P2,صحنهٔ داستان غارهای بلور — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch07_scene04.png,todo,later
+p11_story_ch07_scene05,p11_story,P2,صحنهٔ داستان غارهای بلور — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch07_scene05.png,todo,later
+p11_story_ch07_scene06,p11_story,P2,صحنهٔ داستان غارهای بلور — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch07_scene06.png,todo,later
+p11_story_ch07_scene07,p11_story,P2,صحنهٔ داستان غارهای بلور — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch07_scene07.png,todo,later
+p11_story_ch07_scene08,p11_story,P2,صحنهٔ داستان غارهای بلور — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch07_scene08.png,todo,later
+p11_story_ch07_anim,p11_story,P2,انیمیشن داستان غارهای بلور,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch07_anim.png,todo,later
+p11_story_ch08_scene01,p11_story,P2,صحنهٔ داستان سبزدره — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch08_scene01.png,todo,later
+p11_story_ch08_scene02,p11_story,P2,صحنهٔ داستان سبزدره — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch08_scene02.png,todo,later
+p11_story_ch08_scene03,p11_story,P2,صحنهٔ داستان سبزدره — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch08_scene03.png,todo,later
+p11_story_ch08_scene04,p11_story,P2,صحنهٔ داستان سبزدره — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch08_scene04.png,todo,later
+p11_story_ch08_scene05,p11_story,P2,صحنهٔ داستان سبزدره — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch08_scene05.png,todo,later
+p11_story_ch08_scene06,p11_story,P2,صحنهٔ داستان سبزدره — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch08_scene06.png,todo,later
+p11_story_ch08_scene07,p11_story,P2,صحنهٔ داستان سبزدره — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch08_scene07.png,todo,later
+p11_story_ch08_scene08,p11_story,P2,صحنهٔ داستان سبزدره — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch08_scene08.png,todo,later
+p11_story_ch08_anim,p11_story,P2,انیمیشن داستان سبزدره,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch08_anim.png,todo,later
+p11_story_ch09_scene01,p11_story,P2,صحنهٔ داستان کارخانهٔ ساعت — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch09_scene01.png,todo,later
+p11_story_ch09_scene02,p11_story,P2,صحنهٔ داستان کارخانهٔ ساعت — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch09_scene02.png,todo,later
+p11_story_ch09_scene03,p11_story,P2,صحنهٔ داستان کارخانهٔ ساعت — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch09_scene03.png,todo,later
+p11_story_ch09_scene04,p11_story,P2,صحنهٔ داستان کارخانهٔ ساعت — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch09_scene04.png,todo,later
+p11_story_ch09_scene05,p11_story,P2,صحنهٔ داستان کارخانهٔ ساعت — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch09_scene05.png,todo,later
+p11_story_ch09_scene06,p11_story,P2,صحنهٔ داستان کارخانهٔ ساعت — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch09_scene06.png,todo,later
+p11_story_ch09_scene07,p11_story,P2,صحنهٔ داستان کارخانهٔ ساعت — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch09_scene07.png,todo,later
+p11_story_ch09_scene08,p11_story,P2,صحنهٔ داستان کارخانهٔ ساعت — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch09_scene08.png,todo,later
+p11_story_ch09_anim,p11_story,P2,انیمیشن داستان کارخانهٔ ساعت,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch09_anim.png,todo,later
+p11_story_ch10_scene01,p11_story,P2,صحنهٔ داستان کتابخانه — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch10_scene01.png,todo,later
+p11_story_ch10_scene02,p11_story,P2,صحنهٔ داستان کتابخانه — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch10_scene02.png,todo,later
+p11_story_ch10_scene03,p11_story,P2,صحنهٔ داستان کتابخانه — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch10_scene03.png,todo,later
+p11_story_ch10_scene04,p11_story,P2,صحنهٔ داستان کتابخانه — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch10_scene04.png,todo,later
+p11_story_ch10_scene05,p11_story,P2,صحنهٔ داستان کتابخانه — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch10_scene05.png,todo,later
+p11_story_ch10_scene06,p11_story,P2,صحنهٔ داستان کتابخانه — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch10_scene06.png,todo,later
+p11_story_ch10_scene07,p11_story,P2,صحنهٔ داستان کتابخانه — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch10_scene07.png,todo,later
+p11_story_ch10_scene08,p11_story,P2,صحنهٔ داستان کتابخانه — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch10_scene08.png,todo,later
+p11_story_ch10_anim,p11_story,P2,انیمیشن داستان کتابخانه,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch10_anim.png,todo,later
+p11_story_ch11_scene01,p11_story,P2,صحنهٔ داستان قلعهٔ سایه — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch11_scene01.png,todo,later
+p11_story_ch11_scene02,p11_story,P2,صحنهٔ داستان قلعهٔ سایه — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch11_scene02.png,todo,later
+p11_story_ch11_scene03,p11_story,P2,صحنهٔ داستان قلعهٔ سایه — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch11_scene03.png,todo,later
+p11_story_ch11_scene04,p11_story,P2,صحنهٔ داستان قلعهٔ سایه — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch11_scene04.png,todo,later
+p11_story_ch11_scene05,p11_story,P2,صحنهٔ داستان قلعهٔ سایه — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch11_scene05.png,todo,later
+p11_story_ch11_scene06,p11_story,P2,صحنهٔ داستان قلعهٔ سایه — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch11_scene06.png,todo,later
+p11_story_ch11_scene07,p11_story,P2,صحنهٔ داستان قلعهٔ سایه — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch11_scene07.png,todo,later
+p11_story_ch11_scene08,p11_story,P2,صحنهٔ داستان قلعهٔ سایه — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch11_scene08.png,todo,later
+p11_story_ch11_anim,p11_story,P2,انیمیشن داستان قلعهٔ سایه,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch11_anim.png,todo,later
+p11_story_ch12_scene01,p11_story,P2,صحنهٔ داستان کارگاه آتش — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch12_scene01.png,todo,later
+p11_story_ch12_scene02,p11_story,P2,صحنهٔ داستان کارگاه آتش — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch12_scene02.png,todo,later
+p11_story_ch12_scene03,p11_story,P2,صحنهٔ داستان کارگاه آتش — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch12_scene03.png,todo,later
+p11_story_ch12_scene04,p11_story,P2,صحنهٔ داستان کارگاه آتش — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch12_scene04.png,todo,later
+p11_story_ch12_scene05,p11_story,P2,صحنهٔ داستان کارگاه آتش — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch12_scene05.png,todo,later
+p11_story_ch12_scene06,p11_story,P2,صحنهٔ داستان کارگاه آتش — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch12_scene06.png,todo,later
+p11_story_ch12_scene07,p11_story,P2,صحنهٔ داستان کارگاه آتش — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch12_scene07.png,todo,later
+p11_story_ch12_scene08,p11_story,P2,صحنهٔ داستان کارگاه آتش — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch12_scene08.png,todo,later
+p11_story_ch12_anim,p11_story,P2,انیمیشن داستان کارگاه آتش,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch12_anim.png,todo,later
+p11_story_ch13_scene01,p11_story,P2,صحنهٔ داستان دریای ستارگان — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch13_scene01.png,todo,later
+p11_story_ch13_scene02,p11_story,P2,صحنهٔ داستان دریای ستارگان — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch13_scene02.png,todo,later
+p11_story_ch13_scene03,p11_story,P2,صحنهٔ داستان دریای ستارگان — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch13_scene03.png,todo,later
+p11_story_ch13_scene04,p11_story,P2,صحنهٔ داستان دریای ستارگان — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch13_scene04.png,todo,later
+p11_story_ch13_scene05,p11_story,P2,صحنهٔ داستان دریای ستارگان — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch13_scene05.png,todo,later
+p11_story_ch13_scene06,p11_story,P2,صحنهٔ داستان دریای ستارگان — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch13_scene06.png,todo,later
+p11_story_ch13_scene07,p11_story,P2,صحنهٔ داستان دریای ستارگان — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch13_scene07.png,todo,later
+p11_story_ch13_scene08,p11_story,P2,صحنهٔ داستان دریای ستارگان — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch13_scene08.png,todo,later
+p11_story_ch13_anim,p11_story,P2,انیمیشن داستان دریای ستارگان,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch13_anim.png,todo,later
+p11_story_ch14_scene01,p11_story,P2,صحنهٔ داستان سرزمین وارونه — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch14_scene01.png,todo,later
+p11_story_ch14_scene02,p11_story,P2,صحنهٔ داستان سرزمین وارونه — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch14_scene02.png,todo,later
+p11_story_ch14_scene03,p11_story,P2,صحنهٔ داستان سرزمین وارونه — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch14_scene03.png,todo,later
+p11_story_ch14_scene04,p11_story,P2,صحنهٔ داستان سرزمین وارونه — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch14_scene04.png,todo,later
+p11_story_ch14_scene05,p11_story,P2,صحنهٔ داستان سرزمین وارونه — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch14_scene05.png,todo,later
+p11_story_ch14_scene06,p11_story,P2,صحنهٔ داستان سرزمین وارونه — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch14_scene06.png,todo,later
+p11_story_ch14_scene07,p11_story,P2,صحنهٔ داستان سرزمین وارونه — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch14_scene07.png,todo,later
+p11_story_ch14_scene08,p11_story,P2,صحنهٔ داستان سرزمین وارونه — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch14_scene08.png,todo,later
+p11_story_ch14_anim,p11_story,P2,انیمیشن داستان سرزمین وارونه,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch14_anim.png,todo,later
+p11_story_ch15_scene01,p11_story,P2,صحنهٔ داستان قلب ساعت — 1,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch15_scene01.png,todo,later
+p11_story_ch15_scene02,p11_story,P2,صحنهٔ داستان قلب ساعت — 2,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch15_scene02.png,todo,later
+p11_story_ch15_scene03,p11_story,P2,صحنهٔ داستان قلب ساعت — 3,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch15_scene03.png,todo,later
+p11_story_ch15_scene04,p11_story,P2,صحنهٔ داستان قلب ساعت — 4,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch15_scene04.png,todo,later
+p11_story_ch15_scene05,p11_story,P2,صحنهٔ داستان قلب ساعت — 5,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch15_scene05.png,todo,later
+p11_story_ch15_scene06,p11_story,P2,صحنهٔ داستان قلب ساعت — 6,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch15_scene06.png,todo,later
+p11_story_ch15_scene07,p11_story,P2,صحنهٔ داستان قلب ساعت — 7,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch15_scene07.png,todo,later
+p11_story_ch15_scene08,p11_story,P2,صحنهٔ داستان قلب ساعت — 8,story_scene,illustration 1280x720 (+layers),1280x720,assets/art/p11_story/p11_story_ch15_scene08.png,todo,later
+p11_story_ch15_anim,p11_story,P2,انیمیشن داستان قلب ساعت,story_anim,frames/tween sheet,1280x720,assets/art/p11_story/p11_story_ch15_anim.png,todo,later
