@@ -22,3 +22,15 @@
 - P6: صحنهٔ «حال» (خاکستری/غمگین) و «گذشته» (رنگی/زنده) تضاد دو زمان را نشان می‌دهند ✔.
 - P9: طراحی رابط به پیشنهاد مدیر؛ **هر صفحه تأیید صاحب پروژه** می‌خواهد (CLAUDE.md).
 - همهٔ تصاویر بدون متن داخل تصویر؛ هر نمونه باید جدا برش و به اسپرایت تبدیل شود.
+
+## دستهٔ ۲ (۱۶ نوامبر) — ✅ تأییدشده طبق `03_approval_and_godot_art_spec.md`
+| پارت | محتوا | Canva media | پیش‌نمایش |
+|---|---|---|---|
+| P1 | آرسام: چرخهٔ idle(۶)/walk(۸)/run(۸) | [MAHbDLCs_kk](https://www.canva.com/M/MAHbDLCs_kk) | p1_arsam_cycles_v1.png |
+| P1 | آرسام: ۶ حالت چهره (پرتره دیالوگ) | [MAHbDOo_b7w](https://www.canva.com/M/MAHbDOo_b7w) | p1_arsam_expressions_v1.png |
+| P1/NPC | بابابزرگ، مادربزرگ، کلاغ‌ساعت | [MAHbDDUf2uc](https://www.canva.com/M/MAHbDDUf2uc) | p1_npc_sheet_v1.png |
+| P9 | صفحه: منوی اصلی | [MAHbDEIrFrU](https://www.canva.com/M/MAHbDEIrFrU) | p9_screen_main_menu_v1.png |
+| P9 | صفحه: نقشهٔ مراحل فصل ۱ | [MAHbDIpCEmE](https://www.canva.com/M/MAHbDIpCEmE) | p9_screen_level_map_v1.png |
+| P9 | صفحه: HUD حین بازی | [MAHbDHTyoIk](https://www.canva.com/M/MAHbDHTyoIk) | p9_screen_hud_v1.png |
+| P9 | صفحه: انتخاب قهرمان/همراه/سلاح (کارگاه) | [MAHbDANAYmg](https://www.canva.com/M/MAHbDANAYmg) | p9_screen_loadout_v1.png |
+| P11 | استوری‌بورد ۲: نبرد نگهبان و آزادسازی | [MAHbDIQuccA](https://www.canva.com/M/MAHbDIQuccA) | p11_storyboard_part2_v1.png |
