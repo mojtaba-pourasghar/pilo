@@ -1,8 +1,12 @@
 # اسپرایت‌های کانسپت برش‌خورده (draft؛ نه نهایی)
 
-ساخته با `python3 tools/art/slice_sheets.py` از شیت‌های `assets/art/<part>/sheet_*_v1.png`. پس‌زمینه شفاف است. نام‌هایی که در manifest نیستند «کانسپت» اند و برای مرجع ساخت‌اند؛ با ساخت نسخهٔ نهایی به شناسهٔ manifest نگاشت می‌شوند.
+ساخته با `python3 tools/art/slice_sheets.py` از `assets/art/<part>/sheet_*_v1.png`. پس‌زمینه شفاف. فریم‌های چرخهٔ حرکت (`*_f1..`) و NPC در **سلول ثابت ۴۸۰×۴۸۰ با مرکز-پایین** هستند (در Godot مقیاس ≈۰٫۵۳ برای ۲۵۶). نام‌هایی که در manifest نیستند «کانسپت»اند.
 
-## در manifest (وضعیت draft)
+## در manifest (draft): 69
+- p1_hero_arsam_portrait_happy
+- p1_hero_arsam_portrait_sad
+- p1_hero_arsam_portrait_surprised
+- p1_hero_arsam_portrait_tired
 - p3_tool_lantern_icon_l1
 - p3_tool_lantern_icon_l2
 - p3_tool_lantern_icon_l3
@@ -69,15 +73,48 @@
 - p8_fx_time_lens
 - p8_fx_ui_heart
 
-## مرجع کانسپت (بدون ردیف manifest)
+## مرجع کانسپت (بدون ردیف manifest): 182
 - p1_hero_arsam_aim_concept
 - p1_hero_arsam_crouch_concept
 - p1_hero_arsam_hurt_concept
+- p1_hero_arsam_idle_f1
+- p1_hero_arsam_idle_f2
+- p1_hero_arsam_idle_f3
+- p1_hero_arsam_idle_f4
+- p1_hero_arsam_idle_f5
+- p1_hero_arsam_idle_f6
 - p1_hero_arsam_jump_concept
+- p1_hero_arsam_portrait_determined
+- p1_hero_arsam_portrait_laughing
 - p1_hero_arsam_roll_concept
 - p1_hero_arsam_run_concept
+- p1_hero_arsam_run_f1
+- p1_hero_arsam_run_f2
+- p1_hero_arsam_run_f3
+- p1_hero_arsam_run_f4
+- p1_hero_arsam_run_f5
+- p1_hero_arsam_run_f6
+- p1_hero_arsam_run_f7
+- p1_hero_arsam_run_f8
 - p1_hero_arsam_special_shot_concept
 - p1_hero_arsam_victory_concept
+- p1_hero_arsam_walk_f1
+- p1_hero_arsam_walk_f2
+- p1_hero_arsam_walk_f3
+- p1_hero_arsam_walk_f4
+- p1_hero_arsam_walk_f5
+- p1_hero_arsam_walk_f6
+- p1_hero_arsam_walk_f7
+- p1_hero_arsam_walk_f8
+- p1_npc_crow_call
+- p1_npc_crow_idle
+- p1_npc_crow_wave
+- p1_npc_grandma_idle
+- p1_npc_grandma_smile
+- p1_npc_grandma_talk
+- p1_npc_grandpa_idle
+- p1_npc_grandpa_smile
+- p1_npc_grandpa_talk
 - p2_companion_bargak_form0_egg_concept
 - p2_companion_bargak_form1_concept
 - p2_companion_bargak_form2_concept
@@ -195,3 +232,27 @@
 - p8_fx_ui_crystals
 - p8_fx_ui_music_trail
 - p8_fx_ui_star_burst
+- p9_ui_badge_keyhole_past
+- p9_ui_badge_keyhole_present
+- p9_ui_badge_paw_a
+- p9_ui_badge_paw_b
+- p9_ui_bar_coin
+- p9_ui_bar_gem
+- p9_ui_bar_heart
+- p9_ui_bar_mana
+- p9_ui_btn_back_green
+- p9_ui_btn_blue_a
+- p9_ui_btn_blue_b
+- p9_ui_btn_gold
+- p9_ui_btn_settings_purple
+- p9_ui_icon_lock
+- p9_ui_panel_big_tabs
+- p9_ui_panel_card_tall
+- p9_ui_ribbon_purple
+- p9_ui_ribbon_red
+- p9_ui_slot_hook
+- p9_ui_slot_lantern
+- p9_ui_slot_lens
+- p9_ui_star_1
+- p9_ui_star_2
+- p9_ui_star_3

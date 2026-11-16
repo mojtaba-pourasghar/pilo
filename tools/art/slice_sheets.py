@@ -20,8 +20,11 @@ def cut(im, bg, tol=40, glob=False):
     bgm = np.isin(lab, list(edge))
     bgm = ndi.binary_dilation(bgm, iterations=1) & near
     if glob:  # حفره‌های بسته (مثلاً داخل کمان) هم شفاف شوند
-        hole = ndi.binary_opening(near, iterations=3) & (lab > 0)
-        bgm = bgm | hole
+        hl, hn = ndi.label(ndi.binary_opening(near, iterations=1))
+        if hn:
+            sz = ndi.sum(np.ones_like(hl), hl, range(1, hn + 1))
+            for k in range(1, hn + 1):
+                if sz[k-1] > 1500: bgm = bgm | (hl == k)   # فقط حفره‌های بزرگ؛ سفیدی چشم می‌ماند
     al = np.where(bgm, 0, 255).astype(np.uint8)
     al = ndi.gaussian_filter(al.astype(float), 0.8).astype(np.uint8)
     # حذف تکه‌های کوچک چسبیده به لبه (باقی‌ماندهٔ اسپرایت همسایه)
@@ -30,7 +33,8 @@ def cut(im, bg, tol=40, glob=False):
         sizes = ndi.sum(np.ones_like(al), lab2, range(1, n2 + 1)); big = sizes.max()
         for k in range(1, n2 + 1):
             ys, xs = np.where(lab2 == k)
-            if sizes[k-1] < 0.15 * big and (xs.min() <= 1 or ys.min() <= 1 or xs.max() >= al.shape[1]-2 or ys.max() >= al.shape[0]-2):
+            thin = (ys.max() - ys.min() < 10) and (xs.max() - xs.min() > 0.4 * al.shape[1])  # خط زمین
+            if thin or sizes[k-1] < 0.15 * big and (xs.min() <= 1 or ys.min() <= 1 or xs.max() >= al.shape[1]-2 or ys.max() >= al.shape[0]-2):
                 al[lab2 == k] = 0
     out = im.convert('RGBA'); out.putalpha(Image.fromarray(al))
     bb = out.getchannel('A').point(lambda v: 255 if v > 20 else 0).getbbox()
@@ -44,6 +48,22 @@ def save(sheet, box, part, name, tol=40, pad=6, glob=False):
     o = cut(c, bg, tol, glob)
     os.makedirs(f'{R}/{part}', exist_ok=True)
     o.save(f'{R}/{part}/{name}.png'); made.append(name)
+
+
+def save_cell(sheet, box, part, name, cell=480, tol=40, glob=True):
+    """برش + قرارگیری در سلول ثابت (مرکز-پایین) تا فریم‌های انیمیشن در Godot جابه‌جا نشوند."""
+    im = Image.open(sheet).convert('RGB'); a = np.asarray(im).astype(int); bg = bgcolor(a)
+    x0, y0, x1, y1 = box
+    o = cut(im.crop((max(0, x0-6), max(0, y0-6), min(im.width, x1+6), min(im.height, y1))), bg, tol, glob)
+    al = np.array(o.getchannel('A'))   # حذف خط زمینهٔ نازک چسبیده به پا
+    for y in range(al.shape[0]-1, al.shape[0]//2, -1):
+        if (al[y] > 20).sum() > 0.55 * al.shape[1]: al[y] = 0
+        else: break
+    o.putalpha(Image.fromarray(al)); bb = o.getchannel('A').getbbox(); o = o.crop(bb) if bb else o
+    if o.width > cell or o.height > cell: o.thumbnail((cell, cell))
+    c = Image.new('RGBA', (cell, cell), (0, 0, 0, 0))
+    c.paste(o, ((cell - o.width)//2, cell - o.height), o)
+    os.makedirs(f'{R}/{part}', exist_ok=True); c.save(f'{R}/{part}/{name}.png'); made.append(name)
 
 def runs(v, minlen=30):
     r = []; s = None
@@ -114,6 +134,24 @@ def main():
           'badge_paw_a':(1764,718,2175,1146),'badge_paw_b':(2239,718,2650,1146),
           'slot_lens':(1742,1167,2007,1436),'slot_hook':(2059,1167,2323,1436),'slot_lantern':(2381,1167,2650,1436)}
     for k, b in ui.items(): save(S, b, 'p9_ui', f'p9_ui_{k}', 40, 2)
+    # ── P1 چرخهٔ حرکت آرسام (سلول ۴۸۰ ثابت، مرکز-پایین)
+    S = f'{R}/p1_heroes/sheet_arsam_cycles_v1.png'
+    cyc = [('idle', 36, 491, [(345,545),(686,889),(1032,1234),(1391,1593),(1745,1944),(2110,2312)]),
+           ('walk', 554, 966, [(71,332),(421,644),(735,972),(1050,1298),(1382,1642),(1724,1967),(2064,2308),(2395,2643)]),
+           ('run', 1050, 1449, [(51,334),(382,644),(672,976),(995,1340),(1363,1646),(1694,1972),(1995,2306),(2334,2669)])]
+    for nm, y0, y1, xs in cyc:
+        for i, (x0, x1) in enumerate(xs): save_cell(S, (x0, y0, x1, y1), 'p1_heroes', f'p1_hero_arsam_{nm}_f{i+1}')
+    # ── پرتره‌های چهره
+    S = f'{R}/p1_heroes/sheet_arsam_expressions_v1.png'
+    ex = [('happy',(161,19,776,744)),('determined',(1060,19,1643,744)),('surprised',(1922,19,2540,744)),
+          ('sad',(161,781,775,1493)),('laughing',(1048,781,1644,1493)),('tired',(1938,781,2540,1493))]
+    for nm, b in ex: save(S, b, 'p1_heroes', f'p1_hero_arsam_portrait_{nm}', 40, 4)
+    # ── NPC
+    S = f'{R}/p1_heroes/sheet_npc_grandparents_crow_v1.png'
+    npc = [('grandpa_idle',(20,330)),('grandpa_talk',(330,600)),('grandpa_smile',(600,990)),
+           ('grandma_idle',(1000,1285)),('grandma_talk',(1285,1570)),('grandma_smile',(1570,1900)),
+           ('crow_idle',(1900,2100)),('crow_call',(2100,2370)),('crow_wave',(2370,2710))]
+    for nm, (x0, x1) in npc: save_cell(S, (x0, 242, x1, 1222), 'p1_heroes', f'p1_npc_{nm}', 480, 40)
     # ── P7 جزئیات زنده (۴ ردیف × ۴ گروه × ۴ فریم)
     S = f'{R}/p7_living/sheet_living_ch01_v1.png'
     groups = [['leaf','bird','butterfly','cloud'], ['waterfall','ripple','fish_jump','light_rays'],
