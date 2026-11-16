@@ -101,6 +101,19 @@ def main():
     for r in range(1, 3):
         for c in range(6):
             save(S, (int(c*W)+14, int(r*H)+14, int((c+1)*W)-14, int((r+1)*H)-14), 'p8_fx', f'p8_fx_{names[r][c]}', 70, 0)
+    # ── P9 کیت رابط (برش دستی؛ ۹-برش را در Godot با patch margin تنظیم کن)
+    S = f'{R}/p9_ui/sheet_ui_kit_v1.png'
+    ui = {'btn_gold':(47,51,680,262),'btn_blue_a':(47,272,380,407),'btn_blue_b':(380,272,687,407),
+          'btn_back_green':(690,90,885,289),'btn_settings_purple':(885,90,1076,289),
+          'bar_coin':(1105,94,1552,251),'bar_gem':(1580,93,2004,251),
+          'star_1':(2046,74,2151,253),'star_2':(2161,74,2300,253),'star_3':(2313,74,2487,253),'icon_lock':(2504,45,2686,281),
+          'ribbon_red':(47,422,845,570),'ribbon_purple':(47,572,845,713),
+          'panel_big_tabs':(58,718,1267,1426),'panel_card_tall':(1297,795,1687,1439),
+          'bar_heart':(1104,287,1978,456),'bar_mana':(1104,474,1979,661),
+          'badge_keyhole_past':(2038,287,2346,691),'badge_keyhole_present':(2366,287,2674,690),
+          'badge_paw_a':(1764,718,2175,1146),'badge_paw_b':(2239,718,2650,1146),
+          'slot_lens':(1742,1167,2007,1436),'slot_hook':(2059,1167,2323,1436),'slot_lantern':(2381,1167,2650,1436)}
+    for k, b in ui.items(): save(S, b, 'p9_ui', f'p9_ui_{k}', 40, 2)
     # ── P7 جزئیات زنده (۴ ردیف × ۴ گروه × ۴ فریم)
     S = f'{R}/p7_living/sheet_living_ch01_v1.png'
     groups = [['leaf','bird','butterfly','cloud'], ['waterfall','ripple','fish_jump','light_rays'],
