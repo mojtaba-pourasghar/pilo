@@ -56,11 +56,15 @@ func _ready() -> void:
 			"pause":
 				scene.open_pause()
 			"settings":
-				scene.add_child(SettingsPanel.new())
+				var p := PauseScreen.new()
+				p.settings_only = true
+				scene.add_child(p)
 			"gate":
 				scene.add_child(ParentGate.new())
 			"complete":
 				scene.has_time_key = true
+				scene.has_past_key = true
+				scene.has_present_key = true
 				scene.coins = 57
 				scene.diamonds_found = [0, 2, 3]
 				scene.enemies_freed = 9

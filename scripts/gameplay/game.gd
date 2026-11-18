@@ -54,6 +54,8 @@ var carrying := ""
 var guardian: ChapterBoss
 var _armour_hits := 0
 var enemies_freed := 0
+var hearts_lost := 0
+var _play_time := 0.0
 
 var _busy := false
 var _respawning := false
@@ -214,6 +216,7 @@ func _start_race() -> void:
 func _physics_process(delta: float) -> void:
 	if finished or player == null:
 		return
+	_play_time += delta
 	_shift_cooldown -= delta
 	_notice_cooldown -= delta
 	if not _busy:
@@ -566,6 +569,7 @@ func on_enemy_freed(enemy: Enemy) -> void:
 
 ## the hero was hit: update the hearts and spill a few coins that can be caught again.
 func on_player_hurt(away: float) -> void:
+	hearts_lost += 1
 	hud.set_hearts(player.hearts, player.max_hearts)
 	Juice.hit(player, player.global_position + Vector2(0, -20), 0.65, "impact")
 	Juice.flash(self, Color(1.0, 0.15, 0.1, 0.28), 0.35)
@@ -1003,16 +1007,47 @@ func on_exit_reached() -> void:
 	popup.diamonds_found = diamonds_found.size()
 	popup.diamonds_total = info.diamonds
 	popup.freed = enemies_freed
+	popup.rating = rating()
+	popup.boss = String(data.get("kind", "")) == "boss"
+	popup.keys = int(has_past_key) + int(has_present_key)
+	Economy.on_win(popup.rating)
+	var best: Dictionary = SaveManager.data.get("ratings", {})
+	best[str(level_id)] = maxi(int(best.get(str(level_id), 0)), popup.rating)
+	SaveManager.data["ratings"] = best
+	SaveManager.save_game()
 	popup.action.connect(_on_complete_action)
 	add_child(popup)
+
+
+## 1 star: finished; 2: no heart lost or a treasure found; 3: also a good time (40 s per 64
+## columns) and no free hint from the keeper. Easy mode never gives the third (DECISIONS).
+func rating() -> int:
+	var r := 1
+	if hearts_lost == 0 or not diamonds_found.is_empty():
+		r = 2
+	var par: float = 40.0 * info.size.x / (64.0 * LevelBuilder.TILE)
+	var hint_used: bool = keeper != null and is_instance_valid(keeper) and keeper.hint_shown
+	if r == 2 and _play_time <= par and not hint_used and not bool(SaveManager.data.settings.get("easy", false)):
+		r = 3
+	return r
 
 
 func _on_complete_action(id: String) -> void:
 	match id:
 		"next":
+			if String(data.get("chapter", "")) == "ch01":
+				# the next level on the chapter map (it checks what is open and pays the entry)
+				if level_id >= 8:
+					LevelManager.goto_village()
+				else:
+					_next_or_map()
+				return
 			LevelManager.play_level(level_id + 1)
 		"retry":
-			LevelManager.play_level(level_id)
+			if Economy.enter(level_id):
+				LevelManager.play_level(level_id)
+			else:
+				LevelManager.goto_map()
 		_:
 			LevelManager.goto_map()
 
@@ -1057,7 +1092,7 @@ func _on_pause_action(id: String) -> void:
 		"restart":
 			LevelManager.play_level(level_id)
 		"menu":
-			LevelManager.goto_menu()
+			LevelManager.goto_map()
 
 
 func _play_lines(lines: Array) -> void:
@@ -1085,3 +1120,13 @@ func _notice(text: String, color: Color = UIKit.ORANGE, force := false, voice_id
 	if voice_id != "" and not AudioManager.is_voice_playing():
 		AudioManager.play_voice(voice_id)
 	FX.float_text(_world_root, player.global_position + Vector2(0, -120), Names.fmt(text), color)
+
+
+func _next_or_map() -> void:
+	var next := level_id + 1
+	if next == 7 and WorldMapScreen.marks() < 3:
+		next = 8
+	if WorldMapScreen.unlocked(next) and Economy.enter(next):
+		LevelManager.play_level(next)
+	else:
+		LevelManager.goto_map()

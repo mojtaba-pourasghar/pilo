@@ -1,12 +1,17 @@
 extends CanvasLayer
-## End-of-level popup: stars found, coins and diamonds collected, creatures freed, the
-## time-shard reward and what to do next.
+## Level result, exactly screen_result_v2: the hero and the fox cheering on the left, the freed
+## bear with butterflies on the right; a red ribbon (title), three stars (gold = earned, outline =
+## not), three reward cases on a shelf (coins, gems, the keys / heart of time) with their amounts,
+## the round blue replay button and the long gold ▶ next button.
+## Stars (18_gameplay_design §2.2): 1 = finished; 2 = no heart lost or a treasure found;
+## 3 = a good time and the keeper's secret without the free hint.
 
 signal action(name: String)
 
-const HUD_ICON := preload("res://scripts/ui/hud.gd").HudIcon
+const S := "result"
 
 var level_id := 1
+var rating := 1
 var stars_found := 0
 var stars_total := 3
 var first_time := false
@@ -15,77 +20,47 @@ var coins := 0
 var diamonds_found := 0
 var diamonds_total := 0
 var freed := 0
+var keys := 2
+var boss := false
 
 
 func _ready() -> void:
-	layer = 40
-	var modal := UIKit.make_modal(self, Vector2(640, 0))
-	var box: VBoxContainer = modal.box
-	box.add_child(UIKit.make_strip_title("آفرین!", 48))
-	AudioManager.play_voice("app_shard_found" if first_time else "app_well_done")
-	box.add_child(UIKit.make_label(LevelManager.level_title(level_id), 32))
-
-	var stars := HBoxContainer.new()
-	stars.alignment = BoxContainer.ALIGNMENT_CENTER
-	stars.add_theme_constant_override("separation", 14)
-	box.add_child(stars)
-	for i in stars_total:
-		var star := UIKit.make_icon("res://assets/ui/star.png", 84)
-		star.modulate = Color.WHITE if i < stars_found else Color(0.2, 0.2, 0.3, 0.35)
-		stars.add_child(star)
-		if i < stars_found:
+	layer = 45
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	var root := Control.new()
+	root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	add_child(root)
+	var stage := DesignUI.make_stage(root, DesignUI.piece_path(S, "bg"))
+	stage.mouse_filter = Control.MOUSE_FILTER_STOP
+	DesignUI.text(stage, Strings.t("ui_level_boss_done" if boss else "ui_level_done"), DesignUI.area(S, "ribbon"), 40, Color.WHITE, 10, Color("6a0a0a"))
+	for i in 3:
+		var earned := i < rating
+		var piece := "star_%d" % (i + 1)
+		var r := DesignUI.rect(S, piece)
+		var path := DesignUI.piece_path(S, piece if earned and i < 2 else ("star_1" if earned else "star_3"))
+		var star := DesignUI.picture(stage, path, r)
+		if earned:
+			star.pivot_offset = r.size * 0.5
 			star.scale = Vector2.ZERO
-			star.resized.connect(func(): star.pivot_offset = star.size * 0.5)
-			var tween := create_tween()
-			tween.tween_interval(0.25 + i * 0.25)
-			tween.tween_callback(func(): AudioManager.play_sfx("star", 1.0 + i * 0.12))
-			tween.tween_property(star, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-
-	var score := HBoxContainer.new()
-	score.alignment = BoxContainer.ALIGNMENT_CENTER
-	score.add_theme_constant_override("separation", 28)
-	box.add_child(score)
-	for item in [["coin", str(coins)], ["diamond", "%d/%d" % [diamonds_found, diamonds_total]], ["freed", str(freed)]]:
-		var cell := HBoxContainer.new()
-		cell.add_theme_constant_override("separation", 6)
-		if item[0] == "freed":
-			var label := UIKit.make_label("آزاد شده:", 26, UIKit.PURPLE)
-			cell.add_child(label)
-		else:
-			var icon := HUD_ICON.new()
-			icon.kind = item[0]
-			cell.add_child(icon)
-		cell.add_child(UIKit.make_label(item[1], 30, Color("5a3a1e")))
-		score.add_child(cell)
-
-	if first_time:
-		var reward := HBoxContainer.new()
-		reward.alignment = BoxContainer.ALIGNMENT_CENTER
-		reward.add_child(UIKit.make_icon("res://assets/ui/crystal.png", 52))
-		reward.add_child(UIKit.make_label("یک قلب زمان پیدا کردی!", 28, UIKit.PURPLE))
-		box.add_child(reward)
-
-	if reward != "":
-		var unlocked := HBoxContainer.new()
-		unlocked.alignment = BoxContainer.ALIGNMENT_CENTER
-		unlocked.add_child(RigIcon.make("pilo", 52, float(StoreAdapter.PILO_COLORS.gold.hue), "happy"))
-		unlocked.add_child(UIKit.make_label("پیلوی طلایی باز شد! (فروشگاه ← ظاهر پیلو)", 26, UIKit.ORANGE))
-		box.add_child(unlocked)
-
-	var next_id := level_id + 1
-	var row := HBoxContainer.new()
-	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_theme_constant_override("separation", 14)
-	box.add_child(row)
-	if LevelManager.has_level(next_id) and ProgressManager.is_unlocked(next_id):
-		_add(row, "مرحلهٔ بعد", UIKit.GREEN, "next")
-	elif not LevelManager.world_of(next_id).is_empty():
-		box.add_child(UIKit.make_label("دنیای بعدی: «%s» به‌زودی!" % LevelManager.world_of(next_id).title, 26, UIKit.BLUE))
-	_add(row, "دوباره", UIKit.BLUE, "retry")
-	_add(row, "نقشه", UIKit.ORANGE, "map")
+			var t := star.create_tween()
+			t.tween_interval(0.25 + i * 0.3)
+			t.tween_property(star, "scale", Vector2(1.2, 1.2), 0.18).set_trans(Tween.TRANS_BACK)
+			t.tween_property(star, "scale", Vector2.ONE, 0.12)
+			t.tween_callback(func(): AudioManager.play_sfx("star", 1.0 + i * 0.12))
+	var amounts := [DesignUI.fa_num(coins), DesignUI.fa_num(diamonds_found), DesignUI.fa_num(keys) if not boss else "♥"]
+	for i in 3:
+		DesignUI.text(stage, amounts[i], DesignUI.area(S, "amount_%d" % (i + 1)), 28, Color.WHITE, 7)
+	DesignUI.button(stage, DesignUI.piece_path(S, "btn_replay"), DesignUI.rect(S, "btn_replay"), func(): _close("retry"))
+	DesignUI.button(stage, DesignUI.piece_path(S, "btn_next"), DesignUI.rect(S, "btn_next"), func(): _close("next"))
+	AudioManager.play_voice("app_well_done")
 
 
-func _add(row: HBoxContainer, text: String, color: Color, id: String) -> void:
-	var button := UIKit.make_button(text, color, 180, 30)
-	button.pressed.connect(func(): action.emit(id))
-	row.add_child(button)
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_GO_BACK_REQUEST:
+		_close("map")
+
+
+func _close(id: String) -> void:
+	get_tree().paused = false
+	action.emit(id)
+	queue_free()

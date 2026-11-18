@@ -1,12 +1,25 @@
 extends CanvasLayer
-## Short story lines with a portrait. Tap, click or jump to continue.
-## Text is always shown, so the game works without sound. Lines may carry an "id";
-## a recorded voice file with that id in assets/audio/voice/ plays automatically.
+## The dialogue box, exactly screen_dialogue_v1 (over the scene, at the bottom): the speaker's
+## portrait in the round gold frame (left), the name on the cream ribbon, the line in the navy box
+## with the golden arrow (tap / jump for the next line), and - for a question - the two choice
+## buttons above it (blue and purple). Text from strings_fa.json; {hero} is the player's name. A
+## recorded voice with the line's id plays automatically (never saying the hero's name).
 
 signal advanced
+signal chosen(index: int)
 
+const S := "dialogue"
 const ART := "res://assets/art/"
-## Who can speak, and the picture shown in the round portrait (the first one that exists).
+## Portraits from the approved art (p1, p2, p5); others use the older pictures in assets/art/.
+const PORTRAITS := {
+	"hero": "res://assets/art/p1_heroes/p1_hero_arsam_portrait_happy.png",
+	"pilo": "res://assets/art/p2_companions/p2_companion_pilo_happy_concept.png",
+	"grandpa": "res://assets/art/p1_heroes/p1_npc_grandpa_talk.png",
+	"narrator": "res://assets/art/p1_heroes/p1_npc_grandpa_talk.png",
+	"grandma": "res://assets/art/p1_heroes/p1_npc_grandma_talk.png",
+	"bear": "res://assets/art/p5_enemies/bear/bear_head_calm_p3.png",
+	"leaf_elder": "res://assets/art/p5_enemies/p5_concept_ch01_stump_idle.png",
+}
 const SPEAKERS := {
 	"hero": {"name": "{hero}", "color": Color("e5533d"), "texture": ""},
 	"pilo": {"name": "پیلو", "color": Color("f39a2b"), "texture": ""},
@@ -19,7 +32,8 @@ const SPEAKERS := {
 	"shadow_king": {"name": "شاه‌سایه", "color": Color("5a3a9a"), "texture": ["npc_shadow_king.png", "boss_shadow_castle_free.png"]},
 	"captain": {"name": "ناخدا موج", "color": Color("1f6fd0"), "texture": ["npc_captain.png"]},
 	"grandma": {"name": "مادربزرگ کاکتوس", "color": Color("3f8f3a"), "texture": ["npc_grandma.png"]},
-	"bear": {"name": "خرس پیر جنگل", "color": Color("7a4a26"), "texture": ["boss_forest_free.png"]},
+	"leaf_elder": {"name": "پیرمرد برگی", "color": Color("3f8f3a"), "texture": []},
+	"bear": {"name": "خرس پیر", "color": Color("7a4a26"), "texture": ["boss_forest_free.png"]},
 	"octopus": {"name": "اختاپوس بزرگ", "color": Color("e07050"), "texture": ["boss_coral_beach_free.png"]},
 	"worm": {"name": "کرم شنی", "color": Color("c9963a"), "texture": ["boss_golden_desert_free.png"]},
 	"yeti": {"name": "غول یخی", "color": Color("4b98b3"), "texture": ["boss_snow_mountain_free.png"]},
@@ -35,58 +49,52 @@ const SPEAKERS := {
 }
 
 var _root: Control
-var _portrait: Portrait
+var _stage: Control
+var _portrait: TextureRect
 var _name: Label
 var _text: Label
+var _choices: Array = []
 var _typing: Tween
 var _last_advance := 0.0
+var _asking := false
 
 
 func _ready() -> void:
 	layer = 20
 	_root = Control.new()
 	_root.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_root.layout_direction = Control.LAYOUT_DIRECTION_RTL
 	_root.mouse_filter = Control.MOUSE_FILTER_STOP
 	_root.visible = false
 	add_child(_root)
-	var margin := MarginContainer.new()
-	margin.set_anchors_preset(Control.PRESET_FULL_RECT)
-	margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	for side in ["left", "right"]:
-		margin.add_theme_constant_override("margin_" + side, 120)
-	margin.add_theme_constant_override("margin_bottom", 30)
-	_root.add_child(margin)
-	var column := VBoxContainer.new()
-	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	margin.add_child(column)
-	column.add_child(UIKit.spacer())
-	var panel := PanelContainer.new()
-	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	column.add_child(panel)
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 24)
-	panel.add_child(row)
-	_portrait = Portrait.new()
-	_portrait.custom_minimum_size = Vector2(150, 150)
-	row.add_child(_portrait)
-	var texts := VBoxContainer.new()
-	texts.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_child(texts)
-	# Under RTL layout Godot mirrors LEFT/RIGHT: LEFT is the reading start (right side).
-	_name = UIKit.make_label("", 32)
-	_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	texts.add_child(_name)
-	_text = UIKit.make_label("", 32)
-	_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	_stage = Control.new()
+	_stage.size = DesignUI.BASE
+	_stage.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_root.add_child(_stage)
+	DesignUI.anchor(_stage, "bc")
+	DesignUI.piece(_stage, S, "box")
+	# the portrait sits inside the ring: a circle mask over the picture
+	var pr := DesignUI.area(S, "portrait_in")
+	var mask := CircleMask.new()
+	mask.position = pr.position
+	mask.size = pr.size
+	mask.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
+	_stage.add_child(mask)
+	_portrait = TextureRect.new()
+	_portrait.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_portrait.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	_portrait.set_anchors_preset(Control.PRESET_FULL_RECT)
+	mask.add_child(_portrait)
+	_name = DesignUI.text(_stage, "", DesignUI.area(S, "name"), 26, Color("3a1a04"), 0)
+	_text = DesignUI.text(_stage, "", DesignUI.area(S, "text"), 30, Color.WHITE, 4, Color("0a1430"), HORIZONTAL_ALIGNMENT_RIGHT)
 	_text.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	_text.custom_minimum_size = Vector2(600, 96)
-	_text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	texts.add_child(_text)
-	var more := UIKit.make_label("ضربه بزن ▼", 20, Color(0.45, 0.3, 0.2, 0.7))
-	more.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	texts.add_child(more)
+	for i in 2:
+		var piece := "choice_a" if i == 0 else "choice_b"
+		var b := DesignUI.button(_stage, DesignUI.piece_path(S, piece), DesignUI.rect(S, piece), func(): chosen.emit(i))
+		var label := DesignUI.text(b, "", Rect2(Vector2.ZERO, DesignUI.rect(S, piece).size), 28, Color.WHITE, 6, Color("101030"))
+		b.set_meta("label", label)
+		b.visible = false
+		_choices.append(b)
 
 
 func play(lines: Array) -> void:
@@ -98,13 +106,33 @@ func play(lines: Array) -> void:
 	_root.visible = false
 
 
+## A question with two answers (K11 riddles, the name at the start): returns the index picked.
+func ask(line: Dictionary, choices: Array) -> int:
+	_root.visible = true
+	_asking = true
+	_show(line)
+	_text.visible_ratio = 1.0
+	for i in 2:
+		_choices[i].visible = i < choices.size()
+		if i < choices.size():
+			_choices[i].get_meta("label").text = Names.fmt(String(choices[i]))
+	var index: int = await chosen
+	for b in _choices:
+		b.visible = false
+	_asking = false
+	AudioManager.stop_voice()
+	_root.visible = false
+	return index
+
+
 func _show(line: Dictionary) -> void:
-	var speaker: Dictionary = SPEAKERS.get(String(line.get("who", "pilo")), SPEAKERS.pilo)
+	var who := String(line.get("who", "pilo"))
+	var speaker: Dictionary = SPEAKERS.get(who, SPEAKERS.pilo)
 	_name.text = Names.fmt(String(speaker.name))
-	_name.add_theme_color_override("font_color", speaker.color)
-	_portrait.speaker = String(line.get("who", "pilo"))
 	_portrait.texture = null
-	if speaker.texture is Array:
+	if PORTRAITS.has(who):
+		_portrait.texture = DesignUI.tex(PORTRAITS[who])
+	elif speaker.texture is Array:
 		for file in speaker.texture:
 			if ResourceLoader.exists(ART + file):
 				_portrait.texture = load(ART + file)
@@ -116,47 +144,12 @@ func _show(line: Dictionary) -> void:
 	_typing = create_tween()
 	_typing.tween_property(_text, "visible_ratio", 1.0, clampf(_text.text.length() * 0.03, 0.3, 1.6))
 	if line.has("id"):
-		# Text appears at the voice's pace when a recording exists.
 		if AudioManager.play_voice(String(line.id)) and _typing:
 			_typing.set_speed_scale(0.8)
 
 
-signal chosen(index: int)
-var _choices: HBoxContainer
-
-
-## A question with answer buttons (K11 riddles): returns the index picked.
-func ask(line: Dictionary, choices: Array) -> int:
-	_root.visible = true
-	_show(line)
-	_text.visible_ratio = 1.0
-	if _choices == null:
-		_choices = HBoxContainer.new()
-		_choices.add_theme_constant_override("separation", 40)
-		_choices.alignment = BoxContainer.ALIGNMENT_CENTER
-		_choices.set_anchors_preset(Control.PRESET_CENTER)
-		_choices.position = Vector2(-420, -40)
-		_choices.size = Vector2(840, 90)
-		_root.add_child(_choices)
-	for c in _choices.get_children():
-		c.queue_free()
-	for i in choices.size():
-		var b := Button.new()
-		b.text = Names.fmt(String(choices[i]))
-		b.custom_minimum_size = Vector2(380, 80)
-		b.add_theme_font_size_override("font_size", 30)
-		b.pressed.connect(func(): chosen.emit(i))
-		_choices.add_child(b)
-	_choices.visible = true
-	var index: int = await chosen
-	_choices.visible = false
-	AudioManager.stop_voice()
-	_root.visible = false
-	return index
-
-
 func _input(event: InputEvent) -> void:
-	if not _root.visible or (_choices and _choices.visible):
+	if not _root.visible or _asking:
 		return
 	var pressed := false
 	if event is InputEventScreenTouch and event.pressed:
@@ -184,88 +177,6 @@ func _advance() -> void:
 	advanced.emit()
 
 
-class Portrait extends Control:
-	var texture: Texture2D
-	var speaker := "":
-		set(value):
-			speaker = value
-			_update_rig()
-	var t := 0.0
-	var _rig: CharacterRig
-
-	func _init() -> void:
-		resized.connect(_update_rig)
-
-	func _process(delta: float) -> void:
-		t += delta
-		queue_redraw()
-
-	## the hero and Pilo are drawn by their code rigs (head and shoulders in the circle).
-	func _update_rig() -> void:
-		if _rig:
-			_rig.queue_free()
-			_rig = null
-		var center := size * 0.5
-		if PaintedCreature.available(speaker + "_portrait"):
-			# rendered head-and-shoulders portrait, standing on the bottom of the circle
-			_rig = PaintedCreature.make(speaker + "_portrait", size.y * 0.86, "idle")
-			_rig.position = center + Vector2(0, size.y * 0.47)
-		elif speaker == "hero":
-			_rig = HeroRig.new()
-			_rig.scale = Vector2(1.7, 1.7)
-			_rig.position = center + Vector2(-6, 82 * 1.7)
-		elif speaker == "pilo":
-			_rig = PiloRig.new()
-			_rig.scale = Vector2(2.4, 2.4)
-			_rig.position = center + Vector2(-17.0, 42.0) * 2.4
-		if _rig:
-			_rig.expression = "happy" if speaker == "hero" else "normal"
-			# the character is clipped to the round portrait, the golden ring drawn over it
-			var mask := Mask.new()
-			mask.center = center
-			mask.radius = size.x * 0.5 - 3.0
-			mask.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
-			add_child(mask)
-			mask.add_child(_rig)
-			var frame := Frame.new()
-			frame.set_anchors_preset(Control.PRESET_FULL_RECT)
-			frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			add_child(frame)
-			_rig.tree_exiting.connect(mask.queue_free)
-			_rig.tree_exiting.connect(frame.queue_free)
-
-	## The round window the portrait character shows through.
-	class Mask extends Node2D:
-		var center := Vector2.ZERO
-		var radius := 60.0
-
-		func _draw() -> void:
-			draw_circle(center, radius, Color.WHITE)
-
-	## The golden ring around the round portrait.
-	class Frame extends Control:
-		func _draw() -> void:
-			draw_arc(size * 0.5, size.x * 0.5 - 3.0, 0.0, TAU, 64, Color("e2b877"), 6.0)
-
+class CircleMask extends Control:
 	func _draw() -> void:
-		var center := size * 0.5
-		draw_circle(center, size.x * 0.5, Color("ffe7b8"))
-		draw_arc(center, size.x * 0.5 - 3.0, 0.0, TAU, 48, Color("e2b877"), 6.0)
-		if texture:
-			# Show the head and shoulders: the top part of the character picture.
-			var tex_size := texture.get_size()
-			var region := Rect2(0, 0, tex_size.x, tex_size.x) if tex_size.y > tex_size.x * 1.4 else Rect2(Vector2.ZERO, tex_size)
-			var fit := (size.x - 24.0) / maxf(region.size.x, region.size.y)
-			var draw_size := region.size * fit
-			draw_texture_rect_region(texture, Rect2(center - draw_size * 0.5, draw_size), region)
-		elif not (speaker in ["hero", "pilo", "ghubarak", "squirrel"]):
-			# no picture yet: the speaker's initial in their colour
-			var info: Dictionary = SPEAKERS.get(speaker, SPEAKERS.pilo)
-			draw_circle(center, size.x * 0.36, info.color)
-			var font := ThemeDB.fallback_font
-			var letter := String(info.name).substr(0, 1)
-			draw_string(font, center + Vector2(-18, 18), letter, HORIZONTAL_ALIGNMENT_CENTER, 36, 52, Color.WHITE)
-		elif speaker == "ghubarak":
-			Ghubarak.draw_body(self, center, 1.3, t)
-		elif speaker == "squirrel":
-			RescueFriend.draw_squirrel(self, center + Vector2(4, 22), 1.8, t)
+		draw_circle(size * 0.5, size.x * 0.5, Color.WHITE)

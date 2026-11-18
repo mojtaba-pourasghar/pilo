@@ -9,63 +9,21 @@ extends Node
 signal purchase_finished(sku: String, ok: bool, message: String)
 signal purchases_restored(skus: Array)
 
+## Real-money products: only coins and gems (and two one-time packs). Never a loot box, never
+## something the main path needs (content/09). Granted through Economy after the parent gate.
 const PRODUCTS := {
-	"worlds_pack": {
-		"title": "بستهٔ دنیاهای ۲ تا ۸",
-		"description": "هفت دنیای تازه، ۵۶ مرحله، هفت نگهبان و ادامهٔ داستان تا دنیای وارونه.",
-		"icon": "res://assets/ui/crystal.png",
-		"coming_soon": false,
-	},
-	"pilo_colors": {
-		"title": "رنگ‌های پیلو",
-		"description": "سه رنگ تازه برای پیلو. فقط ظاهری است و مرحله‌ها را آسان‌تر نمی‌کند.",
-		"icon": "res://assets/ui/backpack.png",
-		"coming_soon": false,
-	},
-	"companion_dragon": {
-		"title": "اژدهاک",
-		"description": "همراهی که با پیلو بی‌آنکه پایین بیاید سُر می‌خورد. راه اصلی هیچ مرحله‌ای به آن نیاز ندارد.",
-		"icon": "res://assets/ui/backpack.png",
-		"coming_soon": false,
-	},
-	"companion_lion": {
-		"title": "شیرک بالدار",
-		"description": "همراهی که یک قلب بیشتر به قهرمان می‌دهد.",
-		"icon": "res://assets/ui/backpack.png",
-		"coming_soon": false,
-	},
-	"tool_skateboard": {
-		"title": "اسکیت موشکی",
-		"description": "دَش بلندتر و تندتر.",
-		"icon": "res://assets/ui/backpack.png",
-		"coming_soon": false,
-	},
-	"tool_balloon": {
-		"title": "بالن رنگین‌کمان",
-		"description": "سُر خوردن بی‌پایان در هوا.",
-		"icon": "res://assets/ui/backpack.png",
-		"coming_soon": false,
-	},
-	"tool_starblaster": {
-		"title": "ستاره‌پران",
-		"description": "سلاحی که سه ستاره با هم پرتاب می‌کند. راه اصلی هیچ مرحله‌ای به آن نیاز ندارد.",
-		"icon": "res://assets/ui/backpack.png",
-		"coming_soon": false,
-	},
-	"tool_toolbox": {
-		"title": "جعبه‌ابزار طلایی",
-		"description": "یک جای ابزار سوم در کوله.",
-		"icon": "res://assets/ui/backpack.png",
-		"coming_soon": false,
-	},
+	"coins_s": {"title_key": "shop_coins_s", "coins": 500, "tab": 0},
+	"coins_m": {"title_key": "shop_coins_m", "coins": 3000, "tab": 0},
+	"coins_l": {"title_key": "shop_coins_l", "coins": 15000, "tab": 0},
+	"gems_s": {"title_key": "shop_gems_s", "gems": 50, "tab": 1},
+	"gems_l": {"title_key": "shop_gems_l", "gems": 300, "tab": 1},
+	"starter": {"title_key": "shop_starter", "coins": 1000, "gems": 50, "once": true, "tab": 1},
+	"no_ads": {"title_key": "shop_no_ads", "once": true, "tab": -1},
 }
 
 ## Cosmetic colors for Pilo (hue shift applied by a shader). "classic" is always free.
 const PILO_COLORS := {
 	"classic": {"title": "نارنجی", "hue": 0.0, "sku": ""},
-	"mint": {"title": "نعنایی", "hue": 0.33, "sku": "pilo_colors"},
-	"sky": {"title": "آسمانی", "hue": 0.55, "sku": "pilo_colors"},
-	"berry": {"title": "تمشکی", "hue": 0.83, "sku": "pilo_colors"},
 	# Earned, not bought: finishing the last level of Rangarestan (ProgressManager.REWARDS).
 	"gold": {"title": "طلایی", "hue": 0.1, "sku": "reward_rangarestan"},
 }
@@ -92,7 +50,7 @@ func purchase(sku: String) -> void:
 	if not PRODUCTS.has(sku) or is_coming_soon(sku):
 		purchase_finished.emit(sku, false, "این بسته به‌زودی می‌آید.")
 		return
-	if owns(sku):
+	if bool(PRODUCTS[sku].get("once", false)) and SaveManager.data.purchases.has(sku):
 		purchase_finished.emit(sku, true, "این بسته را قبلاً گرفته‌اید.")
 		return
 	if not OS.is_debug_build():
@@ -112,6 +70,13 @@ func restore() -> void:
 
 
 func _grant(sku: String) -> void:
-	if not SaveManager.data.purchases.has(sku):
-		SaveManager.data.purchases.append(sku)
-		SaveManager.save_game()
+	var p: Dictionary = PRODUCTS.get(sku, {})
+	if bool(p.get("once", false)) and SaveManager.data.purchases.has(sku):
+		return
+	SaveManager.data.purchases.append(sku)
+	var log: Array = SaveManager.data.get("purchases_log", [])
+	log.append({"sku": sku, "at": Time.get_datetime_string_from_system()})
+	SaveManager.data["purchases_log"] = log
+	Economy.add_coins(int(p.get("coins", 0)))
+	Economy.add_gems(int(p.get("gems", 0)))
+	SaveManager.save_game()

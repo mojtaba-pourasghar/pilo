@@ -35,6 +35,7 @@ func _ready() -> void:
 	await _test_keepers()
 	await _test_old_bear()
 	await _test_hud_design()
+	await _test_economy()
 	SaveManager.data = backup
 	SaveManager.save_game()
 	print("\n%d checks, %d failed" % [_checks, _failures])
@@ -903,3 +904,53 @@ func _test_hud_design() -> void:
 	_check(hud._key_past.texture.resource_path.ends_with("hud_key_past.png") and hud._key_present.texture.resource_path.ends_with("_off.png"), "a found key lights up, the other stays dim")
 	_check(game.player.rig is SpriteRig and game.pilo.rig is SpriteRig, "Arsam and the fox are drawn from their frames")
 	await _stop(game)
+
+
+## Economy (content/09): 5 hearts, one back every 20 minutes, entry fee with the first three
+## levels free, replays free, videos capped, no loot box and nothing old in the catalog.
+func _test_economy() -> void:
+	var d: Dictionary = SaveManager.data
+	d.coins = 25
+	d.diamonds = 12
+	d.lives = 5
+	d.lives_time = Economy.now()
+	d.ads = {}
+	d.levels = {}
+	_check(Economy.hearts() == 5 and Economy.MAX_HEARTS == 5, "five hearts")
+	_check(Economy.cost_of(1).coins == 0 and Economy.cost_of(3).coins == 0, "the first three levels of a chapter are free")
+	_check(Economy.cost_of(4).coins == 10, "chapter 1 entry fee is 10 coins")
+	_check(Economy.enter(1) and Economy.hearts() == 4, "starting a level costs one heart")
+	d.lives_time = Economy.now() - Economy.HEART_SECONDS - 5
+	_check(Economy.hearts() == 5, "a heart comes back after 20 minutes")
+	d.levels["1"] = {"done": true, "stars": [], "diamonds": []}
+	_check(Economy.cost_of(1).hearts == 0 and Economy.cost_of(1).coins == 0, "a replay is free (to earn coins back)")
+	d.lives = 0
+	d.lives_time = Economy.now()
+	_check(not Economy.can_enter(2) and Economy.can_enter(1), "with no hearts a finished level can still be replayed")
+	_check(Economy.refill_with_gems() and Economy.hearts() == 5 and Economy.gems() == 2, "10 gems refill the hearts")
+	for i in 5:
+		Economy.watch_ad_for("coins")
+	_check(Economy.ads_left() == 0 and not Economy.watch_ad_for("coins"), "at most five videos a day")
+	var bad := false
+	for sku in StoreAdapter.PRODUCTS:
+		var p: Dictionary = StoreAdapter.PRODUCTS[sku]
+		bad = bad or sku.contains("box") or sku.contains("chest") or sku == "worlds_pack" or sku == "pilo_colors"
+	_check(not bad, "the catalog has no loot box and no old packs")
+	var before := Economy.coins()
+	StoreAdapter._grant("coins_s")
+	_check(Economy.coins() == before + 500, "a coin pack gives its coins")
+	var shop: Control = load("res://scenes/menus/store.tscn").instantiate()
+	add_child(shop)
+	await get_tree().process_frame
+	shop._buy(shop.TABS[0][0])
+	await get_tree().process_frame
+	_check(shop.get_children().any(func(c): return c is ParentGate), "real money always goes through the parent gate")
+	shop.queue_free()
+	for path in ["res://scenes/menus/main_menu.tscn", "res://scenes/menus/village.tscn", "res://scenes/menus/world_map.tscn"]:
+		var screen: Node = load(path).instantiate()
+		add_child(screen)
+		await get_tree().process_frame
+		_check(screen.get_child_count() >= 2, "%s builds from its design" % path.get_file())
+		screen.queue_free()
+	_check(WorldMapScreen.unlocked(1) and not WorldMapScreen.unlocked(2) or ProgressManager.is_done(1), "the map opens level 1 first")
+	get_tree().paused = false

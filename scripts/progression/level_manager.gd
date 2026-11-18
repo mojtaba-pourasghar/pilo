@@ -21,7 +21,7 @@ var WORLDS := [
 	},
 	{
 		"id": "coral_beach", "title_key": "world_coral_beach_title", "subtitle_key": "world_coral_beach_subtitle", "index": 2,
-		"first": 9, "last": 16, "free": false, "available": true, "sku": "worlds_pack",
+		"first": 9, "last": 16, "free": false, "available": true, "sku": "",
 		"secret_level": 15, "boss_level": 16,
 		"card": "res://assets/ui/worlds/coral_beach.png",
 		"background": "res://assets/environments/bg_sky.jpg", "music": "beach", "ambient": "waves",
@@ -29,7 +29,7 @@ var WORLDS := [
 	},
 	{
 		"id": "golden_desert", "title_key": "world_golden_desert_title", "subtitle_key": "world_golden_desert_subtitle", "index": 3,
-		"first": 17, "last": 24, "free": false, "available": true, "sku": "worlds_pack",
+		"first": 17, "last": 24, "free": false, "available": true, "sku": "",
 		"secret_level": 23, "boss_level": 24,
 		"card": "res://assets/ui/worlds/golden_desert.png",
 		"background": "res://assets/environments/bg_forest.jpg", "music": "desert", "ambient": "desert",
@@ -37,7 +37,7 @@ var WORLDS := [
 	},
 	{
 		"id": "snow_mountain", "title_key": "world_snow_mountain_title", "subtitle_key": "world_snow_mountain_subtitle", "index": 4,
-		"first": 25, "last": 32, "free": false, "available": true, "sku": "worlds_pack",
+		"first": 25, "last": 32, "free": false, "available": true, "sku": "",
 		"secret_level": 31, "boss_level": 32,
 		"card": "res://assets/ui/worlds/snow_mountain.png",
 		"background": "res://assets/environments/bg_sky.jpg", "music": "snow", "ambient": "sky",
@@ -45,7 +45,7 @@ var WORLDS := [
 	},
 	{
 		"id": "sky_islands", "title_key": "world_sky_islands_title", "subtitle_key": "world_sky_islands_subtitle", "index": 5,
-		"first": 33, "last": 40, "free": false, "available": true, "sku": "worlds_pack",
+		"first": 33, "last": 40, "free": false, "available": true, "sku": "",
 		"secret_level": 39, "boss_level": 40,
 		"card": "res://assets/ui/worlds/sky_islands.png",
 		"background": "res://assets/environments/bg_sky.jpg", "music": "sky", "ambient": "sky",
@@ -53,7 +53,7 @@ var WORLDS := [
 	},
 	{
 		"id": "crystal_caves", "title_key": "world_crystal_caves_title", "subtitle_key": "world_crystal_caves_subtitle", "index": 6,
-		"first": 41, "last": 48, "free": false, "available": true, "sku": "worlds_pack",
+		"first": 41, "last": 48, "free": false, "available": true, "sku": "",
 		"secret_level": 47, "boss_level": 48,
 		"card": "res://assets/ui/worlds/crystal_caves.png",
 		"background": "res://assets/environments/bg_cave.jpg", "music": "cave", "ambient": "cave",
@@ -61,7 +61,7 @@ var WORLDS := [
 	},
 	{
 		"id": "clock_factory", "title_key": "world_clock_factory_title", "subtitle_key": "world_clock_factory_subtitle", "index": 7,
-		"first": 49, "last": 56, "free": false, "available": true, "sku": "worlds_pack",
+		"first": 49, "last": 56, "free": false, "available": true, "sku": "",
 		"secret_level": 55, "boss_level": 56,
 		"card": "res://assets/ui/worlds/clock_factory.png",
 		"background": "res://assets/environments/bg_cave.jpg", "music": "factory", "ambient": "factory",
@@ -69,7 +69,7 @@ var WORLDS := [
 	},
 	{
 		"id": "shadow_castle", "title_key": "world_shadow_castle_title", "subtitle_key": "world_shadow_castle_subtitle", "index": 8,
-		"first": 57, "last": 64, "free": false, "available": true, "sku": "worlds_pack",
+		"first": 57, "last": 64, "free": false, "available": true, "sku": "",
 		"secret_level": 63, "boss_level": 64,
 		"card": "res://assets/ui/worlds/shadow_castle.png",
 		"background": "res://assets/environments/bg_cave.jpg", "music": "castle", "ambient": "night",
@@ -94,6 +94,7 @@ var override_level: Dictionary = {}
 ## Where the opening story goes when it ends: "menu" or "level" (level 1, for a new game).
 var after_intro := "menu"
 var _fade: ColorRect
+var _dim: ColorRect
 var _busy := false
 
 
@@ -109,6 +110,13 @@ func _ready() -> void:
 	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_fade.set_anchors_preset(Control.PRESET_FULL_RECT)
 	layer.add_child(_fade)
+	# the brightness slider of the settings: a dark veil over everything
+	_dim = ColorRect.new()
+	_dim.color = Color(0, 0, 0, 0)
+	_dim.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_dim.set_anchors_preset(Control.PRESET_FULL_RECT)
+	layer.add_child(_dim)
+	apply_brightness.call_deferred()
 
 
 func world_of(level_id: int) -> Dictionary:
@@ -155,6 +163,11 @@ func load_level(level_id: int) -> Dictionary:
 		return {}
 	var parsed = JSON.parse_string(file.get_as_text())
 	return Strings.resolve(parsed) if parsed is Dictionary else {}
+
+
+func apply_brightness() -> void:
+	if _dim:
+		_dim.color.a = (1.0 - float(SaveManager.data.get("settings", {}).get("brightness", 1.0))) * 0.6
 
 
 func play_level(level_id: int) -> void:
