@@ -256,3 +256,9 @@
 - p9_ui_star_1
 - p9_ui_star_2
 - p9_ui_star_3
+
+## دستهٔ ۳ (۱۸ نوامبر ۲۰۲۶) — draft، برش‌خورده از فایل‌های تمام‌رزولوشن مالک
+- `assets/art/p5_enemies/k1/k1_{idle_sleep,alert,tell,attack_roll,vulnerable,hurt,released,secret_sign}.png` — ۸ حالت نگهبان کنده (K1)، شفاف.
+- `assets/art/p5_enemies/bear/bear_*.png` — ۱۶ قطعه خرس پیر: head_neutral/head_angry_p2/head_calm_p3، torso، upper_arm_L/R، forearm_paw_L/R، thigh، lower_leg_foot، tail، heart_crystal (نقطه‌ضعف)، smoke_1..4. (smoke_2 یک تکهٔ کوچک smoke_4 دارد؛ برای نسخهٔ نهایی پاک شود. محور مفصل‌ها در Godot با Skeleton2D تنظیم شود.)
+- مرجع صفحه (برش نمی‌شوند؛ با NinePatch/Control ساخته می‌شوند): `assets/art/p9_ui/screen_{hub,dialogue,result,shop,pause_settings}_v1.png`.
+- مرجع پالت «حال»: `assets/art/p6_scenes/sheet_parallax_present_v2.png` (هندسه با «گذشته» یکی نیست؛ حال = شیدر روی هندسهٔ گذشته).
