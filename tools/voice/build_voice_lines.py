@@ -150,6 +150,10 @@ def main():
         for panel in json.load(f)["panels"]:
             add(panel["voice_id"], "narrator", text_of(panel), 0, "story", "داستان آغاز بازی")
 
+    # the storyboard panels (scripts/ui/story_panels.gd), read by the grandfather
+    for key in sorted(k for k in STRINGS if k.startswith("story_s")):
+        add(key, "narrator", STRINGS[key], 0, "story", "پنل استوری‌بورد " + key[-2:])
+
     # chapter cards (data/story/chapters.json), shown through the dialogue box
     with open(os.path.join(ROOT, "data", "story", "chapters.json"), encoding="utf-8") as f:
         for world, chapter in json.load(f).items():

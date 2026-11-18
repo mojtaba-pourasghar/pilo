@@ -25,9 +25,11 @@ func _ready() -> void:
 
 func _play() -> void:
 	if not bool(SaveManager.data.get("intro_seen", false)):
-		LevelManager.goto_intro("hub")
-	else:
+		LevelManager.goto_intro("level")
+	elif ProgressManager.is_done(8):
 		LevelManager.goto_village()
+	else:
+		LevelManager.goto_map()
 
 
 func _settings() -> void:

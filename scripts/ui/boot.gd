@@ -54,4 +54,4 @@ func _process(delta: float) -> void:
 		if bool(SaveManager.data.get("intro_seen", false)):
 			LevelManager.goto_menu()
 		else:
-			LevelManager.goto_intro()
+			LevelManager.goto_intro("level")

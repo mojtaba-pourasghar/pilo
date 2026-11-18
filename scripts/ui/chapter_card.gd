@@ -38,6 +38,20 @@ func play() -> void:
 	if chapter.is_empty():
 		finished.emit()
 		return
+	if world_id == "forest":
+		# chapter 1: the grandfather tells it over storyboard panels s04-s06, then the chapter's
+		# own lines (the egg, Pilo) in the dialogue box
+		var panels := StoryPanels.new()
+		panels.dialogue = dialogue
+		add_child(panels)
+		await panels.play(StoryPanels.CHAPTER1_CARD)
+		if dialogue:
+			await dialogue.play(chapter.get("lines", []))
+		panels.queue_free()
+		mark_seen(world_id)
+		finished.emit()
+		queue_free()
+		return
 	layer = 19
 	var root := Control.new()
 	root.set_anchors_preset(Control.PRESET_FULL_RECT)

@@ -72,6 +72,7 @@ func _ready() -> void:
 	_root.add_child(_stage)
 	DesignUI.anchor(_stage, "bc")
 	DesignUI.piece(_stage, S, "box")
+	DesignUI.piece(_stage, S, "name_tag")
 	# the portrait sits inside the ring: a circle mask over the picture
 	var pr := DesignUI.area(S, "portrait_in")
 	var mask := CircleMask.new()
@@ -106,17 +107,36 @@ func play(lines: Array) -> void:
 	_root.visible = false
 
 
+## What was typed in the box of the last ask() with `edit` (the hero's name).
+var edited := ""
+
+
 ## A question with two answers (K11 riddles, the name at the start): returns the index picked.
-func ask(line: Dictionary, choices: Array) -> int:
+## With `edit` a text box (prefilled) appears in the dialogue box under the question.
+func ask(line: Dictionary, choices: Array, edit := "") -> int:
 	_root.visible = true
 	_asking = true
 	_show(line)
 	_text.visible_ratio = 1.0
+	var box: LineEdit = null
+	if edit != "":
+		box = LineEdit.new()
+		box.text = edit
+		box.max_length = Names.MAX_LENGTH
+		box.alignment = HORIZONTAL_ALIGNMENT_CENTER
+		box.add_theme_font_size_override("font_size", 32)
+		var r := DesignUI.area(S, "text")
+		box.position = Vector2(r.position.x + r.size.x * 0.3, r.position.y + 52)
+		box.size = Vector2(r.size.x * 0.4, 56)
+		_stage.add_child(box)
 	for i in 2:
 		_choices[i].visible = i < choices.size()
 		if i < choices.size():
 			_choices[i].get_meta("label").text = Names.fmt(String(choices[i]))
 	var index: int = await chosen
+	if box:
+		edited = box.text
+		box.queue_free()
 	for b in _choices:
 		b.visible = false
 	_asking = false
@@ -131,7 +151,14 @@ func _show(line: Dictionary) -> void:
 	_name.text = Names.fmt(String(speaker.name))
 	_portrait.texture = null
 	if PORTRAITS.has(who):
-		_portrait.texture = DesignUI.tex(PORTRAITS[who])
+		var tex := DesignUI.tex(PORTRAITS[who])
+		if who in ["grandpa", "narrator", "grandma"] and tex:
+			# full figures: only the head and shoulders go in the round frame
+			var head := AtlasTexture.new()
+			head.atlas = tex
+			head.region = Rect2(165, 0, 150, 150)      # the 480 px cell: the head at the top centre
+			tex = head
+		_portrait.texture = tex
 	elif speaker.texture is Array:
 		for file in speaker.texture:
 			if ResourceLoader.exists(ART + file):

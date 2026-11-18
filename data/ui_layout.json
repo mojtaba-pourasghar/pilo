@@ -979,6 +979,15 @@
      0.1015625
     ],
     "file": "res://assets/art/p9_ui/cut/dialogue_choice_b.png"
+   },
+   "name_tag": {
+    "rect": [
+     0.1625,
+     0.6861979166666666,
+     0.1713235294117647,
+     0.0625
+    ],
+    "file": "res://assets/art/p9_ui/cut/dialogue_name_tag.png"
    }
   },
   "areas": {

@@ -363,6 +363,15 @@ func on_chapter_boss_released(b: ChapterBoss) -> void:
 	SaveManager.data.hearts_of_time = maxi(int(SaveManager.data.get("hearts_of_time", 0)), int(world.index))
 	await get_tree().create_timer(1.6).timeout
 	await _play_lines(data.get("released", []))
+	if String(data.get("chapter", "")) == "ch01" and not ProgressManager.is_done(level_id):
+		# the end of chapter 1: the grandfather tells the rest over panels s07-s14
+		_set_busy(true)
+		var panels := StoryPanels.new()
+		panels.dialogue = dialogue
+		add_child(panels)
+		await panels.play(StoryPanels.CHAPTER1_END)
+		panels.queue_free()
+		_set_busy(false)
 
 
 ## The memory room (kind "memory"): no keeper; reaching the glowing egg plays the chapter's
