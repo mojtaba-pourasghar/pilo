@@ -93,7 +93,12 @@ func _on_time_changed(state: int, instant: bool) -> void:
 	_shape.set_deferred("disabled", not on)
 	if _tween:
 		_tween.kill()
-	if instant:
+	if has_meta("time_layer"):
+		# dual layers: always drawn in full; its layer (TimeShift) makes it a ghost when absent
+		_presence = 1.0
+		if not instant:
+			_play_change_sound(on)
+	elif instant:
 		_presence = 1.0 if on else 0.0
 	else:
 		_tween = create_tween()

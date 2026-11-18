@@ -332,7 +332,41 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 	info.mechanisms = mechanisms
 	_build_secret_rooms(wet, w, h, root, palette)    # water (with what floats in it) is never a hidden room
 	_build_pit_shade(grid, w, h, root)
+	var layers := sort_time_layers(root)
+	info.layer_past = layers[0]
+	info.layer_present = layers[1]
 	return info
+
+
+## Past and present together (T3): pieces that exist in only one time move into `layer_past` or
+## `layer_present`; pieces of both times stay in the world. TimeShift colours the absent layer as
+## a ghost. Returns [layer_past, layer_present].
+static func sort_time_layers(root: Node2D) -> Array:
+	var past := root.get_node_or_null("layer_past") as Node2D
+	var present := root.get_node_or_null("layer_present") as Node2D
+	if past == null:
+		past = Node2D.new()
+		past.name = "layer_past"
+		root.add_child(past)
+		root.move_child(past, 0)
+		present = Node2D.new()
+		present.name = "layer_present"
+		root.add_child(present)
+		root.move_child(present, 1)
+	for child in root.get_children():
+		if child == past or child == present:
+			continue
+		var mask := -1
+		if child.has_method("time_mask"):
+			mask = int(child.time_mask())
+		elif "active_mask" in child:
+			mask = int(child.active_mask)
+		if mask == PAST or mask == PRESENT:
+			child.set_meta("time_layer", true)
+			child.reparent(past if mask == PAST else present)
+			if child.has_method("_on_time_changed"):
+				child._on_time_changed(TimeShift.state, true)
+	return [past, present]
 
 
 static func _add_flower(root: Node2D, pos: Vector2, palette: Dictionary) -> void:

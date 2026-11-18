@@ -15,8 +15,9 @@ const LEVEL_COMPLETE := preload("res://scripts/ui/level_complete.gd")
 const SHIFT_COOLDOWN := 0.35
 const PAST_TINT := Color(1.0, 0.88, 0.7)
 const DARK_TINT := Color(0.28, 0.25, 0.4)
-const PAST_RING := Color(1.0, 0.75, 0.3)
-const PRESENT_RING := Color(0.4, 0.9, 1.0)
+## Lens rings: blue into the past, orange back to the present (same colours as the ghost layers).
+const PAST_RING := Color(0.45, 0.75, 1.0)
+const PRESENT_RING := Color(1.0, 0.66, 0.3)
 ## Failed attempts before the hint button starts to glow, per hint setting.
 const HINT_AFTER := {"more": 2, "less": 4}
 
@@ -53,6 +54,8 @@ var _follower: Node2D
 var weather: Weather
 var rival: GhostRival
 var _tint_tween: Tween
+var _grade: TimeGrade
+var _return_wait_told := false
 
 
 func _ready() -> void:
@@ -127,8 +130,18 @@ func _ready() -> void:
 	dialogue = DIALOGUE.new()
 	add_child(dialogue)
 
+	_grade = TimeGrade.new()
+	add_child(_grade)
 	TimeShift.time_changed.connect(_on_time_changed)
-	TimeShift.reset(TimeShift.state_from_name(String(data.get("start_time", "present"))))
+	TimeShift.charge_changed.connect(func(v: float): hud.set_lens_charge(v / TimeShift.MAX_CHARGE))
+	TimeShift.return_countdown.connect(func(left: float): hud.set_return_countdown(left))
+	TimeShift.auto_return_due.connect(_auto_return)
+	TimeShift.register_layers(info.layer_past, info.layer_present)
+	# every level starts in the present; the past is the lens's choice (v4 rule)
+	TimeShift.reset(TimeShift.PRESENT)
+	tree_exiting.connect(func():
+		if TimeShift.layer_past == info.layer_past:
+			TimeShift.stop())
 	AudioManager.play_music("boss" if data.has("boss") else world.music)
 	AudioManager.play_ambient(String(world.get("ambient", "")))
 	weather = Weather.for_level(String(world.id), level_id, int(world.first))
@@ -495,6 +508,11 @@ func try_shift() -> void:
 	if not lens_enabled or _shift_cooldown > 0.0 or _respawning:
 		return
 	_shift_cooldown = SHIFT_COOLDOWN
+	if not TimeShift.can_afford():
+		AudioManager.play_sfx("reject")
+		hud.flash_lens_empty()
+		_notice(Strings.t("app_lens_empty"), UIKit.BLUE, true)
+		return
 	var blocker := TimeShift.find_blocker(player.get_body_rect())
 	if blocker:
 		AudioManager.play_sfx("reject")
@@ -505,21 +523,43 @@ func try_shift() -> void:
 		_notice(Strings.t("app_unsafe"), UIKit.RED, true, "app_unsafe")
 		Analytics.log_event("shift_blocked", level_id)
 		return
-	TimeShift.shift()
-	AudioManager.play_sfx("shift")
-	var color := PAST_RING if TimeShift.state == TimeShift.PAST else PRESENT_RING
-	FX.ring(_world_root, player.global_position, color)
-	hud.flash(color)
+	_do_shift(false)
 	Analytics.log_event("shift", level_id)
 
 
+func _do_shift(soft: bool) -> void:
+	TimeShift.shift(soft)
+	_return_wait_told = false
+	AudioManager.play_sfx("shift", 0.85 if soft else 1.0)
+	var color := PAST_RING if TimeShift.state == TimeShift.PAST else PRESENT_RING
+	FX.ring(_world_root, player.global_position, color)
+	_grade.wipe(player.get_global_transform_with_canvas().origin + Vector2(0, -40), TimeShift.state, 0.8 if soft else 0.45)
+	hud.flash(color)
+
+
+## Soft return (20 s in the past, unless switched off): back to the present as soon as it is safe.
+func _auto_return() -> void:
+	if finished or _respawning or TimeShift.state != TimeShift.PAST:
+		return
+	if TimeShift.find_blocker(player.get_body_rect()) != null:
+		if not _return_wait_told:
+			_return_wait_told = true
+			_notice(Strings.t("app_return_wait"), UIKit.BLUE, true)
+		return
+	_do_shift(true)
+	_notice(Strings.t("app_soft_return"), UIKit.ORANGE, true)
+	Analytics.log_event("soft_return", level_id)
+
+
 func _on_time_changed(state: int, instant: bool) -> void:
-	var tint := PAST_TINT if state == TimeShift.PAST else Color.WHITE
+	# the look of each time comes from TimeGrade (same geometry, a shader for the present)
+	var tint := Color.WHITE
 	if _dark:
 		tint *= DARK_TINT
 	if _tint_tween:
 		_tint_tween.kill()
 	if instant:
+		_grade.set_state(state)
 		_modulate.color = tint
 	else:
 		_tint_tween = create_tween()

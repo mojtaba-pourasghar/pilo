@@ -106,7 +106,8 @@ func _process(delta: float) -> void:
 
 func _draw() -> void:
 	var water: Color = palette.get("water", Color("3d9be0"))
-	var p := _presence
+	# dual layers: drawn in full; the layer it sits in turns it into a ghost when absent
+	var p := 1.0 if has_meta("time_layer") else _presence
 	if p > 0.01:
 		var top := 10.0 if surface else 0.0
 		draw_rect(Rect2(0, top, size.x, size.y - top), Color(water, 0.72 * p))

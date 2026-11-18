@@ -29,6 +29,7 @@ func _ready() -> void:
 	await _test_rival_runs()
 	_test_names()
 	_test_strings()
+	await _test_dual_layers()
 	SaveManager.data = backup
 	SaveManager.save_game()
 	print("\n%d checks, %d failed" % [_checks, _failures])
@@ -304,7 +305,7 @@ func _test_time_shift_safety() -> void:
 	var clear := Rect2(Vector2(1 * 64 + 12, 3 * 64 - 84), size)
 	_check(TimeShift.find_blocker(at_rock) != null, "shift to past is refused inside a past-only rock")
 	_check(TimeShift.find_blocker(clear) == null, "shift is allowed on open ground")
-	TimeShift.reset(TimeShift.PAST)
+	TimeShift.state = TimeShift.PAST
 	_check(TimeShift.find_blocker(at_water) != null, "shift to present is refused inside present-only water")
 	_check(TimeShift.find_blocker(at_rock) == null, "shift away from the rock's time is allowed")
 	root.queue_free()
@@ -334,7 +335,7 @@ func _test_level_1_layout() -> void:
 ## Starts the game scene on a small hand-made map (no dialogue).
 func _start(map: Array, extra := {}) -> Node:
 	var data := {"id": 98, "title": "test", "lens": false, "map": map}
-	data.merge(extra)
+	data.merge(extra, true)
 	LevelManager.override_level = data
 	LevelManager.current_level = 1
 	var game: Node = load("res://scenes/gameplay/game.tscn").instantiate()
@@ -607,3 +608,57 @@ func _test_strings() -> void:
 	_check(ok, "level lines are resolved from their keys")
 	_check(LevelManager.level_title(2) == "پل کُنده‌ها", "level titles come from strings")
 	_check(String(LevelManager.WORLDS[0].title) == "جنگل رنگارستان", "world titles come from strings")
+
+
+## T3: both times in one scene. The absent layer is a ghost (alpha 0.35; blue past, orange
+## present), the level starts in the present, the lens costs charge and the past ends with a soft
+## return after 20 s unless it is switched off.
+func _test_dual_layers() -> void:
+	SaveManager.data.settings.auto_return = true
+	var game := await _start([
+		"..........",
+		"..........",
+		"P..r..V...",
+		"##########",
+	], {"lens": true, "start_time": "past"})
+	_check(TimeShift.state == TimeShift.PRESENT, "every level starts in the present (even if data says past)")
+	var past: Node2D = game.info.layer_past
+	var present: Node2D = game.info.layer_present
+	_check(past.get_child_count() == 1 and present.get_child_count() == 1, "past-only and present-only pieces sit in their own layers")
+	_check(past.modulate.is_equal_approx(TimeShift.GHOST_PAST) and is_equal_approx(past.modulate.a, 0.35), "the past is a blue ghost (alpha 0.35) while in the present")
+	_check(present.modulate.is_equal_approx(Color.WHITE), "the present layer is solid")
+	_check(past.visible and past.get_child(0).visible, "the absent layer is still drawn")
+	var rock: TimeBlock = past.get_child(0)
+	_check(rock._presence == 1.0 and rock._shape.disabled, "a ghost rock is drawn in full but cannot be touched")
+	_check(is_equal_approx(TimeShift.charge, 100.0), "the lens starts full")
+	game.try_shift()
+	await _wait(0.5)
+	_check(TimeShift.state == TimeShift.PAST and is_equal_approx(TimeShift.charge, 75.0), "a trip to the past costs 25 charge")
+	_check(present.modulate.is_equal_approx(TimeShift.GHOST_PRESENT), "the present becomes an orange ghost")
+	_check(not rock._shape.disabled, "the past rock is solid in the past")
+	_check(game._grade != null and game._grade.layer < game.hud.layer, "the time grade sits between the world and the HUD")
+	# the soft return
+	TimeShift.past_elapsed = TimeShift.AUTO_RETURN_AFTER - 0.2
+	await _wait(0.6)
+	_check(TimeShift.state == TimeShift.PRESENT, "after 20 s in the past the hero is brought back softly")
+	# charge: not enough for a trip -> refused; refills in the present
+	TimeShift.charge = 10.0
+	game._shift_cooldown = 0.0
+	game.try_shift()
+	_check(TimeShift.state == TimeShift.PRESENT, "with too little charge the lens refuses")
+	await _wait(1.0)
+	_check(TimeShift.charge > 13.0, "the lens refills in the present (%.1f)" % TimeShift.charge)
+	# switched off in the settings
+	SaveManager.data.settings.auto_return = false
+	TimeShift.charge = 100.0
+	game._shift_cooldown = 0.0
+	game.try_shift()
+	TimeShift.past_elapsed = TimeShift.AUTO_RETURN_AFTER + 5.0
+	await _wait(0.6)
+	_check(TimeShift.state == TimeShift.PAST, "with the soft return off the hero stays in the past")
+	TimeShift.charge = 0.0
+	game._shift_cooldown = 0.0
+	game.try_shift()
+	_check(TimeShift.state == TimeShift.PRESENT, "coming back to the present never needs charge")
+	SaveManager.data.settings.auto_return = true
+	await _stop(game)

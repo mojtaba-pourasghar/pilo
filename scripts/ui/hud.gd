@@ -340,9 +340,38 @@ func set_keys(count: int) -> void:
 	_key_label.text = str(count)
 
 
+var _lens_charge := 1.0
+var _return_left := -1.0
+
+
+## Lens charge 0..1 (T3; the new HUD draws it as the blue bar).
+func set_lens_charge(value: float) -> void:
+	_lens_charge = clampf(value, 0.0, 1.0)
+	_refresh_time_label()
+
+
+## Seconds before the soft return from the past (-1: none).
+func set_return_countdown(left: float) -> void:
+	_return_left = left
+	_refresh_time_label()
+
+
+func flash_lens_empty() -> void:
+	flash(Color(0.3, 0.5, 1.0))
+
+
+func _refresh_time_label() -> void:
+	if _time_label == null:
+		return
+	var text: String = "زمان: " + String(TimeShift.NAMES[TimeShift.state]) + "  ⚡%d" % int(round(_lens_charge * 100.0))
+	if _return_left >= 0.0:
+		text += "  ⏳%d" % int(ceil(_return_left))
+	_time_label.text = text
+
+
 func set_time(state: int) -> void:
 	var past := state == TimeShift.PAST
-	_time_label.text = "زمان: " + TimeShift.NAMES[state]
+	_refresh_time_label()
 	_time_panel.add_theme_stylebox_override("panel", UIKit.glass("pill_orange_s" if past else "pill_blue_s", "pill_s", Vector4(26, 4, 26, 14)))
 
 
