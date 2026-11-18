@@ -1,51 +1,50 @@
 extends CanvasLayer
-## In-level overlay: hearts, coins, diamonds, stars, the time key, the time indicator and
-## large touch buttons (move, jump, dash, Pilo, time lens; ↓ appears on a warp pipe).
+## The in-level HUD, exactly as sheet_screen_hud_v1.png (its own layer, apart from the scene):
+##   top-left      hearts bar, and the lens charge bar under it
+##   top-centre    the two keys: blue = past, orange = present (dim until found)
+##   top-right     coin bar, purple pause button
+##   bottom-left   joystick
+##   bottom-right  three action buttons: jump (green, winged boot), lens (blue clock), shoot (gold
+##                 bow); and three tool slots (Pilo's lantern, the guide map, the carried thing)
+## Pieces: assets/art/p9_ui/cut/hud_* (cut from the design by tools/art/cut_ui.py), positions from
+## data/ui_layout.json. Numbers are drawn as text (Persian digits), never baked in a picture.
 
 signal pause_pressed
 signal hint_pressed
+signal tool_pressed(slot: int)
 
-const TOUCH := {
-	"left": "move_left",
-	"right": "move_right",
-	"jump": "jump",
-	"dash": "dash",
-	"pilo": "pilo",
-	"time": "time_shift",
-	"down": "down",
-	"fire": "fire",
-	"swap": "swap_weapon",
-	"buddy": "swap_companion",
-}
-## Button pictures (the companion switch reuses the round switch picture).
-const TEXTURE := {"buddy": "swap"}
-const PAST_COLOR := Color("e39a2f")
-const PRESENT_COLOR := Color("2fa6d9")
+const S := "hud"
+## The tools shown in the three slots (p3 icons): Pilo's lantern, the guide map, the mirror.
+const SLOT_TOOLS := ["lantern", "map", "mirror"]
+const TOOL_ICON := "res://assets/art/p3_tools/p3_tool_%s_icon_l1.png"
+const CARRY_ICON := {"glow_mushroom": "res://assets/art/p7_living/p7_living_ch01_glow_mushroom_f1.png"}
+const JOY_DEAD := 0.28
 
 var _root: Control
-var _star_counter: PanelContainer
-var _star_total := 3
-var _key_box: PanelContainer
-var _key_label: Label
-var _hearts: Array = []
-var _coin_label: Label
-var _diamond_label: Label
-var _coin_box: PanelContainer
-var _boss_bar: PanelContainer
-var _time_panel: PanelContainer
-var _time_label: Label
-var _hint_button: TextureButton
-var _touch_root: Node2D
-var _touch: Dictionary = {}
-var _weapon_icon: LoadoutIcon
-var _weapon_badge: Node2D
-var _buddy_badge: Node2D
-var _buddy_icon: LoadoutIcon
-var _team_button: Control
-var _hint_tween: Tween
+var _hearts: TextureProgressBar
+var _lens: TextureProgressBar
+var _countdown: Label
+var _key_past: TextureRect
+var _key_present: TextureRect
+var _coins: Label
+var _pause: TextureButton
+var _joy_base: TextureRect
+var _joy_knob: TextureRect
+var _joy_center := Vector2.ZERO
+var _joy_radius := 80.0
+var _joy_touch := -2
+var _buttons := {}
+var _slots: Array = []
+var _slot_icons: Array = []
+var _controls: Array = []
 var _flash: ColorRect
-var _title: Label
-var _top: HBoxContainer
+var _boss: Label
+var _boss_hearts: HBoxContainer
+var _clues_label: Label
+var carry_id := ""
+var _lens_charge := 1.0
+var _return_left := -1.0
+var _held := {}
 
 
 func _ready() -> void:
@@ -53,329 +52,247 @@ func _ready() -> void:
 	_root = Control.new()
 	_root.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_root.layout_direction = Control.LAYOUT_DIRECTION_RTL
 	add_child(_root)
-
 	_flash = ColorRect.new()
 	_flash.set_anchors_preset(Control.PRESET_FULL_RECT)
-	_flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_flash.color = Color(1, 1, 1, 0)
+	_flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_root.add_child(_flash)
+	_build_top()
+	_build_controls()
 
-	var top := HBoxContainer.new()
-	_top = top
-	top.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	top.add_theme_constant_override("separation", 16)
-	_root.add_child(top)
 
-	# Top bar from the approved design: [pause][star counter] on the right, hint on the left.
-	var pause := UIKit.make_round("btn_pause", 84)
-	pause.pressed.connect(func(): pause_pressed.emit())
-	top.add_child(pause)
-	_star_counter = UIKit.make_counter("res://assets/ui/star.png", "0", 32)
-	_star_counter.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	top.add_child(_star_counter)
-	_key_box = UIKit.make_counter("res://assets/ui/key.png", "0", 32)
-	_key_box.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	top.add_child(_key_box)
-	_key_label = _key_box.find_child("Value", true, false)
-	var hearts := PanelContainer.new()
-	hearts.add_theme_stylebox_override("panel", UIKit.glass("pill_dark", "pill_s", Vector4(16, 4, 16, 12)))
-	hearts.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	hearts.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	var heart_row := HBoxContainer.new()
-	heart_row.add_theme_constant_override("separation", 4)
-	heart_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	hearts.add_child(heart_row)
+func _bar(name: String, corner: String) -> TextureProgressBar:
+	var bar := TextureProgressBar.new()
+	bar.texture_under = DesignUI.tex(DesignUI.piece_path(S, name, "_empty"))
+	bar.texture_progress = DesignUI.tex(DesignUI.piece_path(S, name))
+	bar.nine_patch_stretch = true
+	var r := DesignUI.rect(S, name)
+	bar.position = r.position
+	bar.size = r.size
+	bar.min_value = 0.0
+	bar.max_value = 1.0
+	bar.step = 0.001
+	bar.value = 1.0
+	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# the bar fills from its icon's edge: the icon (left 22%) is always drawn in full
+	var left := int(bar.texture_progress.get_width() * 0.2) if bar.texture_progress else 0
+	bar.radial_initial_angle = 0
+	bar.set_meta("icon_px", left)
+	_root.add_child(bar)
+	DesignUI.anchor(bar, corner)
+	return bar
+
+
+func _build_top() -> void:
+	_hearts = _bar("heart_bar", "tl")
+	_lens = _bar("lens_bar", "tl")
+	_countdown = DesignUI.text(_root, "", Rect2(DesignUI.rect(S, "lens_bar").end.x - 70, DesignUI.rect(S, "lens_bar").position.y, 60, DesignUI.rect(S, "lens_bar").size.y), 22, Color.WHITE, 5)
+	DesignUI.anchor(_countdown, "tl")
+	_key_past = DesignUI.piece(_root, S, "key_past", "_off")
+	DesignUI.anchor(_key_past, "tc")
+	_key_present = DesignUI.piece(_root, S, "key_present", "_off")
+	DesignUI.anchor(_key_present, "tc")
+	var coin_bar := DesignUI.piece(_root, S, "coin_bar")
+	DesignUI.anchor(coin_bar, "tr")
+	_coins = DesignUI.text(_root, "۰", DesignUI.content(S, "coin_bar"), 30, DesignUI.GOLD_TEXT, 6)
+	DesignUI.anchor(_coins, "tr")
+	_pause = DesignUI.button(_root, DesignUI.piece_path(S, "pause"), DesignUI.rect(S, "pause"), func(): pause_pressed.emit())
+	DesignUI.anchor(_pause, "tr")
+	# guardian hearts (no design yet for the guardian bar: small hearts under the keys)
+	_boss_hearts = HBoxContainer.new()
+	_boss_hearts.alignment = BoxContainer.ALIGNMENT_CENTER
+	_boss_hearts.position = Vector2(540, 122)
+	_boss_hearts.size = Vector2(200, 40)
+	_boss_hearts.visible = false
+	_boss_hearts.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_root.add_child(_boss_hearts)
+	DesignUI.anchor(_boss_hearts, "tc")
+
+
+func _build_controls() -> void:
+	_joy_base = DesignUI.piece(_root, S, "joystick")
+	DesignUI.anchor(_joy_base, "bl")
+	_joy_knob = DesignUI.piece(_root, S, "joystick_knob")
+	DesignUI.anchor(_joy_knob, "bl")
+	_controls.append_array([_joy_base, _joy_knob])
+	for pair in [["btn_jump", "jump"], ["btn_lens", "time_shift"], ["btn_shoot", "fire"]]:
+		var b := DesignUI.button(_root, DesignUI.piece_path(S, pair[0]), DesignUI.rect(S, pair[0]))
+		var action: String = pair[1]
+		b.button_down.connect(func(): _press(action, true))
+		b.button_up.connect(func(): _press(action, false))
+		DesignUI.anchor(b, "br")
+		_buttons[action] = b
+		_controls.append(b)
 	for i in 3:
-		var icon := HudIcon.new()
-		icon.kind = "heart"
-		heart_row.add_child(icon)
-		_hearts.append(icon)
-	top.add_child(hearts)
-	_coin_box = _counter("coin")
-	_coin_label = _coin_box.find_child("Value", true, false)
-	top.add_child(_coin_box)
-	var diamonds := _counter("diamond")
-	_diamond_label = diamonds.find_child("Value", true, false)
-	top.add_child(diamonds)
-
-	top.add_child(UIKit.spacer())
-	_time_panel = PanelContainer.new()
-	_time_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_time_label = UIKit.make_label("", 30, Color.WHITE, 8, Color(0, 0, 0, 0.35))
-	_time_panel.add_child(_time_label)
-	top.add_child(_time_panel)
-	top.add_child(UIKit.spacer())
-
-	# the team button (companion, backpack, weapon) next to the hint
-	var team := TextureButton.new()
-	team.texture_normal = load("res://assets/ui/backpack.png")
-	team.ignore_texture_size = true
-	team.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
-	team.custom_minimum_size = Vector2(78, 78)
-	team.focus_mode = Control.FOCUS_NONE
-	team.pressed.connect(func():
-		UIKit.play_click()
-		var game := get_tree().get_first_node_in_group("game")
-		if game:
-			game.open_team())
-	top.add_child(team)
-	_team_button = team
-	_hint_button = UIKit.make_round("btn_hint", 84)
-	_hint_button.pressed.connect(func(): hint_pressed.emit())
-	top.add_child(_hint_button)
-
-	_title = UIKit.make_title("", 56)
-	_title.set_anchors_preset(Control.PRESET_CENTER_TOP)
-	_title.modulate.a = 0.0
-	_root.add_child(_title)
-
-	_touch_root = Node2D.new()
-	add_child(_touch_root)
-	for key in TOUCH:
-		var button := TouchScreenButton.new()
-		var texture: Texture2D = load(UIKit.GLASS + "touch_%s.png" % TEXTURE.get(key, key))
-		button.texture_normal = texture
-		button.texture_pressed = texture
-		button.action = TOUCH[key]
-		button.passby_press = key == "left" or key == "right"
-		button.visibility_mode = TouchScreenButton.VISIBILITY_ALWAYS
-		button.pressed.connect(func(): button.modulate = Color(0.8, 0.8, 0.8))
-		button.released.connect(func(): button.modulate = Color.WHITE)
-		_touch_root.add_child(button)
-		_touch[key] = button
-
-	# the current weapon, shown on the fire button
-	_weapon_badge = Badge.new()
-	_touch_root.add_child(_weapon_badge)
-	_weapon_icon = LoadoutIcon.make("tool", "slingshot", 58.0)
-	_weapon_icon.position = Vector2(-29, -29)
-	_weapon_badge.add_child(_weapon_icon)
-
-	# the companion that is out, shown on its switch button
-	_buddy_badge = Badge.new()
-	_touch_root.add_child(_buddy_badge)
-	set_companion("")
-
-	get_viewport().size_changed.connect(_layout)
-	_layout()
+		var name := "slot_%d" % (i + 1)
+		var slot := DesignUI.button(_root, DesignUI.piece_path(S, name), DesignUI.rect(S, name), func(): tool_pressed.emit(i))
+		DesignUI.anchor(slot, "br")
+		var icon := TextureRect.new()
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon.set_anchors_preset(Control.PRESET_FULL_RECT)
+		icon.offset_left = 10
+		icon.offset_top = 10
+		icon.offset_right = -10
+		icon.offset_bottom = -10
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		slot.add_child(icon)
+		_slots.append(slot)
+		_slot_icons.append(icon)
+		_controls.append(slot)
+	_refresh_slots()
 
 
-func _counter(kind: String) -> PanelContainer:
-	var pill := PanelContainer.new()
-	pill.add_theme_stylebox_override("panel", UIKit.glass("pill_dark", "pill_s", Vector4(16, 4, 24, 12)))
-	pill.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	pill.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	var row := HBoxContainer.new()
-	row.add_theme_constant_override("separation", 8)
-	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	pill.add_child(row)
-	var icon := HudIcon.new()
-	icon.kind = kind
-	row.add_child(icon)
-	var label := UIKit.make_label("0", 30, Color.WHITE)
-	label.add_theme_font_override("font", UIKit.FONT_BLACK)
-	label.name = "Value"
-	row.add_child(label)
-	return pill
+func _press(action: String, down: bool) -> void:
+	if down:
+		Input.action_press(action)
+		_held[action] = true
+	else:
+		Input.action_release(action)
+		_held.erase(action)
+
+
+## Joystick: a touch that starts on the base drags the knob; left/right walk, down = crouch/pipe.
+func _input(event: InputEvent) -> void:
+	if not _joy_base.visible:
+		return
+	var pos := Vector2.ZERO
+	var index := -1
+	var pressed := false
+	var is_touch := false
+	if event is InputEventScreenTouch:
+		pos = event.position
+		index = event.index
+		pressed = event.pressed
+		is_touch = true
+	elif event is InputEventScreenDrag:
+		pos = event.position
+		index = event.index
+		pressed = true
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		pos = event.position
+		pressed = event.pressed
+		is_touch = true
+	elif event is InputEventMouseMotion and _joy_touch == -1:
+		pos = event.position
+		pressed = true
+	else:
+		return
+	var base := Rect2(_joy_base.global_position, _joy_base.size)
+	_joy_center = base.get_center()
+	_joy_radius = base.size.x * 0.36
+	if is_touch and pressed and _joy_touch == -2 and base.grow(30).has_point(pos):
+		_joy_touch = index
+	if _joy_touch == -2 or (index != _joy_touch and not (event is InputEventMouseMotion or event is InputEventMouseButton)):
+		return
+	if is_touch and not pressed:
+		_joy_touch = -2
+		_set_stick(Vector2.ZERO)
+		return
+	_set_stick((pos - _joy_center) / _joy_radius)
+	get_viewport().set_input_as_handled()
+
+
+func _set_stick(v: Vector2) -> void:
+	if v.length() > 1.0:
+		v = v.normalized()
+	_joy_knob.position = _joy_base.position + (_joy_base.size - _joy_knob.size) * 0.5 + v * _joy_radius
+	for pair in [["move_left", v.x < -JOY_DEAD], ["move_right", v.x > JOY_DEAD], ["down", v.y > 0.6]]:
+		if pair[1]:
+			Input.action_press(pair[0], clampf(absf(v.x) * 1.25, 0.0, 1.0) if pair[0] != "down" else 1.0)
+		else:
+			Input.action_release(pair[0])
+
+
+# --- the game's calls ----------------------------------------------------------------
+
+func setup(_title: String, _star_total: int, _has_keys: bool, lens_enabled: bool) -> void:
+	_buttons.time_shift.visible = lens_enabled
+	_lens.visible = lens_enabled
+
+
+## The bars fill only between the icon and the end cap (fractions of the cut picture).
+const FILL := {"heart_bar": [0.2, 0.944], "lens_bar": [0.198, 0.94]}
+
+
+func _fill(bar: TextureProgressBar, name: String, v: float) -> void:
+	var span: Array = FILL[name]
+	bar.value = 0.0 if v <= 0.0 else lerpf(float(span[0]), float(span[1]), clampf(v, 0.0, 1.0))
 
 
 func set_hearts(count: int, total: int) -> void:
-	for i in _hearts.size():
-		_hearts[i].visible = i < total
-		_hearts[i].empty = i >= count
-		_hearts[i].queue_redraw()
+	_fill(_hearts, "heart_bar", float(count) / maxf(1.0, float(total)))
 
 
 func set_coins(count: int) -> void:
-	_coin_label.text = str(count)
-	_coin_box.pivot_offset = _coin_box.size * 0.5
-	create_tween().tween_property(_coin_box, "scale", Vector2.ONE, 0.15).from(Vector2(1.12, 1.12))
+	_coins.text = DesignUI.fa_num(count)
 
 
-func set_diamonds(count: int, total: int) -> void:
-	_diamond_label.text = "%d/%d" % [count, total]
-
-
-## The guardian's name and hits left, under the top bar (boss levels).
-func show_boss(boss_name: String, hits: int, total: int) -> void:
-	if _boss_bar == null:
-		_boss_bar = PanelContainer.new()
-		_boss_bar.add_theme_stylebox_override("panel", UIKit.glass("pill_dark", "pill_s", Vector4(30, 6, 30, 14)))
-		_boss_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		_boss_bar.set_anchors_preset(Control.PRESET_CENTER_TOP)
-		_boss_bar.grow_horizontal = Control.GROW_DIRECTION_BOTH
-		_boss_bar.offset_top = 118
-		var label := UIKit.make_label("", 28, Color.WHITE)
-		label.name = "Value"
-		_boss_bar.add_child(label)
-		_root.add_child(_boss_bar)
-	var text := boss_name + "   "
-	for i in total:
-		text += "●" if i < hits else "○"
-	(_boss_bar.find_child("Value", true, false) as Label).text = text if hits > 0 else boss_name + " آزاد شد!"
-
-
-## Where a button is on the screen (the tutorial circles it).
-func button_rect(key: String) -> Rect2:
-	if key == "team" and _team_button:
-		return _team_button.get_global_rect()
-	if _touch.has(key):
-		var button: TouchScreenButton = _touch[key]
-		var size := button.texture_normal.get_size() * button.scale
-		var rect := Rect2(button.position, size)
-		if key == "left":
-			rect = rect.merge(Rect2(_touch.right.position, size))
-		return rect
-	return Rect2(Vector2(600, 320), Vector2(80, 80))
-
-
-func set_weapon(id: String) -> void:
-	if _weapon_icon:
-		_weapon_icon.id = id
-		_weapon_icon.queue_redraw()
-	_touch.swap.visible = Weapons.owned().size() > 1
-
-
-## The down button is always there (crouch); on a warp pipe it glows to say "go in".
-func show_down(value: bool) -> void:
-	_touch.down.modulate = Color(1.3, 1.15, 0.6) if value else Color.WHITE
-
-
-func setup(title: String, star_total: int, has_keys: bool, lens_enabled: bool) -> void:
-	_star_total = star_total
-	set_stars([])
-	_key_box.visible = has_keys
-	_time_panel.visible = lens_enabled
-	_touch["time"].visible = lens_enabled
-	_title.text = title
-	var tween := create_tween()
-	tween.tween_property(_title, "modulate:a", 1.0, 0.4)
-	tween.tween_interval(1.8)
-	tween.tween_property(_title, "modulate:a", 0.0, 0.6)
-
-
-func _texture_button(path: String) -> TextureButton:
-	var button := TextureButton.new()
-	button.texture_normal = load(path)
-	button.ignore_texture_size = true
-	button.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
-	button.custom_minimum_size = Vector2(92, 92)
-	button.focus_mode = Control.FOCUS_NONE
-	button.pressed.connect(func(): UIKit.play_click())
-	button.resized.connect(func(): button.pivot_offset = button.size * 0.5)
-	return button
-
-
-func _layout() -> void:
-	var view := get_viewport().get_visible_rect().size
-	var safe := UIKit.safe_margins(get_viewport())
-	var left: float = 28.0 + safe.left
-	var right: float = 28.0 + safe.right
-	var bottom: float = 24.0 + safe.bottom
-	_top.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	_top.offset_left = left
-	_top.offset_right = -right
-	_top.offset_top = 18.0 + safe.top
-	_top.offset_bottom = _top.offset_top + 92.0
-	_title.position = Vector2(view.x * 0.5 - _title.size.x * 0.5, 130)
-	# touch buttons: bigger on small phone screens, a little smaller on big tablets, and the
-	# player's own choice in the settings on top (UIKit.touch_scale)
-	var k := UIKit.touch_scale(get_viewport())
-	# every button is placed by its centre, for the thumbs:
-	#  left thumb : ◀ ▶ big at the bottom, ↓ (crouch, pipes) above between them
-	#  right thumb: the big jump in the corner, the three main actions in an arc around it
-	#               (shoot, dash, companion), each one thumb-stretch away; the time lens a bit
-	#               further; weapon and companion switches as small badges on their buttons
-	var size := 170.0
-	var place := func(key: String, centre: Vector2, scale: float) -> void:
-		_touch[key].scale = Vector2(scale, scale) * k
-		_touch[key].position = centre - Vector2(size, size) * 0.5 * scale * k
-	var foot: float = view.y - bottom
-	var l1 := Vector2(left + 95.0 * k, foot - 95.0 * k)
-	place.call("left", l1, 1.05)
-	place.call("right", l1 + Vector2(190.0, 0.0) * k, 1.05)
-	place.call("down", l1 + Vector2(95.0, -170.0) * k, 0.8)
-	var j := Vector2(view.x - right - 108.0 * k, foot - 108.0 * k)
-	var r := 178.0
-	place.call("jump", j, 1.15)
-	place.call("dash", j + Vector2(-r, 18.0) * k, 0.82)
-	var fire := j + Vector2(-r * 0.76, -r * 0.8) * k
-	place.call("fire", fire, 0.82)
-	var paw := j + Vector2(0.0, -r - 8.0) * k
-	place.call("pilo", paw, 0.82)
-	place.call("time", j + Vector2(-r * 0.72, -r * 1.68) * k, 0.62)
-	var swap := fire + Vector2(-64.0, -60.0) * k
-	place.call("swap", swap, 0.46)
-	var buddy := paw + Vector2(-64.0, -60.0) * k
-	place.call("buddy", buddy, 0.46)
-	# the current weapon and companion pictures sit on their switch buttons
-	if _weapon_badge:
-		_weapon_badge.scale = Vector2(k, k) * 0.62
-		_weapon_badge.position = swap
-	if _buddy_badge:
-		_buddy_badge.scale = Vector2(k, k) * 0.62
-		_buddy_badge.position = buddy
-
-
-## The companion that is out ("" = Pilo), on the companion switch button.
-func set_companion(id: String) -> void:
-	if _buddy_icon:
-		_buddy_icon.queue_free()
-	_buddy_icon = LoadoutIcon.make("companion", id, 58.0)
-	_buddy_icon.position = Vector2(-29, -29)
-	_buddy_badge.add_child(_buddy_icon)
-
-
-func set_stars(collected: Array) -> void:
-	var label := _star_counter.find_child("Value", true, false) as Label
-	label.text = "%d/%d" % [collected.size(), _star_total]
-	if not collected.is_empty():
-		_star_counter.pivot_offset = _star_counter.size * 0.5
-		create_tween().tween_property(_star_counter, "scale", Vector2.ONE, 0.3).from(Vector2(1.3, 1.3)).set_trans(Tween.TRANS_BACK)
-
-
-func set_keys(count: int) -> void:
-	_key_label.text = str(count)
-
-
-var _lens_charge := 1.0
-var _return_left := -1.0
-
-
-## Lens charge 0..1 (T3; the new HUD draws it as the blue bar).
 func set_lens_charge(value: float) -> void:
 	_lens_charge = clampf(value, 0.0, 1.0)
-	_refresh_time_label()
+	_fill(_lens, "lens_bar", _lens_charge)
 
 
-## Seconds before the soft return from the past (-1: none).
+## Seconds before the soft return while in the past (-1: none), shown at the end of the lens bar.
 func set_return_countdown(left: float) -> void:
 	_return_left = left
-	_refresh_time_label()
+	_countdown.text = DesignUI.fa_num(int(ceil(left))) if left >= 0.0 else ""
 
 
-var _key_past := false
-var _key_present := false
-var _clues_label: Label
-
-
-## The two keys of a format-4 level (the new HUD shows a blue and an orange keyhole).
 func set_time_keys(past: bool, present: bool) -> void:
-	_key_past = past
-	_key_present = present
-	set_keys(int(past) + int(present))
+	_key_past.texture = DesignUI.tex(DesignUI.piece_path(S, "key_past", "" if past else "_off"))
+	_key_present.texture = DesignUI.tex(DesignUI.piece_path(S, "key_present", "" if present else "_off"))
+	for pair in [[_key_past, past], [_key_present, present]]:
+		if pair[1] and pair[0].get_meta("lit", false) == false:
+			pair[0].set_meta("lit", true)
+			pair[0].pivot_offset = pair[0].size * 0.5
+			var t := create_tween()
+			t.tween_property(pair[0], "scale", Vector2(1.25, 1.25), 0.12)
+			t.tween_property(pair[0], "scale", Vector2.ONE, 0.2)
 
 
-## The three clues shown when a level starts (where the keys are, the keeper's secret).
+## Older levels with one key: the present keyhole lights up.
+func set_keys(count: int) -> void:
+	if count > 0 and not _key_present.get_meta("lit", false):
+		set_time_keys(_key_past.get_meta("lit", false), true)
+
+
+func show_boss(boss_name: String, hits: int, total: int) -> void:
+	_boss_hearts.visible = total > 0
+	for c in _boss_hearts.get_children():
+		c.queue_free()
+	var heart := DesignUI.tex("res://assets/art/p8_fx/p8_fx_ui_heart.png")
+	for i in total:
+		var t := TextureRect.new()
+		t.texture = heart
+		t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		t.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		t.custom_minimum_size = Vector2(40, 40)
+		t.modulate = Color.WHITE if i < hits else Color(0.3, 0.3, 0.35, 0.7)
+		_boss_hearts.add_child(t)
+	_boss_hearts.tooltip_text = boss_name
+
+
+func set_carry(id: String) -> void:
+	carry_id = id
+	_refresh_slots()
+
+
+func _refresh_slots() -> void:
+	for i in 3:
+		var path := TOOL_ICON % SLOT_TOOLS[i]
+		if i == 2 and carry_id != "":
+			path = CARRY_ICON.get(carry_id, path)
+		_slot_icons[i].texture = DesignUI.tex(path)
+
+
+## The three clues of a level (also said by Pilo in the dialogue box at the start).
 func show_clues(lines: Array) -> void:
 	if _clues_label == null:
-		_clues_label = UIKit.make_label("", 26, Color.WHITE, 8, Color(0.1, 0.12, 0.3, 0.9))
-		_clues_label.set_anchors_preset(Control.PRESET_CENTER_TOP)
-		_clues_label.position = Vector2(-400, 120)
-		_clues_label.size = Vector2(800, 120)
-		add_child(_clues_label)
+		_clues_label = DesignUI.text(_root, "", Rect2(340, 150, 600, 110), 24, Color.WHITE, 6)
+		_clues_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		DesignUI.anchor(_clues_label, "tc")
 	_clues_label.text = "\n".join(lines.map(func(l): return "• " + String(l)))
 	_clues_label.modulate.a = 1.0
 	var tween := create_tween()
@@ -383,57 +300,76 @@ func show_clues(lines: Array) -> void:
 	tween.tween_property(_clues_label, "modulate:a", 0.0, 0.8)
 
 
-var carry_id := ""
-
-
-## The thing carried between the times (K12) shown on the HUD (first tool slot in the new HUD).
-func set_carry(id: String) -> void:
-	carry_id = id
+func flash(color: Color) -> void:
+	_flash.color = Color(color, 0.35)
+	create_tween().tween_property(_flash, "color:a", 0.0, 0.35)
 
 
 func flash_lens_empty() -> void:
-	flash(Color(0.3, 0.5, 1.0))
-
-
-func _refresh_time_label() -> void:
-	if _time_label == null:
-		return
-	var text: String = "زمان: " + String(TimeShift.NAMES[TimeShift.state]) + "  ⚡%d" % int(round(_lens_charge * 100.0))
-	if _return_left >= 0.0:
-		text += "  ⏳%d" % int(ceil(_return_left))
-	_time_label.text = text
-
-
-func set_time(state: int) -> void:
-	var past := state == TimeShift.PAST
-	_refresh_time_label()
-	_time_panel.add_theme_stylebox_override("panel", UIKit.glass("pill_orange_s" if past else "pill_blue_s", "pill_s", Vector4(26, 4, 26, 14)))
-
-
-func flash(color: Color) -> void:
-	_flash.color = Color(color, 0.45)
-	create_tween().tween_property(_flash, "color:a", 0.0, 0.45)
+	var t := create_tween()
+	t.tween_property(_lens, "modulate", Color(1.6, 0.6, 0.6), 0.1)
+	t.tween_property(_lens, "modulate", Color.WHITE, 0.3)
 
 
 func set_controls_visible(value: bool) -> void:
-	_touch_root.visible = value
+	for c in _controls:
+		c.visible = value
+	if not value:
+		_set_stick(Vector2.ZERO)
+		_joy_touch = -2
+		for action in _held.keys():
+			Input.action_release(action)
+		_held.clear()
+
+
+## Where a control is on the screen (the first-time guide circles it).
+func button_rect(key: String) -> Rect2:
+	var c: Control = {"move": _joy_base, "left": _joy_base, "right": _joy_base, "jump": _buttons.get("jump"),
+		"time": _buttons.get("time_shift"), "fire": _buttons.get("fire"), "tools": _slots[0] if _slots.size() > 0 else null,
+		"pause": _pause}.get(key)
+	if c == null:
+		return Rect2(640, 360, 100, 100)
+	return Rect2(c.global_position, c.size)
+
+
+# Old HUD calls that the new design has no place for (kept so older code keeps working).
+func set_weapon(_id: String) -> void:
+	pass
+
+
+func set_companion(_id: String) -> void:
+	pass
+
+
+func set_diamonds(_count: int, _total: int) -> void:
+	pass
+
+
+func set_stars(_collected: Array) -> void:
+	pass
+
+
+func set_time(_state: int) -> void:
+	pass
+
+
+func show_down(_value: bool) -> void:
+	pass
 
 
 func pulse_hint() -> void:
-	if _hint_tween and _hint_tween.is_running():
-		return
-	_hint_tween = create_tween().set_loops(6)
-	_hint_tween.tween_property(_hint_button, "scale", Vector2(1.25, 1.25), 0.3)
-	_hint_tween.tween_property(_hint_button, "scale", Vector2.ONE, 0.3)
+	pass
 
 
 func stop_hint_pulse() -> void:
-	if _hint_tween:
-		_hint_tween.kill()
-	_hint_button.scale = Vector2.ONE
+	pass
 
 
-## Small icons drawn in code for the top bar (same drawings as in the level).
+func _layout() -> void:
+	pass
+
+
+## Small coin / diamond / heart icon (used by the old result popup until it is replaced).
 class HudIcon extends Control:
 	var kind := "coin"
 	var empty := false
@@ -462,9 +398,3 @@ class HudIcon extends Control:
 			"diamond":
 				Collectible.draw_diamond(self, c, 0.95, _t)
 
-
-## Round badge behind the current weapon's icon.
-class Badge extends Node2D:
-	func _draw() -> void:
-		draw_circle(Vector2.ZERO, 34.0, Color(0.12, 0.13, 0.2, 0.85))
-		draw_arc(Vector2.ZERO, 34.0, 0.0, TAU, 40, Color(1, 0.85, 0.35), 4.0)

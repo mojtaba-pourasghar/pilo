@@ -92,7 +92,8 @@ func _ready() -> void:
 	add_child(_world_root)
 
 	info = LevelBuilder.build(data, _world_root, self, palette)
-	var layered := LayeredBackground.new()
+	# chapter 1 (format 4): the five-layer scenery from the approved p6 art; older worlds keep theirs
+	var layered: CanvasLayer = ForestParallax.new() if String(data.get("chapter", "")) == "ch01" else LayeredBackground.new()
 	layered.level_size = info.size
 	layered.world_id = String(world.id)
 	_background = layered
@@ -144,6 +145,7 @@ func _ready() -> void:
 		_spawn_guardian()
 		_setup_memory()
 	hud.pause_pressed.connect(open_pause)
+	hud.tool_pressed.connect(use_tool)
 	hud.hint_pressed.connect(request_hint)
 	dialogue = DIALOGUE.new()
 	add_child(dialogue)
@@ -183,6 +185,8 @@ func _start_story() -> void:
 		await card.play()
 		_set_busy(false)
 	await _play_lines(data.get("intro", []))
+	if not clues.is_empty():
+		await _play_lines([{"who": "pilo", "text": Strings.t("app_clues_title") + "\n" + "\n".join(clues.map(func(c): return "• " + String(c)))}])
 	if guardian:
 		guardian.start()
 	if level_id == 1 and not Tutorial.seen() and LevelManager.override_level.is_empty():
@@ -285,8 +289,7 @@ func _setup_keys() -> void:
 	var keeper: Dictionary = data.get("keeper", {}) if data.get("keeper") is Dictionary else {}
 	if keeper.has("hint_key"):
 		clues.append(Strings.t(String(keeper.hint_key)))
-	if not clues.is_empty():
-		hud.show_clues(clues)
+	# the clues are said by Pilo in the dialogue box when the level starts (_start_story)
 
 
 ## The chapter guardian (T7): data "guardian" {"id", "pos", "arena": [left, right], "song_stone"}.
@@ -666,6 +669,39 @@ func cycle_companion() -> void:
 	AudioManager.play_sfx("star", 1.2, -4.0)
 	if hud:
 		hud.set_companion(next)
+
+
+## The three tool slots of the HUD: 0 Pilo's lantern (light: draws hidden keepers out, Pilo
+## acts), 1 the guide map (shows both keys for a moment, three times a level), 2 the mirror (light
+## too) - or, while carrying something between the times (K12), that thing.
+var map_uses := 3
+
+
+func use_tool(slot: int) -> void:
+	if _busy or finished:
+		return
+	match slot:
+		0:
+			_light_keepers()
+			if pilo.visible:
+				pilo.act(self)
+		1:
+			if map_uses <= 0:
+				_notice(Strings.t("app_map_empty"), UIKit.ORANGE, true)
+				return
+			map_uses -= 1
+			for key in time_keys.values():
+				if is_instance_valid(key) and not key.taken:
+					FX.ring(_world_root, key.global_position, PAST_RING if key.key_time == TimeShift.PAST else PRESENT_RING)
+					if pilo.visible:
+						pilo.show_hint(key.global_position)
+			_notice(Strings.t("app_map_used", {"n": map_uses}), UIKit.BLUE, true)
+		2:
+			if carrying != "":
+				_notice(Strings.t("app_item_taken"), UIKit.GREEN, true)
+			else:
+				_light_keepers()
+				FX.ring(_world_root, player.global_position, Color(0.9, 0.95, 1.0))
 
 
 ## Pilo's glow (and the lantern) draws hidden keepers (K8) out of hiding.

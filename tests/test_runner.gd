@@ -34,6 +34,7 @@ func _ready() -> void:
 	await _test_two_keys()
 	await _test_keepers()
 	await _test_old_bear()
+	await _test_hud_design()
 	SaveManager.data = backup
 	SaveManager.save_game()
 	print("\n%d checks, %d failed" % [_checks, _failures])
@@ -90,7 +91,7 @@ func _test_loadout() -> void:
 
 
 func _test_effects() -> void:
-	_check(Weather.for_level("forest", 3, 1).rain, "forest level 3 is rainy")
+	_check(not Weather.for_level("forest", 3, 1).rain and Weather.for_level("coral_beach", 13, 9).rain, "chapter 1 is sunny (approved scenes); the beach still has its storm")
 	_check(Weather.for_level("golden_desert", 17, 17).heat, "the desert shimmers with heat")
 	_check(Weather.for_level("shadow_castle", 58, 57).storm, "castle storms have lightning")
 	_check(not Weather.for_level("crystal_caves", 41, 41).rain, "no rain inside the caves")
@@ -887,4 +888,18 @@ func _test_old_bear() -> void:
 		bear.receive_hit("shot", from)
 	_check(bear.freed and not game.info.exit.locked, "calm, his heart can be reached in any time; released, the gate opens")
 	TimeShift.state = TimeShift.PRESENT
+	await _stop(game)
+
+
+## The HUD of sheet_screen_hud_v1: its pieces in their corners, two keys, three slots.
+func _test_hud_design() -> void:
+	var game := await _start(["P.........", "##########"], {"lens": true})
+	var hud: Node = game.hud
+	_check(hud._hearts.texture_progress != null and hud._lens.texture_progress != null, "hearts and lens bars use the design's pieces")
+	_check(hud._slots.size() == 3 and hud._buttons.has("jump") and hud._buttons.has("fire") and hud._buttons.has("time_shift"), "three action buttons and three tool slots")
+	var view := get_viewport().get_visible_rect().size
+	_check(hud._pause.global_position.x > view.x * 0.85 and hud._joy_base.global_position.y > view.y * 0.5, "pause top-right, joystick bottom-left")
+	hud.set_time_keys(true, false)
+	_check(hud._key_past.texture.resource_path.ends_with("hud_key_past.png") and hud._key_present.texture.resource_path.ends_with("_off.png"), "a found key lights up, the other stays dim")
+	_check(game.player.rig is SpriteRig and game.pilo.rig is SpriteRig, "Arsam and the fox are drawn from their frames")
 	await _stop(game)

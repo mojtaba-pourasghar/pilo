@@ -103,13 +103,12 @@ var _fire_cooldown := 0.0
 
 func _ready() -> void:
 	z_index = 4
-	if PaintedRig.available("hero"):
-		# the generated, rendered the hero replaces the drawn one
-		var painted := PaintedRig.make("hero")
-		painted.name = "Rig"
-		rig.replace_by(painted)
-		rig.queue_free()
-		rig = painted
+	# Arsam from his approved frames (p1_heroes; pivot at the feet, flipped with the visual)
+	var sprite := SpriteRig.make("arsam")
+	sprite.name = "Rig"
+	rig.replace_by(sprite)
+	rig.queue_free()
+	rig = sprite
 	_shape = $CollisionShape2D
 	_shape.shape = _shape.shape.duplicate()
 	fx = PlayerFX.new()

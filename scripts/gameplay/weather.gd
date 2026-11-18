@@ -41,8 +41,9 @@ static func for_level(world_id: String, level_id: int, first: int) -> Weather:
 	var index := level_id - first + 1
 	match world_id:
 		"forest":
-			weather.rain = index in [3, 5]
-			weather.sun = not weather.rain
+			# chapter 1 is sunny in the approved scenes (sheet_ch01_*)
+			weather.rain = false
+			weather.sun = true
 		"coral_beach":
 			weather.rain = index == 5
 			weather.storm = index == 5

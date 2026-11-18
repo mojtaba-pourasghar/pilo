@@ -11,8 +11,8 @@ extends Node2D
 ## block, a cracked wall or a den he runs over, points with an "!" and sniffs.
 ## He still glows in the colour of the current time and flies to hint spots.
 
-const PAST_GLOW := Color(1.0, 0.72, 0.3)
-const PRESENT_GLOW := Color(0.4, 0.9, 1.0)
+const PAST_GLOW := Color(0.45, 0.75, 1.0)
+const PRESENT_GLOW := Color(1.0, 0.68, 0.32)
 const HINT_TIME := 4.0
 var attack_range := 320.0
 const SMASH_RANGE := 220.0
@@ -38,12 +38,12 @@ var _bubble: Label
 
 func _ready() -> void:
 	z_index = 6
-	if PaintedRig.available("pilo"):
-		var painted := PaintedRig.make("pilo")
-		painted.name = "Rig"
-		rig.replace_by(painted)
-		rig.queue_free()
-		rig = painted
+	# Pilo is the fox companion (p2_companions frames)
+	var fox := SpriteRig.make("fox")
+	fox.name = "Rig"
+	rig.replace_by(fox)
+	rig.queue_free()
+	rig = fox
 	_last_pos = global_position
 	_bubble = UIKit.make_label("!", 40, UIKit.ORANGE, 10, Color.WHITE)
 	_bubble.size = Vector2(60, 50)
