@@ -356,6 +356,41 @@ func set_return_countdown(left: float) -> void:
 	_refresh_time_label()
 
 
+var _key_past := false
+var _key_present := false
+var _clues_label: Label
+
+
+## The two keys of a format-4 level (the new HUD shows a blue and an orange keyhole).
+func set_time_keys(past: bool, present: bool) -> void:
+	_key_past = past
+	_key_present = present
+	set_keys(int(past) + int(present))
+
+
+## The three clues shown when a level starts (where the keys are, the keeper's secret).
+func show_clues(lines: Array) -> void:
+	if _clues_label == null:
+		_clues_label = UIKit.make_label("", 26, Color.WHITE, 8, Color(0.1, 0.12, 0.3, 0.9))
+		_clues_label.set_anchors_preset(Control.PRESET_CENTER_TOP)
+		_clues_label.position = Vector2(-400, 120)
+		_clues_label.size = Vector2(800, 120)
+		add_child(_clues_label)
+	_clues_label.text = "\n".join(lines.map(func(l): return "• " + String(l)))
+	_clues_label.modulate.a = 1.0
+	var tween := create_tween()
+	tween.tween_interval(6.0)
+	tween.tween_property(_clues_label, "modulate:a", 0.0, 0.8)
+
+
+var carry_id := ""
+
+
+## The thing carried between the times (K12) shown on the HUD (first tool slot in the new HUD).
+func set_carry(id: String) -> void:
+	carry_id = id
+
+
 func flash_lens_empty() -> void:
 	flash(Color(0.3, 0.5, 1.0))
 

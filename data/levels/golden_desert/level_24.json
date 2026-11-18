@@ -1,9 +1,8 @@
 {
  "id": 24,
- "format": 2,
+ "format": 4,
  "world": "golden_desert",
  "lens": true,
- "start_time": "present",
  "difficulty": 1.0,
  "dark": false,
  "move_range": 4,
@@ -82,5 +81,19 @@
  ],
  "boss": "golden_desert",
  "sign_keys": [],
- "title_key": "c03_l08_title"
+ "title_key": "c03_l08_title",
+ "chapter": "ch03",
+ "index": 8,
+ "kind": "boss",
+ "weapon_level_required": 1,
+ "dual_physics": false,
+ "keeper": null,
+ "legacy_v3": true,
+ "rewards": {
+  "coins": [
+   20,
+   40
+  ],
+  "stars": 3
+ }
 }

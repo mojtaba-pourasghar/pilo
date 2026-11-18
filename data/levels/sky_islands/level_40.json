@@ -1,9 +1,8 @@
 {
  "id": 40,
- "format": 2,
+ "format": 4,
  "world": "sky_islands",
  "lens": true,
- "start_time": "present",
  "difficulty": 1.0,
  "dark": false,
  "move_range": 4,
@@ -85,5 +84,19 @@
   "c05_l08_04",
   "c05_l08_05"
  ],
- "title_key": "c05_l08_title"
+ "title_key": "c05_l08_title",
+ "chapter": "ch05",
+ "index": 8,
+ "kind": "boss",
+ "weapon_level_required": 1,
+ "dual_physics": false,
+ "keeper": null,
+ "legacy_v3": true,
+ "rewards": {
+  "coins": [
+   20,
+   40
+  ],
+  "stars": 3
+ }
 }

@@ -194,6 +194,20 @@ class Shot extends Area2D:
 	func _on_body(body: Node) -> void:
 		if body == owner_node or _hit.has(body):
 			return
+		if body.has_method("receive_hit") and not body is Enemy and not body is Boss:
+			# a keeper or a K4 root knot: the keeper decides whether the hit counts
+			if body.get("freed"):
+				return
+			_hit.append(body)
+			var from: Vector2 = owner_node.global_position if is_instance_valid(owner_node) else global_position
+			if body.receive_hit("shot", from):
+				Juice.hit(body, global_position, 0.25)
+				_burst()
+			else:
+				# sent back by a shield, harmless: it flies off the other way
+				velocity = Vector2(-velocity.x * 0.7, -absf(velocity.y) - 200.0)
+				owner_node = body
+			return
 		if body is Enemy:
 			if body.freed:
 				return

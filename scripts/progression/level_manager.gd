@@ -87,6 +87,8 @@ var WORLDS := [
 
 
 var current_level := 1
+## A shared key seed (daily challenge, online, ghost race): 0 = a new seed every run.
+var key_seed := 0
 ## Tests can play a hand-made map: when set, load_level returns it instead of the file.
 var override_level: Dictionary = {}
 ## Where the opening story goes when it ends: "menu" or "level" (level 1, for a new game).

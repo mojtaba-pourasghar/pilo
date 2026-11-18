@@ -39,6 +39,8 @@ var past_elapsed := 0.0
 var running := false
 var layer_past: Node2D
 var layer_present: Node2D
+## The butterfly effect: things done in the past (a seed planted...) that change the present.
+var history: Array = []
 
 var _layer_tween: Tween
 var _due_sent := 0.0
@@ -53,6 +55,7 @@ func reset(_start_state: int = PRESENT) -> void:
 	state = PRESENT
 	charge = MAX_CHARGE
 	past_elapsed = 0.0
+	history = []
 	running = true
 	_apply_layers(true)
 	time_changed.emit(state, true)
@@ -119,6 +122,15 @@ func shift(soft := false) -> void:
 func add_charge(amount: float) -> void:
 	charge = clampf(charge + amount, 0.0, MAX_CHARGE)
 	charge_changed.emit(charge)
+
+
+func record(event_id: String) -> void:
+	if not history.has(event_id):
+		history.append(event_id)
+
+
+func has_event(event_id: String) -> bool:
+	return history.has(event_id)
 
 
 func state_from_name(state_name: String) -> int:

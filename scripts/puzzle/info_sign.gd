@@ -4,6 +4,12 @@ extends Area2D
 
 var text := ""
 var voice_id := ""
+## -1: in both times; TimeShift.PAST / PRESENT: a sign of one time (its ghost cannot be read).
+var sign_time := -1
+
+
+func time_mask() -> int:
+	return 3 if sign_time < 0 else (1 if sign_time == TimeShift.PAST else 2)
 
 var _bubble: PanelContainer
 
@@ -46,6 +52,8 @@ func _place_bubble() -> void:
 
 
 func _on_body_entered(body: Node) -> void:
+	if sign_time >= 0 and TimeShift.state != sign_time:
+		return
 	if body.is_in_group("player") and text != "":
 		if not _bubble.visible and voice_id != "":
 			AudioManager.play_voice(voice_id)

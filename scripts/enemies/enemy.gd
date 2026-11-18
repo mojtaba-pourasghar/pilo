@@ -100,8 +100,7 @@ func touch_player(player: Node) -> void:
 		player.take_hit(global_position.x)
 
 
-## Defeats the creature. A stomp flattens it and it vanishes in a puff of smoke; a shot,
-## Pilo or a dash knock it over and it tumbles off the screen.
+## Frees the creature (stomp, shot, Pilo or a dash): it is released, never knocked out.
 func defeat(how := "stomp") -> void:
 	if freed:
 		return
@@ -112,21 +111,17 @@ func defeat(how := "stomp") -> void:
 	AudioManager.play_sfx("stomp" if how == "stomp" else "impact", randf_range(0.95, 1.1), -2.0 if how == "stomp" else -6.0)
 	if game and game.has_method("on_enemy_freed"):
 		game.on_enemy_freed(self)
+	# freed, never hurt: the shadow lifts, butterflies fly up and the creature hops away happily
+	ReleaseFX.spawn(get_parent(), global_position + Vector2(0, -body_size.y * 0.5), 4)
+	var tween := create_tween()
 	if how == "stomp":
-		var tween := create_tween()
 		tween.tween_property(rig, "squash", 1.0, 0.08)
-		tween.tween_interval(0.22)
-		tween.tween_callback(func():
-			FX.dust_ring(get_parent(), global_position, 0.6, Color(0.9, 0.9, 0.95, 0.8))
-			FX.burst(get_parent(), global_position + Vector2(0, -16), Color(0.95, 0.95, 1.0), 10))
-		tween.tween_property(self, "modulate:a", 0.0, 0.12)
-		tween.tween_callback(queue_free)
-	else:
-		# knocked over: flips, pops up and falls away
-		var knock := Knockout.new()
-		knock.enemy = self
-		knock.velocity = Vector2(signf(global_position.x - (game.player.global_position.x if game and game.player else 0.0)) * 220.0, -620.0)
-		add_child(knock)
+		tween.tween_property(rig, "squash", 0.0, 0.12)
+	tween.tween_property(self, "position:y", position.y - 40.0, 0.25).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(self, "modulate", Color(1.4, 1.35, 1.1, 1.0), 0.25)
+	tween.tween_property(self, "position:y", position.y, 0.2).set_ease(Tween.EASE_IN)
+	tween.tween_property(self, "modulate:a", 0.0, 0.5)
+	tween.tween_callback(queue_free)
 
 
 ## Moves a knocked-out creature: it spins upside down and falls out of the level.

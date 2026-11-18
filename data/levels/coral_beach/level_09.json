@@ -1,9 +1,8 @@
 {
  "id": 9,
- "format": 2,
+ "format": 4,
  "world": "coral_beach",
  "lens": true,
- "start_time": "present",
  "difficulty": 0.21,
  "dark": false,
  "move_range": 4,
@@ -167,12 +166,68 @@
   "##############sssss########sssss###...............###############################...#####......c.c.c............y.........#########ssc.c.c.cssssss#####################",
   "##############ssssssssssssssssss###......Q.U......###############################...#####.........y..........c...c........#########sssssssssysss*s#####################",
   "##############sss*ssc.d.csssssss###p............p.###############################...#####.p..................b...b.....p..#########sssssssssssssss#####################",
-  "##############sssssssssdssssssss###...N.dc.c.Y....###############################...#####......ed..h.....X..AAAAAAAA......#########ssssssdssssAAss#####################",
+  "##############sssssssssdssssssss###...N.dc.c.Y....###############################...#####......ed..h.....Y..AAAAAAAA......#########ssssssdssssAAss#####################",
   "#################################################################################...###################################################################################"
  ],
  "sign_keys": [
   "c02_l01_02",
   "c02_l01_03"
  ],
- "title_key": "c02_l01_title"
+ "title_key": "c02_l01_title",
+ "chapter": "ch02",
+ "index": 1,
+ "kind": "normal",
+ "weapon_level_required": 1,
+ "dual_physics": false,
+ "keeper": null,
+ "legacy_v3": true,
+ "rewards": {
+  "coins": [
+   20,
+   40
+  ],
+  "stars": 3
+ },
+ "key_slots": {
+  "past": [
+   [
+    50,
+    6
+   ],
+   [
+    92,
+    15
+   ],
+   [
+    134,
+    15
+   ]
+  ],
+  "present": [
+   [
+    50,
+    15
+   ],
+   [
+    92,
+    20
+   ],
+   [
+    134,
+    19
+   ]
+  ]
+ },
+ "key_hints": {
+  "past": [
+   "hint_high",
+   "hint_ground",
+   "hint_near_water"
+  ],
+  "present": [
+   "hint_ground",
+   "hint_underground",
+   "hint_near_water"
+  ]
+ }
 }

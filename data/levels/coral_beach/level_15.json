@@ -1,9 +1,8 @@
 {
  "id": 15,
- "format": 2,
+ "format": 4,
  "world": "coral_beach",
  "lens": true,
- "start_time": "present",
  "difficulty": 0.87,
  "dark": false,
  "move_range": 4,
@@ -157,5 +156,19 @@
   "c02_l07_04",
   "c02_l07_05"
  ],
- "title_key": "c02_l07_title"
+ "title_key": "c02_l07_title",
+ "chapter": "ch02",
+ "index": 7,
+ "kind": "memory",
+ "weapon_level_required": 1,
+ "dual_physics": false,
+ "keeper": null,
+ "legacy_v3": true,
+ "rewards": {
+  "coins": [
+   20,
+   40
+  ],
+  "stars": 3
+ }
 }

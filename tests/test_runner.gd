@@ -30,6 +30,10 @@ func _ready() -> void:
 	_test_names()
 	_test_strings()
 	await _test_dual_layers()
+	_test_key_placer()
+	await _test_two_keys()
+	await _test_keepers()
+	await _test_old_bear()
 	SaveManager.data = backup
 	SaveManager.save_game()
 	print("\n%d checks, %d failed" % [_checks, _failures])
@@ -661,4 +665,210 @@ func _test_dual_layers() -> void:
 	game.try_shift()
 	_check(TimeShift.state == TimeShift.PRESENT, "coming back to the present never needs charge")
 	SaveManager.data.settings.auto_return = true
+	await _stop(game)
+
+
+## T5: three places for each key, one picked by a seed (all nine combinations happen).
+func _test_key_placer() -> void:
+	var a := KeyPlacer.choose(KeyPlacer.seed_for(3, 7))
+	var b := KeyPlacer.choose(KeyPlacer.seed_for(3, 7))
+	_check(a == b, "the same level and run give the same key places")
+	var seen := {}
+	for run in 300:
+		var c := KeyPlacer.choose(KeyPlacer.seed_for(5, run))
+		_check_quiet(c.past >= 0 and c.past < 3 and c.present >= 0 and c.present < 3)
+		seen["%d%d" % [c.past, c.present]] = true
+	_check(seen.size() == 9, "every one of the 9 combinations comes up (%d)" % seen.size())
+	var slots := {"past": [[1, 1], [2, 2], [3, 3]], "present": [[4, 4], [5, 5], [6, 6]]}
+	var placed := KeyPlacer.place(slots, 12345)
+	_check(slots.past.has([placed.past.x, placed.past.y]) and slots.present.has([placed.present.x, placed.present.y]), "keys are put on one of their own places")
+	var before := int(SaveManager.data.get("key_runs", {}).get("777", 0))
+	_check(KeyPlacer.next_run(777) == before + 1, "each run of a level counts up")
+
+
+## T5: the past key can only be taken in the past, the present key in the present, and the gate
+## has two locks that need both.
+func _test_two_keys() -> void:
+	LevelManager.key_seed = 4242
+	var game := await _start([
+		"....................",
+		"....................",
+		"P.................E.",
+		"####################",
+	], {"lens": true, "format": 4, "kind": "normal",
+		"key_slots": {"past": [[4, 2], [4, 2], [4, 2]], "present": [[8, 2], [8, 2], [8, 2]]},
+		"key_hints": {"past": ["hint_ground", "hint_ground", "hint_ground"], "present": ["hint_near_gate", "hint_near_gate", "hint_near_gate"]}})
+	_check(game.two_keys and game.info.exit.two_locks and game.info.exit.locked, "a format-4 gate starts with two locks")
+	_check(game.clues.size() == 2, "the clues for both keys are shown")
+	var past_key: TimeKey = game.info.layer_past.get_children().filter(func(n): return n is TimeKey)[0]
+	var present_key: TimeKey = game.info.layer_present.get_children().filter(func(n): return n is TimeKey)[0]
+	_check(past_key.key_time == TimeShift.PAST and present_key.key_time == TimeShift.PRESENT, "each key sits in its own time layer")
+	game.player.global_position = past_key.global_position + Vector2(0, 30)
+	await _wait(0.3)
+	_check(not game.has_past_key and not past_key.taken, "the past key is a ghost in the present: it cannot be taken")
+	game.on_exit_reached()
+	_check(not game.finished, "the gate stays shut without the keys")
+	game._shift_cooldown = 0.0
+	game.try_shift()
+	await _wait(0.3)
+	_check(game.has_past_key, "in the past the past key is taken")
+	game.player.global_position = present_key.global_position + Vector2(0, 30)
+	await _wait(0.3)
+	_check(not game.has_present_key, "the present key cannot be taken from the past")
+	game._shift_cooldown = 0.0
+	game.try_shift()
+	await _wait(0.3)
+	_check(game.has_present_key and game.info.exit.lock_past and game.info.exit.lock_present, "both keys fill both locks")
+	_check(not game.info.exit.locked, "with both keys the gate opens")
+	LevelManager.key_seed = 0
+	await _stop(game)
+
+
+func _check_quiet(ok: bool) -> void:
+	if not ok:
+		_check(false, "quiet check")
+
+
+func _keeper_game(entry: Dictionary) -> Node:
+	LevelManager.key_seed = 99
+	var game := await _start([
+		"..............................",
+		"..............................",
+		"P...........................E.",
+		"##############################",
+	], {"lens": true, "format": 4, "kind": "normal", "keeper": entry,
+		"key_slots": {"past": [[20, 2], [20, 2], [20, 2]], "present": [[12, 2], [12, 2], [12, 2]]},
+		"key_hints": {"past": ["hint_ground", "hint_ground", "hint_ground"], "present": ["hint_ground", "hint_ground", "hint_ground"]}})
+	LevelManager.key_seed = 0
+	return game
+
+
+## T6: the keepers of chapter 1 - each one only falls to its secret, is released (never killed)
+## and lets go of its key; three failures in a row give the free hint.
+func _test_keepers() -> void:
+	# K1: asleep in the present (harmless, can be hit), awake in the past
+	var game := await _keeper_game({"type": "K1", "id": "rootling", "holds": "present", "awake_in": "past", "hint_key": "app_unsafe"})
+	var k: Keeper = game.keeper
+	_check(k is KeeperSleepy and k.held_key == game.time_keys.present, "K1 stands on the present key")
+	await _wait(0.2)
+	_check(k.asleep() and not k.harmful() and k.state == "sleep", "K1 sleeps in the present")
+	_check(k.held_key.held_by == null, "a sleeping K1 does not hold its key tight")
+	game.player.global_position = k.global_position + Vector2(-10, -1)
+	game.player.velocity = Vector2.ZERO
+	await _wait(0.3)
+	_check(game.has_present_key and k.freed, "the key taken quietly releases K1 (its secret)")
+	await _stop(game)
+	game = await _keeper_game({"type": "K1", "id": "rootling", "holds": "present", "awake_in": "past"})
+	k = game.keeper
+	game.player.global_position = k.global_position + Vector2(-200, 0)
+	game.player.velocity = Vector2(450, 0)
+	k.keeper_process(0.016)
+	_check(not k.asleep() and k.held_key.held_by == k, "running close by wakes K1 and it holds the key")
+	game.player.velocity = Vector2.ZERO
+	game._shift_cooldown = 0.0
+	game.try_shift()
+	await _wait(0.2)
+	_check(not k.receive_hit("shot", k.global_position + Vector2(-100, 0)), "awake in the past, hits bounce off K1")
+	await _stop(game)
+	# K2: the shield faces the hero; from behind the hits count
+	game = await _keeper_game({"type": "K2", "id": "stonewing", "holds": "present", "hint_key": "app_unsafe"})
+	k = game.keeper
+	k.facing = -1.0
+	var front := k.global_position + Vector2(-150, 0)
+	var back := k.global_position + Vector2(150, 0)
+	_check(not k.receive_hit("shot", front), "K2's shield stops a shot from the front")
+	k._invulnerable = 0.0
+	k.receive_hit("shot", front)
+	k._invulnerable = 0.0
+	k.receive_hit("shot", front)
+	_check(k.hint_shown, "three failures in a row give the free hint")
+	for i in 3:
+		k._invulnerable = 0.0
+		k.receive_hit("shot", back)
+	_check(k.freed and k.held_key.held_by == null, "three hits from behind release K2 and its key is free")
+	await _stop(game)
+	# K4: the order carved in the past
+	game = await _keeper_game({"type": "K4", "id": "rootkeeper", "holds": "present", "pattern": [2, 0, 1], "sign_cell": [5, 2]})
+	k = game.keeper
+	await _wait(0.1)
+	var carving: Array = game.info.layer_past.get_children().filter(func(n): return n is KeeperPattern.CarvedSign)
+	_check(carving.size() == 1, "K4's carving is only in the past layer")
+	k.knot_hit(k.knots[0])
+	_check(k._progress == 0 and k.fails == 1, "a wrong knot resets the order")
+	for i in [2, 0, 1]:
+		k.knot_hit(k.knots[i])
+	_check(k.freed, "the carved order releases K4")
+	await _stop(game)
+	# K8: hidden until light draws it out
+	game = await _keeper_game({"type": "K8", "id": "fishcatcher", "holds": "present"})
+	k = game.keeper
+	_check(not k.receive_hit("shot", k.global_position + Vector2(-100, 0)), "hidden K8 cannot be hit")
+	game.player.global_position = k.global_position + Vector2(-200, -5)
+	game._light_keepers()
+	_check(not k.in_hiding and k.receive_hit("shot", k.global_position + Vector2(-100, 0)), "Pilo's light draws K8 out and then it can be hit")
+	await _stop(game)
+	# K11: the riddle
+	game = await _keeper_game({"type": "K11", "id": "leaf_elder", "holds": "present", "question_key": "app_unsafe", "answer_keys": ["app_unsafe", "app_need_key"], "correct": 1})
+	k = game.keeper
+	var hearts: int = game.player.hearts
+	k.answer(0)
+	_check(game.player.hearts == hearts - 1 and k.fails == 1 and not k.freed, "a wrong answer is a small hit")
+	k.answer(1)
+	_check(k.freed, "the right answer releases K11")
+	await _stop(game)
+	# K12: bring the thing from the other time
+	game = await _keeper_game({"type": "K12", "id": "mushroom_king", "holds": "present", "needs": "glow_mushroom", "item_cell": [6, 2]})
+	k = game.keeper
+	_check(not k.receive_hit("shot", k.global_position + Vector2(-100, 0)), "K12 cannot be beaten by force")
+	game.take_item("glow_mushroom")
+	game.player.global_position = k.global_position + Vector2(-120, -1)
+	await _wait(0.2)
+	_check(k.freed and game.carrying == "", "the mushroom from the past releases K12")
+	await _stop(game)
+
+
+## T7: the Old Bear - three hearts, one per phase; bark armour in the present; a flashback in
+## phase 2; the lullaby from the song stone calms phase 3; released, never killed.
+func _test_old_bear() -> void:
+	var game := await _start([
+		"..............................",
+		"..............................",
+		"..............................",
+		"..............................",
+		"P...........................E.",
+		"##############################",
+	], {"lens": true, "format": 4, "kind": "boss",
+		"guardian": {"id": "old_bear", "pos": [20, 4], "arena": [3, 27], "song_stone": [6, 4]}})
+	var bear: OldBear = game.guardian
+	_check(bear != null and bear.rig.skeleton is Skeleton2D, "the Old Bear is a Skeleton2D cut-out")
+	_check(bear.phase == 1 and game.info.exit.locked, "the fight starts and the gate is closed")
+	var from := bear.global_position + Vector2(-200, 0)
+	_check(not bear.receive_hit("shot", from), "in the present the bark armour stops hits")
+	TimeShift.state = TimeShift.PAST
+	bear._set_action("dazed")
+	for i in 3:
+		bear._invulnerable = 0.0
+		bear.receive_hit("shot", from)
+	_check(bear.phase == 2 and bear.hearts == 2, "three hits in the past break the first heart")
+	bear._set_action("dazed")
+	for i in 2:
+		bear._invulnerable = 0.0
+		bear.receive_hit("shot", from)
+	await _wait(0.1)
+	_check(bear.flashback_played and get_tree().paused, "halfway through phase 2 the flashback plays")
+	for fb in game.get_children().filter(func(n): return n is Flashback):
+		fb._end()
+	bear._set_action("dazed")
+	bear._invulnerable = 0.0
+	bear.receive_hit("shot", from)
+	_check(bear.phase == 3, "phase 3: rage")
+	var stone: Node = game.info.layer_past.get_children().filter(func(n): return n is OldBear.SongStone)[0]
+	stone.sing()
+	_check(bear.lullaby and bear.calm() and bear.rig.head_mood == "calm", "the lullaby calms the bear")
+	TimeShift.state = TimeShift.PRESENT
+	for i in 3:
+		bear._invulnerable = 0.0
+		bear.receive_hit("shot", from)
+	_check(bear.freed and not game.info.exit.locked, "calm, his heart can be reached in any time; released, the gate opens")
+	TimeShift.state = TimeShift.PRESENT
 	await _stop(game)

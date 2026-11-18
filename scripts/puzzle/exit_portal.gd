@@ -9,6 +9,16 @@ const OUTLINE := Color("3b2418")
 
 var game: Node
 var locked := false
+## Format 4: the gate has two locks, one for the past key (blue) and one for the present key
+## (orange). They light up as the keys come in; the gate opens with both.
+var two_locks := false
+var lock_past := false
+var lock_present := false
+const KEYHOLE := {
+	"past": "res://assets/art/p9_ui/p9_ui_badge_keyhole_past.png",
+	"present": "res://assets/art/p9_ui/p9_ui_badge_keyhole_present.png",
+}
+var _keyholes := {}
 
 var _t := 0.0
 var _open := 1.0
@@ -37,6 +47,15 @@ func set_locked(value: bool) -> void:
 	_open = 0.0 if locked else 1.0
 
 
+func set_key_locks(past: bool, present: bool) -> void:
+	if two_locks and is_inside_tree():
+		if past and not lock_past or present and not lock_present:
+			AudioManager.play_sfx("key", 0.9)
+			FX.burst(get_parent(), global_position + Vector2(32 + (-34 if past and not lock_past else 34), -150), Color(1, 0.9, 0.5), 12)
+	lock_past = past
+	lock_present = present
+
+
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		game.on_exit_reached()
@@ -48,6 +67,26 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
+	_draw_gate()
+	if two_locks:
+		# the two keyholes over the arch: dim until their key is in
+		for i in 2:
+			var key: String = ["past", "present"][i]
+			if not _keyholes.has(key) and ResourceLoader.exists(KEYHOLE[key]):
+				_keyholes[key] = load(KEYHOLE[key])
+			var tex: Texture2D = _keyholes.get(key)
+			if tex == null:
+				continue
+			var filled: bool = lock_past if i == 0 else lock_present
+			var h := 70.0
+			var w := tex.get_width() * h / tex.get_height()
+			var c := Vector2(32 + (-38 if i == 0 else 38), -150 + sin(_t * 2.0 + i) * 2.0)
+			if filled:
+				draw_circle(c, 40.0, Color(0.45, 0.75, 1.0, 0.35) if i == 0 else Color(1.0, 0.7, 0.3, 0.35))
+			draw_texture_rect(tex, Rect2(c - Vector2(w, h) * 0.5, Vector2(w, h)), false, Color.WHITE if filled else Color(0.45, 0.45, 0.55, 0.9))
+
+
+func _draw_gate() -> void:
 	var texture := WorldArt.tex("time_gate", "locked" if locked else "open")
 	if texture:
 		# the rendered gate, feet on the ground under it; the portal glows and breathes

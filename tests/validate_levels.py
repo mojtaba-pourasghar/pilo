@@ -55,6 +55,8 @@ class Level:
         for (x, y) in [(x, y) for y, r in enumerate(self.g) for x, c in enumerate(r) if c == "t"]:
             self.rafts.update({(x, y), (x + 1, y)})
         self.start_time = PAST if data.get("start_time", "present") == "past" else PRESENT
+        if int(data.get("format", 1)) >= 4:
+            self.start_time = PRESENT     # v4: every level starts in the present
         self.wind_times = TIME_MASKS[data.get("wind_time", "both")]
         self.doors_open = False
         self.gates_open = False
@@ -83,6 +85,16 @@ class Level:
             if self.at(x, y - 1) != "^":
                 self.updraft.add((x, y - 1))
         self._beam_cache = {}
+        self.no_shift = False          # True: the lens is never used (one time only)
+        # format 4 "time_tiles": rocks / bridges listed in the JSON, in one time only
+        self.tt_solid = {PAST: set(), PRESENT: set()}
+        self.tt_one_way = {PAST: set(), PRESENT: set()}
+        for t in data.get("time_tiles", []):
+            when = PAST if t.get("time", "past") == "past" else PRESENT
+            target = self.tt_solid if t.get("kind", "rock") == "rock" else self.tt_one_way
+            for yy in range(int(t["y"]), int(t["y"]) + int(t.get("h", 1))):
+                for xx in range(int(t["x"]), int(t["x"]) + int(t.get("w", 1))):
+                    target[when].add((xx, yy))
 
     def find(self, char):
         return [(x, y) for y, row in enumerate(self.g) for x, c in enumerate(row) if c == char]
@@ -127,11 +139,12 @@ class Level:
     def solid(self, x, y, t):
         c = self.at(x, y)
         return (c in "#MI=_" or c in BLOCKS or c == "F" or (x, y) in self.pipe_cells or (c == "r" and t == PAST)
+                or (x, y) in self.tt_solid[t]
                 or (c == "D" and not self.doors_open) or (c == "g" and not self.gates_open))
 
     def one_way(self, x, y, t, cfg):
         c = self.at(x, y)
-        return (c in "ozqv" or (x, y) in self.rafts or (c == "B" and t == PAST) or (c == "V" and t == PRESENT) or (x, y) in self.ride
+        return (c in "ozqv" or (x, y) in self.rafts or (x, y) in self.tt_one_way[t] or (c == "B" and t == PAST) or (c == "V" and t == PRESENT) or (x, y) in self.ride
                 or (c == "x" and (x, y) in self.lit(t, cfg)))
 
     def hazard(self, x, y, t):
@@ -186,7 +199,7 @@ class Level:
         for cell in self.touches(x, y, self.lever_bit):
             yield (x, y, t, cfg, lev | self.lever_bit[cell])
         other = 1 - t
-        if self.body_free(x, y, other):
+        if not self.no_shift and self.body_free(x, y, other):
             landing = self.fall(x, y, other, cfg)
             if landing:
                 yield (landing[0], landing[1], other, cfg, lev)
@@ -357,6 +370,8 @@ def check(path):
             near = [s for s in states if abs(s[0] - rx) <= 1 and ry - 2 <= s[1] <= ry + 1]
             if not body_touches(level.search(near), ex, ey):
                 errors.append("exit unreachable after rescuing the friend")
+    if int(data.get("format", 1)) >= 4:
+        check_v4(data, level, states, (ex, ey), errors, warnings)
     stars = level.find("*")
     if len(stars) != 3:
         warnings.append("has %d stars (3 expected)" % len(stars))
@@ -367,6 +382,72 @@ def check(path):
         if not touches(states, x, y, level, arc=True):
             warnings.append("star at %d,%d may be unreachable" % (x, y))
     return errors, warnings
+
+
+KINDS = {"normal", "race", "memory", "boss"}
+KEEPER_TYPES = {"K%d" % i for i in range(1, 13)}
+
+
+def key_reach(level, states, cell, t, exit_cell):
+    """(reachable in its own time, exit reachable after taking it)."""
+    x, y = cell
+    own = [s for s in states if s[2] == t]
+    if not touches(own, x, y, level):
+        return False, False
+    near = [s for s in own if abs(s[0] - x) <= 1 and y - 2 <= s[1] <= y + 1]
+    return True, body_touches(level.search(near), *exit_cell)
+
+
+def check_v4(data, level, states, exit_cell, errors, warnings):
+    """Format 4 (T4/T5): two keys, three places each (all 9 combinations), the keeper, the clues."""
+    kind = data.get("kind")
+    if kind not in KINDS:
+        errors.append("kind must be one of %s" % sorted(KINDS))
+    if level.find("k") or level.find("X"):
+        errors.append("format 4 has no single 'k' key: use key_slots")
+    if kind in ("normal", "race"):
+        slots = data.get("key_slots", {})
+        hints = data.get("key_hints", {})
+        for time in ("past", "present"):
+            if len(slots.get(time, [])) != 3:
+                errors.append("key_slots.%s needs exactly 3 places" % time)
+            if len(hints.get(time, [])) != 3:
+                errors.append("key_hints.%s needs 3 clues" % time)
+            for key in hints.get(time, []):
+                if key not in STRINGS:
+                    errors.append("clue %s is not in strings_fa.json" % key)
+        if errors:
+            return
+        ok = {}
+        for time, t in (("past", PAST), ("present", PRESENT)):
+            for i, cell in enumerate(slots[time]):
+                x, y = cell
+                if level.solid(x, y, t):
+                    errors.append("%s key place %d (%d,%d) is inside a wall" % (time, i, x, y))
+                reach, out = key_reach(level, states, (x, y), t, exit_cell)
+                ok[(time, i)] = reach and out
+                if not reach:
+                    errors.append("%s key place %d (%d,%d) cannot be reached in the %s" % (time, i, x, y, time))
+                elif not out:
+                    errors.append("exit unreachable after the %s key at place %d" % (time, i))
+        bad = [(i, j) for i in range(3) for j in range(3) if not (ok[("past", i)] and ok[("present", j)])]
+        if bad:
+            errors.append("%d of 9 key combinations cannot be solved: %s" % (len(bad), bad))
+        if not data.get("legacy_v3"):
+            # both layers are needed: without the lens (present only) the past key is out of reach
+            alone = Level(data)
+            alone.no_shift = True
+            sx, sy = level.find("P")[0]
+            only_present = explore(alone, [(sx, sy, PRESENT, 0, 0)])
+            if any(key_reach(alone, only_present, c, PAST, exit_cell)[0] for c in slots["past"]):
+                errors.append("a past key can be reached without ever using the lens")
+            keeper = data.get("keeper")
+            if not isinstance(keeper, dict) or keeper.get("type") not in KEEPER_TYPES:
+                errors.append("a normal level needs a keeper {type: K1..K12}")
+            elif "hint_key" in keeper and keeper["hint_key"] not in STRINGS:
+                errors.append("keeper clue %s is not in strings_fa.json" % keeper["hint_key"])
+    elif kind == "memory" and data.get("keeper"):
+        errors.append("the memory room has no keeper")
 
 
 def main():

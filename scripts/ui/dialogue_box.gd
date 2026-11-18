@@ -121,8 +121,42 @@ func _show(line: Dictionary) -> void:
 			_typing.set_speed_scale(0.8)
 
 
+signal chosen(index: int)
+var _choices: HBoxContainer
+
+
+## A question with answer buttons (K11 riddles): returns the index picked.
+func ask(line: Dictionary, choices: Array) -> int:
+	_root.visible = true
+	_show(line)
+	_text.visible_ratio = 1.0
+	if _choices == null:
+		_choices = HBoxContainer.new()
+		_choices.add_theme_constant_override("separation", 40)
+		_choices.alignment = BoxContainer.ALIGNMENT_CENTER
+		_choices.set_anchors_preset(Control.PRESET_CENTER)
+		_choices.position = Vector2(-420, -40)
+		_choices.size = Vector2(840, 90)
+		_root.add_child(_choices)
+	for c in _choices.get_children():
+		c.queue_free()
+	for i in choices.size():
+		var b := Button.new()
+		b.text = Names.fmt(String(choices[i]))
+		b.custom_minimum_size = Vector2(380, 80)
+		b.add_theme_font_size_override("font_size", 30)
+		b.pressed.connect(func(): chosen.emit(i))
+		_choices.add_child(b)
+	_choices.visible = true
+	var index: int = await chosen
+	_choices.visible = false
+	AudioManager.stop_voice()
+	_root.visible = false
+	return index
+
+
 func _input(event: InputEvent) -> void:
-	if not _root.visible:
+	if not _root.visible or (_choices and _choices.visible):
 		return
 	var pressed := false
 	if event is InputEventScreenTouch and event.pressed:

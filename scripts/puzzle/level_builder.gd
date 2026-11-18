@@ -332,6 +332,7 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 	info.mechanisms = mechanisms
 	_build_secret_rooms(wet, w, h, root, palette)    # water (with what floats in it) is never a hidden room
 	_build_pit_shade(grid, w, h, root)
+	TimeParts.build(data, root, game, palette)
 	var layers := sort_time_layers(root)
 	info.layer_past = layers[0]
 	info.layer_present = layers[1]

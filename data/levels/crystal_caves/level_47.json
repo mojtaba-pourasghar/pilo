@@ -1,9 +1,8 @@
 {
  "id": 47,
- "format": 2,
+ "format": 4,
  "world": "crystal_caves",
  "lens": true,
- "start_time": "present",
  "difficulty": 1.0,
  "dark": true,
  "move_range": 4,
@@ -156,5 +155,19 @@
   "c06_l07_03",
   "c06_l07_04"
  ],
- "title_key": "c06_l07_title"
+ "title_key": "c06_l07_title",
+ "chapter": "ch06",
+ "index": 7,
+ "kind": "memory",
+ "weapon_level_required": 1,
+ "dual_physics": false,
+ "keeper": null,
+ "legacy_v3": true,
+ "rewards": {
+  "coins": [
+   20,
+   40
+  ],
+  "stars": 3
+ }
 }

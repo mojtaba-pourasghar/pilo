@@ -39,6 +39,20 @@ var finished := false
 var coins := 0
 var diamonds_found: Array = []
 var has_time_key := false
+## Format 4 (T5): two keys, one per time, at seeded places; the gate has two locks.
+var two_keys := false
+var has_past_key := false
+var has_present_key := false
+var key_placement := {}
+var key_seed := 0
+var clues: Array = []
+var keeper: Keeper
+var time_keys := {}
+## The thing being carried from one time to the other (K12), "" when none.
+var carrying := ""
+## The chapter guardian of a boss level (format 4, kind "boss").
+var guardian: ChapterBoss
+var _armour_hits := 0
 var enemies_freed := 0
 
 var _busy := false
@@ -125,6 +139,9 @@ func _ready() -> void:
 	hud.set_diamonds(0, info.diamonds)
 	if info.boss:
 		hud.show_boss(info.boss.display_name(), info.boss.hp, info.boss.max_hp)
+	if int(data.get("format", 2)) >= 4:
+		_setup_keys()
+		_spawn_guardian()
 	hud.pause_pressed.connect(open_pause)
 	hud.hint_pressed.connect(request_hint)
 	dialogue = DIALOGUE.new()
@@ -165,6 +182,8 @@ func _start_story() -> void:
 		await card.play()
 		_set_busy(false)
 	await _play_lines(data.get("intro", []))
+	if guardian:
+		guardian.start()
 	if level_id == 1 and not Tutorial.seen() and LevelManager.override_level.is_empty():
 		var tutorial := Tutorial.new()
 		tutorial.hud = hud
@@ -196,6 +215,7 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed("time_shift"):
 			try_shift()
 		if Input.is_action_just_pressed("pilo"):
+			_light_keepers()
 			if Loadout.companion() == "" or _follower == null:
 				pilo.act(self)
 			else:
@@ -226,6 +246,216 @@ func _physics_process(delta: float) -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_GO_BACK_REQUEST or what == NOTIFICATION_APPLICATION_PAUSED:
 		open_pause()
+
+
+# --- The two time keys (format 4) -------------------------------------------------
+
+func _setup_keys() -> void:
+	var slots: Dictionary = data.get("key_slots", {})
+	if slots.is_empty():
+		return
+	two_keys = true
+	key_seed = LevelManager.key_seed if LevelManager.key_seed != 0 else KeyPlacer.seed_for(level_id, KeyPlacer.next_run(level_id))
+	key_placement = KeyPlacer.place(slots, key_seed)
+	for time in ["past", "present"]:
+		if not key_placement.has(time):
+			continue
+		var key := TimeKey.new()
+		key.key_time = TimeShift.PAST if time == "past" else TimeShift.PRESENT
+		key.game = self
+		var cell: Vector2i = key_placement[time]
+		key.position = Vector2(cell.x * LevelBuilder.TILE + 32, cell.y * LevelBuilder.TILE + 32)
+		key.set_meta("time_layer", true)
+		(info.layer_past if time == "past" else info.layer_present).add_child(key)
+		time_keys[time] = key
+	_spawn_keeper()
+	if info.exit:
+		info.exit.two_locks = true
+		info.exit.set_locked(true)
+	hud.set_time_keys(false, false)
+	# three clues: near what the past key is, near what the present key is, and the keeper's secret
+	var hints: Dictionary = data.get("key_hints", {})
+	clues = []
+	for time in ["past", "present"]:
+		var list: Array = hints.get(time, [])
+		var i := int(key_placement.get(time + "_index", 0))
+		if i < list.size():
+			clues.append(Strings.t(String(list[i])))
+	var keeper: Dictionary = data.get("keeper", {}) if data.get("keeper") is Dictionary else {}
+	if keeper.has("hint_key"):
+		clues.append(Strings.t(String(keeper.hint_key)))
+	if not clues.is_empty():
+		hud.show_clues(clues)
+
+
+## The chapter guardian (T7): data "guardian" {"id", "pos", "arena": [left, right], "song_stone"}.
+func _spawn_guardian() -> void:
+	var entry = data.get("guardian")
+	if not entry is Dictionary:
+		return
+	match String(entry.get("id", "")):
+		"old_bear":
+			guardian = OldBear.new()
+		_:
+			push_warning("guardian %s is not built yet" % entry.get("id"))
+			return
+	var tile := LevelBuilder.TILE
+	var arena: Array = entry.get("arena", [0, 0])
+	entry["arena_left"] = float(arena[0]) * tile + 64.0
+	entry["arena_right"] = float(arena[1]) * tile - 64.0
+	guardian.params = entry
+	guardian.game = self
+	guardian.position = Vector2(int(entry.pos[0]) * tile + 32, (int(entry.pos[1]) + 1) * tile)
+	_world_root.add_child(guardian)
+	if entry.has("song_stone"):
+		var stone := OldBear.SongStone.new()
+		stone.game = self
+		stone.position = Vector2(int(entry.song_stone[0]) * tile + 32, (int(entry.song_stone[1]) + 1) * tile)
+		stone.set_meta("time_layer", true)
+		info.layer_past.add_child(stone)
+	if info.exit:
+		info.exit.set_locked(true)
+	hud.show_boss(Strings.t("guardian_%s_name" % guardian.boss_id), guardian.hearts, guardian.max_hearts)
+
+
+func on_chapter_boss_hit(b: ChapterBoss) -> void:
+	_armour_hits = 0
+	hud.show_boss(Strings.t("guardian_%s_name" % b.boss_id), b.hearts, b.max_hearts)
+	Juice.hit(b, b.global_position + Vector2(0, -150), 0.85, "impact")
+
+
+## Hits that bounce off the bark armour: after three, Pilo says to try the past.
+func on_boss_armour(_b: ChapterBoss) -> void:
+	_armour_hits += 1
+	if _armour_hits == 3:
+		_notice(Strings.t("guardian_old_bear_hint_armour"), UIKit.BLUE, true)
+		if pilo.visible:
+			pilo.shake()
+
+
+func play_flashback(b: ChapterBoss) -> void:
+	var fb := Flashback.new()
+	fb.panel_path = String(b.params.get("flashback_panel", "res://assets/art/p11_story/panels/s07_bear_calm.png"))
+	fb.text_key = String(b.params.get("flashback_key", "guardian_%s_flashback" % b.boss_id))
+	add_child(fb)
+
+
+func on_lullaby() -> void:
+	if guardian and guardian is OldBear:
+		guardian.hear_lullaby()
+	_notice(Strings.t("guardian_old_bear_lullaby"), UIKit.GREEN, true)
+
+
+func on_chapter_boss_released(b: ChapterBoss) -> void:
+	hud.show_boss(Strings.t("guardian_%s_name" % b.boss_id), 0, b.max_hearts)
+	for door in get_tree().get_nodes_in_group("boss_door"):
+		door.open()
+	if info.exit:
+		info.exit.set_locked(false)
+	Juice.flash(self, Color(1, 1, 0.9, 0.7), 0.6)
+	SaveManager.data.hearts_of_time = maxi(int(SaveManager.data.get("hearts_of_time", 0)), int(world.index))
+	await get_tree().create_timer(1.6).timeout
+	await _play_lines(data.get("released", []))
+
+
+## The keeper of the level stands on the place of the key it holds (T6).
+func _spawn_keeper() -> void:
+	var entry = data.get("keeper")
+	if not entry is Dictionary:
+		return
+	keeper = KeeperFactory.make(entry)
+	if keeper == null:
+		return
+	keeper.game = self
+	var holds := String(entry.get("holds", "present"))
+	var cell: Vector2i
+	if key_placement.has(holds):
+		cell = key_placement[holds]
+	else:
+		var pos: Array = entry.get("pos", [10, 10])
+		cell = Vector2i(int(pos[0]), int(pos[1]))
+	keeper.position = Vector2(cell.x * LevelBuilder.TILE + 32, (cell.y + 1) * LevelBuilder.TILE)
+	keeper.held_key = time_keys.get(holds)
+	_world_root.add_child(keeper)
+	if entry.has("sign_cell"):
+		var carving := KeeperPattern.CarvedSign.new()
+		carving.pattern = entry.get("pattern", [2, 0, 1])
+		carving.position = Vector2(int(entry.sign_cell[0]) * LevelBuilder.TILE + 32, (int(entry.sign_cell[1]) + 1) * LevelBuilder.TILE)
+		carving.set_meta("time_layer", true)
+		info.layer_past.add_child(carving)
+	if entry.has("item_cell"):
+		var item := KeeperNeedsItem.CarryItem.new()
+		item.id = String(entry.get("needs", "glow_mushroom"))
+		item.game = self
+		item.position = Vector2(int(entry.item_cell[0]) * LevelBuilder.TILE + 32, int(entry.item_cell[1]) * LevelBuilder.TILE + 32)
+		item.set_meta("time_layer", true)
+		info.layer_past.add_child(item)
+
+
+func on_keeper_hit(_k: Keeper) -> void:
+	Juice.hit(keeper, keeper.global_position + Vector2(0, -60), 0.4)
+
+
+## Three failures in a row: Pilo flies to the keeper and tells the secret (free hint).
+func on_keeper_hint(k: Keeper) -> void:
+	if k.hint_key != "":
+		_notice(Strings.t(k.hint_key), UIKit.BLUE, true)
+	if pilo.visible:
+		pilo.show_hint(k.global_position + Vector2(0, -80))
+	Analytics.log_event("keeper_hint", level_id)
+
+
+func on_keeper_released(k: Keeper) -> void:
+	enemies_freed += 1
+	var name_key := "keeper_%s_name" % k.keeper_id
+	_notice(Strings.t("app_freed_generic_keeper", {"name": Strings.t(name_key) if Strings.has(name_key) else k.type}), UIKit.GREEN, true)
+	add_coins(10, k.global_position, false)
+	Analytics.log_event("keeper_released", level_id)
+
+
+## K11: the riddle in the dialogue box (two answers).
+func ask_riddle(k: KeeperRiddle) -> void:
+	if _busy:
+		k.asking = false
+		return
+	_set_busy(true)
+	var answers: Array = k.answer_keys.map(func(key): return Strings.t(String(key)))
+	var pick: int = await dialogue.ask({"who": String(k.params.get("who", "leaf_elder")), "text": Strings.t(k.question_key)}, answers)
+	await get_tree().physics_frame
+	_set_busy(false)
+	k.answer(pick)
+
+
+## K12: carrying something from one time to the other.
+func take_item(id: String) -> void:
+	carrying = id
+	AudioManager.play_sfx("pop")
+	_notice(Strings.t("app_item_taken"), UIKit.GREEN, true)
+	hud.set_carry(id)
+
+
+func give_item(_id: String) -> void:
+	carrying = ""
+	hud.set_carry("")
+
+
+func on_time_key(key: TimeKey) -> void:
+	# K1's secret: the key taken quietly while the keeper sleeps also releases it
+	if keeper and is_instance_valid(keeper) and not keeper.freed and keeper.held_key == key:
+		keeper.release()
+	if key.key_time == TimeShift.PAST:
+		has_past_key = true
+	else:
+		has_present_key = true
+	AudioManager.play_sfx("key")
+	FX.burst(_world_root, key.global_position, PAST_RING if key.key_time == TimeShift.PAST else PRESENT_RING, 22)
+	hud.set_time_keys(has_past_key, has_present_key)
+	if info.exit:
+		info.exit.set_key_locks(has_past_key, has_present_key)
+		if has_past_key and has_present_key and friend_rescued:
+			info.exit.set_locked(false)
+	_notice(Strings.t("app_both_keys" if has_past_key and has_present_key else ("app_past_key" if key.key_time == TimeShift.PAST else "app_present_key")), UIKit.GREEN, true)
+	Analytics.log_event("key_" + ("past" if key.key_time == TimeShift.PAST else "present"), level_id)
 
 
 # --- Score: coins, diamonds, hearts, creatures --------------------------------
@@ -388,6 +618,13 @@ func cycle_companion() -> void:
 	AudioManager.play_sfx("star", 1.2, -4.0)
 	if hud:
 		hud.set_companion(next)
+
+
+## Pilo's glow (and the lantern) draws hidden keepers (K8) out of hiding.
+func _light_keepers() -> void:
+	for k in get_tree().get_nodes_in_group("keeper_hidden"):
+		if k.has_method("light_reveal") and k.global_position.distance_to(player.global_position) < 420.0:
+			k.light_reveal()
 
 
 func refresh_loadout() -> void:
@@ -644,6 +881,9 @@ func on_friend_rescued(_friend: Node) -> void:
 
 func on_exit_reached() -> void:
 	if finished:
+		return
+	if two_keys and not (has_past_key and has_present_key):
+		_notice(Strings.t("app_need_both_keys"), UIKit.ORANGE, false)
 		return
 	if info.time_key and not has_time_key:
 		_notice(Strings.t("app_gate_locked"), UIKit.ORANGE, false, "app_gate_locked")
