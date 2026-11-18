@@ -17,7 +17,7 @@ static func lines_for(world: String) -> Dictionary:
 	var file := FileAccess.open(DATA, FileAccess.READ)
 	if file == null:
 		return {}
-	var all: Dictionary = JSON.parse_string(file.get_as_text())
+	var all: Dictionary = Strings.resolve(JSON.parse_string(file.get_as_text()))
 	return all.get(world, {})
 
 

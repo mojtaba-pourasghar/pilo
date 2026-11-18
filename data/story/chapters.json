@@ -1,182 +1,182 @@
 {
  "forest": {
-  "title": "فصل ۱: جنگل رنگارستان",
   "lines": [
    {
     "who": "narrator",
-    "text": "شاه‌سایه هشت قلب زمان را دزدید. رنگ‌ها از رنگارستان پریدند و ساعت بزرگ ایستاد.",
-    "id": "ch_forest_1"
+    "id": "ch_forest_1",
+    "text_key": "ch_forest_1"
    },
    {
     "who": "narrator",
-    "text": "ولی در جنگل، {hero} یک تخم درخشان پیدا کرد... و پیلو، آخرین نگهبان زمان، از آن بیرون آمد.",
-    "id": "ch_forest_2"
+    "id": "ch_forest_2",
+    "text_key": "ch_forest_2"
    },
    {
     "who": "pilo",
-    "text": "سایه‌ها جنگل را گرفته‌اند. قلب زمان اول پیش خرس پیر است!",
-    "id": "ch_forest_3"
+    "id": "ch_forest_3",
+    "text_key": "ch_forest_3"
    }
-  ]
+  ],
+  "title_key": "chapter_forest_title"
  },
  "coral_beach": {
-  "title": "فصل ۲: ساحل مرجانی",
   "lines": [
    {
     "who": "narrator",
-    "text": "خرس پیر گفت: «سایه‌ها دستور کسی را اجرا می‌کنند.» ولی دستور چه کسی؟",
-    "id": "ch_coral_beach_1"
+    "id": "ch_coral_beach_1",
+    "text_key": "ch_coral_beach_1"
    },
    {
     "who": "narrator",
-    "text": "مسافرهای دیگر هم دنبال قلب‌های زمان‌اند. از حالا با روح رقیب مسابقه می‌دهی!",
-    "id": "ch_coral_beach_2"
+    "id": "ch_coral_beach_2",
+    "text_key": "ch_coral_beach_2"
    },
    {
     "who": "hero",
-    "text": "یک رقیب؟ پس مسابقه!",
-    "id": "ch_coral_beach_3"
+    "id": "ch_coral_beach_3",
+    "text_key": "ch_coral_beach_3"
    }
-  ]
+  ],
+  "title_key": "chapter_coral_beach_title"
  },
  "golden_desert": {
-  "title": "فصل ۳: بیابان طلایی",
   "lines": [
    {
     "who": "narrator",
-    "text": "روح رقیب زودتر رسید، ولی اختاپوس آزاد شد و لاکی به تیم پیوست.",
-    "id": "ch_golden_desert_1"
+    "id": "ch_golden_desert_1",
+    "text_key": "ch_golden_desert_1"
    },
    {
     "who": "grandma",
-    "text": "خوش آمدید بچه‌ها. روی دیوار هرم فراموش‌شده نقش یک ساعت وارونه هست... و یک راز.",
-    "id": "ch_golden_desert_2"
+    "id": "ch_golden_desert_2",
+    "text_key": "ch_golden_desert_2"
    },
    {
     "who": "pilo",
-    "text": "ساعت وارونه؟ برویم ببینیم!",
-    "id": "ch_golden_desert_3"
+    "id": "ch_golden_desert_3",
+    "text_key": "ch_golden_desert_3"
    }
-  ]
+  ],
+  "title_key": "chapter_golden_desert_title"
  },
  "snow_mountain": {
-  "title": "فصل ۴: کوهستان برفی",
   "lines": [
    {
     "who": "narrator",
-    "text": "در هرم، اولین الماس افسانه‌ای و نقش یک نقاب‌دار پیدا شد.",
-    "id": "ch_snow_mountain_1"
+    "id": "ch_snow_mountain_1",
+    "text_key": "ch_snow_mountain_1"
    },
    {
     "who": "pilo",
-    "text": "مسابقهٔ روح دوم! این بار تا قله.",
-    "id": "ch_snow_mountain_2"
+    "id": "ch_snow_mountain_2",
+    "text_key": "ch_snow_mountain_2"
    },
    {
     "who": "ghubarak",
-    "text": "صبر کنید... من باید چیزی بگویم. ولی... بعداً.",
-    "id": "ch_snow_mountain_3"
+    "id": "ch_snow_mountain_3",
+    "text_key": "ch_snow_mountain_3"
    }
-  ]
+  ],
+  "title_key": "chapter_snow_mountain_title"
  },
  "sky_islands": {
-  "title": "فصل ۵: جزیره‌های آسمانی",
   "lines": [
    {
     "who": "narrator",
-    "text": "بهمن آمد و همه با هم فرار کردند. غبارک اعتراف کرد: نقاب‌دار فریبش داده بود.",
-    "id": "ch_sky_islands_1"
+    "id": "ch_sky_islands_1",
+    "text_key": "ch_sky_islands_1"
    },
    {
     "who": "ghubarak",
-    "text": "من در برج را باز گذاشتم... متأسفم. حالا راه برج طوفان را نشانتان می‌دهم.",
-    "id": "ch_sky_islands_2"
+    "id": "ch_sky_islands_2",
+    "text_key": "ch_sky_islands_2"
    },
    {
     "who": "pilo",
-    "text": "دوست تازه! از ابرها بالا برویم.",
-    "id": "ch_sky_islands_3"
+    "id": "ch_sky_islands_3",
+    "text_key": "ch_sky_islands_3"
    }
-  ]
+  ],
+  "title_key": "chapter_sky_islands_title"
  },
  "crystal_caves": {
-  "title": "فصل ۶: غارهای بلور",
   "lines": [
    {
     "who": "narrator",
-    "text": "عقاب طوفان آزاد شد و نقشهٔ قلعهٔ سایه را داد. ولی در غارها، کلاغ‌ساعت پیام تازه‌ای از نقاب‌دار آورد.",
-    "id": "ch_crystal_caves_1"
+    "id": "ch_crystal_caves_1",
+    "text_key": "ch_crystal_caves_1"
    },
    {
     "who": "masked",
-    "text": "کلاغ‌ساعت، قلب‌ها را برایم بیاور...",
-    "id": "ch_crystal_caves_2"
+    "id": "ch_crystal_caves_2",
+    "text_key": "ch_crystal_caves_2"
    },
    {
     "who": "pilo",
-    "text": "نقاب‌دار به خیلی‌ها دروغ گفته. باید زودتر برسیم!",
-    "id": "ch_crystal_caves_3"
+    "id": "ch_crystal_caves_3",
+    "text_key": "ch_crystal_caves_3"
    }
-  ]
+  ],
+  "title_key": "chapter_crystal_caves_title"
  },
  "clock_factory": {
-  "title": "فصل ۷: کارخانهٔ ساعت",
   "lines": [
    {
     "who": "narrator",
-    "text": "جغد پیچ‌پیچ به تیم پیوست. در گذشتهٔ غار، دهکدهٔ سبزدره دیده شد؛ هنوز می‌شود نجاتش داد.",
-    "id": "ch_clock_factory_1"
+    "id": "ch_clock_factory_1",
+    "text_key": "ch_clock_factory_1"
    },
    {
     "who": "pilo",
-    "text": "صدای تیک‌تاک... بابابزرگ اینجاست! ولی طلسم شده.",
-    "id": "ch_clock_factory_2"
+    "id": "ch_clock_factory_2",
+    "text_key": "ch_clock_factory_2"
    },
    {
     "who": "masked",
-    "text": "دیر رسیدید. ساعت وارونه مال من است.",
-    "id": "ch_clock_factory_3"
+    "id": "ch_clock_factory_3",
+    "text_key": "ch_clock_factory_3"
    }
-  ]
+  ],
+  "title_key": "chapter_clock_factory_title"
  },
  "shadow_castle": {
-  "title": "فصل ۸: قلعهٔ سایه",
   "lines": [
    {
     "who": "narrator",
-    "text": "نقاب افتاد: زروان بود، شاگرد قدیمی من، سازندهٔ ساعت وارونه. او با ساعت به قلعه فرار کرد.",
-    "id": "ch_shadow_castle_1"
+    "id": "ch_shadow_castle_1",
+    "text_key": "ch_shadow_castle_1"
    },
    {
     "who": "grandpa",
-    "text": "شاه‌سایه بدجنس نیست؛ نگهبان تنهای شب بود که ساعت وارونه او را سایه کرد.",
-    "id": "ch_shadow_castle_2"
+    "id": "ch_shadow_castle_2",
+    "text_key": "ch_shadow_castle_2"
    },
    {
     "who": "pilo",
-    "text": "همهٔ نگهبان‌ها و همراه‌ها کمک می‌کنند. برویم!",
-    "id": "ch_shadow_castle_3"
+    "id": "ch_shadow_castle_3",
+    "text_key": "ch_shadow_castle_3"
    }
-  ]
+  ],
+  "title_key": "chapter_shadow_castle_title"
  },
  "inverted_land": {
-  "title": "فصل ۹: سرزمین وارونه",
   "lines": [
    {
     "who": "narrator",
-    "text": "شاه‌سایه نگهبان شب شد و ساعت بزرگ دوباره چرخید... ولی زروان با ساعت وارونه به سرزمین وارونه گریخت.",
-    "id": "ch_inverted_land_1"
+    "id": "ch_inverted_land_1",
+    "text_key": "ch_inverted_land_1"
    },
    {
     "who": "pilo",
-    "text": "هشت الماس افسانه‌ای راه را باز کردند. اینجا همه‌چیز وارونه است!",
-    "id": "ch_inverted_land_2"
+    "id": "ch_inverted_land_2",
+    "text_key": "ch_inverted_land_2"
    },
    {
     "who": "hero",
-    "text": "ساعت وارونه را می‌شکنیم و سبزدره را برمی‌گردانیم.",
-    "id": "ch_inverted_land_3"
+    "id": "ch_inverted_land_3",
+    "text_key": "ch_inverted_land_3"
    }
-  ]
+  ],
+  "title_key": "chapter_inverted_land_title"
  }
 }

@@ -168,8 +168,8 @@ func _start_race() -> void:
 	_world_root.add_child(rival)
 	rival.arrived.connect(func():
 		if not finished:
-			_notice("روح رقیب زودتر رسید! باز هم می‌شود کلیدها را پیدا کرد.", UIKit.BLUE, true, "app_race_lost"))
-	_notice("مسابقه با روح رقیب! زودتر به دروازه برس.", UIKit.BLUE, true, "app_race_start")
+			_notice(Strings.t("app_race_lost"), UIKit.BLUE, true, "app_race_lost"))
+	_notice(Strings.t("app_race_start"), UIKit.BLUE, true, "app_race_start")
 	await get_tree().create_timer(0.8).timeout
 	rival.running = true
 
@@ -238,7 +238,7 @@ func on_collect(item: Collectible) -> void:
 			hud.set_keys(1)
 			if info.exit and friend_rescued:
 				info.exit.set_locked(false)
-			_notice("کلید زمان! حالا دروازه باز می‌شود.", UIKit.GREEN, true, "app_time_key")
+			_notice(Strings.t("app_time_key"), UIKit.GREEN, true, "app_time_key")
 
 
 func add_coins(amount: int, pos: Vector2, from_block := true) -> void:
@@ -297,7 +297,7 @@ func _player_down() -> void:
 	_respawning = true
 	fails += 1
 	player.controls_enabled = false
-	_notice("اوه! دوباره امتحان کنیم.", UIKit.ORANGE, true, "app_try_again")
+	_notice(Strings.t("app_try_again"), UIKit.ORANGE, true, "app_try_again")
 	pilo.shake()
 	await get_tree().create_timer(0.7).timeout
 	AudioManager.play_sfx("respawn")
@@ -364,13 +364,13 @@ func cycle_companion() -> void:
 		if Loadout.owns_companion(id):
 			team.append(id)
 	if team.size() < 2:
-		_notice("هنوز همراه دیگری نداری؛ در دهکده پیدایش کن.", UIKit.ORANGE, true)
+		_notice(Strings.t("app_no_companion"), UIKit.ORANGE, true)
 		return
 	var next: String = team[(team.find(Loadout.companion()) + 1) % team.size()]
 	Loadout.pick_companion(next)
 	refresh_loadout()
-	var name := "پیلو" if next == "" else String(Loadout.COMPANIONS[next].name)
-	_notice(name + " همراهت شد!", UIKit.GREEN, true)
+	var name := Strings.t("companion_pilo") if next == "" else String(Loadout.COMPANIONS[next].name)
+	_notice(Strings.t("app_companion_joined", {"name": name}), UIKit.GREEN, true)
 	FX.burst(_world_root, player.global_position + Vector2(-80.0 * player.facing, -40.0), Color(1, 0.9, 0.5), 18)
 	AudioManager.play_sfx("star", 1.2, -4.0)
 	if hud:
@@ -443,7 +443,7 @@ func on_boss_freed(boss: Boss) -> void:
 	FX.burst(_world_root, boss.global_position + Vector2(0, -80), UIKit.GOLD, 40)
 	Juice.hit(boss, boss.global_position + Vector2(0, -80), 1.0, "thunder")
 	Juice.flash(self, Color(1, 1, 0.9, 0.7), 0.6)
-	_notice("%s آزاد شد! دروازه باز است." % boss.display_name(), UIKit.GREEN, true, "app_freed_" + boss.kind)
+	_notice(Strings.t("app_freed_generic", {"name": boss.display_name()}), UIKit.GREEN, true, "app_freed_" + boss.kind)
 	SaveManager.data.hearts_of_time = maxi(int(SaveManager.data.get("hearts_of_time", 0)), int(world.index))
 
 
@@ -502,7 +502,7 @@ func try_shift() -> void:
 			blocker.flash_warning()
 		player.react_surprise()
 		pilo.shake()
-		_notice("اینجا جای امن نیست!", UIKit.RED, true, "app_unsafe")
+		_notice(Strings.t("app_unsafe"), UIKit.RED, true, "app_unsafe")
 		Analytics.log_event("shift_blocked", level_id)
 		return
 	TimeShift.shift()
@@ -580,7 +580,7 @@ func on_door_touched(door: Door) -> void:
 		hud.set_keys(keys)
 	else:
 		pilo.shake()
-		_notice("کلید کجاست؟", UIKit.ORANGE, false, "app_need_key")
+		_notice(Strings.t("app_need_key"), UIKit.ORANGE, false, "app_need_key")
 
 
 func on_checkpoint(checkpoint: Checkpoint) -> void:
@@ -606,13 +606,13 @@ func on_exit_reached() -> void:
 	if finished:
 		return
 	if info.time_key and not has_time_key:
-		_notice("دروازه قفل است؛ کلید زمان را پیدا کن!", UIKit.ORANGE, false, "app_gate_locked")
+		_notice(Strings.t("app_gate_locked"), UIKit.ORANGE, false, "app_gate_locked")
 		return
 	if not friend_rescued:
 		if info.chaser:
-			_notice("اول غبارک را بگیر!", UIKit.ORANGE, false, "app_catch_first")
+			_notice(Strings.t("app_catch_first"), UIKit.ORANGE, false, "app_catch_first")
 		else:
-			_notice("اول دوستمان را نجات بده!", UIKit.ORANGE, false, "app_rescue_first")
+			_notice(Strings.t("app_rescue_first"), UIKit.ORANGE, false, "app_rescue_first")
 		return
 	finished = true
 	_set_busy(true)
@@ -621,7 +621,7 @@ func on_exit_reached() -> void:
 	if rival and not rival.done:
 		rival.running = false
 		add_coins(50, player.global_position, false)
-		_notice("از روح رقیب زودتر رسیدی! ۵۰ سکه جایزه.", UIKit.GREEN, true, "app_race_won")
+		_notice(Strings.t("app_race_won"), UIKit.GREEN, true, "app_race_won")
 	AudioManager.play_sfx("win")
 	var result := ProgressManager.complete_level(level_id, stars_collected, coins, diamonds_found)
 	Analytics.log_event("level_complete", level_id)

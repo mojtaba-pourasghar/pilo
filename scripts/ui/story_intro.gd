@@ -29,7 +29,7 @@ func _ready() -> void:
 	UIKit.ensure_theme()
 	layout_direction = Control.LAYOUT_DIRECTION_LTR
 	set_anchors_preset(Control.PRESET_FULL_RECT)
-	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(STORY))
+	var data: Dictionary = Strings.resolve(JSON.parse_string(FileAccess.get_file_as_string(STORY)))
 	_panels = data.panels
 	var black := ColorRect.new()
 	black.color = Color.BLACK

@@ -19,6 +19,7 @@ import sys
 from collections import deque
 
 PAST, PRESENT = 0, 1
+STRINGS = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "strings_fa.json"), encoding="utf-8"))
 LEGEND = set(".#roBVMKD*CEPi?GRf~wamu<>^Lg/\\SOxz") | set("QUJHb$ncd+keyhFTtANpWYX") | set("Isq=_vZ&|")
 REACH = {0: 4, 1: 3, 2: 2}        # rise in tiles -> horizontal reach (puzzle levels: walk 330)
 # Platformer levels ("format": 2): JUMP_VELOCITY -870 plus run bonus, RUN 470, one air dash.
@@ -285,7 +286,7 @@ def check(path):
     errors, warnings = [], []
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
-    for key in ("id", "title", "map"):
+    for key in ("id", "title_key", "map"):
         if key not in data:
             errors.append("missing key '%s'" % key)
     if errors:
@@ -301,8 +302,19 @@ def check(path):
     for (x, y) in starts + level.find("C"):
         if level.at(x, y + 1) not in "#":
             errors.append("start/checkpoint at %d,%d must stand on '#' (exists in both times)" % (x, y))
-    if level.find("i") and len(level.find("i")) > len(data.get("signs", [])):
-        errors.append("more 'i' signs than texts in 'signs'")
+    signs = data.get("sign_keys", data.get("signs", []))
+    if level.find("i") and len(level.find("i")) > len(signs):
+        errors.append("more 'i' signs than texts in 'sign_keys'")
+    # T2: level text lives in data/strings_fa.json; the level keeps only keys
+    for kind in ("intro", "rescue", "outro"):
+        for line in data.get(kind, []):
+            if "text" in line:
+                errors.append("%s line has a hard-coded text (use text_key)" % kind)
+            elif line.get("text_key") not in STRINGS:
+                errors.append("%s text_key %s is not in strings_fa.json" % (kind, line.get("text_key")))
+    for key in data.get("sign_keys", []) + [data.get("title_key", "")] * ("title_key" in data):
+        if key not in STRINGS:
+            errors.append("key %s is not in strings_fa.json" % key)
     if data.get("lens", True) is False and any(c in "".join(level.g) for c in "rBV~wz"):
         errors.append("lens is off but the map has time-dependent tiles")
     if level.find("g") and not (level.levers or level.sensors):

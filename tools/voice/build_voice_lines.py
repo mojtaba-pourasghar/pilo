@@ -80,6 +80,17 @@ GUARDIANS = {
 }
 
 
+STRINGS_FILE = os.path.join(ROOT, "data", "strings_fa.json")
+STRINGS = json.load(open(STRINGS_FILE, encoding="utf-8")) if os.path.exists(STRINGS_FILE) else {}
+
+
+def text_of(item):
+    """A line's text: data keeps only keys into data/strings_fa.json (T2)."""
+    if "text_key" in item:
+        return STRINGS[item["text_key"]]
+    return item.get("text", "")
+
+
 SPOKEN_FILE = os.path.join(ROOT, "tools", "voice", "spoken_fa.json")
 SPOKEN = json.load(open(SPOKEN_FILE, encoding="utf-8")) if os.path.exists(SPOKEN_FILE) else {}
 
@@ -118,9 +129,10 @@ def main():
                 if "id" not in line:
                     line["id"] = "l%02d_%s_%d" % (level, kind, n)
                     changed = True
-                add(line["id"], line.get("who", "pilo"), line["text"], level, kind,
+                add(line["id"], line.get("who", "pilo"), text_of(line), level, kind,
                     "%s — مرحلهٔ %d" % (event, level))
-        for n, text in enumerate(data.get("signs", []), 1):
+        signs = [STRINGS[k] for k in data.get("sign_keys", [])] or data.get("signs", [])
+        for n, text in enumerate(signs, 1):
             add("l%02d_sign_%d" % (level, n), "pilo", text, level, "sign", "تابلوی %d مرحلهٔ %d" % (n, level))
         if changed:
             with open(path, "w", encoding="utf-8") as f:
@@ -136,13 +148,13 @@ def main():
     # the opening story (data/story/intro.json), read by the narrator
     with open(os.path.join(ROOT, "data", "story", "intro.json"), encoding="utf-8") as f:
         for panel in json.load(f)["panels"]:
-            add(panel["voice_id"], "narrator", panel["text"], 0, "story", "داستان آغاز بازی")
+            add(panel["voice_id"], "narrator", text_of(panel), 0, "story", "داستان آغاز بازی")
 
     # chapter cards (data/story/chapters.json), shown through the dialogue box
     with open(os.path.join(ROOT, "data", "story", "chapters.json"), encoding="utf-8") as f:
         for world, chapter in json.load(f).items():
             for line in chapter.get("lines", []):
-                add(line["id"], line.get("who", "narrator"), line["text"], 0, "chapter", "کارت فصل " + world)
+                add(line["id"], line.get("who", "narrator"), text_of(line), 0, "chapter", "کارت فصل " + world)
 
     # the opening tutorial (scripts/ui/tutorial.gd STEPS), read by Pilo
     with open(os.path.join(ROOT, "scripts", "ui", "tutorial.gd"), encoding="utf-8") as f:

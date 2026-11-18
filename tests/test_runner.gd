@@ -28,6 +28,7 @@ func _ready() -> void:
 	await _test_water_exit()
 	await _test_rival_runs()
 	_test_names()
+	_test_strings()
 	SaveManager.data = backup
 	SaveManager.save_game()
 	print("\n%d checks, %d failed" % [_checks, _failures])
@@ -592,3 +593,17 @@ func _test_names() -> void:
 			bad.append(path)
 	_check(bad.is_empty(), "no level or story text names Nima or Kian %s" % [bad])
 	_check(AudioManager.is_voice_stale("app_race_start") and not AudioManager.play_voice("app_race_start"), "clips that said Kian or the old name are not played")
+
+
+## T2: texts come from data/strings_fa.json; data keeps only keys.
+func _test_strings() -> void:
+	_check(Strings.t("app_unsafe") == "اینجا جای امن نیست!", "a message comes from strings_fa.json")
+	_check(Strings.t("app_companion_joined", {"name": "پیلو"}) == "پیلو همراهت شد!", "values are filled in")
+	_check(Strings.t("no_such_key_xyz") == "no_such_key_xyz", "a missing key shows itself")
+	var data: Dictionary = LevelManager.load_level(2)
+	var ok: bool = not data.get("intro", []).is_empty()
+	for line in data.get("intro", []):
+		ok = ok and line.has("text_key") and String(line.get("text", "")) != "" and not String(line.text).begins_with("c0")
+	_check(ok, "level lines are resolved from their keys")
+	_check(LevelManager.level_title(2) == "پل کُنده‌ها", "level titles come from strings")
+	_check(String(LevelManager.WORLDS[0].title) == "جنگل رنگارستان", "world titles come from strings")

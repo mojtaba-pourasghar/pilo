@@ -6,49 +6,49 @@
    "voice_id": "intro_1",
    "image": "story_1",
    "mood": "bright",
-   "text": "روزی روزگاری، در سرزمین رنگارستان، همه‌چیز پر از رنگ و آواز بود."
+   "text_key": "intro_1"
   },
   {
    "voice_id": "intro_2",
    "image": "story_2",
    "mood": "warm",
-   "text": "در برج زمانِ دهکده، بابابزرگ ساعت‌ساز از هشت قلب زمان مراقبت می‌کرد؛ قلب‌هایی که زمان و رنگ‌ها را زنده نگه می‌داشتند."
+   "text_key": "intro_2"
   },
   {
    "voice_id": "intro_3",
    "image": "story_3",
    "mood": "night",
-   "text": "اما یک شب، شاه‌سایه از دل تاریکی آمد و هر هشت قلب زمان را دزدید!"
+   "text_key": "intro_3"
   },
   {
    "voice_id": "intro_4",
    "image": "story_4",
    "mood": "grey",
-   "text": "رنگ‌ها از شهر پریدند، ساعت بزرگ ایستاد و سایه‌ها همه‌جا را گرفتند."
+   "text_key": "intro_4"
   },
   {
    "voice_id": "intro_5",
    "image": "story_5",
    "mood": "bright",
-   "text": "صبح روز بعد، {hero}ی کنجکاو در جنگل یک تخم درخشان پیدا کرد..."
+   "text_key": "intro_5"
   },
   {
    "voice_id": "intro_6",
    "image": "story_6",
    "mood": "magic",
-   "text": "تخم ترک برداشت و پیلو بیرون آمد؛ روباه کوچولویی که آخرین نگهبان زمان بود!"
+   "text_key": "intro_6"
   },
   {
    "voice_id": "intro_7",
    "image": "story_7",
    "mood": "magic",
-   "text": "پیلو عدسی زمان را به {hero} نشان داد. با آن می‌شود بین گذشته و حال سفر کرد."
+   "text_key": "intro_7"
   },
   {
    "voice_id": "intro_8",
    "image": "story_8",
    "mood": "bright",
-   "text": "حالا نوبت توست! هشت قلب زمان را پس بگیر، سایه‌ها را آزاد کن و رنگارستان را نجات بده!"
+   "text_key": "intro_8"
   }
  ]
 }

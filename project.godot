@@ -25,6 +25,7 @@ config/icon="res://icon.png"
 
 SaveManager="*res://scripts/save/save_manager.gd"
 Names="*res://scripts/platform/names.gd"
+Strings="*res://scripts/platform/strings.gd"
 GameInput="*res://scripts/platform/input_setup.gd"
 AudioManager="*res://scripts/platform/audio_manager.gd"
 Analytics="*res://scripts/platform/analytics_adapter.gd"
