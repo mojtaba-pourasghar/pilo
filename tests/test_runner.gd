@@ -255,6 +255,8 @@ func _test_audio() -> void:
 	for line in lines.lines:
 		if bool(line.get("stale_audio", false)):
 			continue    # to be re-recorded without the hero's name (T19); its vowelled form comes then
+		if not line.has("spoken") and not ResourceLoader.exists("res://assets/audio/voice/%s.mp3" % line.id):
+			continue    # a new line not recorded yet (T19): the studio adds its vowelled form
 		var spoken := String(line.get("spoken", ""))
 		var text := String(line.text)
 		for m in marks:
@@ -316,24 +318,38 @@ func _test_time_shift_safety() -> void:
 	await get_tree().process_frame
 
 
+## T8: chapter 1 «جنگل رنگارستان» - eight levels: six normal ones with the keepers of
+## content/01 (K1, K2, K8, K4, K11, K12), the memory room and the Old Bear; every normal level
+## has three places per key and uses at least three of the six past/present verbs.
 func _test_level_1_layout() -> void:
-	var data := LevelManager.load_level(1)
-	var root := Node2D.new()
-	add_child(root)
-	var palette := LevelBuilder.make_palette(LevelManager.WORLDS[0].palette)
-	var info := LevelBuilder.build(data, root, FakeGame.new(), palette)
-	_check(info.time_key, "level 1 has a time key that locks the gate")
-	_check(info.diamonds >= 5, "level 1 hides %d diamonds" % info.diamonds)
-	_check(info.enemies >= 8, "level 1 has %d shadow creatures" % info.enemies)
-	var warps := 0
-	for pipe in info.pipes.values():
-		warps += int(pipe.is_warp)
-	_check(warps == data.warps.size(), "every warp starts on a pipe (%d)" % warps)
-	var rooms := 0
-	for child in root.get_children():
-		rooms += int(child is SecretRoom)
-	_check(rooms >= 3, "level 1 has %d secret rooms or caves" % rooms)
-	root.free()
+	var keepers := ["K1", "K2", "K8", "K4", "K11", "K12"]
+	for i in 6:
+		var data := LevelManager.load_level(i + 1)
+		_check(int(data.format) == 4 and data.kind == "normal" and data.chapter == "ch01", "level %d is a normal format-4 level of chapter 1" % (i + 1))
+		_check(data.keeper.type == keepers[i], "level %d keeper is %s" % [i + 1, keepers[i]])
+		_check(data.key_slots.past.size() == 3 and data.key_slots.present.size() == 3, "level %d has three places per key" % (i + 1))
+		var verbs := {}
+		var text := "".join(data.map)
+		if "B" in text or "r" in text:
+			verbs["ruin_restore"] = true
+		if data.get("time_tiles", []).size() > 0:
+			verbs["open_closed"] = true
+		if data.get("seeds", []).size() > 0:
+			verbs["seed_tree"] = true
+		if "w" in text:
+			verbs["water"] = true
+		if data.keeper.type in ["K4", "K11"] or data.get("signs_timed", []).size() > 0:
+			verbs["clue"] = true
+		if data.keeper.type == "K12":
+			verbs["carry"] = true
+		_check(verbs.size() >= 3, "level %d uses %d past/present verbs" % [i + 1, verbs.size()])
+		_check(not data.intro.is_empty() and data.intro[0].has("text_key"), "level %d starts with a short dialogue" % (i + 1))
+	var memory := LevelManager.load_level(7)
+	_check(memory.kind == "memory" and memory.keeper == null and memory.memory.egg == "bargak", "level 7 is the memory room (no keeper, the egg Bargak)")
+	var boss := LevelManager.load_level(8)
+	_check(boss.kind == "boss" and boss.guardian.id == "old_bear", "level 8 is the Old Bear")
+	var title := LevelManager.level_title(1)
+	_check(title == "راه اول", "level 1 is called «راه اول» (%s)" % title)
 
 
 ## Starts the game scene on a small hand-made map (no dialogue).

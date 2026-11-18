@@ -3,18 +3,33 @@
   "lines": [
    {
     "who": "narrator",
-    "id": "ch_forest_1",
-    "text_key": "ch_forest_1"
+    "text_key": "c01_s1_01",
+    "id": "c01_s1_01"
    },
    {
     "who": "narrator",
-    "id": "ch_forest_2",
-    "text_key": "ch_forest_2"
+    "text_key": "c01_s1_02",
+    "id": "c01_s1_02"
+   },
+   {
+    "who": "hero",
+    "text_key": "c01_s1_03",
+    "id": "c01_s1_03"
    },
    {
     "who": "pilo",
-    "id": "ch_forest_3",
-    "text_key": "ch_forest_3"
+    "text_key": "c01_s1_05",
+    "id": "c01_s1_05"
+   },
+   {
+    "who": "hero",
+    "text_key": "c01_s1_06",
+    "id": "c01_s1_06"
+   },
+   {
+    "who": "pilo",
+    "text_key": "c01_s1_07",
+    "id": "c01_s1_07"
    }
   ],
   "title_key": "chapter_forest_title"

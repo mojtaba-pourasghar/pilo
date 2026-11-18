@@ -21,7 +21,8 @@ func setup() -> void:
 		"hurt": ART + "idle.png", "released": ART + "released.png"}
 	pattern = params.get("pattern", [2, 0, 1])
 	hits_needed = 1
-	var offsets := [Vector2(-190, 0), Vector2(170, 0), Vector2(330, 0)]
+	# the three knots float in an arc over its crown (so they fit wherever the keeper stands)
+	var offsets := [Vector2(-150, -150), Vector2(0, -235), Vector2(150, -150)]
 	for i in 3:
 		var knot := Knot.new()
 		knot.symbol = i

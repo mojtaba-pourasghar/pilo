@@ -142,6 +142,7 @@ func _ready() -> void:
 	if int(data.get("format", 2)) >= 4:
 		_setup_keys()
 		_spawn_guardian()
+		_setup_memory()
 	hud.pause_pressed.connect(open_pause)
 	hud.hint_pressed.connect(request_hint)
 	dialogue = DIALOGUE.new()
@@ -356,6 +357,53 @@ func on_chapter_boss_released(b: ChapterBoss) -> void:
 	SaveManager.data.hearts_of_time = maxi(int(SaveManager.data.get("hearts_of_time", 0)), int(world.index))
 	await get_tree().create_timer(1.6).timeout
 	await _play_lines(data.get("released", []))
+
+
+## The memory room (kind "memory"): no keeper; reaching the glowing egg plays the chapter's
+## memory (a panel and a few lines) and the egg joins; then the gate opens.
+var memory_played := false
+
+
+func _setup_memory() -> void:
+	if String(data.get("kind", "")) != "memory" or not data.get("memory") is Dictionary:
+		return
+	var mem: Dictionary = data.memory
+	var trigger := MemoryEgg.new()
+	trigger.game = self
+	trigger.egg = String(mem.get("egg", ""))
+	trigger.position = Vector2(int(mem.cell[0]) * LevelBuilder.TILE + 32, (int(mem.cell[1]) + 1) * LevelBuilder.TILE)
+	_world_root.add_child(trigger)
+	if info.exit:
+		info.exit.set_locked(true)
+
+
+func play_memory(egg: String) -> void:
+	if memory_played:
+		return
+	memory_played = true
+	_set_busy(true)
+	var mem: Dictionary = data.memory
+	var fb := Flashback.new()
+	fb.panel_path = String(mem.get("panel", ""))
+	add_child(fb)
+	await fb.finished
+	await dialogue.play(Strings.resolve(mem.get("lines", []).duplicate(true)))
+	var eggs: Array = SaveManager.data.get("eggs", [])
+	if egg != "" and not eggs.has(egg):
+		eggs.append(egg)
+	SaveManager.data["eggs"] = eggs
+	var memories: Array = SaveManager.data.get("memories", [])
+	if not memories.has(String(data.get("chapter", ""))):
+		memories.append(String(data.get("chapter", "")))
+	SaveManager.data["memories"] = memories
+	if info.exit:
+		info.exit.set_locked(false)
+	_set_busy(false)
+	_notice(Strings.t("app_egg_found"), UIKit.GREEN, true)
+
+
+func on_memory_mark(_mark: Node) -> void:
+	_notice(Strings.t("app_memory_mark"), Color(0.75, 0.6, 1.0), true)
 
 
 ## The keeper of the level stands on the place of the key it holds (T6).
