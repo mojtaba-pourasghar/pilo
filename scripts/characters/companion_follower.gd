@@ -1,6 +1,6 @@
 class_name CompanionFollower
 extends Node2D
-## The companion that is out (instead of Pilo) walks or flies beside Nima. Its passive ability
+## The companion that is out (instead of Pilo) walks or flies beside the hero. Its passive ability
 ## (wall jump, double jump...) is applied by the player; the paw button calls act() below.
 
 var id := "squirrel"
@@ -176,7 +176,7 @@ func _nearest(nodes: Array, from: Vector2, reach: float, ok: Callable) -> Node2D
 	return best
 
 
-## Leaps to a point, does the thing there, and comes back to Nima's side.
+## Leaps to a point, does the thing there, and comes back to the hero's side.
 func _dash_to(where: Vector2, on_hit: Callable) -> void:
 	busy = true
 	set_physics_process(false)

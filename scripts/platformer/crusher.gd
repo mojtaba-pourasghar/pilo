@@ -1,6 +1,6 @@
 class_name Crusher
 extends AnimatableBody2D
-## «سنگ‌کوب»: a grumpy stone face hanging in the air. When Nima walks underneath it drops,
+## «سنگ‌کوب»: a grumpy stone face hanging in the air. When the hero walks underneath it drops,
 ## rests a moment (you can stand on it) and slowly rises again. Being under it as it
 ## lands costs a heart. Size: 1.5 x 1.5 tiles; origin = top-left of its resting cell.
 

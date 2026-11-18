@@ -25,8 +25,8 @@ func _ready() -> void:
 		rig = painted
 		if who == "pilo":
 			painted.ready.connect(func(): painted.set_hue_shift(hue))
-	elif who == "nima":
-		rig = NimaRig.new()
+	elif who == "hero":
+		rig = HeroRig.new()
 	else:
 		var fox := PiloRig.new()
 		fox.set_hue_shift(hue)
@@ -38,7 +38,7 @@ func _ready() -> void:
 
 
 func _fit(rig: CharacterRig) -> void:
-	# Nima is ~125 px tall, Pilo ~70 px wide: scale to the box, feet at the bottom.
-	var s := size.y / 130.0 if who == "nima" else size.x / 78.0
+	# the hero is ~125 px tall, Pilo ~70 px wide: scale to the box, feet at the bottom.
+	var s := size.y / 130.0 if who == "hero" else size.x / 78.0
 	rig.scale = Vector2(s, s)
-	rig.position = Vector2(size.x * 0.5 + (0.0 if who == "nima" else -4.0 * s), size.y - 4.0 * s)
+	rig.position = Vector2(size.x * 0.5 + (0.0 if who == "hero" else -4.0 * s), size.y - 4.0 * s)

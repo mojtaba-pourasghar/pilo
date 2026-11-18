@@ -67,7 +67,7 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 	}
 	_build_runs(grid, w, h, root, palette)
 	# cells inside a pool that hold a coin, a diamond or a creature (or nothing) are water too, so
-	# the water is drawn behind them and Nima swims there (the items are still placed normally)
+	# the water is drawn behind them and the hero swims there (the items are still placed normally)
 	var wet := _wet_grid(grid, w, h)
 	_build_water(wet, w, h, root, game, palette)
 	_build_wind(grid, w, h, root, int(TIME_MASKS.get(String(data.get("wind_time", "both")), BOTH)))
@@ -188,7 +188,7 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 					info.needs_rescue = true
 				"i":
 					var board := InfoSign.new()
-					board.text = signs[sign_index] if sign_index < signs.size() else ""
+					board.text = Names.fmt(String(signs[sign_index])) if sign_index < signs.size() else ""
 					board.voice_id = "l%02d_sign_%d" % [int(data.get("id", 0)), sign_index + 1]
 					board.position = pos
 					root.add_child(board)
@@ -495,7 +495,7 @@ static func _build_thorns(grid: Array, w: int, h: int, root: Node2D) -> void:
 
 
 ## Open cells under the ground (some "#" above them in the same column) become secret rooms:
-## covered with earth until Nima gets inside. One room per connected group of cells.
+## covered with earth until the hero gets inside. One room per connected group of cells.
 static func _build_secret_rooms(grid: Array, w: int, h: int, root: Node2D, palette: Dictionary) -> void:
 	var covered := {}
 	for x in w:

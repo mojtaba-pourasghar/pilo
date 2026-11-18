@@ -1,6 +1,6 @@
 class_name CompanionRig
 extends CharacterRig
-## The twelve companions of the village, drawn in code like Nima and Pilo: each one breathes,
+## The twelve companions of the village, drawn in code like the hero and Pilo: each one breathes,
 ## blinks and moves (hop, waddle, flap). Origin = feet on the ground (flyers hover above it),
 ## facing right. State "idle" or "move".
 

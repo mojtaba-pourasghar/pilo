@@ -1,7 +1,7 @@
 class_name TeamPicker
 extends CanvasLayer
 ## In the middle of a level: pick who comes along (one companion), what is in the backpack
-## (tools, as many as there are slots) and which weapon Nima holds. The game is paused while
+## (tools, as many as there are slots) and which weapon the hero holds. The game is paused while
 ## it is open; every change takes effect at once. Only what is owned is shown; the rest is
 ## bought in the village.
 
@@ -105,7 +105,7 @@ func _pick(kind: String, id: String) -> void:
 				_message.text = "%s: %s" % [Loadout.TOOLS[id].name, Loadout.TOOLS[id].use]
 		"weapon":
 			Weapons.pick(id)
-			_message.text = "%s در دست نیماست." % Loadout.TOOLS[id].name
+			_message.text = Names.fmt("%s در دست {hero} است." % Loadout.TOOLS[id].name)
 	var game := get_tree().get_first_node_in_group("game")
 	if game and game.has_method("refresh_loadout"):
 		game.refresh_loadout()

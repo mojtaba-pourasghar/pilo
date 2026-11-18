@@ -1,6 +1,6 @@
 class_name GameCamera
 extends Camera2D
-## Follows Nima with a look-ahead in the running direction (so at speed you see what is
+## Follows the hero with a look-ahead in the running direction (so at speed you see what is
 ## coming) and a short shake for heavy landings and crushers.
 
 const LOOK_AHEAD := 0.32
@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
 	rotation = _noise.get_noise_2d(_time * 40.0, 99.0) * 0.05 * amount
 	_punch = move_toward(_punch, 0.0, delta * 0.6)
 	# taller screens (tablets, 4:3) show more of the level above and below: zoom in a little
-	# so Nima stays as big as on a phone
+	# so the hero stays as big as on a phone
 	var view := get_viewport().get_visible_rect().size
 	var base := sqrt(maxf(1.0, view.y / 720.0))
 	zoom = Vector2.ONE * (base + _punch)

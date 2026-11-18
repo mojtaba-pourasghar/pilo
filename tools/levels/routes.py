@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Measures the routes of the platformer levels with the validator's reachability search:
 
-  upper   share of the level's columns where Nima can stand high above the ground road
+  upper   share of the level's columns where the hero can stand high above the ground road
           (on planks, roofs, tree tops...)
   under   columns of the underground he can actually reach (secret rooms, corridors)
   secret  reachable warp pipes + fox dens

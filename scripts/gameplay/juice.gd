@@ -52,7 +52,7 @@ static func vibrate(ms: int) -> void:
 		Input.vibrate_handheld(ms)
 
 
-## A full-screen flash (white for big hits, red when Nima is hurt).
+## A full-screen flash (white for big hits, red when the hero is hurt).
 static func flash(node: Node, color: Color, seconds := 0.25) -> void:
 	var layer := CanvasLayer.new()
 	layer.layer = 40

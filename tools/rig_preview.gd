@@ -14,7 +14,7 @@ func _ready() -> void:
 	RenderingServer.set_default_clear_color(Color("bfe6ff"))
 	var s := float(args.get("scale", "1.7"))
 	for i in NIMA_STATES.size():
-		var rig: CharacterRig = PaintedRig.make("nima") if args.has("painted") else NimaRig.new()
+		var rig: CharacterRig = PaintedRig.make("hero") if args.has("painted") else HeroRig.new()
 		rig.state = NIMA_STATES[i]
 		rig.speed = 260.0 if rig.state == "walk" else 520.0
 		rig.position = Vector2(80 + i * 136, 330)

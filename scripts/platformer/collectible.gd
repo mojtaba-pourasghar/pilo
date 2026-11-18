@@ -2,7 +2,7 @@ class_name Collectible
 extends Area2D
 ## Things to pick up, all drawn in code: coins (spin), diamonds (rare, mostly in hidden
 ## places), hearts and the time key that unlocks the exit gate. Spilled coins (dropped
-## when Nima is hurt) bounce around and can be caught again before they fade.
+## when the hero is hurt) bounce around and can be caught again before they fade.
 
 enum Kind { COIN, DIAMOND, HEART, TIME_KEY }
 
@@ -90,7 +90,7 @@ func collect() -> void:
 	tween.tween_callback(queue_free)
 
 
-## Pilo fetches it: it flies to Nima and is collected there.
+## Pilo fetches it: it flies to the hero and is collected there.
 func fetch_to(target: Node2D) -> void:
 	if taken:
 		return

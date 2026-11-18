@@ -1,6 +1,6 @@
 class_name PlayerFX
 extends Node2D
-## Nima's body in the world: dust kicked up by his feet (sand, snow... in the colour of the
+## the hero's body in the world: dust kicked up by his feet (sand, snow... in the colour of the
 ## ground), a dust ring and a thump on a hard landing, sweat in the desert heat or after a
 ## long run, panting when he stops tired, his breath steaming in the cold, and catching fire
 ## for a moment when a guardian's fireball hits him.
@@ -93,7 +93,7 @@ func _land(parent: Node, feet: Vector2) -> void:
 		FX.dust_ring(parent, feet, 0.7, color)
 
 
-## Nima catches fire for a moment (a guardian's fireball).
+## the hero catches fire for a moment (a guardian's fireball).
 func ignite(seconds := 1.2) -> void:
 	if _burning > 0.0:
 		return

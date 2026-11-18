@@ -2,7 +2,7 @@ class_name Boss
 extends CharacterBody2D
 ## The guardian of a world, cursed by the shadow. Stomp on its head (or send Pilo) while it is
 ## open to a hit; each hit makes it angrier and faster. With no hits left the curse lifts:
-## it turns back into its true colours, thanks Nima, and the barred door to the time gate
+## it turns back into its true colours, thanks the hero, and the barred door to the time gate
 ## opens. Each world's guardian has its own look and moves (KINDS).
 
 const GRAVITY := 2000.0
@@ -122,7 +122,7 @@ func _physics_process(delta: float) -> void:
 			if is_on_floor() and velocity.y >= 0.0 and _timer < 0.4:
 				_land_slam()
 		"high":
-			# flying up and drifting over Nima before a dive
+			# flying up and drifting over the hero before a dive
 			velocity = Vector2(signf(to_player) * 220.0, (global_position.y - (_home.y - 330.0)) * -2.5)
 			if _timer <= 0.0:
 				state = "dive"
@@ -131,7 +131,7 @@ func _physics_process(delta: float) -> void:
 			if is_on_floor() or global_position.y >= _home.y:
 				_stun(1.3)
 		"under":
-			# burrowed: invisible and untouchable, sliding under Nima, then bursting up
+			# burrowed: invisible and untouchable, sliding under the hero, then bursting up
 			rig.modulate.a = 0.0
 			velocity.x = signf(to_player) * 260.0
 			if _timer <= 0.0:
@@ -303,7 +303,7 @@ func _free() -> void:
 
 
 ## Thrown things: an arc that hurts on touch and breaks on the ground. In the hot worlds
-## (and the castle) they are fireballs that set Nima alight for a moment.
+## (and the castle) they are fireballs that set the hero alight for a moment.
 class Projectile extends Area2D:
 	const FIRE := {"golden_desert": Color(1.0, 0.55, 0.15), "clock_factory": Color(1.0, 0.6, 0.2), "shadow_castle": Color(0.75, 0.35, 1.0)}
 	var kind := "forest"
@@ -350,7 +350,7 @@ class Projectile extends Area2D:
 
 	func _hit(body: Node) -> void:
 		if body.is_in_group("player"):
-			# a guardian's fireball sets Nima alight for a moment
+			# a guardian's fireball sets the hero alight for a moment
 			if body.take_hit(global_position.x) and FIRE.has(kind) and body.get("fx"):
 				body.fx.ignite()
 		FX.burst(get_parent(), global_position, SkinBook.accent(kind), 8)

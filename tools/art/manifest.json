@@ -19,7 +19,7 @@
   },
   {
    "id": "story_5",
-   "prompt": "the next morning in a sunlit forest: an 8-year-old boy explorer with a red beanie and backpack finds a softly glowing egg among roots. an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack, blue denim shorts, white socks, brown hiking boots. He is a normal human boy with NO tail, NO animal ears, clean face with a small normal human nose, nothing on his face",
+   "prompt": "the next morning in a sunlit forest: an 8-year-old boy explorer with a red beanie and backpack finds a softly glowing egg among roots. an 8-year-old boy explorer named the hero: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack, blue denim shorts, white socks, brown hiking boots. He is a normal human boy with NO tail, NO animal ears, clean face with a small normal human nose, nothing on his face",
    "style": "scene",
    "size": [
     1536,
@@ -32,7 +32,7 @@
   },
   {
    "id": "story_6",
-   "prompt": "the glowing egg hatches and a tiny orange fox cub with big blue eyes and a blue scarf pops out in a burst of golden light, the boy smiles in surprise. an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack, blue denim shorts, white socks, brown hiking boots. He is a normal human boy with NO tail, NO animal ears, clean face with a small normal human nose, nothing on his face",
+   "prompt": "the glowing egg hatches and a tiny orange fox cub with big blue eyes and a blue scarf pops out in a burst of golden light, the boy smiles in surprise. an 8-year-old boy explorer named the hero: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack, blue denim shorts, white socks, brown hiking boots. He is a normal human boy with NO tail, NO animal ears, clean face with a small normal human nose, nothing on his face",
    "style": "scene",
    "size": [
     1536,
@@ -45,7 +45,7 @@
   },
   {
    "id": "story_7",
-   "prompt": "the boy Nima holds a glowing brass time lens with both hands while the separate little orange fox cub Pilo with a blue scarf sits beside his feet; the forest around them is half golden past and half blue present. an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack, blue denim shorts, white socks, brown hiking boots. He is a normal human boy with NO tail, NO animal ears, clean face with a small normal human nose, nothing on his face",
+   "prompt": "the boy the hero holds a glowing brass time lens with both hands while the separate little orange fox cub Pilo with a blue scarf sits beside his feet; the forest around them is half golden past and half blue present. an 8-year-old boy explorer named the hero: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack, blue denim shorts, white socks, brown hiking boots. He is a normal human boy with NO tail, NO animal ears, clean face with a small normal human nose, nothing on his face",
    "style": "scene",
    "size": [
     1536,
@@ -58,7 +58,7 @@
   },
   {
    "id": "story_8",
-   "prompt": "the boy Nima and the separate little orange fox cub Pilo with a blue scarf stand together on a cliff at sunrise, seen from behind and the side, looking at eight distant magical worlds. an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack, blue denim shorts, white socks, brown hiking boots. He is a normal human boy with NO tail, NO animal ears, clean face with a small normal human nose, nothing on his face",
+   "prompt": "the boy the hero and the separate little orange fox cub Pilo with a blue scarf stand together on a cliff at sunrise, seen from behind and the side, looking at eight distant magical worlds. an 8-year-old boy explorer named the hero: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack, blue denim shorts, white socks, brown hiking boots. He is a normal human boy with NO tail, NO animal ears, clean face with a small normal human nose, nothing on his face",
    "style": "scene",
    "size": [
     1536,
@@ -70,7 +70,7 @@
    ]
   },
   {
-   "id": "nima_run_a",
+   "id": "hero_run_a",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, running fast: right leg forward, left arm forward, body leaning forward",
    "style": "sprite",
    "size": [
@@ -78,14 +78,14 @@
     1024
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_run_b",
+   "id": "hero_run_b",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, running fast: both feet off the ground in mid-stride, arms swinging",
    "style": "sprite",
    "size": [
@@ -93,14 +93,14 @@
     1024
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_run_c",
+   "id": "hero_run_c",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, running fast: left leg forward, right arm forward, body leaning forward",
    "style": "sprite",
    "size": [
@@ -108,14 +108,14 @@
     1024
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_run_d",
+   "id": "hero_run_d",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, running fast: passing pose, one knee raised high",
    "style": "sprite",
    "size": [
@@ -123,14 +123,14 @@
     1024
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_walk_a",
+   "id": "hero_walk_a",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking calmly, right leg forward",
    "style": "sprite",
    "size": [
@@ -138,14 +138,14 @@
     1024
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_walk_b",
+   "id": "hero_walk_b",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking calmly, left leg forward",
    "style": "sprite",
    "size": [
@@ -153,14 +153,14 @@
     1024
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_idle_b",
+   "id": "hero_idle_b",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, standing relaxed, breathing in, shoulders slightly raised, a small smile",
    "style": "sprite",
    "size": [
@@ -168,9 +168,9 @@
     1024
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
@@ -1004,8 +1004,8 @@
    "max": 384
   },
   {
-   "id": "nima_sheet",
-   "prompt": "Character turnaround model sheet of an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots. Four full-body views in a row, evenly spaced with wide gaps: front view, three-quarter view, side view facing right, back view. Same character in every view, neutral standing pose",
+   "id": "hero_sheet",
+   "prompt": "Character turnaround model sheet of an 8-year-old boy explorer named the hero: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots. Four full-body views in a row, evenly spaced with wide gaps: front view, three-quarter view, side view facing right, back view. Same character in every view, neutral standing pose",
    "style": "sprite",
    "size": [
     1440,
@@ -1032,8 +1032,8 @@
    "max": 1024
   },
   {
-   "id": "nima_rig",
-   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference sheet. Full body, strict side profile view facing right, standing tall and relaxed, the near arm hanging straight down slightly in front of the body with a clear gap between arm and body, legs slightly apart with a clear gap between them, the backpack on his back",
+   "id": "hero_rig",
+   "prompt": "an 8-year-old boy explorer named the hero: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference sheet. Full body, strict side profile view facing right, standing tall and relaxed, the near arm hanging straight down slightly in front of the body with a clear gap between arm and body, legs slightly apart with a clear gap between them, the backpack on his back",
    "style": "sprite",
    "size": [
     768,
@@ -1041,7 +1041,7 @@
    ],
    "post": "cutout",
    "refs": [
-    "nima_sheet"
+    "hero_sheet"
    ],
    "max": 1024
   },
@@ -1060,8 +1060,8 @@
    "max": 1024
   },
   {
-   "id": "nima_jump",
-   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference. Full body, side view facing right, jumping high with joy, both arms raised, one knee up",
+   "id": "hero_jump",
+   "prompt": "an 8-year-old boy explorer named the hero: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference. Full body, side view facing right, jumping high with joy, both arms raised, one knee up",
    "style": "sprite",
    "size": [
     768,
@@ -1069,12 +1069,12 @@
    ],
    "post": "cutout",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_glide",
+   "id": "hero_glide",
    "prompt": "the same cartoon explorer character as in the reference picture (red knitted beanie, orange t-shirt, olive backpack, denim shorts, brown boots), same 3D style, full body, side view facing right, floating in the air with both arms stretched straight up, holding on to something above, legs together, happy face",
    "style": "sprite",
    "size": [
@@ -1083,7 +1083,7 @@
    ],
    "post": "cutout",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024,
    "trim_top": 62,
@@ -1097,7 +1097,7 @@
    ]
   },
   {
-   "id": "nima_hurt",
+   "id": "hero_hurt",
    "prompt": "the same cartoon explorer character as in the reference picture (red knitted beanie, orange t-shirt, olive backpack, denim shorts, brown boots), same 3D style, full body, side view facing right, stumbling backward with a surprised dizzy face, arms out for balance",
    "style": "sprite",
    "size": [
@@ -1106,12 +1106,12 @@
    ],
    "post": "cutout",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_celebrate",
+   "id": "hero_celebrate",
    "prompt": "the same cartoon explorer character as in the reference picture (red knitted beanie, orange t-shirt, olive backpack, denim shorts, brown boots), same 3D style, full body, side view facing right, cheering with both fists raised high, big happy smile",
    "style": "sprite",
    "size": [
@@ -1120,13 +1120,13 @@
    ],
    "post": "cutout",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_dash",
-   "prompt": "an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference. Full body, side view facing right, dashing forward fast, body leaning far forward, arms back, motion",
+   "id": "hero_dash",
+   "prompt": "an 8-year-old boy explorer named the hero: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference. Full body, side view facing right, dashing forward fast, body leaning far forward, arms back, motion",
    "style": "sprite",
    "size": [
     768,
@@ -1134,7 +1134,7 @@
    ],
    "post": "cutout",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
@@ -1195,8 +1195,8 @@
    "max": 1024
   },
   {
-   "id": "nima_portrait",
-   "prompt": "head and shoulders portrait of an 8-year-old boy explorer named Nima: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference, three-quarter view facing right, friendly big smile",
+   "id": "hero_portrait",
+   "prompt": "head and shoulders portrait of an 8-year-old boy explorer named the hero: red slouchy knitted beanie, messy brown hair, big warm brown eyes, rosy cheeks, orange t-shirt, olive green backpack with brass buckles, blue denim shorts with rolled hems, white socks, brown hiking boots, exactly as in the reference, three-quarter view facing right, friendly big smile",
    "style": "sprite",
    "size": [
     1024,
@@ -1204,7 +1204,7 @@
    ],
    "post": "bust",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 640,
    "bust": 0.42
@@ -6116,7 +6116,7 @@
    "max": 1024
   },
   {
-   "id": "nima_walk_c",
+   "id": "hero_walk_c",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking calmly, passing pose: the right leg straight under the body carrying the weight, the left foot lifted just behind it, arms close to the sides",
    "style": "sprite",
    "size": [
@@ -6124,14 +6124,14 @@
     1024
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_walk_d",
+   "id": "hero_walk_d",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, walking calmly, passing pose: the left leg straight under the body carrying the weight, the right foot lifted just behind it, arms close to the sides",
    "style": "sprite",
    "size": [
@@ -6139,14 +6139,14 @@
     1024
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_crouch",
+   "id": "hero_crouch",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, crouching down low on bent knees to fit under a low ceiling, back bent, head ducked, hands resting on the knees",
    "style": "sprite",
    "size": [
@@ -6154,14 +6154,14 @@
     768
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_crawl_a",
+   "id": "hero_crawl_a",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, crawling forward on hands and knees close to the ground, the right hand and the left knee forward",
    "style": "sprite",
    "size": [
@@ -6169,14 +6169,14 @@
     768
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_crawl_b",
+   "id": "hero_crawl_b",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, crawling forward on hands and knees close to the ground, the left hand and the right knee forward",
    "style": "sprite",
    "size": [
@@ -6184,14 +6184,14 @@
     768
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_swim_a",
+   "id": "hero_swim_a",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, swimming underwater, body stretched out horizontally, both arms reaching forward together, legs together kicking behind",
    "style": "sprite",
    "size": [
@@ -6199,14 +6199,14 @@
     768
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_swim_b",
+   "id": "hero_swim_b",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, swimming underwater, body stretched out horizontally, both arms pulled back along the sides, knees bent in a frog kick",
    "style": "sprite",
    "size": [
@@ -6214,14 +6214,14 @@
     768
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   },
   {
-   "id": "nima_swim_c",
+   "id": "hero_swim_c",
    "prompt": "the same cute cartoon character as in the reference picture, same design and colors, 3D style, full body, side view facing right, swimming underwater, body stretched out horizontally, arms spread wide to the sides in mid-stroke, legs apart",
    "style": "sprite",
    "size": [
@@ -6229,9 +6229,9 @@
     768
    ],
    "post": "frame",
-   "base": "nima_rig",
+   "base": "hero_rig",
    "refs": [
-    "nima_rig"
+    "hero_rig"
    ],
    "max": 1024
   }

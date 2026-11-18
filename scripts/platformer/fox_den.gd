@@ -1,6 +1,6 @@
 class_name FoxDen
 extends Node2D
-## «لانهٔ روباه»: a small burrow in the ground or a wall, far too small for Nima. Only Pilo fits:
+## «لانهٔ روباه»: a small burrow in the ground or a wall, far too small for the hero. Only Pilo fits:
 ## with the Pilo button he goes in and brings out what is inside (a diamond, or even the time
 ## key). Pilo's nose points dens out. Origin = top-left of its cell (the hole sits at the bottom).
 

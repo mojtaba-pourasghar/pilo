@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/player/player_controller.gd" id="1_script"]
-[ext_resource type="Script" path="res://scripts/characters/nima_rig.gd" id="2_rig"]
+[ext_resource type="Script" path="res://scripts/characters/hero_rig.gd" id="2_rig"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(36, 80)

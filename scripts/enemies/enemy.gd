@@ -2,7 +2,7 @@ class_name Enemy
 extends CharacterBody2D
 ## A shadow creature. Nothing dies in this game: stomping it, a dash, a bumped block or
 ## Pilo's attack *frees* it — the shadow lifts, it turns back to its real colours, hops
-## happily and leaves a coin. Touching it any other way costs Nima a heart.
+## happily and leaves a coin. Touching it any other way costs the hero a heart.
 ## Origin = middle of the feet. Each kind draws itself with its own CharacterRig.
 
 const GRAVITY := 2000.0

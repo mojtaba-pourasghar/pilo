@@ -1,7 +1,7 @@
 extends Node
 ## Dev helper for store screenshots and visual checks. Example:
 ##   godot --path . res://tools/screenshot.tscn -- --scene=game --level=3 --wait=2.5 --out=/tmp/shot.png [--shift] [--right=1.5]
-##   [--at=60,9] puts Nima at that tile first
+##   [--at=60,9] puts the hero at that tile first
 
 func _ready() -> void:
 	var args := {}
@@ -40,7 +40,7 @@ func _ready() -> void:
 			scene.call(call_parts[0])
 		await get_tree().create_timer(0.3).timeout
 	if args.has("at"):
-		# --at=x,y in tiles: put Nima there (feet on the bottom of that cell)
+		# --at=x,y in tiles: put the hero there (feet on the bottom of that cell)
 		var cell := String(args.at).split(",")
 		scene.player.global_position = Vector2(float(cell[0]) * 64.0 + 32.0, float(cell[1]) * 64.0 + 23.0)
 		scene.player.get_node("Camera2D").reset_smoothing()

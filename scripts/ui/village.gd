@@ -206,15 +206,15 @@ func _slot(kind: String, id: String) -> Control:
 func _pilo_card() -> Control:
 	var button: Button
 	if Loadout.companion() == "":
-		button = _price_button("همراه نیماست", UIKit.GREEN, false)
+		button = _price_button(Names.fmt("همراه {hero} است"), UIKit.GREEN, false)
 	else:
 		button = _price_button("انتخاب", UIKit.BLUE, true)
 		button.pressed.connect(func():
 			Loadout.pick_companion("")
-			_message.text = "پیلو همراه نیما شد!"
+			_message.text = Names.fmt("پیلو همراه {hero} شد!")
 			_refresh())
 	return _card(LoadoutIcon.make("companion", "", 92), "پیلو",
-		"سُر دادن نیما، بو کشیدن رازها، لانهٔ روباه، پرتاب شدن و شکستن", button, false)
+		Names.fmt("سُر دادن {hero}، بو کشیدن رازها، لانهٔ روباه، پرتاب شدن و شکستن"), button, false)
 
 
 func _companion_card(id: String) -> Control:
@@ -222,12 +222,12 @@ func _companion_card(id: String) -> Control:
 	var owned := Loadout.owns_companion(id)
 	var button: Button
 	if Loadout.has_companion(id):
-		button = _price_button("همراه نیماست", UIKit.GREEN, false)
+		button = _price_button(Names.fmt("همراه {hero} است"), UIKit.GREEN, false)
 	elif owned:
 		button = _price_button("انتخاب", UIKit.BLUE, true)
 		button.pressed.connect(func():
 			Loadout.pick_companion(id)
-			_message.text = "%s همراه نیما شد! (پیلو در کوله می‌ماند؛ وسط بازی با دکمهٔ کوچک عوضش کن)" % entry.name
+			_message.text = Names.fmt("%s همراه {hero} شد! (پیلو در کوله می‌ماند؛ وسط بازی با دکمهٔ کوچک عوضش کن)" % entry.name)
 			_refresh())
 	else:
 		button = _buy_button("companion", id, entry)
@@ -258,18 +258,18 @@ func _tool_card(id: String) -> Control:
 
 
 ## Weapons are not in the backpack: every owned one can be picked in a level with the swap
-## button; here you choose which one Nima starts with.
+## button; here you choose which one the hero starts with.
 func _weapon_card(id: String) -> Control:
 	var entry: Dictionary = Loadout.TOOLS[id]
 	var owned := Loadout.owns_tool(id)
 	var button: Button
 	if owned and Weapons.current() == id:
-		button = _price_button("در دست نیما", UIKit.GREEN, false)
+		button = _price_button(Names.fmt("در دست {hero}"), UIKit.GREEN, false)
 	elif owned:
 		button = _price_button("بردار", UIKit.BLUE, true)
 		button.pressed.connect(func():
 			Weapons.pick(id)
-			_message.text = "%s در دست نیماست. در مرحله با دکمهٔ چرخش، سلاح را عوض کن." % entry.name
+			_message.text = Names.fmt("%s در دست {hero} است. در مرحله با دکمهٔ چرخش، سلاح را عوض کن." % entry.name)
 			_refresh())
 	else:
 		button = _buy_button("tool", id, entry)

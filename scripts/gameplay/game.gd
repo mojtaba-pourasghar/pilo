@@ -1,8 +1,8 @@
 extends Node2D
 ## One playable level: builds the map, wires the events of every piece (blocks, coins,
 ## diamonds, shadow creatures, hazards, pipes, the time lens) and keeps the level's score.
-## Hearts: a hit costs one and spills a few coins; a fall costs one and returns Nima to the
-## last flag. With no hearts left Nima simply starts again from the flag with full hearts —
+## Hearts: a hit costs one and spills a few coins; a fall costs one and returns the hero to the
+## last flag. With no hearts left the hero simply starts again from the flag with full hearts —
 ## there is no game over.
 
 const PLAYER_SCENE := preload("res://scenes/characters/player.tscn")
@@ -51,7 +51,7 @@ var _camera: GameCamera
 var _dark := false
 var _follower: Node2D
 var weather: Weather
-var rival: Rival
+var rival: GhostRival
 var _tint_tween: Tween
 
 
@@ -140,7 +140,7 @@ func _ready() -> void:
 
 
 ## The chapter card the first time a world opens, then the level's lines, then (in a race
-## level) Kian sets off.
+## level) the ghost rival sets off.
 func _start_story() -> void:
 	if not ChapterCard.seen(String(world.id)) and LevelManager.override_level.is_empty():
 		_set_busy(true)
@@ -157,19 +157,19 @@ func _start_story() -> void:
 		tutorial.hud = hud
 		add_child(tutorial)
 		await tutorial.finished
-	if String(data.get("race", "")) == "kian":
+	if String(data.get("race", "")) == "ghost":
 		_start_race()
 
 
 func _start_race() -> void:
-	rival = Rival.new()
+	rival = GhostRival.offline(level_id)
 	rival.position = info.start + Vector2(70, 40)
 	rival.goal_x = info.exit.global_position.x + 32.0 if info.exit else info.size.x - 200.0
 	_world_root.add_child(rival)
 	rival.arrived.connect(func():
 		if not finished:
-			_notice("کیان زودتر به دروازه رسید! بازهم می‌شود کلید را پیدا کرد.", UIKit.BLUE, true, "app_race_lost"))
-	_notice("مسابقه با کیان! زودتر به دروازه برس.", UIKit.BLUE, true, "app_race_start")
+			_notice("روح رقیب زودتر رسید! باز هم می‌شود کلیدها را پیدا کرد.", UIKit.BLUE, true, "app_race_lost"))
+	_notice("مسابقه با روح رقیب! زودتر به دروازه برس.", UIKit.BLUE, true, "app_race_start")
 	await get_tree().create_timer(0.8).timeout
 	rival.running = true
 
@@ -254,7 +254,7 @@ func on_enemy_freed(enemy: Enemy) -> void:
 	SaveManager.data.pilo_xp = int(SaveManager.data.get("pilo_xp", 0)) + 1
 	FX.burst(_world_root, enemy.global_position + Vector2(0, -30), Color(1, 0.9, 0.5), 14)
 	Juice.hit(enemy, enemy.global_position + Vector2(0, -enemy.body_size.y * 0.6), 0.3)
-	# every defeated creature drops real coins: they jump out, then fly to Nima (+N floats up)
+	# every defeated creature drops real coins: they jump out, then fly to the hero (+N floats up)
 	var amount: int = maxi(2, enemy.coins + 1)
 	for i in amount:
 		var coin := Collectible.new()
@@ -270,7 +270,7 @@ func on_enemy_freed(enemy: Enemy) -> void:
 	FX.float_text(_world_root, enemy.global_position + Vector2(0, -90), "+%d" % amount, UIKit.GOLD)
 
 
-## Nima was hit: update the hearts and spill a few coins that can be caught again.
+## the hero was hit: update the hearts and spill a few coins that can be caught again.
 func on_player_hurt(away: float) -> void:
 	hud.set_hearts(player.hearts, player.max_hearts)
 	Juice.hit(player, player.global_position + Vector2(0, -20), 0.65, "impact")
@@ -347,7 +347,7 @@ func apply_display_settings() -> void:
 		weather.set_light(String(SaveManager.data.settings.get("quality", "high")) == "low")
 
 
-## Pilo out with Nima, or in the backpack while another companion is out.
+## Pilo out with the hero, or in the backpack while another companion is out.
 func _set_pilo_out(out: bool) -> void:
 	pilo.visible = out
 	pilo.process_mode = Node.PROCESS_MODE_INHERIT if out else Node.PROCESS_MODE_DISABLED
@@ -355,7 +355,7 @@ func _set_pilo_out(out: bool) -> void:
 		pilo.global_position = player.global_position + Vector2(-80.0 * player.facing, -40.0)
 
 
-## The next companion (Pilo first, then the ones Nima owns), straight from the screen.
+## The next companion (Pilo first, then the ones the hero owns), straight from the screen.
 func cycle_companion() -> void:
 	if _busy or finished:
 		return
@@ -408,7 +408,7 @@ func _magnet() -> void:
 
 # --- Darkness and the guardian of the world ----------------------------------------
 
-## Dark caves and castle halls: the world is dim, Nima carries a small light and Pilo glows.
+## Dark caves and castle halls: the world is dim, the hero carries a small light and Pilo glows.
 func _make_dark() -> void:
 	_dark = true
 	_modulate.color = DARK_TINT
@@ -621,7 +621,7 @@ func on_exit_reached() -> void:
 	if rival and not rival.done:
 		rival.running = false
 		add_coins(50, player.global_position, false)
-		_notice("تو از کیان زودتر رسیدی! ۵۰ سکه جایزه.", UIKit.GREEN, true, "app_race_won")
+		_notice("از روح رقیب زودتر رسیدی! ۵۰ سکه جایزه.", UIKit.GREEN, true, "app_race_won")
 	AudioManager.play_sfx("win")
 	var result := ProgressManager.complete_level(level_id, stars_collected, coins, diamonds_found)
 	Analytics.log_event("level_complete", level_id)
@@ -653,7 +653,7 @@ func _on_complete_action(id: String) -> void:
 			LevelManager.goto_map()
 
 
-## Water or a fall: costs a heart and Nima comes back at the last flag (with full hearts
+## Water or a fall: costs a heart and the hero comes back at the last flag (with full hearts
 ## when that was the last one).
 func on_hazard(kind: String) -> void:
 	if _respawning or finished:
@@ -720,4 +720,4 @@ func _notice(text: String, color: Color = UIKit.ORANGE, force := false, voice_id
 	_notice_cooldown = 1.5
 	if voice_id != "" and not AudioManager.is_voice_playing():
 		AudioManager.play_voice(voice_id)
-	FX.float_text(_world_root, player.global_position + Vector2(0, -120), text, color)
+	FX.float_text(_world_root, player.global_position + Vector2(0, -120), Names.fmt(text), color)

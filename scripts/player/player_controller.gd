@@ -1,16 +1,16 @@
 extends CharacterBody2D
-## Nima's movement, in the spirit of Mario and Sonic but tuned for small hands:
+## the hero's movement, in the spirit of Mario and Sonic but tuned for small hands:
 ## - momentum: walking speed at first, holding a direction opens up running speed;
 ##   faster runs jump higher; turning at speed skids;
 ## - dash (its own button): a short burst that also smashes cracked walls; once per jump
 ##   in the air;
-## - stomp: landing on a stompable enemy frees it and bounces Nima up (higher if jump is held);
+## - stomp: landing on a stompable enemy frees it and bounces the hero up (higher if jump is held);
 ## - hitting a block from below bumps it (coins, diamonds, bricks);
-## - glide: holding jump while falling, Pilo carries Nima and they float down slowly (a few
+## - glide: holding jump while falling, Pilo carries the hero and they float down slowly (a few
 ##   seconds, refilled on landing) — some gaps can only be crossed this way;
-## - hearts: a hit costs one heart, knocks Nima back, spills a few coins and gives a short
+## - hearts: a hit costs one heart, knocks the hero back, spills a few coins and gives a short
 ##   blinking invulnerability. Forgiving jump timing (coyote time and jump buffer) stays.
-## Nima is drawn in code (NimaRig), every joint animated.
+## the hero is drawn in code (HeroRig), every joint animated.
 
 signal jumped
 signal landed
@@ -41,7 +41,7 @@ const DASH_TIME := 0.26
 const DASH_COOLDOWN := 0.45
 const INVULNERABLE := 1.6
 const KNOCKBACK := Vector2(340, -560)
-const GLIDE_FALL := 110.0      # fall speed while Pilo carries Nima
+const GLIDE_FALL := 110.0      # fall speed while Pilo carries the hero
 const GLIDE_TIME := 2.2
 const WIND_PUSH := 260.0
 const UPDRAFT_ACCEL := 3400.0
@@ -90,8 +90,8 @@ var _emote: Label
 var _wind := Vector2.ZERO      # set by wind zones for the next physics frame
 var _on_ice := false
 var _belt := 0.0
-var _swim := 0                 # deep water areas Nima is in (swimming when > 0)
-var _sand := 0                 # quicksand areas Nima is in (slowed when > 0)
+var _swim := 0                 # deep water areas the hero is in (swimming when > 0)
+var _sand := 0                 # quicksand areas the hero is in (slowed when > 0)
 
 @onready var visual: Node2D = $Visual
 var fx: PlayerFX
@@ -103,9 +103,9 @@ var _fire_cooldown := 0.0
 
 func _ready() -> void:
 	z_index = 4
-	if PaintedRig.available("nima"):
-		# the generated, rendered Nima replaces the drawn one
-		var painted := PaintedRig.make("nima")
+	if PaintedRig.available("hero"):
+		# the generated, rendered the hero replaces the drawn one
+		var painted := PaintedRig.make("hero")
 		painted.name = "Rig"
 		rig.replace_by(painted)
 		rig.queue_free()
@@ -264,7 +264,7 @@ func _fire() -> void:
 	Juice.vibrate(8)
 
 
-## Crouch: a lower body (crawl under low ceilings). Nima only stands up when there is room.
+## Crouch: a lower body (crawl under low ceilings). the hero only stands up when there is room.
 func _update_crouch(want: bool) -> void:
 	if want == crouching:
 		return
@@ -329,7 +329,7 @@ func _animate(delta: float, on_floor: bool, dir: float) -> void:
 	elif dashing > 0.0:
 		state = "dash"
 	elif _swim > 0:
-		# a drawn stroke when there is one (it keeps going slowly while Nima treads water)
+		# a drawn stroke when there is one (it keeps going slowly while the hero treads water)
 		if rig.has_method("has_cycle") and rig.has_cycle("swim"):
 			state = "swim"
 		else:
@@ -370,7 +370,7 @@ func _process(_delta: float) -> void:
 		AudioManager.play_sfx("step", randf_range(0.9, 1.12), -10.0)
 
 
-## True when Nima is falling onto something whose top is at `top_y`.
+## True when the hero is falling onto something whose top is at `top_y`.
 func is_stomping(top_y: float) -> bool:
 	return velocity.y > 0.0 and global_position.y + FEET <= top_y + 30.0
 
@@ -430,14 +430,14 @@ func _air_jump() -> void:
 		_buffer = 0.0
 
 
-## The companion picked in the village and the tools in the bag change how Nima moves.
+## The companion picked in the village and the tools in the bag change how the hero moves.
 func apply_loadout() -> void:
 	var c := Loadout.companion()
 	wall_jump = c == "squirrel"
 	swim_fast = c == "turtle"
 	sand_free = c == "mole"
 	ice_grip = c == "penguin"
-	# gliding: Pilo carries Nima; without Pilo only a flying companion (butterfly, dragon, owl)
+	# gliding: Pilo carries the hero; without Pilo only a flying companion (butterfly, dragon, owl)
 	# can, or the umbrella and the balloon
 	can_glide = c in ["", "butterfly", "dragon", "owl"] or Loadout.has_tool("umbrella") or Loadout.has_tool("balloon")
 	glide_time = GLIDE_TIME * (2.0 if c == "butterfly" else 1.0) * (1.5 if Loadout.has_tool("umbrella") else 1.0)

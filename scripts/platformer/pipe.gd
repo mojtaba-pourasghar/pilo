@@ -1,7 +1,7 @@
 class_name Pipe
 extends StaticBody2D
 ## A hollow tree-trunk pipe (two tiles wide), drawn in code. A warp pipe has a destination:
-## standing on it and pressing down (or the ↓ touch button that appears) takes Nima there,
+## standing on it and pressing down (or the ↓ touch button that appears) takes the hero there,
 ## often to a secret room. `cells` = height in tiles; origin = top-left.
 
 const TILE := 64.0

@@ -12,7 +12,7 @@ func _ready() -> void:
 		var parts := arg.trim_prefix("--").split("=", true, 1)
 		_args[parts[0]] = parts[1] if parts.size() > 1 else "1"
 	RenderingServer.set_default_clear_color(Color("bfe6ff"))
-	_rig = PaintedRig.make(String(_args.get("character", "nima")))
+	_rig = PaintedRig.make(String(_args.get("character", "hero")))
 	_rig.state = String(_args.get("state", "walk"))
 	_rig.speed = 250.0 if _rig.state != "run" else 560.0
 	_rig.position = Vector2(640, 520)

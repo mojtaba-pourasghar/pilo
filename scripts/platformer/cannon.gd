@@ -1,6 +1,6 @@
 class_name ShadowCannon
 extends StaticBody2D
-## A hollow shadow log that puffs shadow balls toward Nima every few seconds while he is
+## A hollow shadow log that puffs shadow balls toward the hero every few seconds while he is
 ## near. The balls can be stomped. Solid, one tile.
 
 const TILE := 64.0
@@ -57,7 +57,7 @@ func _fire() -> void:
 func _draw() -> void:
 	var barrel := WorldArt.pic("cannon")
 	if barrel:
-		# the rendered hollow log, its mouth turned toward Nima, kicking back when it fires
+		# the rendered hollow log, its mouth turned toward the hero, kicking back when it fires
 		var w := 84.0
 		var h := barrel.get_height() * w / barrel.get_width()
 		var x := 32.0 - _facing * _recoil * 6.0

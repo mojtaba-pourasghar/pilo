@@ -1,6 +1,6 @@
 class_name Block
 extends StaticBody2D
-## Blocks Nima bumps from below, Mario style, drawn in code:
+## Blocks the hero bumps from below, Mario style, drawn in code:
 ## - QUESTION: golden "?" block; gives its content once (or a coin per bump for "coins");
 ## - BRICK: breaks into pieces when empty, otherwise gives its content;
 ## - HIDDEN: invisible until bumped from below — then it appears and gives its content
@@ -49,7 +49,7 @@ func _physics_process(delta: float) -> void:
 	_cooldown -= delta
 	if kind != Kind.HIDDEN or game == null or game.player == null:
 		return
-	# A hidden block reveals itself when Nima's head comes up into it from below.
+	# A hidden block reveals itself when the hero's head comes up into it from below.
 	var player: CharacterBody2D = game.player
 	if player.velocity.y >= 0.0:
 		return
@@ -117,7 +117,7 @@ func _give() -> void:
 			item.position = position + Vector2(SIZE * 0.5, SIZE * 0.5)
 			get_parent().add_child(item)
 			AudioManager.play_sfx("grow", 1.4)
-			# no room above the block (under a ceiling): the item flies straight to Nima
+			# no room above the block (under a ceiling): the item flies straight to the hero
 			var space := get_world_2d().direct_space_state
 			var probe := PhysicsPointQueryParameters2D.new()
 			probe.position = global_position + Vector2(SIZE * 0.5, -SIZE * 0.5)

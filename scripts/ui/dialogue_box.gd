@@ -8,13 +8,12 @@ signal advanced
 const ART := "res://assets/art/"
 ## Who can speak, and the picture shown in the round portrait (the first one that exists).
 const SPEAKERS := {
-	"nima": {"name": "نیما", "color": Color("e5533d"), "texture": ""},
+	"hero": {"name": "{hero}", "color": Color("e5533d"), "texture": ""},
 	"pilo": {"name": "پیلو", "color": Color("f39a2b"), "texture": ""},
 	"ghubarak": {"name": "غبارک", "color": Color("8e7cc3"), "texture": ["npc_ghubarak.png"]},
 	"squirrel": {"name": "سنجابک", "color": Color("a0663a"), "texture": ["companion_squirrel.png"]},
 	"grandpa": {"name": "بابابزرگ ساعت‌ساز", "color": Color("7a5a3a"), "texture": ["npc_grandpa.png"]},
 	"narrator": {"name": "بابابزرگ ساعت‌ساز", "color": Color("7a5a3a"), "texture": ["npc_grandpa.png"]},
-	"kian": {"name": "کیان", "color": Color("2f7fd0"), "texture": ["npc_kian.png", "npc_kian_portrait.png"]},
 	"zurvan": {"name": "زروان", "color": Color("5a3a9a"), "texture": ["npc_zurvan.png", "boss_inverted_land_free.png"]},
 	"masked": {"name": "نقاب‌دار", "color": Color("4a3a6a"), "texture": ["npc_masked.png"]},
 	"shadow_king": {"name": "شاه‌سایه", "color": Color("5a3a9a"), "texture": ["npc_shadow_king.png", "boss_shadow_castle_free.png"]},
@@ -101,7 +100,7 @@ func play(lines: Array) -> void:
 
 func _show(line: Dictionary) -> void:
 	var speaker: Dictionary = SPEAKERS.get(String(line.get("who", "pilo")), SPEAKERS.pilo)
-	_name.text = speaker.name
+	_name.text = Names.fmt(String(speaker.name))
 	_name.add_theme_color_override("font_color", speaker.color)
 	_portrait.speaker = String(line.get("who", "pilo"))
 	_portrait.texture = null
@@ -110,7 +109,7 @@ func _show(line: Dictionary) -> void:
 			if ResourceLoader.exists(ART + file):
 				_portrait.texture = load(ART + file)
 				break
-	_text.text = String(line.get("text", ""))
+	_text.text = Names.fmt(String(line.get("text", "")))
 	_text.visible_ratio = 0.0
 	if _typing:
 		_typing.kill()
@@ -167,7 +166,7 @@ class Portrait extends Control:
 		t += delta
 		queue_redraw()
 
-	## Nima and Pilo are drawn by their code rigs (head and shoulders in the circle).
+	## the hero and Pilo are drawn by their code rigs (head and shoulders in the circle).
 	func _update_rig() -> void:
 		if _rig:
 			_rig.queue_free()
@@ -177,8 +176,8 @@ class Portrait extends Control:
 			# rendered head-and-shoulders portrait, standing on the bottom of the circle
 			_rig = PaintedCreature.make(speaker + "_portrait", size.y * 0.86, "idle")
 			_rig.position = center + Vector2(0, size.y * 0.47)
-		elif speaker == "nima":
-			_rig = NimaRig.new()
+		elif speaker == "hero":
+			_rig = HeroRig.new()
 			_rig.scale = Vector2(1.7, 1.7)
 			_rig.position = center + Vector2(-6, 82 * 1.7)
 		elif speaker == "pilo":
@@ -186,7 +185,7 @@ class Portrait extends Control:
 			_rig.scale = Vector2(2.4, 2.4)
 			_rig.position = center + Vector2(-17.0, 42.0) * 2.4
 		if _rig:
-			_rig.expression = "happy" if speaker == "nima" else "normal"
+			_rig.expression = "happy" if speaker == "hero" else "normal"
 			# the character is clipped to the round portrait, the golden ring drawn over it
 			var mask := Mask.new()
 			mask.center = center
@@ -225,7 +224,7 @@ class Portrait extends Control:
 			var fit := (size.x - 24.0) / maxf(region.size.x, region.size.y)
 			var draw_size := region.size * fit
 			draw_texture_rect_region(texture, Rect2(center - draw_size * 0.5, draw_size), region)
-		elif not (speaker in ["nima", "pilo", "ghubarak", "squirrel"]):
+		elif not (speaker in ["hero", "pilo", "ghubarak", "squirrel"]):
 			# no picture yet: the speaker's initial in their colour
 			var info: Dictionary = SPEAKERS.get(speaker, SPEAKERS.pilo)
 			draw_circle(center, size.x * 0.36, info.color)

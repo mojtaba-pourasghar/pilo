@@ -1,6 +1,6 @@
 class_name Weapons
 extends RefCounted
-## Nima's shooting tools. The slingshot is his from the start; the others come from the
+## the hero's shooting tools. The slingshot is his from the start; the others come from the
 ## village (coins, diamonds, or one bought with real money). They are not in the backpack
 ## slots: every owned weapon can be picked with the swap button, the fire button shoots it.
 ##

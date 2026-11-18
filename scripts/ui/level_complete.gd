@@ -62,7 +62,7 @@ func _ready() -> void:
 		var reward := HBoxContainer.new()
 		reward.alignment = BoxContainer.ALIGNMENT_CENTER
 		reward.add_child(UIKit.make_icon("res://assets/ui/crystal.png", 52))
-		reward.add_child(UIKit.make_label("یک تکهٔ زمان پیدا کردی!", 28, UIKit.PURPLE))
+		reward.add_child(UIKit.make_label("یک قلب زمان پیدا کردی!", 28, UIKit.PURPLE))
 		box.add_child(reward)
 
 	if reward != "":

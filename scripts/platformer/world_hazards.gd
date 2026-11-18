@@ -1,8 +1,8 @@
 class_name WorldHazards
 extends RefCounted
 ## The special pieces of the later worlds, drawn in code:
-##   SwimWater    deep water at the beach: Nima swims (jump = stroke), no drowning;
-##   Quicksand    desert sand that swallows Nima to the chest and slows him down;
+##   SwimWater    deep water at the beach: the hero swims (jump = stroke), no drowning;
+##   Quicksand    desert sand that swallows the hero to the chest and slows him down;
 ##   VanishPlatform  shadow stones in the castle that come and go in turn;
 ##   StormCloud   a thundercloud that flashes, then strikes a bolt straight down;
 ##   BossDoor     a barred gate that opens when the boss of the world is freed.

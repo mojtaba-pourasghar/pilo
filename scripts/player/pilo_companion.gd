@@ -1,13 +1,13 @@
 extends Node2D
-## Pilo, the active companion (drawn in code by PiloRig). He runs beside Nima on the ground
-## and glides with a magic glow when Nima jumps or falls. The Pilo button makes him act,
+## Pilo, the active companion (drawn in code by PiloRig). He runs beside the hero on the ground
+## and glides with a magic glow when the hero jumps or falls. The Pilo button makes him act,
 ## in this order:
 ##   1. a shadow creature nearby → he pounces on it and frees it;
 ##   2. a cracked wall or brick nearby → he breaks it;
 ##   3. a fox den (a hole only he fits through) nearby → he goes in and brings out what is inside;
 ##   4. coins or diamonds nearby → he fetches them (up to three at once);
 ##   otherwise he shakes his head.
-## When Nima glides, Pilo flies above him and carries him. His nose finds secrets: near a hidden
+## When the hero glides, Pilo flies above him and carries him. His nose finds secrets: near a hidden
 ## block, a cracked wall or a den he runs over, points with an "!" and sniffs.
 ## He still glows in the colour of the current time and flies to hint spots.
 
@@ -61,7 +61,7 @@ func _process(delta: float) -> void:
 	var flying := true
 	_sniff(delta)
 	if target and target.gliding:
-		# carrying Nima: right above his raised hands
+		# carrying the hero: right above his raised hands
 		goal = target.global_position + Vector2(0, -target.BODY_SIZE.y * 0.5 - 52.0)
 		global_position = global_position.lerp(goal, 1.0 - exp(-25.0 * delta))
 		rig.state = "fly"
@@ -79,7 +79,7 @@ func _process(delta: float) -> void:
 		var facing: float = target.facing
 		var feet: Vector2 = target.global_position + Vector2(0, target.FEET)
 		goal = feet + Vector2(-70.0 * facing, 0)
-		# Pilo walks on the ground behind Nima; he only flies while Nima is in the air or when
+		# Pilo walks on the ground behind the hero; he only flies while the hero is in the air or when
 		# there is no ground under his spot (a gap, a ledge)
 		var ground = _ground_under(goal.x, feet.y)
 		flying = not target.is_on_floor() or ground == null
@@ -112,7 +112,7 @@ func _process(delta: float) -> void:
 	rig.run_speed = 470.0
 
 
-## The top of the ground under x near Nima's feet height (null if there is none close).
+## The top of the ground under x near the hero's feet height (null if there is none close).
 func _ground_under(x: float, feet_y: float) -> Variant:
 	var query := PhysicsRayQueryParameters2D.create(Vector2(x, feet_y - 70.0), Vector2(x, feet_y + 90.0), 1)
 	var hit := get_world_2d().direct_space_state.intersect_ray(query)
@@ -189,7 +189,7 @@ func act(game: Node) -> String:
 		_happy(0.8)
 		AudioManager.play_sfx("star", 1.3, -6.0)
 		return "fetch"
-	# nothing close by: Nima throws Pilo forward like a spinning ball of fire; he breaks
+	# nothing close by: the hero throws Pilo forward like a spinning ball of fire; he breaks
 	# whatever is in the way (bricks, cracked walls, creatures) and comes back
 	_throw()
 	return "throw"

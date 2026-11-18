@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Where each drawn pose of Nima, Pilo and Kian stands, so the game can line the frames up.
+"""Where each drawn pose of the hero, Pilo and the ghost rival stands, so the game can line the frames up.
 
 The pose pictures come from an image generator one by one: each is cut to its own bounding box
 and scaled to the base picture's painted area (postprocess.py "frame"), so from frame to frame
@@ -27,7 +27,7 @@ from PIL import Image
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
 ART = os.path.join(ROOT, "assets", "art")
 OUT = os.path.join(ART, "frame_anchors.json")
-CHARACTERS = ["nima", "kian", "pilo"]
+CHARACTERS = ["hero", "kian", "pilo"]
 UPRIGHT = re.compile(r"_(rig|walk_[a-z]|run_[a-z]|idle_[a-z])$")
 
 
@@ -80,7 +80,7 @@ def main():
     with open(OUT, "w", encoding="utf-8") as fh:
         json.dump(result, fh, indent=1, sort_keys=True)
     print(f"{len(result)} frames -> {os.path.relpath(OUT, ROOT)}")
-    for k in ("nima_rig", "nima_walk_a", "nima_run_d", "nima_crouch", "nima_crawl_a"):
+    for k in ("hero_rig", "hero_walk_a", "hero_run_d", "hero_crouch", "hero_crawl_a"):
         if k in result:
             print(" ", k, result[k])
 

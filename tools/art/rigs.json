@@ -1,7 +1,7 @@
 {
  "_doc": "Cut lines for tools/art/make_rig.py, measured on the cut-outs in assets/art with tools/art/grid.py (source pixels).",
- "nima": {
-  "src": "nima_rig",
+ "hero": {
+  "src": "hero_rig",
   "height": 128,
   "feet": [
    190,
@@ -227,19 +227,19 @@
   },
   "poses": {
    "jump": {
-    "src": "nima_jump"
+    "src": "hero_jump"
    },
    "glide": {
-    "src": "nima_glide"
+    "src": "hero_glide"
    },
    "hurt": {
-    "src": "nima_hurt"
+    "src": "hero_hurt"
    },
    "celebrate": {
-    "src": "nima_celebrate"
+    "src": "hero_celebrate"
    },
    "dash": {
-    "src": "nima_dash"
+    "src": "hero_dash"
    }
   }
  },

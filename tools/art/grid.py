@@ -2,7 +2,7 @@
 """Draws a labelled coordinate grid over a picture (on magenta where it is transparent), to
 measure the polygons and joints for tools/art/rigs.json by eye.
 
-    python3 tools/art/grid.py assets/art/nima_rig.png out.png [step]
+    python3 tools/art/grid.py assets/art/hero_rig.png out.png [step]
 """
 import sys
 from PIL import Image, ImageDraw

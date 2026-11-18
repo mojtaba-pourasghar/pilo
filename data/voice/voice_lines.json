@@ -7,15 +7,15 @@
    "speaker": "shahrzad",
    "speed": 0.95
   },
-  "nima": {
-   "name": "نیما",
-   "about": "پسر ماجراجوی ۸ ساله؛ کنجکاو، مهربان و پرانرژی",
+  "hero": {
+   "name": "قهرمان",
+   "about": "قهرمان ۱۲ ساله (پیش‌فرض آرسام؛ نامش قابل‌تغییر و هرگز در صدا گفته نمی‌شود)",
    "speaker": "bahar",
    "speed": 1.0
   },
   "pilo": {
    "name": "پیلو",
-   "about": "همراه کوچک و بامزهٔ نیما؛ گرم، شاد و راهنما (جواب را لو نمی‌دهد)",
+   "about": "همراه کوچک و بامزهٔ قهرمان؛ گرم، شاد و راهنما (جواب را لو نمی‌دهد)",
    "speaker": "pune",
    "speed": 0.9
   },
@@ -30,12 +30,6 @@
    "about": "سنجاب کوچولو و تند‌حرف؛ هیجان‌زده و قدردان",
    "speaker": "sheyda",
    "speed": 1.15
-  },
-  "kian": {
-   "name": "کیان",
-   "about": "رقیب نیما؛ مغرور ولی ته دلش خوب",
-   "speaker": "sara",
-   "speed": 1.05
   },
   "grandpa": {
    "name": "بابابزرگ ساعت‌ساز",
@@ -135,7 +129,7 @@
   },
   "owl": {
    "name": "پیچ‌پیچ",
-   "about": "جغد کیان؛ دانا و آرام",
+   "about": "جغد همراه؛ دانا و آرام",
    "speaker": "nourai",
    "speed": 1.0
   },
@@ -174,7 +168,7 @@
   {
    "id": "l49_intro_2",
    "file": "voice/l49_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "و پایین پرس‌ها... باید به‌موقع رد شوم.",
    "level": 49,
    "kind": "intro",
@@ -214,7 +208,7 @@
   {
    "id": "l50_intro_2",
    "file": "voice/l50_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "پس تندتر می‌دوم!",
    "level": 50,
    "kind": "intro",
@@ -274,7 +268,7 @@
   {
    "id": "l51_intro_2",
    "file": "voice/l51_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "صدای تیک‌تاک می‌آید... برویم!",
    "level": 51,
    "kind": "intro",
@@ -394,7 +388,7 @@
   {
    "id": "l54_intro_1",
    "file": "voice/l54_intro_1.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "بابابزرگ آن جلوست... طلسم شده.",
    "level": 54,
    "kind": "intro",
@@ -464,7 +458,7 @@
   {
    "id": "l55_outro_1",
    "file": "voice/l55_outro_1.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
    "level": 55,
    "kind": "outro",
@@ -525,11 +519,11 @@
    "id": "l56_outro_1",
    "file": "voice/l56_outro_1.mp3",
    "who": "grandpa",
-   "text": "نیما! پیلو! بیدار شدم... زروان، شاگرد خودم، ساعت وارونه را ساخت.",
+   "text": "{hero}! پیلو! بیدار شدم... زروان، شاگرد خودم، ساعت وارونه را ساخت.",
    "level": 56,
    "kind": "outro",
    "event": "پایان مرحله — مرحلهٔ 56",
-   "spoken": "نیما! پیلو! بیدارْ شُدَمْ... زَروانْ، شاگِردِ خودَمْ، ساعَتِ وارونِه را ساختْ."
+   "stale_audio": true
   },
   {
    "id": "l56_outro_2",
@@ -564,7 +558,7 @@
   {
    "id": "l09_intro_2",
    "file": "voice/l09_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "یا از روی تخته‌ها می‌پرم و خیس نمی‌شوم!",
    "level": 9,
    "kind": "intro",
@@ -604,7 +598,7 @@
   {
    "id": "l10_intro_2",
    "file": "voice/l10_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "یا از دکل بالا بروم و الماس سبد دیده‌بانی را بردارم!",
    "level": 10,
    "kind": "intro",
@@ -614,17 +608,17 @@
   {
    "id": "l10_intro_3",
    "file": "voice/l10_intro_3.mp3",
-   "who": "kian",
-   "text": "مسابقه تا دروازهٔ زمان! هر کس زودتر برسد، برنده است.",
+   "who": "pilo",
+   "text": "یک روح رقیب هم دنبال قلب زمان است! هر کس زودتر به دروازه برسد، برنده است.",
    "level": 10,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 10",
-   "spoken": "مُسابَقِه تا دَرْوازِهٔ زَمانْ! هَر کَسْ زودْتَر بِرَسَدْ، بَرَنْدِه اَستْ."
+   "stale_audio": true
   },
   {
    "id": "l10_intro_4",
    "file": "voice/l10_intro_4.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "قبول!",
    "level": 10,
    "kind": "intro",
@@ -664,7 +658,7 @@
   {
    "id": "l11_intro_2",
    "file": "voice/l11_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "پس اول بالا، بعد پایین!",
    "level": 11,
    "kind": "intro",
@@ -764,12 +758,12 @@
   {
    "id": "l14_intro_1",
    "file": "voice/l14_intro_1.mp3",
-   "who": "kian",
-   "text": "قلب زمان ساحل مال من است!",
+   "who": "pilo",
+   "text": "مسافرهای دیگر هم دنبال قلب زمان‌اند!",
    "level": 14,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 14",
-   "spoken": "قَلْبِ زَمانِ ساحِلْ مالِ مَن اَسْتْ!"
+   "stale_audio": true
   },
   {
    "id": "l14_intro_2",
@@ -824,7 +818,7 @@
   {
    "id": "l15_outro_1",
    "file": "voice/l15_outro_1.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
    "level": 15,
    "kind": "outro",
@@ -885,10 +879,11 @@
    "id": "l16_outro_1",
    "file": "voice/l16_outro_1.mp3",
    "who": "octopus",
-   "text": "از طلسم آزادم کردید. آن پسر، کیان، فریب خورده؛ کمکش کنید.",
+   "text": "از طلسم آزادم کردید. مسافران دیگر هم می‌آیند؛ با آن‌ها مهربان باشید، همه دنبال چیزی هستند.",
    "level": 16,
    "kind": "outro",
    "event": "پایان مرحله — مرحلهٔ 16",
+   "stale_audio": true,
    "spoken": "اَز طِلِسمْ آزادَمْ کَردیدْ. آنْ پِسَر، کیانْ، فَریبْ خُورْدِه؛ کُمَکَشْ کُنیدْ."
   },
   {
@@ -924,7 +919,7 @@
   {
    "id": "l41_intro_2",
    "file": "voice/l41_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "تاریک است... چراغم را روشن نگه می‌دارم.",
    "level": 41,
    "kind": "intro",
@@ -964,7 +959,7 @@
   {
    "id": "l42_intro_2",
    "file": "voice/l42_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "و پایین چرخ خار است. بالا را انتخاب می‌کنم!",
    "level": 42,
    "kind": "intro",
@@ -974,21 +969,22 @@
   {
    "id": "l42_intro_3",
    "file": "voice/l42_intro_3.mp3",
-   "who": "kian",
-   "text": "مسابقهٔ سوم... ولی دلم با مسابقه نیست.",
+   "who": "pilo",
+   "text": "مسابقهٔ روح سوم! دنبال روح نرو؛ راه خودت را پیدا کن.",
    "level": 42,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 42",
-   "spoken": "مُسابَقِهٔ سِوُّمْ... وَلی دِلَمْ با مُسابَقِه نیستْ."
+   "stale_audio": true
   },
   {
    "id": "l42_intro_4",
    "file": "voice/l42_intro_4.mp3",
-   "who": "nima",
-   "text": "چیزی شده کیان؟",
+   "who": "hero",
+   "text": "باشد، راه خودم!",
    "level": 42,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 42",
+   "stale_audio": true,
    "spoken": "چیزی شُدِه کیانْ؟"
   },
   {
@@ -1034,7 +1030,7 @@
   {
    "id": "l43_intro_2",
    "file": "voice/l43_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "همه را پیدا می‌کنیم!",
    "level": 43,
    "kind": "intro",
@@ -1074,12 +1070,12 @@
   {
    "id": "l44_intro_1",
    "file": "voice/l44_intro_1.mp3",
-   "who": "kian",
-   "text": "در گذشتهٔ این غار... دهکدهٔ من را دیدم!",
+   "who": "pilo",
+   "text": "در گذشتهٔ این غار... یک دهکده پیداست!",
    "level": 44,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 44",
-   "spoken": "دَرِ گُذَشْتَهٔ اینِ غارْ... دِهْکَدِهٔ مَن را دیدَمْ!"
+   "stale_audio": true
   },
   {
    "id": "l44_intro_2",
@@ -1154,12 +1150,12 @@
   {
    "id": "l46_intro_1",
    "file": "voice/l46_intro_1.mp3",
-   "who": "kian",
-   "text": "پیچ‌پیچ، با نیما برو. ما یک تیمیم.",
+   "who": "pilo",
+   "text": "پیچ‌پیچ، با ما بیا. ما یک تیمیم.",
    "level": 46,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 46",
-   "spoken": "پیچ‌پیچْ، با نیما بُرو. ما یِکْ تیمیمْ."
+   "stale_audio": true
   },
   {
    "id": "l46_sign_1",
@@ -1214,7 +1210,7 @@
   {
    "id": "l47_outro_1",
    "file": "voice/l47_outro_1.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
    "level": 47,
    "kind": "outro",
@@ -1275,10 +1271,11 @@
    "id": "l48_outro_2",
    "file": "voice/l48_outro_2.mp3",
    "who": "owl",
-   "text": "من پیچ‌پیچم، جغد کیان! در تاریکی می‌بینم و از دور راز را بو می‌کشم.",
+   "text": "من پیچ‌پیچم! در تاریکی می‌بینم و از دور راز را بو می‌کشم.",
    "level": 48,
    "kind": "outro",
    "event": "پایان مرحله — مرحلهٔ 48",
+   "stale_audio": true,
    "spoken": "مَنْ پیچْ‌پیچَمْ، جُغْدِ کیانْ! دَر تاریکی می‌بینَمْ وَ اَزْ دورْ رازْ را بو می‌کِشَمْ."
   },
   {
@@ -1305,16 +1302,16 @@
    "id": "l01_intro_1",
    "file": "voice/l01_intro_1.mp3",
    "who": "pilo",
-   "text": "نیما! سایه‌ها جنگل را گرفته‌اند. باید کلید زمان را پیدا کنیم!",
+   "text": "{hero}! سایه‌ها جنگل را گرفته‌اند. باید کلید زمان را پیدا کنیم!",
    "level": 1,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 1",
-   "spoken": "نیما! سایِه‌ها جَنگَلْ را گِرِفتِه‌اَندْ. بایَدْ کِلیدِ زَمانْ را پیدا کُنیمْ!"
+   "stale_audio": true
   },
   {
    "id": "l01_intro_2",
    "file": "voice/l01_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "کجاست؟",
    "level": 1,
    "kind": "intro",
@@ -1344,7 +1341,7 @@
   {
    "id": "l01_outro_2",
    "file": "voice/l01_outro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "بعدی کجاست، پیلو؟",
    "level": 1,
    "kind": "outro",
@@ -1424,7 +1421,7 @@
   {
    "id": "l02_intro_2",
    "file": "voice/l02_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "من از قارچ‌ها بالا می‌روم!",
    "level": 2,
    "kind": "intro",
@@ -1464,7 +1461,7 @@
   {
    "id": "l03_intro_2",
    "file": "voice/l03_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "و اگر از بالا بروم؟",
    "level": 3,
    "kind": "intro",
@@ -1554,7 +1551,7 @@
   {
    "id": "l05_intro_1",
    "file": "voice/l05_intro_1.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "صدای خرس می‌آید... نزدیکیم!",
    "level": 5,
    "kind": "intro",
@@ -1664,7 +1661,7 @@
   {
    "id": "l07_outro_1",
    "file": "voice/l07_outro_1.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
    "level": 7,
    "kind": "outro",
@@ -1754,7 +1751,7 @@
   {
    "id": "l17_intro_2",
    "file": "voice/l17_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "وسط هرم چه هست؟",
    "level": 17,
    "kind": "intro",
@@ -1804,7 +1801,7 @@
   {
    "id": "l18_intro_2",
    "file": "voice/l18_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "بالای چاله وسطی یک جعبهٔ پنهان هست؟",
    "level": 18,
    "kind": "intro",
@@ -1874,7 +1871,7 @@
   {
    "id": "l19_intro_2",
    "file": "voice/l19_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "گرم است... عرق کردم!",
    "level": 19,
    "kind": "intro",
@@ -1914,7 +1911,7 @@
   {
    "id": "l20_intro_1",
    "file": "voice/l20_intro_1.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "گرم است... عرق کردم!",
    "level": 20,
    "kind": "intro",
@@ -2104,7 +2101,7 @@
   {
    "id": "l23_outro_1",
    "file": "voice/l23_outro_1.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
    "level": 23,
    "kind": "outro",
@@ -2204,7 +2201,7 @@
   {
    "id": "l65_intro_2",
    "file": "voice/l65_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "سرم گیج می‌رود!",
    "level": 65,
    "kind": "intro",
@@ -2254,7 +2251,7 @@
   {
    "id": "l66_intro_2",
    "file": "voice/l66_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "عدسی زمان آماده است!",
    "level": 66,
    "kind": "intro",
@@ -2274,7 +2271,7 @@
   {
    "id": "l66_intro_4",
    "file": "voice/l66_intro_4.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "زمان مال همه است.",
    "level": 66,
    "kind": "intro",
@@ -2344,7 +2341,7 @@
   {
    "id": "l67_intro_2",
    "file": "voice/l67_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "آخرین قدم‌ها تا ساعت وارونه!",
    "level": 67,
    "kind": "intro",
@@ -2404,12 +2401,12 @@
   {
    "id": "l68_intro_1",
    "file": "voice/l68_intro_1.mp3",
-   "who": "kian",
-   "text": "دهکده‌ام... دارم صدایش را می‌شنوم!",
+   "who": "pilo",
+   "text": "صدای ساعت وارونه را می‌شنوم! نزدیکیم.",
    "level": 68,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 68",
-   "spoken": "دِهْکَدِه‌اَمْ... دارَمْ صَدایَشْ را می‌شْنِوَمْ!"
+   "stale_audio": true
   },
   {
    "id": "l68_sign_1",
@@ -2644,7 +2641,7 @@
   {
    "id": "l71_outro_1",
    "file": "voice/l71_outro_1.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
    "level": 71,
    "kind": "outro",
@@ -2754,7 +2751,7 @@
   {
    "id": "l57_intro_2",
    "file": "voice/l57_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "سیاهچال؟ پر از خار است؟",
    "level": 57,
    "kind": "intro",
@@ -2804,7 +2801,7 @@
   {
    "id": "l58_intro_2",
    "file": "voice/l58_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "هر دو سخت است... بالا را امتحان می‌کنم.",
    "level": 58,
    "kind": "intro",
@@ -2814,11 +2811,12 @@
   {
    "id": "l58_intro_3",
    "file": "voice/l58_intro_3.mp3",
-   "who": "kian",
+   "who": "pilo",
    "text": "نگهبان‌ها پشت سرمان‌اند. نترس!",
    "level": 58,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 58",
+   "stale_audio": true,
    "spoken": "نِگَهْبانْ‌ها پُشتِ سَرِمانْ‌اَنْدْ. نَتَرسْ!"
   },
   {
@@ -2874,7 +2872,7 @@
   {
    "id": "l59_intro_2",
    "file": "voice/l59_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "نمی‌ترسم! با هم می‌رویم.",
    "level": 59,
    "kind": "intro",
@@ -2934,7 +2932,7 @@
   {
    "id": "l60_intro_2",
    "file": "voice/l60_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "چون رنگ‌ها را برمی‌گردانیم!",
    "level": 60,
    "kind": "intro",
@@ -3114,7 +3112,7 @@
   {
    "id": "l63_outro_1",
    "file": "voice/l63_outro_1.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
    "level": 63,
    "kind": "outro",
@@ -3184,7 +3182,7 @@
   {
    "id": "l33_intro_2",
    "file": "voice/l33_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "مثل پرواز!",
    "level": 33,
    "kind": "intro",
@@ -3234,7 +3232,7 @@
   {
    "id": "l34_intro_2",
    "file": "voice/l34_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "باد از پشت سرم می‌وزد!",
    "level": 34,
    "kind": "intro",
@@ -3314,7 +3312,7 @@
   {
    "id": "l35_intro_2",
    "file": "voice/l35_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "رعد و برق! زود باشیم.",
    "level": 35,
    "kind": "intro",
@@ -3564,7 +3562,7 @@
   {
    "id": "l39_outro_1",
    "file": "voice/l39_outro_1.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
    "level": 39,
    "kind": "outro",
@@ -3684,7 +3682,7 @@
   {
    "id": "l25_intro_2",
    "file": "voice/l25_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "نفسم بخار می‌شود! برویم.",
    "level": 25,
    "kind": "intro",
@@ -3724,7 +3722,7 @@
   {
    "id": "l26_intro_2",
    "file": "voice/l26_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "و پایین یخ لیز و یک دره!",
    "level": 26,
    "kind": "intro",
@@ -3734,21 +3732,22 @@
   {
    "id": "l26_intro_3",
    "file": "voice/l26_intro_3.mp3",
-   "who": "kian",
-   "text": "مسابقهٔ دوم! این بار تا قله.",
+   "who": "pilo",
+   "text": "مسابقهٔ روح دوم! این بار تا قله.",
    "level": 26,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 26",
-   "spoken": "مُسابَقِهٔ دُوُّمْ! اینْ بارْ تا قُلَّه."
+   "stale_audio": true
   },
   {
    "id": "l26_intro_4",
    "file": "voice/l26_intro_4.mp3",
-   "who": "nima",
-   "text": "مراقب یخ‌ها باش!",
+   "who": "hero",
+   "text": "مراقب یخ‌ها باشیم!",
    "level": 26,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 26",
+   "stale_audio": true,
    "spoken": "مُراقِبِ یَخْ‌ها باشْ!"
   },
   {
@@ -3804,7 +3803,7 @@
   {
    "id": "l27_intro_2",
    "file": "voice/l27_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "دنبالم بیا پیلو!",
    "level": 27,
    "kind": "intro",
@@ -3844,17 +3843,17 @@
   {
    "id": "l28_intro_1",
    "file": "voice/l28_intro_1.mp3",
-   "who": "kian",
-   "text": "بهمن! نیما، از این طرف!",
+   "who": "pilo",
+   "text": "بهمن! از این طرف!",
    "level": 28,
    "kind": "intro",
    "event": "شروع مرحله — مرحلهٔ 28",
-   "spoken": "بَهمَن! نیما، اَزْ اینْ طَرَفْ!"
+   "stale_audio": true
   },
   {
    "id": "l28_intro_2",
    "file": "voice/l28_intro_2.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "با هم فرار کنیم!",
    "level": 28,
    "kind": "intro",
@@ -4064,7 +4063,7 @@
   {
    "id": "l31_outro_1",
    "file": "voice/l31_outro_1.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "الماس افسانه‌ای! یکی دیگر تا سرزمین وارونه.",
    "level": 31,
    "kind": "outro",
@@ -4205,10 +4204,11 @@
    "id": "app_shard_found",
    "file": "voice/app_shard_found.mp3",
    "who": "pilo",
-   "text": "یک تکهٔ زمان پیدا کردی!",
+   "text": "یک قلب زمان پیدا کردی!",
    "level": 0,
    "kind": "app",
    "event": "پنجرهٔ پایان مرحله، بار اول",
+   "stale_audio": true,
    "spoken": "یِکْ تِکَّهٔ زَمانْ پِیدا کَرْدی!"
   },
   {
@@ -4225,30 +4225,33 @@
    "id": "app_race_start",
    "file": "voice/app_race_start.mp3",
    "who": "pilo",
-   "text": "مسابقه با کیان! زودتر به دروازه برس.",
+   "text": "مسابقه با روح رقیب! زودتر به دروازه برس.",
    "level": 0,
    "kind": "app",
-   "event": "شروع مسابقه با کیان",
+   "event": "شروع مسابقهٔ روح",
+   "stale_audio": true,
    "spoken": "مُسابَقِه با کیانْ! زودْتَر بِه دَرْوازِه بِرَسْ."
   },
   {
    "id": "app_race_lost",
    "file": "voice/app_race_lost.mp3",
    "who": "pilo",
-   "text": "کیان زودتر به دروازه رسید! باز هم می‌شود کلید را پیدا کرد.",
+   "text": "روح رقیب زودتر رسید! باز هم می‌شود کلیدها را پیدا کرد.",
    "level": 0,
    "kind": "app",
-   "event": "کیان برد",
+   "event": "روح رقیب برد",
+   "stale_audio": true,
    "spoken": "کیانْ زودْتَر به دَرْوازِه رَسیدْ! بازْ هَمْ می‌شَوَدْ کِلیدْ را پِیدا کَرْدْ."
   },
   {
    "id": "app_race_won",
    "file": "voice/app_race_won.mp3",
    "who": "pilo",
-   "text": "تو از کیان زودتر رسیدی! پنجاه سکه جایزه.",
+   "text": "از روح رقیب زودتر رسیدی! پنجاه سکه جایزه.",
    "level": 0,
    "kind": "app",
-   "event": "نیما برد",
+   "event": "قهرمان برد",
+   "stale_audio": true,
    "spoken": "تو اَزْ کیانْ زودْتَر رَسیدی! پَنجاهْ سِکّه جایِزِه."
   },
   {
@@ -4415,11 +4418,11 @@
    "id": "intro_5",
    "file": "voice/intro_5.mp3",
    "who": "narrator",
-   "text": "صبح روز بعد، نیمای کنجکاو در جنگل یک تخم درخشان پیدا کرد...",
+   "text": "صبح روز بعد، {hero}ی کنجکاو در جنگل یک تخم درخشان پیدا کرد...",
    "level": 0,
    "kind": "story",
    "event": "داستان آغاز بازی",
-   "spoken": "صُبْحِ روزِ بَعْدْ، نیمایِ کُنْجْکاوْ دَرِ جَنْگَلْ یِکْ تُخْمِ دِرَخْشانْ پِیدا کَرْدْ..."
+   "stale_audio": true
   },
   {
    "id": "intro_6",
@@ -4435,11 +4438,11 @@
    "id": "intro_7",
    "file": "voice/intro_7.mp3",
    "who": "narrator",
-   "text": "پیلو عدسی زمان را به نیما نشان داد. با آن می‌شود بین گذشته و حال سفر کرد.",
+   "text": "پیلو عدسی زمان را به {hero} نشان داد. با آن می‌شود بین گذشته و حال سفر کرد.",
    "level": 0,
    "kind": "story",
    "event": "داستان آغاز بازی",
-   "spoken": "پیلو عَدَسیِ زَمانْ را بِه نیما نِشانْ دادْ. با آنْ می‌شَوَدْ بَینِ گُذَشتِه وَ حالْ سَفَر کَردْ."
+   "stale_audio": true
   },
   {
    "id": "intro_8",
@@ -4465,11 +4468,11 @@
    "id": "ch_forest_2",
    "file": "voice/ch_forest_2.mp3",
    "who": "narrator",
-   "text": "ولی در جنگل، نیما یک تخم درخشان پیدا کرد... و پیلو، آخرین نگهبان زمان، از آن بیرون آمد.",
+   "text": "ولی در جنگل، {hero} یک تخم درخشان پیدا کرد... و پیلو، آخرین نگهبان زمان، از آن بیرون آمد.",
    "level": 0,
    "kind": "chapter",
    "event": "کارت فصل forest",
-   "spoken": "وَلی دَر جَنگَلْ، نیما یِکْ تُخمِ دِرَخشانْ پیدا کَردْ... وَ پیلو، آخِرینْ نِگَهبانِ زَمانْ، اَزْ آنْ بیرونْ آمَدْ."
+   "stale_audio": true
   },
   {
    "id": "ch_forest_3",
@@ -4494,17 +4497,17 @@
   {
    "id": "ch_coral_beach_2",
    "file": "voice/ch_coral_beach_2.mp3",
-   "who": "kian",
-   "text": "سلام! من کیانم، گنج‌یاب. تکه‌های زمان مال من‌اند؛ می‌خواهم دهکدهٔ گم‌شده‌ام را برگردانم!",
+   "who": "narrator",
+   "text": "مسافرهای دیگر هم دنبال قلب‌های زمان‌اند. از حالا با روح رقیب مسابقه می‌دهی!",
    "level": 0,
    "kind": "chapter",
    "event": "کارت فصل coral_beach",
-   "spoken": "سَلامْ! مَنْ کیانَمْ، گَنْجْ‌یابْ. تِکَّه‌هایِ زَمانْ مالِ مَن‌اندْ؛ می‌خواهَمْ دِهْکَدِهٔ گُم‌شُدِه‌اَمْ را بَرگَرْدانَمْ!"
+   "stale_audio": true
   },
   {
    "id": "ch_coral_beach_3",
    "file": "voice/ch_coral_beach_3.mp3",
-   "who": "nima",
+   "who": "hero",
    "text": "یک رقیب؟ پس مسابقه!",
    "level": 0,
    "kind": "chapter",
@@ -4515,10 +4518,11 @@
    "id": "ch_golden_desert_1",
    "file": "voice/ch_golden_desert_1.mp3",
    "who": "narrator",
-   "text": "کیان قلب زمان ساحل را زودتر برداشت، ولی اختاپوس آزاد شد و لاکی به تیم پیوست.",
+   "text": "روح رقیب زودتر رسید، ولی اختاپوس آزاد شد و لاکی به تیم پیوست.",
    "level": 0,
    "kind": "chapter",
    "event": "کارت فصل golden_desert",
+   "stale_audio": true,
    "spoken": "کیانْ قَلْبِ زَمانِ ساحِلْ را زودْتَر بَرْداشْتْ، وَلی اَخْتاپوسْ آزادْ شُدْ وَ لاکی به تیمْ پِیْوَسْتْ."
   },
   {
@@ -4545,21 +4549,22 @@
    "id": "ch_snow_mountain_1",
    "file": "voice/ch_snow_mountain_1.mp3",
    "who": "narrator",
-   "text": "در هرم، اولین الماس افسانه‌ای و نقش یک نقاب‌دار پیدا شد. کیان ساکت ماند.",
+   "text": "در هرم، اولین الماس افسانه‌ای و نقش یک نقاب‌دار پیدا شد.",
    "level": 0,
    "kind": "chapter",
    "event": "کارت فصل snow_mountain",
+   "stale_audio": true,
    "spoken": "دَر هَرَمْ، اَوَّلینْ اَلْماسِ اَفْسانه‌ای وَ نَقْشِ یِکْ نِقابْ‌دارْ پِیدا شُدْ. کیانْ ساکِتْ مانْدْ."
   },
   {
    "id": "ch_snow_mountain_2",
    "file": "voice/ch_snow_mountain_2.mp3",
-   "who": "kian",
-   "text": "مسابقهٔ دوم! این بار تا قله.",
+   "who": "pilo",
+   "text": "مسابقهٔ روح دوم! این بار تا قله.",
    "level": 0,
    "kind": "chapter",
    "event": "کارت فصل snow_mountain",
-   "spoken": "مُسابَقِهٔ دُوُّمْ! اینْ بارْ تا قُلَّه."
+   "stale_audio": true
   },
   {
    "id": "ch_snow_mountain_3",
@@ -4575,10 +4580,11 @@
    "id": "ch_sky_islands_1",
    "file": "voice/ch_sky_islands_1.mp3",
    "who": "narrator",
-   "text": "بهمن نیما و کیان را با هم گیر انداخت و با هم فرار کردند. غبارک اعتراف کرد: نقاب‌دار فریبش داده بود.",
+   "text": "بهمن آمد و همه با هم فرار کردند. غبارک اعتراف کرد: نقاب‌دار فریبش داده بود.",
    "level": 0,
    "kind": "chapter",
    "event": "کارت فصل sky_islands",
+   "stale_audio": true,
    "spoken": "بَهمَن نیما وَ کیانْ را با هَمْ گیرْ اَنداختْ وَ با هَمْ فَرارْ کَردَندْ. غُبارَکْ اِعتِرافْ کَردْ: نِقاب‌دارْ فَریبَشْ دادِه بودْ."
   },
   {
@@ -4605,40 +4611,43 @@
    "id": "ch_crystal_caves_1",
    "file": "voice/ch_crystal_caves_1.mp3",
    "who": "narrator",
-   "text": "عقاب طوفان آزاد شد و نقشهٔ قلعهٔ سایه را داد. ولی در غارها، کیان پیام تازه‌ای از نقاب‌دار گرفت.",
+   "text": "عقاب طوفان آزاد شد و نقشهٔ قلعهٔ سایه را داد. ولی در غارها، کلاغ‌ساعت پیام تازه‌ای از نقاب‌دار آورد.",
    "level": 0,
    "kind": "chapter",
    "event": "کارت فصل crystal_caves",
+   "stale_audio": true,
    "spoken": "عُقابِ طوفانْ آزادْ شُدْ وَ نَقْشِهٔ قَلْعِهٔ سایِه را دادْ. وَلی دَر غارْها، کیانْ پَیامِ تازِه‌ای اَزْ نِقابْ‌دارْ گِرِفْتْ."
   },
   {
    "id": "ch_crystal_caves_2",
    "file": "voice/ch_crystal_caves_2.mp3",
    "who": "masked",
-   "text": "کیان، تکه‌ها را برایم بیاور... وگرنه دهکده‌ات را هرگز نمی‌بینی.",
+   "text": "کلاغ‌ساعت، قلب‌ها را برایم بیاور...",
    "level": 0,
    "kind": "chapter",
    "event": "کارت فصل crystal_caves",
+   "stale_audio": true,
    "spoken": "کیانْ، تِکَّه‌ها را بَرایَمْ بیاوَر... وَگَرْنَه دِهْکَدِه‌اَتْ را هَرْگِزْ نَمی‌بینی."
   },
   {
    "id": "ch_crystal_caves_3",
    "file": "voice/ch_crystal_caves_3.mp3",
-   "who": "kian",
-   "text": "او به من دروغ گفته؟ نیما... باید با هم برویم.",
+   "who": "pilo",
+   "text": "نقاب‌دار به خیلی‌ها دروغ گفته. باید زودتر برسیم!",
    "level": 0,
    "kind": "chapter",
    "event": "کارت فصل crystal_caves",
-   "spoken": "او بِه مَنْ دُروغْ گُفتِه؟ نیما... بایَدْ با هَمْ بِرَویمْ."
+   "stale_audio": true
   },
   {
    "id": "ch_clock_factory_1",
    "file": "voice/ch_clock_factory_1.mp3",
    "who": "narrator",
-   "text": "کیان و جغدش پیچ‌پیچ به تیم پیوستند. در گذشتهٔ غار، دهکدهٔ کیان دیده شد؛ هنوز می‌شود نجاتش داد.",
+   "text": "جغد پیچ‌پیچ به تیم پیوست. در گذشتهٔ غار، دهکدهٔ سبزدره دیده شد؛ هنوز می‌شود نجاتش داد.",
    "level": 0,
    "kind": "chapter",
    "event": "کارت فصل clock_factory",
+   "stale_audio": true,
    "spoken": "کیانْ وَ جُغْدَشْ پیچ‌پیچْ به تیمْ پِیْوَسْتَنْدْ. دَر گُذَشْتَهٔ غارْ، دِهْکَدَهٔ کیانْ دیدِه شُدْ؛ هَنوزْ می‌شَوَدْ نَجاتَشْ دادْ."
   },
   {
@@ -4684,11 +4693,12 @@
   {
    "id": "ch_shadow_castle_3",
    "file": "voice/ch_shadow_castle_3.mp3",
-   "who": "kian",
+   "who": "pilo",
    "text": "همهٔ نگهبان‌ها و همراه‌ها کمک می‌کنند. برویم!",
    "level": 0,
    "kind": "chapter",
    "event": "کارت فصل shadow_castle",
+   "stale_audio": true,
    "spoken": "هَمِهٔ نِگَهْبانْ‌ها وَ هَمْراه‌ها کُمَکْ می‌کُنَنْدْ. بِرَویمْ!"
   },
   {
@@ -4714,22 +4724,23 @@
   {
    "id": "ch_inverted_land_3",
    "file": "voice/ch_inverted_land_3.mp3",
-   "who": "nima",
-   "text": "ساعت وارونه را می‌شکنیم و دهکدهٔ کیان را برمی‌گردانیم.",
+   "who": "hero",
+   "text": "ساعت وارونه را می‌شکنیم و سبزدره را برمی‌گردانیم.",
    "level": 0,
    "kind": "chapter",
    "event": "کارت فصل inverted_land",
+   "stale_audio": true,
    "spoken": "ساعَتِ وارونِه را می‌شِکَنیمْ وَ دِهْکَدِهٔ کیانْ را بَرْمی‌گَرْدانیمْ."
   },
   {
    "id": "tutorial_1",
    "file": "voice/tutorial_1.mp3",
    "who": "pilo",
-   "text": "با این دو دکمه راه برو. اگر نگه داری، نیما تندتر می‌دود.",
+   "text": "با این دو دکمه راه برو. اگر نگه داری، تندتر می‌دوی.",
    "level": 0,
    "kind": "tutorial",
    "event": "راهنمای شروع: left",
-   "spoken": "با اینْ دو دُکمِه راهْ بُرو. اَگَر نِگَهْ داری، نیما تُندْتَر می‌دَوَدْ."
+   "stale_audio": true
   },
   {
    "id": "tutorial_2",

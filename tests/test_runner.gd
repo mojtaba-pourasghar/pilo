@@ -27,6 +27,7 @@ func _ready() -> void:
 	await _test_combat()
 	await _test_water_exit()
 	await _test_rival_runs()
+	_test_names()
 	SaveManager.data = backup
 	SaveManager.save_game()
 	print("\n%d checks, %d failed" % [_checks, _failures])
@@ -61,7 +62,7 @@ func _test_loadout() -> void:
 	_check(game._follower != null and game._follower.id == "squirrel", "the picked companion follows along")
 	_check(not game.pilo.visible, "only one companion is out: Pilo rides in the backpack")
 	_check(game.player.can_glide == (Loadout.has_tool("umbrella") or Loadout.has_tool("balloon")),
-		"without Pilo (or a flyer) Nima glides only with the umbrella or the balloon")
+		"without Pilo (or a flyer) the hero glides only with the umbrella or the balloon")
 	await _wait(0.5)
 	# switching from the screen: back to Pilo, who is out again with his own button
 	game.cycle_companion()
@@ -70,7 +71,7 @@ func _test_loadout() -> void:
 	while Loadout.companion() != "":
 		game.cycle_companion()
 	await _wait(0.1)
-	_check(game.pilo.visible and game._follower == null and game.player.can_glide, "Pilo is out again and Nima can glide")
+	_check(game.pilo.visible and game._follower == null and game.player.can_glide, "Pilo is out again and the hero can glide")
 	_stop(game)
 	for id in Loadout.COMPANIONS:
 		var rig := CompanionRig.new()
@@ -133,10 +134,10 @@ func _test_combat() -> void:
 	_check(did == "smash" or did == "throw", "the Pilo button sends Pilo at the obstacle (%s)" % did)
 	_check(get_tree().get_nodes_in_group("block").size() < bricks, "thrown Pilo breaks a brick")
 	_stop(game)
-	_check(Weapons.owned().has("slingshot") and Weapons.current() == "slingshot", "the slingshot is Nima's from the start")
+	_check(Weapons.owned().has("slingshot") and Weapons.current() == "slingshot", "the slingshot is the hero's from the start")
 
 
-## Kian runs with real physics: on the floor on flat ground (no bobbing), over a gap, to the goal.
+## the ghost rival runs with real physics: on the floor on flat ground (no bobbing), over a gap, to the goal.
 func _test_rival_runs() -> void:
 	var game := await _start([
 		"..............................................",
@@ -144,7 +145,7 @@ func _test_rival_runs() -> void:
 		"P.............................................",
 		"##############....############################",
 	])
-	var rival := Rival.new()
+	var rival := GhostRival.offline(1)
 	rival.position = Vector2(2 * 64, 4 * 64)
 	rival.goal_x = 40 * 64
 	game._world_root.add_child(rival)
@@ -158,13 +159,13 @@ func _test_rival_runs() -> void:
 		if rival.global_position.x > 20 * 64 and rival._floor:
 			crossed = true
 	var spread: float = (ys.max() - ys.min()) if not ys.is_empty() else 999.0
-	_check(spread < 2.0, "Kian stays on flat ground without bobbing (%.1f px)" % spread)
-	_check(crossed and rival.global_position.y < 5 * 64, "Kian jumps the gap and lands on the far side")
-	_check(rival.done, "Kian reaches the goal")
+	_check(spread < 2.0, "the ghost rival stays on flat ground without bobbing (%.1f px)" % spread)
+	_check(crossed and rival.global_position.y < 5 * 64, "the ghost rival jumps the gap and lands on the far side")
+	_check(rival.done, "the ghost rival reaches the goal")
 	_stop(game)
 
 
-## Nima dropped deep under the reef shelf must be able to swim out and climb onto the bank.
+## the hero dropped deep under the reef shelf must be able to swim out and climb onto the bank.
 func _test_water_exit() -> void:
 	var game := await _start([
 		"........................................",
@@ -188,7 +189,7 @@ func _test_water_exit() -> void:
 		if game.player.is_on_floor() and game.player.global_position.y < 3 * 64 + 40 and game.player._swim == 0:
 			out = true
 			break
-	_check(out, "Nima swims out from under the reef shelf onto the bank (at %s)" % game.player.global_position)
+	_check(out, "the hero swims out from under the reef shelf onto the bank (at %s)" % game.player.global_position)
 	_stop(game)
 
 
@@ -220,7 +221,10 @@ func _test_audio() -> void:
 		for ext in AudioManager.VOICE_EXTENSIONS:
 			if ResourceLoader.exists("res://assets/audio/voice/%s%s" % [line.id, ext]):
 				recorded += 1
-				_check(AudioManager.play_voice(line.id), "voice %s plays" % line.id)
+				if bool(line.get("stale_audio", false)):
+					_check(not AudioManager.play_voice(line.id), "stale clip %s (old name) is muted" % line.id)
+				else:
+					_check(AudioManager.play_voice(line.id), "voice %s plays" % line.id)
 				break
 	print("     %d of %d voice lines have audio" % [recorded, lines.lines.size()])
 	# every line the game asks for by id is in the list the voices are made from
@@ -243,6 +247,8 @@ func _test_audio() -> void:
 	var marks := ["َ", "ُ", "ِ", "ْ", "ّ", "ً"]
 	var bad := []
 	for line in lines.lines:
+		if bool(line.get("stale_audio", false)):
+			continue    # to be re-recorded without the hero's name (T19); its vowelled form comes then
 		var spoken := String(line.get("spoken", ""))
 		var text := String(line.text)
 		for m in marks:
@@ -361,14 +367,14 @@ func _test_stomp_and_hurt() -> void:
 		"############",
 	])
 	var enemy: Enemy = get_tree().get_first_node_in_group("enemy")
-	# drop Nima onto the mushroom from above
+	# drop the hero onto the mushroom from above
 	game.player.global_position = enemy.global_position + Vector2(0, -200)
 	game.player.velocity = Vector2(0, 300)
 	await _wait(0.6)
 	_check(enemy == null or not is_instance_valid(enemy) or enemy.freed, "stomping a shadow mushroom frees it")
 	_check(game.player.hearts == 3, "a stomp costs no heart")
 	await _wait(1.4)
-	_check(game.coins >= 2, "a defeated creature drops coins that fly to Nima (%d)" % game.coins)
+	_check(game.coins >= 2, "a defeated creature drops coins that fly to the hero (%d)" % game.coins)
 	# now walk into a second one from the side
 	var second := Shroom.new()
 	second.game = game
@@ -385,7 +391,7 @@ func _test_stomp_and_hurt() -> void:
 	game.player.invulnerable = 0.0
 	game.player.take_hit(game.player.global_position.x)
 	await _wait(2.0)
-	_check(game.player.hearts == game.player.max_hearts, "with no hearts left Nima starts again with full hearts")
+	_check(game.player.hearts == game.player.max_hearts, "with no hearts left the hero starts again with full hearts")
 	await _stop(game)
 
 
@@ -560,3 +566,29 @@ class FakeGame extends Node:
 
 	func on_hazard(_kind: String) -> void:
 		pass
+
+
+## T0: the hero's name is the player's choice («آرسام» by default) and no display data still
+## names Nima or Kian.
+func _test_names() -> void:
+	SaveManager.data.erase("player_name")
+	_check(Names.hero() == "آرسام", "the default hero is Arsam")
+	_check(Names.fmt("سلام {hero}!") == "سلام آرسام!", "{hero} is filled in")
+	Names.set_hero("  مهسا  ")
+	_check(Names.hero() == "مهسا" and Names.chosen(), "the player can change the name (trimmed)")
+	_check(Names.clean("{x}\n") == "x" and Names.clean("") == "آرسام", "names are cleaned; empty keeps Arsam")
+	SaveManager.data.erase("player_name")
+	_check(ProjectSettings.get_setting("application/config/name") == "نگهبانان زمان", "the game is called Guardians of Time")
+	var bad := []
+	for dir_name in DirAccess.get_directories_at("res://data/levels"):
+		for file in DirAccess.get_files_at("res://data/levels/" + dir_name):
+			if file.ends_with(".json"):
+				var text := FileAccess.get_file_as_string("res://data/levels/%s/%s" % [dir_name, file])
+				if "نیما" in text or "کیان" in text or "\"kian\"" in text or "\"nima\"" in text:
+					bad.append(file)
+	for path in ["res://data/story/chapters.json", "res://data/story/intro.json"]:
+		var t := FileAccess.get_file_as_string(path)
+		if "نیما" in t or "کیان" in t or "تکهٔ زمان" in t:
+			bad.append(path)
+	_check(bad.is_empty(), "no level or story text names Nima or Kian %s" % [bad])
+	_check(AudioManager.is_voice_stale("app_race_start") and not AudioManager.play_voice("app_race_start"), "clips that said Kian or the old name are not played")

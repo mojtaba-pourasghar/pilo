@@ -145,7 +145,27 @@ func play_sfx_once(sound: String, window := 0.25, pitch := 1.0, volume_db := 0.0
 
 
 ## Plays a character line if a recording exists. Returns whether one was found.
+## Voice clips recorded with the old hero name (or Kian's lines) are never played: the hero's
+## name is the player's choice and is never spoken (data/voice/voice_lines.json "stale_audio").
+var _stale_voice: Dictionary = {}
+
+
+func is_voice_stale(line_id: String) -> bool:
+	if _stale_voice.is_empty():
+		_stale_voice["_loaded"] = true
+		var path := "res://data/voice/voice_lines.json"
+		if FileAccess.file_exists(path):
+			var parsed = JSON.parse_string(FileAccess.get_file_as_string(path))
+			if parsed is Dictionary:
+				for line in parsed.get("lines", []):
+					if bool(line.get("stale_audio", false)):
+						_stale_voice[String(line.id)] = true
+	return _stale_voice.has(line_id)
+
+
 func play_voice(line_id: String) -> bool:
+	if is_voice_stale(line_id):
+		return false
 	var stream: AudioStream = null
 	for ext in VOICE_EXTENSIONS:
 		stream = _load(VOICE_DIR + line_id + ext)

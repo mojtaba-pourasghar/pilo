@@ -1,7 +1,7 @@
 class_name SecretRoom
 extends Node2D
 ## An underground room or a cave under a roof. From outside it looks like solid earth;
-## when Nima gets inside (through a pipe or a broken wall) the earth fades away and the
+## when the hero gets inside (through a pipe or a broken wall) the earth fades away and the
 ## room stays revealed. The back wall (dark earth, stones, roots) is drawn behind it.
 
 const TILE := 64.0

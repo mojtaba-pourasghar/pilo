@@ -80,7 +80,7 @@
    917
   ]
  },
- "nima_celebrate": {
+ "hero_celebrate": {
   "anchor_x": 173.4,
   "feet_y": 922,
   "scale": 1.0,
@@ -89,7 +89,7 @@
    924
   ]
  },
- "nima_crawl_a": {
+ "hero_crawl_a": {
   "anchor_x": 328.8,
   "feet_y": 558,
   "scale": 1.0,
@@ -98,7 +98,7 @@
    559
   ]
  },
- "nima_crawl_b": {
+ "hero_crawl_b": {
   "anchor_x": 331.7,
   "feet_y": 564,
   "scale": 1.0,
@@ -107,7 +107,7 @@
    565
   ]
  },
- "nima_crouch": {
+ "hero_crouch": {
   "anchor_x": 249.7,
   "feet_y": 561,
   "scale": 1.0,
@@ -116,7 +116,7 @@
    562
   ]
  },
- "nima_dash": {
+ "hero_dash": {
   "anchor_x": 285.7,
   "feet_y": 923,
   "scale": 1.0,
@@ -125,7 +125,7 @@
    925
   ]
  },
- "nima_glide": {
+ "hero_glide": {
   "anchor_x": 156.7,
   "feet_y": 895,
   "scale": 1.0,
@@ -134,7 +134,7 @@
    896
   ]
  },
- "nima_hurt": {
+ "hero_hurt": {
   "anchor_x": 252.3,
   "feet_y": 893,
   "scale": 1.0,
@@ -143,7 +143,7 @@
    894
   ]
  },
- "nima_idle_b": {
+ "hero_idle_b": {
   "anchor_x": 160.0,
   "feet_y": 922,
   "scale": 1.0038,
@@ -152,7 +152,7 @@
    923
   ]
  },
- "nima_jump": {
+ "hero_jump": {
   "anchor_x": 205.9,
   "feet_y": 845,
   "scale": 1.0,
@@ -161,7 +161,7 @@
    847
   ]
  },
- "nima_rig": {
+ "hero_rig": {
   "anchor_x": 160.5,
   "feet_y": 919,
   "scale": 1.0,
@@ -170,7 +170,7 @@
    920
   ]
  },
- "nima_run_a": {
+ "hero_run_a": {
   "anchor_x": 277.5,
   "feet_y": 838,
   "scale": 1.0392,
@@ -179,7 +179,7 @@
    839
   ]
  },
- "nima_run_b": {
+ "hero_run_b": {
   "anchor_x": 248.5,
   "feet_y": 800,
   "scale": 1.1088,
@@ -188,7 +188,7 @@
    801
   ]
  },
- "nima_run_c": {
+ "hero_run_c": {
   "anchor_x": 258.5,
   "feet_y": 810,
   "scale": 1.0729,
@@ -197,7 +197,7 @@
    811
   ]
  },
- "nima_run_d": {
+ "hero_run_d": {
   "anchor_x": 259.0,
   "feet_y": 740,
   "scale": 1.06,
@@ -206,7 +206,7 @@
    741
   ]
  },
- "nima_swim_a": {
+ "hero_swim_a": {
   "anchor_x": 419.9,
   "feet_y": 502,
   "scale": 1.0,
@@ -215,7 +215,7 @@
    503
   ]
  },
- "nima_swim_b": {
+ "hero_swim_b": {
   "anchor_x": 376.0,
   "feet_y": 506,
   "scale": 1.0,
@@ -224,7 +224,7 @@
    508
   ]
  },
- "nima_swim_c": {
+ "hero_swim_c": {
   "anchor_x": 337.8,
   "feet_y": 645,
   "scale": 1.0,
@@ -233,7 +233,7 @@
    646
   ]
  },
- "nima_walk_a": {
+ "hero_walk_a": {
   "anchor_x": 172.0,
   "feet_y": 880,
   "scale": 1.0271,
@@ -242,7 +242,7 @@
    882
   ]
  },
- "nima_walk_b": {
+ "hero_walk_b": {
   "anchor_x": 171.0,
   "feet_y": 875,
   "scale": 1.0433,
@@ -251,7 +251,7 @@
    876
   ]
  },
- "nima_walk_c": {
+ "hero_walk_c": {
   "anchor_x": 209.5,
   "feet_y": 867,
   "scale": 1.0311,
@@ -260,7 +260,7 @@
    868
   ]
  },
- "nima_walk_d": {
+ "hero_walk_d": {
   "anchor_x": 178.5,
   "feet_y": 875,
   "scale": 1.0311,

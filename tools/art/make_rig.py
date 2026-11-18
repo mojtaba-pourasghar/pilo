@@ -2,8 +2,8 @@
 """Cuts a generated character (a transparent cut-out made by postprocess.py) into the parts
 that PaintedRig animates, following tools/art/rigs.json:
 
-    "nima": {
-      "src": "nima_rig",                 # assets/art/nima_rig.png (side view, facing right)
+    "hero": {
+      "src": "hero_rig",                 # assets/art/hero_rig.png (side view, facing right)
       "height": 128,                     # height in the game, in pixels (feet to top)
       "feet": [x, y],                    # ground point between the feet (source pixels)
       "parts": {                         # every part: a polygon around it and its joint
@@ -15,7 +15,7 @@ that PaintedRig animates, following tools/art/rigs.json:
       "body_pivot": [x, y],              # the rest is the body; it leans around this point
       "drop": [[[x, y], ...]],           # pixels nobody keeps (far legs: the near leg is drawn twice)
       "points": {"hip_front": [x, y], "hip_back": [x, y]},
-      "poses": {"jump": {"src": "nima_jump", "scale": 1.0}}
+      "poses": {"jump": {"src": "hero_jump", "scale": 1.0}}
     }
 
 A part takes the pixels inside its polygon; the body keeps everything else plus a small disc

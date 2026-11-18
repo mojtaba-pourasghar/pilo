@@ -12,12 +12,12 @@
  "wheel_length": 4,
  "intro": [
   {
-   "who": "kian",
-   "text": "بهمن! نیما، از این طرف!",
+   "who": "pilo",
+   "text": "بهمن! از این طرف!",
    "id": "l28_intro_1"
   },
   {
-   "who": "nima",
+   "who": "hero",
    "text": "با هم فرار کنیم!",
    "id": "l28_intro_2"
   }

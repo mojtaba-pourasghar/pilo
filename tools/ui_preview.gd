@@ -9,7 +9,7 @@ func _ready() -> void:
 		args[parts[0]] = parts[1] if parts.size() > 1 else "1"
 	UIKit.ensure_theme(get_tree())
 	RenderingServer.set_default_clear_color(Color("7fc8f0"))
-	match String(args.get("show", "nima")):
+	match String(args.get("show", "hero")):
 		"complete":
 			var popup: CanvasLayer = load("res://scripts/ui/level_complete.gd").new()
 			popup.level_id = 1

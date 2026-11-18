@@ -30,7 +30,7 @@ const PRODUCTS := {
 	},
 	"companion_lion": {
 		"title": "شیرک بالدار",
-		"description": "همراهی که یک قلب بیشتر به نیما می‌دهد.",
+		"description": "همراهی که یک قلب بیشتر به قهرمان می‌دهد.",
 		"icon": "res://assets/ui/backpack.png",
 		"coming_soon": false,
 	},

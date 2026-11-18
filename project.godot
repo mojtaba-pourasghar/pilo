@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="سفر پیلو"
-config/description="پلتفرمر معمایی کودکانه در سرزمین رنگارستان؛ با لنز زمان بین گذشته و حال جابه‌جا شو."
+config/name="نگهبانان زمان"
+config/description="پلتفرمر معمایی-ماجرایی برای ۸ تا ۱۵ سال؛ گذشته و حال با هم، با لنز زمان."
 config/version="0.1.0"
 run/main_scene="res://scenes/boot/boot.tscn"
 config/quit_on_go_back=false
@@ -24,6 +24,7 @@ config/icon="res://icon.png"
 [autoload]
 
 SaveManager="*res://scripts/save/save_manager.gd"
+Names="*res://scripts/platform/names.gd"
 GameInput="*res://scripts/platform/input_setup.gd"
 AudioManager="*res://scripts/platform/audio_manager.gd"
 Analytics="*res://scripts/platform/analytics_adapter.gd"

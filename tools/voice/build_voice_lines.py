@@ -26,15 +26,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 OUT = os.path.join(ROOT, "data", "voice", "voice_lines.json")
 
 # Every speaker: name, who they are, and the Avasho voice and pace the voice studio
-# (tools/voice-studio) uses for their lines. Avasho has no child voices, so the boys Nima and
-# Kian are voiced by young female voices, as in Persian dubbing of children's films.
+# (tools/voice-studio) uses for their lines. Avasho has no child voices, so the boys the hero and
+# the ghost rival are voiced by young female voices, as in Persian dubbing of children's films.
 CHARACTERS = {
     "narrator": {"name": "راوی", "about": "قصه‌گوی گرم و مهربان", "speaker": "shahrzad", "speed": 0.95},
-    "nima": {"name": "نیما", "about": "پسر ماجراجوی ۸ ساله؛ کنجکاو، مهربان و پرانرژی", "speaker": "bahar", "speed": 1.0},
-    "pilo": {"name": "پیلو", "about": "همراه کوچک و بامزهٔ نیما؛ گرم، شاد و راهنما (جواب را لو نمی‌دهد)", "speaker": "pune", "speed": 0.9},
+    "hero": {"name": "قهرمان", "about": "قهرمان ۱۲ ساله (پیش‌فرض آرسام؛ نامش قابل‌تغییر و هرگز در صدا گفته نمی‌شود)", "speaker": "bahar", "speed": 1.0},
+    "pilo": {"name": "پیلو", "about": "همراه کوچک و بامزهٔ قهرمان؛ گرم، شاد و راهنما (جواب را لو نمی‌دهد)", "speaker": "pune", "speed": 0.9},
     "ghubarak": {"name": "غبارک", "about": "موجود غباری بازیگوش؛ شیطون و خنده‌رو، اصلاً ترسناک نیست", "speaker": "ariya", "speed": 1.1},
     "squirrel": {"name": "سنجابک", "about": "سنجاب کوچولو و تند‌حرف؛ هیجان‌زده و قدردان", "speaker": "sheyda", "speed": 1.15},
-    "kian": {"name": "کیان", "about": "رقیب نیما؛ مغرور ولی ته دلش خوب", "speaker": "sara", "speed": 1.05},
     "grandpa": {"name": "بابابزرگ ساعت‌ساز", "about": "ساعت‌ساز پیر و مهربان", "speaker": "parviz", "speed": 0.9},
     "grandma": {"name": "مادربزرگ کاکتوس", "about": "کاکتوس پیر و مهربان بیابان", "speaker": "shirin", "speed": 0.9},
     "captain": {"name": "ناخدا موج", "about": "ناخدای خوش‌خندهٔ ساحل", "speaker": "bahman", "speed": 1.0},
@@ -51,7 +50,7 @@ CHARACTERS = {
     "mole": {"name": "خال‌خالی", "about": "موش‌کور همراه؛ بامزه", "speaker": "ariya", "speed": 1.0},
     "penguin": {"name": "یخک", "about": "پنگوئن همراه؛ سرزنده", "speaker": "sheyda", "speed": 1.05},
     "butterfly": {"name": "پَرپَری", "about": "پروانهٔ همراه؛ سبک و رؤیایی", "speaker": "sara", "speed": 1.1},
-    "owl": {"name": "پیچ‌پیچ", "about": "جغد کیان؛ دانا و آرام", "speaker": "nourai", "speed": 1.0},
+    "owl": {"name": "پیچ‌پیچ", "about": "جغد همراه؛ دانا و آرام", "speaker": "nourai", "speed": 1.0},
     "spark": {"name": "جرقه", "about": "جرقهٔ همراه؛ تند و پرانرژی", "speaker": "pune", "speed": 1.15},
     "dragon": {"name": "اژدهاک", "about": "اژدهای کوچک همراه؛ بازیگوش", "speaker": "shahriyar", "speed": 1.1},
 }
@@ -63,11 +62,11 @@ APP_LINES = [
     ("app_rescue_first", "pilo", "اول دوستمان را نجات بده!", "پایان مرحله قبل از نجات دوست"),
     ("app_catch_first", "pilo", "اول غبارک را بگیر!", "پایان مرحلهٔ تعقیب قبل از گرفتن غبارک"),
     ("app_well_done", "pilo", "آفرین!", "پنجرهٔ پایان مرحله"),
-    ("app_shard_found", "pilo", "یک تکهٔ زمان پیدا کردی!", "پنجرهٔ پایان مرحله، بار اول"),
+    ("app_shard_found", "pilo", "یک قلب زمان پیدا کردی!", "پنجرهٔ پایان مرحله، بار اول"),
     ("app_next_world_soon", "pilo", "دنیای بعدی به‌زودی می‌آید!", "پایان مرحلهٔ آخر دنیا"),
-    ("app_race_start", "pilo", "مسابقه با کیان! زودتر به دروازه برس.", "شروع مسابقه با کیان"),
-    ("app_race_lost", "pilo", "کیان زودتر به دروازه رسید! باز هم می‌شود کلید را پیدا کرد.", "کیان برد"),
-    ("app_race_won", "pilo", "تو از کیان زودتر رسیدی! پنجاه سکه جایزه.", "نیما برد"),
+    ("app_race_start", "pilo", "مسابقه با روح رقیب! زودتر به دروازه برس.", "شروع مسابقهٔ روح"),
+    ("app_race_lost", "pilo", "روح رقیب زودتر رسید! باز هم می‌شود کلیدها را پیدا کرد.", "روح رقیب برد"),
+    ("app_race_won", "pilo", "از روح رقیب زودتر رسیدی! پنجاه سکه جایزه.", "قهرمان برد"),
     ("app_time_key", "pilo", "کلید زمان! حالا دروازه باز می‌شود.", "کلید زمان پیدا شد"),
     ("app_gate_locked", "pilo", "دروازه قفل است؛ کلید زمان را پیدا کن!", "دروازهٔ قفل بدون کلید زمان"),
     ("app_try_again", "pilo", "اوه! دوباره امتحان کنیم.", "افتادن یا از دست دادن قلب‌ها"),
@@ -100,6 +99,10 @@ def main():
         # else a respelling saved in the studio for the same text
         old = previous.get(line_id, {})
         spoken = SPOKEN.get(text) or (old.get("spoken") if old.get("text") == text else None)
+        if old.get("stale_audio") or (old.get("text") not in (None, text)):
+            # the recorded clip says something else (e.g. the old hero name): re-record (T19)
+            entry["stale_audio"] = True
+            spoken = SPOKEN.get(text)
         if spoken:
             entry["spoken"] = spoken
         lines.append(entry)

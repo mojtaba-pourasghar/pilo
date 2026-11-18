@@ -142,7 +142,7 @@ func _next() -> void:
 	drift.tween_property(_front, "scale", Vector2(1.02, 1.02), 12.0).set_trans(Tween.TRANS_SINE)
 	drift.tween_property(_front, "position", Vector2(-_front.position.x, 0), 12.0).set_trans(Tween.TRANS_SINE)
 	_set_mood(String(panel.mood))
-	_subtitle.text = panel.text
+	_subtitle.text = Names.fmt(String(panel.text))
 	_caption.modulate.a = 0.0
 	create_tween().tween_property(_caption, "modulate:a", 1.0, 0.5).set_delay(0.3)
 	if not AudioManager.play_voice(String(panel.voice_id)):

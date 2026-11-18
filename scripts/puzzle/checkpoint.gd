@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
-	# rendered flag: limp and grey until Nima reaches it, then up and waving in the wind
+	# rendered flag: limp and grey until the hero reaches it, then up and waving in the wind
 	if WorldArt.pic("checkpoint_on"):
 		var sway := sin(_t * 4.0) * 0.04 * _raise
 		draw_set_transform(Vector2(31, 64), sway, Vector2(1.0 + sin(_t * 6.0) * 0.03 * _raise, 1.0))
