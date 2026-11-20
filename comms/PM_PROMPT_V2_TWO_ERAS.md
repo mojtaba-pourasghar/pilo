@@ -1,6 +1,6 @@
 # پرامپت برای Claude Code — بازسازی بر پایهٔ سناریوی دو دنیا و حس کلیپ‌های مرجع
 
-اول بخوان: `CLAUDE.md` (قاعدهٔ ۲ جدید)، `docs/22_full_scenario_two_eras_v2.md`، `docs/23_creatures_giants_fx_paths_story_binding.md`، `docs/21_reference_analysis_motion_camera_fx_bg_paths_menus_font.md`، `docs/24_scene_by_scene_scenario_from_reference_clips.md`، `docs/25_economy_monetization_and_extra_games.md`، `docs/26_motion_bible_controls_and_smoothness.md`، `docs/27_background_fx_per_layer_and_level.md`، `docs/DECISIONS.md` (دو سطر ۲۰ نوامبر). همچنین `git pull` و `comms/`.
+اول بخوان: `CLAUDE.md` (قاعدهٔ ۲ جدید)، `docs/22_full_scenario_two_eras_v2.md`، `docs/23_creatures_giants_fx_paths_story_binding.md`، `docs/21_reference_analysis_motion_camera_fx_bg_paths_menus_font.md`، `docs/24_scene_by_scene_scenario_from_reference_clips.md`، `docs/25_economy_monetization_and_extra_games.md`، `docs/26_motion_bible_controls_and_smoothness.md`، `docs/27_background_fx_per_layer_and_level.md`، `docs/28_animated_menus_and_story_scenario.md`، `docs/DECISIONS.md` (دو سطر ۲۰ نوامبر). همچنین `git pull` و `comms/`.
 
 ## هدف
 قدیم و جدید دو دنیای جدا (پدربزرگ جوان / آرسام)، با اثر کارهای قدیم روی جدید. حس بازی مثل کلیپ‌های مرجع: حرکت نرم، تیراندازی کامل، افکت، پس‌زمینهٔ لایه‌ای با ارتفاع، مسیرهای متنوع، دشمن‌ها و غول‌های زنده. **موتور فعلی را تکامل بده، از صفر ننویس.** ویدیوها در مخزن نیستند و نباید باشند.
@@ -54,3 +54,5 @@
 - **اقتصاد و مینی‌بازی‌ها** (`docs/25`): `data/economy.json` را با ارزها و چرخه‌ها هماهنگ کن؛ مینی‌بازی‌ها فقط در هاب؛ بدون خرید شانسی؛ سد تأیید خرید.
 - **افکت لایه‌ها** (`docs/27`): شیدر باد، مه، god rays، چمن واکنشی، blur عمقی، ۳ سطح کیفیت.
 - ترتیب پیشنهادی: **V0 (نرمی+کنترل)** پیش از V2؛ سپس بقیه. هر چیز بدون طرح (صفحه‌های 🆕) ساخته نمی‌شود.
+
+- **همه‌چیز انیمیشنی (حکم ۲۰ نوامبر):** منوها و داستان **صحنهٔ زنده** هستند (`docs/28`)، نه عکس ثابت؛ ریگ مشترک گیم‌پلی و سینماتیک؛ ورود/ایدل/خروج برای هر صفحه؛ آزمون «بی‌حرکت نباشد».
