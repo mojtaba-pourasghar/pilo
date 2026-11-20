@@ -2,6 +2,8 @@
 
 اول بخوان: `CLAUDE.md` (قاعدهٔ ۲ جدید)، `docs/22_full_scenario_two_eras_v2.md`، `docs/23_creatures_giants_fx_paths_story_binding.md`، `docs/21_reference_analysis_motion_camera_fx_bg_paths_menus_font.md`، `docs/24_scene_by_scene_scenario_from_reference_clips.md`، `docs/25_economy_monetization_and_extra_games.md`، `docs/26_motion_bible_controls_and_smoothness.md`، `docs/27_background_fx_per_layer_and_level.md`، `docs/28_animated_menus_and_story_scenario.md`، `docs/DECISIONS.md` (دو سطر ۲۰ نوامبر). همچنین `git pull` و `comms/`.
 
+> **توقف (۲۰ نوامبر، شب):** دامنه فقط **دو مرحلهٔ اول فصل ۱** است و **هیچ شخصیت/همراه/دشمن/افکت بدون تأیید صریح صاحب پروژه ساخته نمی‌شود** (`docs/29` دروازه‌ها). تا تأیید G0، فقط زیرساخت (ریگ، کنترل، دوربین، لایه‌ها) با جانگهدار.
+
 ## هدف
 قدیم و جدید دو دنیای جدا (پدربزرگ جوان / آرسام)، با اثر کارهای قدیم روی جدید. حس بازی مثل کلیپ‌های مرجع: حرکت نرم، تیراندازی کامل، افکت، پس‌زمینهٔ لایه‌ای با ارتفاع، مسیرهای متنوع، دشمن‌ها و غول‌های زنده. **موتور فعلی را تکامل بده، از صفر ننویس.** ویدیوها در مخزن نیستند و نباید باشند.
 
