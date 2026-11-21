@@ -119,3 +119,4 @@
 - پس‌زمینهٔ «دشت صبح» ۷ لایه: MAHbh2w6YgE — https://www.canva.com/M/MAHbh2w6YgE
 - پس‌زمینهٔ «دشت بعد» ۷ لایه: MAHbhyTaZuc — https://www.canva.com/M/MAHbhyTaZuc
 - افکت‌ها (G4) و منوها (G5): در صف (سهمیهٔ Canva)
+- ۲۱ نوامبر: مالک برگه‌های بالا را تأیید کرد و نسخهٔ کامل را داد؛ فایل‌ها در `assets/art/pair1_sheets/`. افکت‌ها: فایل کامل هم آمد (g4_fx_sheet.png).
