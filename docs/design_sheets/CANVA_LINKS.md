@@ -108,3 +108,14 @@
 - فرم‌های هم‌پیوندی قهرمان (عادی / بال زمان / یال شعله / تاج شاخ): MAHbeBN1ev8 — https://www.canva.com/M/MAHbeBN1ev8
 - شش فرّهٔ نوزاد (پیلو، اَخگَر، رُستو، خیزَک، ابرِک، بِلورَک): MAHbeHYbATQ — https://www.canva.com/M/MAHbeHYbATQ
 - سه خط تکامل (پیلو/اَخگَر/رُستو، ۳ مرحله): MAHbeExSJYY — https://www.canva.com/M/MAHbeExSJYY
+
+## G2/G3 — جفت ۱ (۲۱ نوامبر ۲۰۲۶؛ پیش‌نمایش؛ منتظر تأیید مالک؛ بعد از تأیید فایل کامل را مالک می‌دهد)
+- آرسام: قطعات و ۴ چهره (پس‌زمینهٔ صورتی): MAHbh1RtWm4 — https://www.canva.com/M/MAHbh1RtWm4
+  > تذکر: مرجع تصویری طرح اولیه (MAHbC8Bs2TE) دوبار شکست خورد؛ چهره از توصیف `01_arsam.md` ساخته شد، **باید با طرح اولیه تطبیق شود**.
+- پدربزرگ جوان: قطعات (۴ چهره، ابزارها): MAHbhwYTepU — https://www.canva.com/M/MAHbhwYTepU
+- Tikkit ← Chronix ← Chronarch، ۴ حالت: MAHbh53UQX0 — https://www.canva.com/M/MAHbh53UQX0
+- دشمن‌های قدیم (Murkwisp/Cindrel، Clockcrow/Tickwing): MAHbh0lcQ3I — https://www.canva.com/M/MAHbh0lcQ3I
+- دشمن‌های جدید (Murkling/Nimbeak، Stiltmurk/Rootstomp، Stumpguard/Verdlin نوزاد): MAHbh3VJ7U4 — https://www.canva.com/M/MAHbh3VJ7U4
+- پس‌زمینهٔ «دشت صبح» ۷ لایه: MAHbh2w6YgE — https://www.canva.com/M/MAHbh2w6YgE
+- پس‌زمینهٔ «دشت بعد» ۷ لایه: MAHbhyTaZuc — https://www.canva.com/M/MAHbhyTaZuc
+- افکت‌ها (G4) و منوها (G5): در صف (سهمیهٔ Canva)
