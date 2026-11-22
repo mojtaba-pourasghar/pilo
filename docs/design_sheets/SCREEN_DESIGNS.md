@@ -28,3 +28,17 @@
 | انرژی/قلب | `assets/art/pair1_sheets/g5_heart_lock_v1.png` |
 
 مشخصات کامل: `docs/design_sheets/G5_PAIR1_MENUS.md`.
+
+## G5 v2 — بازطراحی با سبک هنر اصلی (۲۲ نوامبر ۲۰۲۶ — draft، منتظر تأیید مالک)
+> حکم مالک: «هنر اصلی اینه؛ با این سبک باید طراحی بشه.» مرجع سبک = `assets/art/p9_ui/sheet_ui_kit_v1.png`، `screen_pause_settings_v1.png`، `screen_hub_v2.png`، `sheet_screen_main_menu_v1.png`، `screen_dialogue_v1.png`.
+> نسخه‌های v1 قبلی **منسوخ** شدند. این v2ها با FLUX و توصیف دقیق همان سبک ساخته شد.
+
+| صفحه | فایل v2 |
+|---|---|
+| نقشهٔ ۶ گرهٔ دوتایی | `assets/art/pair1_sheets/g5v2_map_v2.png` |
+| HUD + جوی‌استیک | `assets/art/pair1_sheets/g5v2_hud_v2.png` |
+| ساعت بزرگ + پنل اثر | `assets/art/pair1_sheets/g5v2_clock_v2.png` |
+| نتیجه (پولاروید) | `assets/art/pair1_sheets/g5v2_result_v2.png` |
+| کارت Auraling | `assets/art/pair1_sheets/g5v2_card_v2.png` |
+| نام قهرمان | `assets/art/pair1_sheets/g5v2_name_v2.png` |
+| انرژی/قلب | `assets/art/pair1_sheets/g5v2_heart_v2.png` |
