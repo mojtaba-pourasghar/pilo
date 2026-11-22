@@ -15,3 +15,16 @@
 | کارگاه/انتخاب | `sheet_screen_loadout_v1.png` | ۳ تب بالا؛ پرتره قهرمان چپ؛ شبکهٔ ۴×۳ اسلات؛ کارت همراه راست با ۳ اسلات تجهیز؛ ستارهٔ سطح؛ دکمه‌های ارتقا (طلایی) و تأیید (آبی) |
 
 > عنصرهای تعاملی با قطعه‌های `p9_ui_*.png` ساخته شوند، نه برش از این تصاویر صفحه (آن‌ها فقط **طرح مرجع** هستند).
+
+## G5 — منوهای جفت ۱ (۲۲ نوامبر ۲۰۲۶ — draft، منتظر تأیید مالک)
+| صفحه | فایل طرح |
+|---|---|
+| نقشهٔ ۶ گرهٔ دوتایی | `assets/art/pair1_sheets/g5_map_dual_nodes_v1.png` |
+| HUD + جوی‌استیک شناور | `assets/art/pair1_sheets/g5_hud_joystick_v1.png` |
+| ساعت بزرگ + پنل اثر | `assets/art/pair1_sheets/g5_great_clock_v1.png` |
+| نتیجه (پولاروید) | `assets/art/pair1_sheets/g5_result_polaroid_v1.png` |
+| کارت Auraling | `assets/art/pair1_sheets/g5_auraling_card_v1.png` |
+| نام قهرمان | `assets/art/pair1_sheets/g5_name_entry_v1.png` |
+| انرژی/قلب | `assets/art/pair1_sheets/g5_heart_lock_v1.png` |
+
+مشخصات کامل: `docs/design_sheets/G5_PAIR1_MENUS.md`.
