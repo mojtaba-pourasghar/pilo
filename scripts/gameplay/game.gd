@@ -823,6 +823,7 @@ func enter_pipe(pipe: Pipe) -> void:
 			target_pipe = other
 	if target_pipe:
 		player.global_position = target_pipe.global_position + Vector2(64, 90)
+		player.reset_physics_interpolation()
 		_camera.reset_smoothing()
 		AudioManager.play_sfx("pipe", 1.2)
 		var up := create_tween()
@@ -830,6 +831,7 @@ func enter_pipe(pipe: Pipe) -> void:
 		await up.finished
 	else:
 		player.global_position = pipe.warp_to + Vector2(32, 64 - player.FEET - 1.0)
+		player.reset_physics_interpolation()
 		_camera.reset_smoothing()
 		FX.burst(_world_root, player.global_position, UIKit.GOLD, 14)
 	player.velocity = Vector2.ZERO

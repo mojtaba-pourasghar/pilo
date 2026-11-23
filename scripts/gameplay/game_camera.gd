@@ -18,9 +18,13 @@ var _time := 0.0
 func _ready() -> void:
 	position_smoothing_enabled = true
 	position_smoothing_speed = 7.0
+	# dead zone (docs/26 §3): the hero moves +-64 px sideways and +-96 px up/down before the view follows
+	drag_horizontal_enabled = true
+	drag_left_margin = 0.05
+	drag_right_margin = 0.05
 	drag_vertical_enabled = true
-	drag_top_margin = 0.25
-	drag_bottom_margin = 0.15
+	drag_top_margin = 0.13
+	drag_bottom_margin = 0.13
 	ignore_rotation = false
 	_noise.frequency = 3.0
 

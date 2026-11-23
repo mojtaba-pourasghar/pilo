@@ -201,7 +201,10 @@ func _physics_process(delta: float) -> void:
 	if velocity.y >= 0.0:
 		_jump_held = false
 
+	var rise_vy := velocity.y
 	move_and_slide()
+	if rise_vy < -150.0 and is_on_ceiling():
+		_corner_assist(rise_vy, delta)
 	_check_collisions()
 	if _belt != 0.0 and is_on_floor():
 		move_and_collide(Vector2(_belt * TimeBlock.BELT_SPEED * delta, 0))
@@ -214,6 +217,19 @@ func _physics_process(delta: float) -> void:
 	if dir != 0.0 and dashing <= 0.0 and _hurt_lock <= 0.0:
 		facing = signf(dir)
 	_animate(delta, on_floor, dir)
+
+
+## Edge forgiveness (docs/26 §1.6): a jump that only clips the corner of a platform slides the hero
+## past it (up to CORNER_FORGIVE px) instead of bonking his head.
+const CORNER_FORGIVE := 8
+func _corner_assist(rise_vy: float, delta: float) -> void:
+	for d in range(1, CORNER_FORGIVE + 1):
+		for sgn in [1, -1]:
+			var shift := Vector2(sgn * d, 0)
+			if not test_move(Transform2D(0.0, global_position + shift), Vector2(0, rise_vy * delta)):
+				global_position += shift
+				velocity.y = rise_vy
+				return
 
 
 func _horizontal(dir: float, delta: float, on_floor: bool) -> void:
@@ -555,6 +571,7 @@ func respawn(pos: Vector2) -> void:
 	tween.tween_property(visual, "modulate:a", 0.0, 0.2)
 	await tween.finished
 	global_position = pos
+	reset_physics_interpolation()
 	velocity = Vector2.ZERO
 	_buffer = 0.0
 	_jump_held = false

@@ -15,6 +15,7 @@ func _ready() -> void:
 	await _test_skeleton_rig()
 	await _test_joystick()
 	await _test_bow()
+	await _test_corner_assist()
 	await _test_time_shift_safety()
 	_test_audio()
 	_test_level_1_layout()
@@ -163,7 +164,7 @@ func _test_rival_runs() -> void:
 	rival.running = true
 	var ys: Array = []
 	var crossed := false
-	for i in 420:
+	for i in int(420.0 * Engine.physics_ticks_per_second / 60.0):
 		await get_tree().physics_frame
 		if rival.global_position.x > 3 * 64 and rival.global_position.x < 10 * 64:
 			ys.append(rival.global_position.y)
@@ -960,6 +961,29 @@ func _test_bow() -> void:
 	_stop(game)
 	Weapons.hero_weapon = ""
 	_check(Weapons.current() == "slingshot", "the bow is only the hero's own weapon, the swap list is unchanged")
+
+
+## Edge forgiveness: a jump that clips the corner of a ledge by a few pixels slides past it.
+func _test_corner_assist() -> void:
+	var game := await _start([
+		"..............",
+		"..............",
+		"....#.........",
+		"..............",
+		"P.............",
+		"##############",
+	])
+	var ledge_x := 4.0 * 64.0                       # the ledge's left edge; its bottom is at y = 192
+	game.player.position.x = ledge_x - 18.0 + 6.0     # the hero's right edge overlaps it by 6 px
+	await _wait(0.2)
+	var min_y := 9999.0
+	game.player.velocity.y = -860.0
+	for i in 60:
+		await get_tree().physics_frame
+		min_y = minf(min_y, game.player.global_position.y)
+	# without help the head stops under the ledge: origin = 192 + 40 = 232
+	_check(min_y < 215.0, "clipping a ledge corner by a few pixels does not stop the jump (%.0f)" % min_y)
+	_stop(game)
 
 
 ## Floating analog joystick (docs/26 §2.1): dead zone 12%, x^1.4 response, the ring appears under the
