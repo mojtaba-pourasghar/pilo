@@ -31,3 +31,17 @@
 
 ## G5 v2 — رد شد (۲۲ نوامبر ۲۰۲۶)
 > مالک: «نه خوب نشد، پاکش کن.» هر ۷ فایل g5v2 حذف شدند. طراحی بعدی باید از **Canva** با سبک ذخیره‌شده خوانده و ساخته شود (گردش `02_style_prompt.md`). این نشست ابزار Canva ندارد؛ درخواست در comms/ART_REQUESTS.md ثبت شد.
+
+## G5 v3 — طرح نهایی با سبک هنر اصلی (۲۲ نوامبر ۲۰۲۶ — تأیید مالک ✅)
+> مالک هر ۷ تصویر را با ابزار خارجی و پرامپت‌های دقیق مدیر پروژه تولید کرد. سبک = عین `p9_ui` موجود در مخزن.
+> این نسخه **نهایی** است و Qwen Code باید عین همین طرح‌ها را پیاده کند.
+
+| صفحه | فایل | وضعیت |
+|---|---|---|
+| HUD gameplay | `assets/art/pair1_sheets/g5v3_hud_v3.png` | ✅ final |
+| Heart/energy popup | `assets/art/pair1_sheets/g5v3_heart_v3.png` | ✅ final |
+| Name entry | `assets/art/pair1_sheets/g5v3_name_v3.png` | ✅ final |
+| Result screen | `assets/art/pair1_sheets/g5v3_result_v3.png` | ✅ final |
+| Great clock transition | `assets/art/pair1_sheets/g5v3_clock_v3.png` | ✅ final |
+| Chapter map (6 dual nodes) | `assets/art/pair1_sheets/g5v3_map_v3.png` | ✅ final |
+| Auraling card reveal | `assets/art/pair1_sheets/g5v3_card_v3.png` | ✅ final |
