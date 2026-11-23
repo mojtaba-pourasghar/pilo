@@ -33,6 +33,7 @@ func default_data() -> Dictionary:
 		"legendary": [],
 		"hearts_of_time": 0,
 		"analytics": {},
+		"deeds": {},
 	}
 
 

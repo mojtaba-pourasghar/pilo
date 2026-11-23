@@ -17,6 +17,7 @@ func _ready() -> void:
 	await _test_bow()
 	await _test_pair1_scenery()
 	await _test_fx_budget()
+	_test_deeds()
 	await _test_corner_assist()
 	await _test_time_shift_safety()
 	_test_audio()
@@ -986,6 +987,22 @@ func _test_corner_assist() -> void:
 	# without help the head stops under the ledge: origin = 192 + 40 = 232
 	_check(min_y < 215.0, "clipping a ledge corner by a few pixels does not stop the jump (%.0f)" % min_y)
 	_stop(game)
+
+
+## Deeds of the old level choose the variant of the new one; every variant is reachable.
+func _test_deeds() -> void:
+	var saved: Variant = SaveManager.data.get("deeds", {}).duplicate()
+	DeedsStore.clear()
+	_check(DeedsStore.variant() == "none" and DeedsStore.count() == 0, "no deeds: the new level is the bare variant")
+	_check(DeedsStore.add("egg_saved") and not DeedsStore.add("egg_saved"), "a deed is new only the first time")
+	_check(DeedsStore.variant() == "partial" and DeedsStore.has("egg_saved") and not DeedsStore.has("shrine_lit"), "one or two deeds: partial")
+	DeedsStore.add("bridge_planted")
+	DeedsStore.add("shrine_lit")
+	_check(DeedsStore.variant() == "full", "all three deeds: the full variant")
+	_check(SaveManager.data.deeds.has("egg_saved"), "deeds are kept in the save")
+	DeedsStore.clear()
+	for id in saved:
+		SaveManager.data.deeds[id] = true
 
 
 ## Effects (docs/26 §1.9): the particle budget caps at 200 units, quality scales it, cut-art effects play and free themselves.
