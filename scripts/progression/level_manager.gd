@@ -170,6 +170,23 @@ func apply_brightness() -> void:
 		_dim.color.a = (1.0 - float(SaveManager.data.get("settings", {}).get("brightness", 1.0))) * 0.6
 
 
+## A level of a pair (data/levels/pair1/<name>.json, e.g. "old_01"): played outside the nine worlds.
+func load_pair_level(name: String) -> Dictionary:
+	var path := "res://data/levels/pair1/%s.json" % name
+	if not FileAccess.file_exists(path):
+		return {}
+	var parsed = JSON.parse_string(FileAccess.open(path, FileAccess.READ).get_as_text())
+	return Strings.resolve(parsed) if parsed is Dictionary else {}
+
+
+func play_pair_level(name: String) -> void:
+	override_level = load_pair_level(name)
+	if override_level.is_empty():
+		return
+	current_level = int(override_level.get("id", 101))
+	change_scene(GAME_SCENE)
+
+
 func play_level(level_id: int) -> void:
 	current_level = level_id
 	change_scene(GAME_SCENE)

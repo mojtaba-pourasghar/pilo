@@ -1,0 +1,202 @@
+[
+ {
+  "n": 1,
+  "id": "v3_arsam_run",
+  "path": "assets/art/v3/v3_arsam_run.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Arsam: run and walk cycles (side view)"
+ },
+ {
+  "n": 2,
+  "id": "v3_arsam_air",
+  "path": "assets/art/v3/v3_arsam_air.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Arsam: jump, fall, glide, wall, slide (side view)"
+ },
+ {
+  "n": 3,
+  "id": "v3_arsam_actions",
+  "path": "assets/art/v3/v3_arsam_actions.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Arsam: bow, hurt, victory (side view)"
+ },
+ {
+  "n": 4,
+  "id": "v3_grandfather_run",
+  "path": "assets/art/v3/v3_grandfather_run.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Grandfather: run and walk cycles (side view)"
+ },
+ {
+  "n": 5,
+  "id": "v3_grandfather_air",
+  "path": "assets/art/v3/v3_grandfather_air.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Grandfather: jump, fall, pole-vault, swing (side view)"
+ },
+ {
+  "n": 6,
+  "id": "v3_grandfather_actions",
+  "path": "assets/art/v3/v3_grandfather_actions.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Grandfather: tools, carrying the egg (side view)"
+ },
+ {
+  "n": 7,
+  "id": "v3_embri_move",
+  "path": "assets/art/v3/v3_embri_move.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Embri: run, hop, idle (side view)"
+ },
+ {
+  "n": 8,
+  "id": "v3_embri_actions",
+  "path": "assets/art/v3/v3_embri_actions.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Embri: light, burn, react (side view)"
+ },
+ {
+  "n": 9,
+  "id": "v3_tikkit_fly",
+  "path": "assets/art/v3/v3_tikkit_fly.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Tikkit: fly, lift, cast (side view)"
+ },
+ {
+  "n": 10,
+  "id": "v3_terrain_old",
+  "path": "assets/art/v3/v3_terrain_old.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Terrain kit, old era (curved ground textures)"
+ },
+ {
+  "n": 11,
+  "id": "v3_terrain_new",
+  "path": "assets/art/v3/v3_terrain_new.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Terrain kit, new era (curved ground textures)"
+ },
+ {
+  "n": 12,
+  "id": "v3_props_motion",
+  "path": "assets/art/v3/v3_props_motion.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Motion props: rope swing, vine, signs, arches, columns"
+ },
+ {
+  "n": 13,
+  "id": "v3_props_tower",
+  "path": "assets/art/v3/v3_props_tower.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Tower props: crossbeam wheel, chains, webs, wall"
+ },
+ {
+  "n": 14,
+  "id": "v3_bg_old_sky",
+  "path": "assets/art/v3/v3_bg_old_sky.png",
+  "size": "3072x2048",
+  "kind": "none",
+  "title": "Old world: sky layer (opaque)"
+ },
+ {
+  "n": 15,
+  "id": "v3_bg_old_far",
+  "path": "assets/art/v3/v3_bg_old_far.png",
+  "size": "3072x2048",
+  "kind": "pink",
+  "title": "Old world: far silhouettes"
+ },
+ {
+  "n": 16,
+  "id": "v3_bg_old_village",
+  "path": "assets/art/v3/v3_bg_old_village.png",
+  "size": "3072x2048",
+  "kind": "pink",
+  "title": "Old world: misty hills and village"
+ },
+ {
+  "n": 17,
+  "id": "v3_bg_old_trees",
+  "path": "assets/art/v3/v3_bg_old_trees.png",
+  "size": "3072x2048",
+  "kind": "pink",
+  "title": "Old world: giant trees and arches"
+ },
+ {
+  "n": 18,
+  "id": "v3_bg_old_near",
+  "path": "assets/art/v3/v3_bg_old_near.png",
+  "size": "3072x2048",
+  "kind": "pink",
+  "title": "Old world: near foliage"
+ },
+ {
+  "n": 19,
+  "id": "v3_bg_old_front",
+  "path": "assets/art/v3/v3_bg_old_front.png",
+  "size": "3072x1024",
+  "kind": "pink",
+  "title": "Old world: dark foreground silhouettes"
+ },
+ {
+  "n": 20,
+  "id": "v3_bg_new_sky",
+  "path": "assets/art/v3/v3_bg_new_sky.png",
+  "size": "3072x2048",
+  "kind": "none",
+  "title": "New world: sky layer (opaque)"
+ },
+ {
+  "n": 21,
+  "id": "v3_bg_new_far",
+  "path": "assets/art/v3/v3_bg_new_far.png",
+  "size": "3072x2048",
+  "kind": "pink",
+  "title": "New world: far ruins"
+ },
+ {
+  "n": 22,
+  "id": "v3_bg_new_village",
+  "path": "assets/art/v3/v3_bg_new_village.png",
+  "size": "3072x2048",
+  "kind": "pink",
+  "title": "New world: smoky hills and ruins"
+ },
+ {
+  "n": 23,
+  "id": "v3_bg_new_trees",
+  "path": "assets/art/v3/v3_bg_new_trees.png",
+  "size": "3072x2048",
+  "kind": "pink",
+  "title": "New world: giant glowing tree and ruins"
+ },
+ {
+  "n": 24,
+  "id": "v3_bg_new_near",
+  "path": "assets/art/v3/v3_bg_new_near.png",
+  "size": "3072x2048",
+  "kind": "pink",
+  "title": "New world: near foliage and smoke"
+ },
+ {
+  "n": 25,
+  "id": "v3_bg_new_front",
+  "path": "assets/art/v3/v3_bg_new_front.png",
+  "size": "3072x1024",
+  "kind": "pink",
+  "title": "New world: dark foreground silhouettes"
+ }
+]

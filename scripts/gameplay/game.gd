@@ -27,6 +27,8 @@ var world: Dictionary = {}
 var info: Dictionary = {}
 var player: CharacterBody2D
 var pilo: Node2D
+var deeds_done: Array = []        ## deeds finished in this run (fresh ones are shown on the big clock)
+signal deed_done(id: String, fresh: bool)
 var hud: CanvasLayer
 var dialogue: CanvasLayer
 var respawn_point := Vector2.ZERO
@@ -80,6 +82,8 @@ func _ready() -> void:
 	level_id = LevelManager.current_level
 	world = LevelManager.world_of(level_id)
 	data = LevelManager.load_level(level_id)
+	if world.is_empty() and data.has("world"):
+		world = LevelManager.world_by_id(String(data.world))      # pair levels live outside the nine worlds
 	if data.is_empty():
 		push_error("Level %d has no data" % level_id)
 		LevelManager.goto_map()
@@ -116,6 +120,8 @@ func _ready() -> void:
 		info.exit.set_locked(not friend_rescued or info.time_key)
 
 	player = PLAYER_SCENE.instantiate()
+	player.hero_name = String(data.get("hero", "arsam"))
+	Weapons.hero_weapon = String(data.get("weapon", ""))
 	player.position = info.start
 	_world_root.add_child(player)
 	respawn_point = info.start
@@ -139,6 +145,13 @@ func _ready() -> void:
 	_world_root.add_child(pilo)
 	pilo.apply_color(String(SaveManager.data.get("pilo_color", "classic")))
 	_apply_loadout()
+	if String(data.get("companion", "pilo")) == "none":
+		# pair-1 levels have their own companions (docs/36); the old fox is not part of them
+		pilo.visible = false
+		pilo.process_mode = Node.PROCESS_MODE_DISABLED
+		if _follower:
+			_follower.queue_free()
+			_follower = null
 	if bool(data.get("dark", false)):
 		_make_dark()
 
@@ -234,7 +247,9 @@ func _physics_process(delta: float) -> void:
 			try_shift()
 		if Input.is_action_just_pressed("pilo"):
 			_light_keepers()
-			if Loadout.companion() == "" or _follower == null:
+			if try_pair_act():
+				pass
+			elif Loadout.companion() == "" or _follower == null:
 				pilo.act(self)
 			else:
 				_follower.act(self)
@@ -698,6 +713,19 @@ func cycle_companion() -> void:
 ## acts), 1 the guide map (shows both keys for a moment, three times a level), 2 the mirror (light
 ## too) - or, while carrying something between the times (K12), that thing.
 var map_uses := 3
+
+
+## The tool button near a deed site (plant the seed, light the shrine). True = a site used it.
+func try_pair_act() -> bool:
+	for site in get_tree().get_nodes_in_group("pair_site"):
+		if site.has_method("act") and site.act():
+			return true
+	return false
+
+
+func notify_deed(id: String, fresh: bool) -> void:
+	deeds_done.append(id)
+	deed_done.emit(id, fresh)
 
 
 func use_tool(slot: int) -> void:

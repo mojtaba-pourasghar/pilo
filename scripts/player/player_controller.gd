@@ -49,6 +49,10 @@ const UPDRAFT_ACCEL := 3400.0
 const UPDRAFT_MAX := -560.0
 
 var controls_enabled := true
+## What the hero carries ("" | "egg"): a carried egg slows him to x0.7 and rules out dash and long jumps (docs/33).
+var carrying := ""
+var has_lantern := true
+const CARRY_SPEED := 0.7
 var facing := 1.0
 var hearts := 3
 var max_hearts := 3
@@ -137,7 +141,7 @@ func _physics_process(delta: float) -> void:
 			_update_bow(delta)
 		elif Input.is_action_just_pressed("fire") and _fire_cooldown <= 0.0:
 			_fire()
-		if Input.is_action_just_pressed("dash") and _dash_cooldown <= 0.0 and (is_on_floor() or not _air_dash_used):
+		if Input.is_action_just_pressed("dash") and _dash_cooldown <= 0.0 and carrying == "" and (is_on_floor() or not _air_dash_used):
 			_air_dash_used = not is_on_floor()
 			_start_dash(dir)
 	_update_crouch(can_move and Input.is_action_pressed("down") and is_on_floor() and _swim == 0)
@@ -185,7 +189,7 @@ func _physics_process(delta: float) -> void:
 	_wind = Vector2.ZERO
 
 	if _buffer > 0.0 and _coyote > 0.0 and can_move and _swim == 0:
-		velocity.y = (JUMP_VELOCITY - absf(velocity.x) * JUMP_SPEED_BONUS) * jump_scale
+		velocity.y = (JUMP_VELOCITY - absf(velocity.x) * (JUMP_SPEED_BONUS if carrying == "" else 0.0)) * jump_scale
 		if _sand > 0 and not sand_free:
 			velocity.y *= 0.78
 		_buffer = 0.0
@@ -222,6 +226,13 @@ func _physics_process(delta: float) -> void:
 ## Edge forgiveness (docs/26 §1.6): a jump that only clips the corner of a platform slides the hero
 ## past it (up to CORNER_FORGIVE px) instead of bonking his head.
 const CORNER_FORGIVE := 8
+## Picks something up (or puts it down with ""); the rig shows the egg in both hands.
+func carry(item: String) -> void:
+	carrying = item
+	if rig is SkeletonRig:
+		(rig as SkeletonRig).holding = item
+
+
 func _corner_assist(rise_vy: float, delta: float) -> void:
 	for d in range(1, CORNER_FORGIVE + 1):
 		for sgn in [1, -1]:
@@ -240,6 +251,8 @@ func _horizontal(dir: float, delta: float, on_floor: bool) -> void:
 	# docs/26: analog stick. A gentle push walks (scaled up to 0.75), a full push (>= 0.75) runs.
 	var mag := minf(absf(dir), 1.0)
 	var cap := run_speed if (_run_hold > RUN_AFTER and mag >= RUN_STICK) else walk_speed
+	if carrying != "":
+		cap *= CARRY_SPEED
 	var analog := minf(mag / RUN_STICK, 1.0) if mag > 0.0 else 0.0
 	var drift := 0.0
 	if _wind.x != 0.0 and not on_floor:

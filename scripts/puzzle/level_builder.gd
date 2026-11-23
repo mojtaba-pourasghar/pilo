@@ -63,7 +63,7 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 	var info := {
 		"size": Vector2(w * TILE, h * TILE), "start": Vector2(TILE * 2, TILE * 2), "exit": null,
 		"hints": [], "stars": 0, "keys": 0, "needs_rescue": false, "chaser": null, "mechanisms": null,
-		"diamonds": 0, "time_key": false, "enemies": 0, "pipes": {}, "boss": null,
+		"diamonds": 0, "time_key": false, "enemies": 0, "pipes": {}, "boss": null, "sites": [],
 	}
 	_build_runs(grid, w, h, root, palette)
 	# cells inside a pool that hold a coin, a diamond or a creature (or nothing) are water too, so
@@ -333,6 +333,7 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 	_build_secret_rooms(wet, w, h, root, palette)    # water (with what floats in it) is never a hidden room
 	_build_pit_shade(grid, w, h, root)
 	TimeParts.build(data, root, game, palette)
+	info["sites"] = PairSites.build_all(data.get("objects", []), root, game)
 	var layers := sort_time_layers(root)
 	info.layer_past = layers[0]
 	info.layer_present = layers[1]

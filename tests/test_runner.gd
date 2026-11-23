@@ -18,6 +18,8 @@ func _ready() -> void:
 	await _test_pair1_scenery()
 	await _test_fx_budget()
 	_test_deeds()
+	await _test_pair_sites()
+	await _test_pair1_old_level()
 	await _test_corner_assist()
 	await _test_time_shift_safety()
 	_test_audio()
@@ -916,14 +918,14 @@ func _test_hud_design() -> void:
 ## Arsam's bow (docs/26 §3.4): hold to draw, release to shoot; a snap shot is shorter and slower than a
 ## held power arrow; an arrow that hits a wall sticks, quivers and fades; it frees a shadow creature.
 func _test_bow() -> void:
-	Weapons.hero_weapon = "time_bow"
-	_check(Weapons.current() == "time_bow" and Weapons.LIST.time_bow.gravity == 300.0 and Weapons.LIST.time_bow.speed == 900.0, "the bow arrow flies at 900 px/s with gravity 300")
+	_check(Weapons.LIST.time_bow.gravity == 300.0 and Weapons.LIST.time_bow.speed == 900.0, "the bow arrow flies at 900 px/s with gravity 300")
 	var game := await _start([
 		"..............",
 		"..............",
 		"P.......e.....",
 		"##############",
-	])
+	], {"weapon": "time_bow"})
+	_check(Weapons.current() == "time_bow", "a level can give the hero the bow")
 	var enemy: Node = null
 	for e in get_tree().get_nodes_in_group("enemy"):
 		enemy = e
@@ -951,7 +953,7 @@ func _test_bow() -> void:
 		"..............",
 		"P.........#...",
 		"##############",
-	])
+	], {"weapon": "time_bow"})
 	game.player.facing = 1.0
 	var arrow: Array = Weapons.fire(game.player, 1.0, 1.0)
 	await _wait(0.75)
@@ -1003,6 +1005,100 @@ func _test_deeds() -> void:
 	DeedsStore.clear()
 	for id in saved:
 		SaveManager.data.deeds[id] = true
+
+
+## Deed sites of pair 1: the egg is picked up and slows the hero, the nest takes it (egg_saved), the seed
+## grows a bridge (bridge_planted), the shrine lights and opens its door (shrine_lit).
+func _test_pair_sites() -> void:
+	DeedsStore.clear()
+	var game := await _start(["P.........................", "..........................", "##########..###############"], {
+		"objects": [
+			{"type": "egg", "x": 2, "y": 2},
+			{"type": "nest", "x": 9, "y": 2, "deed": "egg_saved"},
+			{"type": "seed", "x": 11, "y": 2, "deed": "bridge_planted", "width": 2},
+			{"type": "shrine", "x": 15, "y": 2, "deed": "shrine_lit", "opens": "gate1"},
+			{"type": "door", "x": 19, "y": 2, "id": "gate1", "height": 2},
+		]})
+	var sites: Array = get_tree().get_nodes_in_group("pair_site")
+	_check(sites.size() == 5, "all five sites are built from the level objects (%d)" % sites.size())
+	var p: Node = game.player
+	_check(p.carrying == "", "the hero starts with empty hands")
+	p.global_position = sites[0].global_position + Vector2(0, -40)
+	await _wait(0.2)
+	_check(p.carrying == "egg", "touching the egg picks it up")
+	var run_before: float = p.walk_speed
+	Input.action_press("move_right")
+	await _wait(0.6)
+	Input.action_release("move_right")
+	_check(absf(p.velocity.x) <= run_before * 0.7 + 5.0, "a carried egg limits the speed to x0.7 (%.0f)" % absf(p.velocity.x))
+	var nest: Node = null
+	var seed_site: Node = null
+	var shrine: Node = null
+	var door: Node = null
+	for s in get_tree().get_nodes_in_group("pair_site"):
+		match String(s.data.get("type", "")):
+			"nest": nest = s
+			"seed": seed_site = s
+			"shrine": shrine = s
+			"door": door = s
+	p.global_position = nest.global_position + Vector2(0, -40)
+	await _wait(0.2)
+	_check(p.carrying == "" and DeedsStore.has("egg_saved"), "the nest takes the egg: deed egg_saved")
+	p.global_position = seed_site.global_position + Vector2(0, -40)
+	await _wait(0.1)
+	_check(game.try_pair_act() and DeedsStore.has("bridge_planted"), "the tool button plants the seed: deed bridge_planted")
+	_check(not game.try_pair_act(), "the same seed cannot be planted twice")
+	p.global_position = shrine.global_position + Vector2(0, -40)
+	await _wait(0.1)
+	_check(game.try_pair_act() and DeedsStore.has("shrine_lit") and DeedsStore.variant() == "full", "the lantern lights the shrine: deed shrine_lit, variant full")
+	await _wait(1.2)
+	_check(door.done, "the shrine opens its door")
+	_check(game.deeds_done.size() == 3, "the level reports its three deeds")
+	_stop(game)
+	DeedsStore.clear()
+
+
+## The old level of pair 1 (docs/33 §3): built from its data with the grandfather, the pair-1 scenery,
+## deed sites; a blind bot reaches the gate with no deed done (never a dead end).
+func _test_pair1_old_level() -> void:
+	DeedsStore.clear()
+	var data := LevelManager.load_pair_level("old_01")
+	_check(not data.is_empty() and String(data.hero) == "grandfather" and String(data.era) == "old", "old_01 is defined for the grandfather")
+	LevelManager.override_level = data
+	LevelManager.current_level = 101
+	var game: Node = load("res://scenes/gameplay/game.tscn").instantiate()
+	add_child(game)
+	for i in 3:
+		await get_tree().physics_frame
+	_check(game.player.hero_name == "grandfather" and game.player.rig is SkeletonRig, "the hero is the jointed grandfather")
+	_check(game._background is Pair1Parallax and game._background.era == "old", "the old pair-1 scenery is used")
+	_check(get_tree().get_nodes_in_group("pair_site").size() == 4, "four deed sites are placed")
+	_check(Weapons.current() == "slingshot", "the grandfather shoots the slingshot")
+	_check(not game.pilo.visible, "the old fox is not in the pair-1 level")
+	Engine.time_scale = 3.0
+	var elapsed := 0.0
+	var jump_timer := 0.0
+	Input.action_press("move_right")
+	while elapsed < 150.0 and not game.finished:
+		await get_tree().physics_frame
+		var delta := get_physics_process_delta_time()
+		elapsed += delta
+		jump_timer += delta
+		if game._busy:
+			game.dialogue.advanced.emit()
+			continue
+		if jump_timer > 0.62:
+			jump_timer = 0.0
+			Input.action_press("jump")
+		elif jump_timer > 0.3:
+			Input.action_release("jump")
+	Input.action_release("move_right")
+	Input.action_release("jump")
+	Engine.time_scale = 1.0
+	_check(game.finished or game.player.global_position.x > 120.0 * 64.0, "a blind bot gets through the old level with no deed (x %d, %.0fs, hearts %d)" % [int(game.player.global_position.x), elapsed, game.player.hearts])
+	LevelManager.override_level = {}
+	await _stop(game)
+	DeedsStore.clear()
 
 
 ## Effects (docs/26 §1.9): the particle budget caps at 200 units, quality scales it, cut-art effects play and free themselves.
