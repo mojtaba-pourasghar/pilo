@@ -16,7 +16,13 @@ const LIST := {
 	"boomerang": {"name": "بومرنگ", "cooldown": 0.8, "speed": 820.0, "gravity": 0.0, "life": 2.5},
 	"fire_staff": {"name": "عصای آتش", "cooldown": 0.45, "speed": 640.0, "gravity": 1400.0, "life": 2.2},
 	"star_blaster": {"name": "ستاره‌پران", "cooldown": 0.4, "speed": 1100.0, "gravity": 0.0, "life": 0.9},
+	# Arsam's bow (docs/26 §3.4, docs/33 B1): arrow 900 px/s, gravity 300, hold to draw 0.22 s, a held
+	# draw (>= 0.6 s) is a power arrow (range x1.5, bright trail). Not in the swap list: set by the hero.
+	"time_bow": {"name": "کمان زمان", "cooldown": 0.3, "speed": 900.0, "gravity": 300.0, "life": 1.6},
 }
+
+## The weapon the hero's own tool forces (the bow for Arsam); "" = the player's pick.
+static var hero_weapon := ""
 
 
 static func owned() -> Array:
@@ -28,6 +34,8 @@ static func owned() -> Array:
 
 
 static func current() -> String:
+	if hero_weapon != "" and LIST.has(hero_weapon):
+		return hero_weapon
 	var id := String(SaveManager.data.get("weapon", "slingshot"))
 	return id if owned().has(id) else "slingshot"
 
@@ -48,7 +56,8 @@ static func pick(id: String) -> void:
 
 
 ## Fires the current weapon from `shooter` (the player). Returns false while cooling down.
-static func fire(shooter: Node2D, facing: float) -> Array:
+## `power` 0..1: how far the bow was drawn (0 = a quick snap shot, 1 = a held power arrow).
+static func fire(shooter: Node2D, facing: float, power := 1.0) -> Array:
 	var id := current()
 	var cfg: Dictionary = LIST[id]
 	var shots: Array = []
@@ -57,6 +66,8 @@ static func fire(shooter: Node2D, facing: float) -> Array:
 	# phone one tap is enough; with nothing in front it flies straight ahead
 	var target := aim_target(shooter, facing)
 	var speed := float(cfg.speed)
+	if id == "time_bow":
+		speed *= lerpf(0.78, 1.3, power)
 	var aim := Vector2(facing, 0)
 	if target:
 		var to: Vector2 = target.global_position + Vector2(0, -24) - origin
@@ -70,12 +81,13 @@ static func fire(shooter: Node2D, facing: float) -> Array:
 		shot.owner_node = shooter
 		var dir := aim.rotated(a * facing)
 		shot.velocity = dir * speed
-		if id == "slingshot":
+		if id == "slingshot" or id == "time_bow":
 			# an arc that lands on the target: lift by half the drop over the flight time
 			var flight := (target.global_position.distance_to(origin) / speed) if target else 0.45
 			shot.velocity.y -= 0.5 * float(cfg.gravity) * flight
 		shot.fall = float(cfg.gravity)
-		shot.life = float(cfg.life)
+		shot.life = float(cfg.life) * (lerpf(0.55, 1.5, power) if id == "time_bow" else 1.0)
+		shot.power = power
 		shot.homing = target if id != "boomerang" else null
 		shot.position = origin
 		shooter.get_parent().add_child(shot)
@@ -114,6 +126,8 @@ class Shot extends Area2D:
 	var _hit: Array = []
 	var _trapped: Node2D
 	var homing: Node2D      ## a gentle curve towards this creature (aim assist)
+	var power := 1.0        ## bow draw (0..1)
+	var _stuck := -1.0      ## > 0: the arrow sits in what it hit and quivers
 
 	func _ready() -> void:
 		collision_layer = 0
@@ -125,7 +139,20 @@ class Shot extends Area2D:
 		shape.shape = circle
 		add_child(shape)
 		body_entered.connect(_on_body)
-		if kind != "fire_staff" and kind != "star_blaster":
+		if kind == "time_bow":
+			var glow := CPUParticles2D.new()
+			glow.texture = FX.soft()
+			glow.amount = 22 if power > 0.8 else 12
+			glow.lifetime = 0.34
+			glow.local_coords = false
+			glow.scale_amount_min = 0.25
+			glow.scale_amount_max = 0.5
+			glow.color = Color(1.0, 0.9, 0.5, 0.65) if power > 0.8 else Color(1, 1, 0.9, 0.4)
+			var addm := CanvasItemMaterial.new()
+			addm.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+			glow.material = addm
+			add_child(glow)
+		if kind != "fire_staff" and kind != "star_blaster" and kind != "time_bow":
 			# a soft trail, so every shot can be followed by eye
 			var soft := CPUParticles2D.new()
 			soft.texture = FX.soft()
@@ -152,6 +179,15 @@ class Shot extends Area2D:
 
 	func _physics_process(delta: float) -> void:
 		_t += delta
+		if _stuck >= 0.0:
+			_stuck -= delta
+			modulate.a = clampf(_stuck / 0.25, 0.0, 1.0)
+			queue_redraw()
+			if _stuck <= 0.0:
+				queue_free()
+			return
+		if kind == "time_bow" and velocity.length() > 1.0:
+			rotation = velocity.angle()
 		if _trapped:
 			# a trapped creature floats up in the bubble, then it pops
 			_trapped.global_position = global_position + Vector2(0, 20)
@@ -160,7 +196,7 @@ class Shot extends Area2D:
 				_pop_trap()
 			queue_redraw()
 			return
-		if homing and is_instance_valid(homing) and not homing.get("freed") and kind != "slingshot":
+		if homing and is_instance_valid(homing) and not homing.get("freed") and kind != "slingshot" and kind != "time_bow":
 			# steer gently towards the target, keeping the speed
 			var want := (homing.global_position + Vector2(0, -24) - global_position).normalized() * velocity.length()
 			velocity = velocity.lerp(want, 1.0 - exp(-4.0 * delta))
@@ -237,6 +273,12 @@ class Shot extends Area2D:
 		if kind == "boomerang":
 			_returning = true
 			return
+		if kind == "time_bow":
+			# the arrow sits in the wall or floor for a moment, quivering, then fades
+			velocity = Vector2.ZERO
+			_stuck = 0.45
+			set_deferred("monitoring", false)
+			return
 		if kind == "fire_staff":
 			# the floor only bounces it; a wall in front puts it out
 			var space := get_world_2d().direct_space_state
@@ -263,7 +305,7 @@ class Shot extends Area2D:
 
 	func _burst() -> void:
 		var color := {"slingshot": Color("b07a45"), "bubble": Color(0.75, 0.92, 1.0), "boomerang": Color("f39a2b"),
-			"fire_staff": Color(1.0, 0.55, 0.15), "star_blaster": Color(1, 0.9, 0.4)}
+			"fire_staff": Color(1.0, 0.55, 0.15), "star_blaster": Color(1, 0.9, 0.4), "time_bow": Color(1.0, 0.92, 0.55)}
 		FX.burst(get_parent(), global_position, color.get(kind, Color.WHITE), 6)
 		queue_free()
 
@@ -292,6 +334,19 @@ class Shot extends Area2D:
 				draw_circle(Vector2.ZERO, 18.0 * flicker, Color(1, 0.5, 0.1, 0.35))
 				draw_circle(Vector2.ZERO, 12.0 * flicker, Color(1, 0.6, 0.15))
 				draw_circle(Vector2.ZERO, 6.0, Color(1, 0.95, 0.7))
+			"time_bow":
+				# a light arrow: shaft, steel head, white fletching; a power arrow glows
+				var wob := sin(_t * 70.0) * 2.0 * clampf(_stuck / 0.45, 0.0, 1.0) if _stuck >= 0.0 else 0.0
+				draw_set_transform(Vector2(0, wob * 0.2), wob * 0.02)
+				if power > 0.8:
+					draw_circle(Vector2.ZERO, 16.0, Color(1.0, 0.9, 0.5, 0.28))
+				draw_line(Vector2(-26, 0), Vector2(12, 0), Color("3b2418"), 5.0)
+				draw_line(Vector2(-26, 0), Vector2(12, 0), Color("c58b4b"), 3.0)
+				draw_colored_polygon(PackedVector2Array([Vector2(12, -6), Vector2(26, 0), Vector2(12, 6)]), Color("2a1f3d"))
+				draw_colored_polygon(PackedVector2Array([Vector2(13, -4), Vector2(23, 0), Vector2(13, 4)]), Color("e8eef5"))
+				for fy in [-1.0, 1.0]:
+					draw_colored_polygon(PackedVector2Array([Vector2(-26, 0), Vector2(-18, fy * 8), Vector2(-12, fy * 8), Vector2(-14, 0)]), Color("f6efe0"))
+				draw_set_transform(Vector2.ZERO)
 			"star_blaster":
 				var star := PackedVector2Array()
 				for i in 10:

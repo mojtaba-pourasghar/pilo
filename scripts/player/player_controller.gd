@@ -20,6 +20,7 @@ const BODY_SIZE := Vector2(36, 80)
 const FEET := 40.0
 const WALK := 300.0
 const RUN := 470.0
+const RUN_STICK := 0.75         # stick strength at which running opens (docs/26)
 const RUN_AFTER := 0.65         # seconds of running in one direction before top speed opens
 const GROUND_ACCEL := 1500.0
 const AIR_ACCEL := 1150.0
@@ -132,7 +133,9 @@ func _physics_process(delta: float) -> void:
 			_buffer = JUMP_BUFFER
 			if not is_on_floor() and _coyote <= 0.0 and _swim == 0:
 				_air_jump()
-		if Input.is_action_just_pressed("fire") and _fire_cooldown <= 0.0:
+		if Weapons.current() == "time_bow":
+			_update_bow(delta)
+		elif Input.is_action_just_pressed("fire") and _fire_cooldown <= 0.0:
 			_fire()
 		if Input.is_action_just_pressed("dash") and _dash_cooldown <= 0.0 and (is_on_floor() or not _air_dash_used):
 			_air_dash_used = not is_on_floor()
@@ -218,11 +221,14 @@ func _horizontal(dir: float, delta: float, on_floor: bool) -> void:
 		_run_hold += delta
 	elif dir == 0.0 or signf(dir) != signf(velocity.x):
 		_run_hold = 0.0
-	var cap := run_speed if _run_hold > RUN_AFTER else walk_speed
+	# docs/26: analog stick. A gentle push walks (scaled up to 0.75), a full push (>= 0.75) runs.
+	var mag := minf(absf(dir), 1.0)
+	var cap := run_speed if (_run_hold > RUN_AFTER and mag >= RUN_STICK) else walk_speed
+	var analog := minf(mag / RUN_STICK, 1.0) if mag > 0.0 else 0.0
 	var drift := 0.0
 	if _wind.x != 0.0 and not on_floor:
 		drift = signf(_wind.x) * WIND_PUSH
-	var target := dir * cap + drift
+	var target := signf(dir) * cap * analog + drift
 	var rate := FRICTION
 	if dir != 0.0:
 		rate = GROUND_ACCEL if on_floor else AIR_ACCEL
@@ -235,7 +241,7 @@ func _horizontal(dir: float, delta: float, on_floor: bool) -> void:
 	var slowed := (_swim > 0 and not swim_fast) or (_sand > 0 and not sand_free)
 	if slowed:
 		cap *= 0.7 if _swim > 0 else 0.45
-		target = dir * cap
+		target = signf(dir) * cap * analog
 	velocity.x = move_toward(velocity.x, target, rate * delta)
 
 
@@ -253,11 +259,38 @@ func _start_dash(dir: float) -> void:
 	Juice.vibrate(12)
 
 
+## Bow: hold the fire button to draw (0.22 s to full draw), release to shoot. A quick tap is a snap
+## shot; a draw held 0.6 s or more is a power arrow (docs/26 §3.4). Anything between scales smoothly.
+const BOW_DRAW_TIME := 0.22
+const BOW_POWER_TIME := 0.6
+const BOW_SNAP_TIME := 0.12
+var _bow_hold := -1.0          ## < 0: not drawing
+
+
+func _update_bow(delta: float) -> void:
+	if _bow_hold < 0.0:
+		if Input.is_action_just_pressed("fire") and _fire_cooldown <= 0.0:
+			_bow_hold = 0.0
+		return
+	_bow_hold += delta
+	if rig is SkeletonRig:
+		var sk := rig as SkeletonRig
+		sk.aiming = true
+		sk.aim_angle = 0.0
+		sk.draw_amount = clampf(_bow_hold / BOW_DRAW_TIME, 0.0, 1.0)
+	if not Input.is_action_pressed("fire") or not controls_enabled:
+		var power := 0.0 if _bow_hold < BOW_SNAP_TIME else clampf((_bow_hold - BOW_SNAP_TIME) / (BOW_POWER_TIME - BOW_SNAP_TIME), 0.0, 1.0)
+		_bow_hold = -1.0
+		if rig is SkeletonRig:
+			(rig as SkeletonRig).aiming = false
+		_fire(power)
+
+
 ## Shoots the current weapon (Weapons): a little recoil, a throw pose and a whoosh.
-func _fire() -> void:
+func _fire(power := 1.0) -> void:
 	var id := Weapons.current()
 	_fire_cooldown = float(Weapons.LIST[id].cooldown)
-	Weapons.fire(self, facing)
+	Weapons.fire(self, facing, power)
 	if rig is SkeletonRig:
 		(rig as SkeletonRig).aim_pulse(0.35)
 	_squash = Vector2(0.9, 1.08)

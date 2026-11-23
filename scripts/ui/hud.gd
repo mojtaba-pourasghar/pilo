@@ -18,7 +18,11 @@ const S := "hud"
 const SLOT_TOOLS := ["lantern", "map", "mirror"]
 const TOOL_ICON := "res://assets/art/p3_tools/p3_tool_%s_icon_l1.png"
 const CARRY_ICON := {"glow_mushroom": "res://assets/art/p7_living/p7_living_ch01_glow_mushroom_f1.png"}
-const JOY_DEAD := 0.28
+const JOY_DEAD := 0.12          ## docs/26: dead zone 12%
+const JOY_CURVE := 1.4
+const JOY_SMOOTH := 0.05        ## seconds of input smoothing
+const JOY_ZONE_W := 0.45        ## floating stick: left 45% of the screen
+const JOY_ZONE_TOP := 0.25
 
 var _root: Control
 var _hearts: TextureProgressBar
@@ -33,6 +37,11 @@ var _joy_knob: TextureRect
 var _joy_center := Vector2.ZERO
 var _joy_radius := 80.0
 var _joy_touch := -2
+var _joy_home := Vector2.INF
+var _joy_target := Vector2.ZERO
+var _joy_value := Vector2.ZERO
+var _joy_driving := false
+var floating := true             ## false = a fixed ring (settings)
 var _buttons := {}
 var _slots: Array = []
 var _slot_icons: Array = []
@@ -45,6 +54,11 @@ var carry_id := ""
 var _lens_charge := 1.0
 var _return_left := -1.0
 var _held := {}
+
+
+func _process(delta: float) -> void:
+	if _joy_base != null and _joy_base.visible:
+		_process_joystick(delta)
 
 
 func _ready() -> void:
@@ -153,7 +167,9 @@ func _press(action: String, down: bool) -> void:
 		_held.erase(action)
 
 
-## Joystick: a touch that starts on the base drags the knob; left/right walk, down = crouch/pipe.
+## Joystick (docs/26 §2.1): floating and analog. A touch in the left 45% of the screen puts the ring
+## under the finger; the ring follows when the finger leaves it. Dead zone 12%, response x^1.4, the
+## value is smoothed over ~0.05 s so a jumpy finger never jerks the hero. down = crouch / pipe.
 func _input(event: InputEvent) -> void:
 	if not _joy_base.visible:
 		return
@@ -179,30 +195,79 @@ func _input(event: InputEvent) -> void:
 		pressed = true
 	else:
 		return
+	var view := get_viewport().get_visible_rect().size
+	if _joy_home == Vector2.INF:
+		_joy_home = _joy_base.position
 	var base := Rect2(_joy_base.global_position, _joy_base.size)
-	_joy_center = base.get_center()
-	_joy_radius = base.size.x * 0.36
-	if is_touch and pressed and _joy_touch == -2 and base.grow(30).has_point(pos):
-		_joy_touch = index
+	if is_touch and pressed and _joy_touch == -2:
+		var in_zone := pos.x < view.x * JOY_ZONE_W and pos.y > view.y * JOY_ZONE_TOP
+		if in_zone or base.grow(30).has_point(pos):
+			_joy_touch = index
+			_joy_center = pos if floating else base.get_center()
+			if floating:
+				_place_joystick(_joy_center)
 	if _joy_touch == -2 or (index != _joy_touch and not (event is InputEventMouseMotion or event is InputEventMouseButton)):
 		return
 	if is_touch and not pressed:
 		_joy_touch = -2
-		_set_stick(Vector2.ZERO)
+		_joy_target = Vector2.ZERO
+		_joy_base.modulate.a = 0.55
+		if floating:
+			_joy_base.position = _joy_home
 		return
-	_set_stick((pos - _joy_center) / _joy_radius)
+	_joy_radius = _joy_base.size.x * 0.36
+	var offset := pos - _joy_center
+	if floating and offset.length() > _joy_radius:      # the ring follows the finger
+		_joy_center = pos - offset.normalized() * _joy_radius
+		_place_joystick(_joy_center)
+		offset = pos - _joy_center
+	_joy_base.modulate.a = 1.0
+	_joy_target = offset / _joy_radius
 	get_viewport().set_input_as_handled()
 
 
-func _set_stick(v: Vector2) -> void:
+## Analog value of a raw stick vector: dead zone then the x^1.4 response (docs/26).
+static func stick_curve(v: Vector2) -> Vector2:
+	var m := minf(v.length(), 1.0)
+	if m <= JOY_DEAD:
+		return Vector2.ZERO
+	var k := pow((m - JOY_DEAD) / (1.0 - JOY_DEAD), JOY_CURVE)
+	return v.normalized() * k
+
+
+func _place_joystick(center: Vector2) -> void:
+	_joy_base.global_position = center - _joy_base.size * 0.5
+
+
+func _process_joystick(delta: float) -> void:
+	# Only drive the actions while the stick is in use, so the keyboard (and bots) still work.
+	if _joy_touch == -2 and _joy_value == Vector2.ZERO and not _joy_driving:
+		return
+	var smooth := 1.0 - exp(-delta / JOY_SMOOTH)
+	_joy_value = _joy_value.lerp(stick_curve(_joy_target), smooth)
+	if _joy_value.length() < 0.004 and _joy_target == Vector2.ZERO:
+		_joy_value = Vector2.ZERO
+	_joy_driving = _joy_value != Vector2.ZERO or _joy_touch != -2
+	_set_stick(_joy_value, true)
+
+
+func _set_stick(v: Vector2, analog := false) -> void:
 	if v.length() > 1.0:
 		v = v.normalized()
+	if not analog:                                    # direct call (hide controls): reset everything
+		_joy_target = v
+		_joy_value = v
 	_joy_knob.position = _joy_base.position + (_joy_base.size - _joy_knob.size) * 0.5 + v * _joy_radius
-	for pair in [["move_left", v.x < -JOY_DEAD], ["move_right", v.x > JOY_DEAD], ["down", v.y > 0.6]]:
-		if pair[1]:
-			Input.action_press(pair[0], clampf(absf(v.x) * 1.25, 0.0, 1.0) if pair[0] != "down" else 1.0)
+	var strengths := {"move_left": maxf(-v.x, 0.0), "move_right": maxf(v.x, 0.0)}
+	for action in strengths:
+		if strengths[action] > 0.001:
+			Input.action_press(action, strengths[action])
 		else:
-			Input.action_release(pair[0])
+			Input.action_release(action)
+	if v.y > 0.6:
+		Input.action_press("down", 1.0)
+	else:
+		Input.action_release("down")
 
 
 # --- the game's calls ----------------------------------------------------------------

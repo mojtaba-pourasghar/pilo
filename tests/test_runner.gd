@@ -13,6 +13,8 @@ func _ready() -> void:
 	_test_save_merge()
 	await _test_levels_build()
 	await _test_skeleton_rig()
+	await _test_joystick()
+	await _test_bow()
 	await _test_time_shift_safety()
 	_test_audio()
 	_test_level_1_layout()
@@ -904,6 +906,103 @@ func _test_hud_design() -> void:
 	hud.set_time_keys(true, false)
 	_check(hud._key_past.texture.resource_path.ends_with("hud_key_past.png") and hud._key_present.texture.resource_path.ends_with("_off.png"), "a found key lights up, the other stays dim")
 	_check((game.player.rig is SkeletonRig or game.player.rig is SpriteRig) and game.pilo.rig is SpriteRig, "Arsam (jointed rig or frames) and the fox are drawn from pictures")
+	await _stop(game)
+
+
+## Arsam's bow (docs/26 §3.4): hold to draw, release to shoot; a snap shot is shorter and slower than a
+## held power arrow; an arrow that hits a wall sticks, quivers and fades; it frees a shadow creature.
+func _test_bow() -> void:
+	Weapons.hero_weapon = "time_bow"
+	_check(Weapons.current() == "time_bow" and Weapons.LIST.time_bow.gravity == 300.0 and Weapons.LIST.time_bow.speed == 900.0, "the bow arrow flies at 900 px/s with gravity 300")
+	var game := await _start([
+		"..............",
+		"..............",
+		"P.......e.....",
+		"##############",
+	])
+	var enemy: Node = null
+	for e in get_tree().get_nodes_in_group("enemy"):
+		enemy = e
+	game.player.facing = 1.0
+	# a quick tap = snap shot
+	var snap: Array = Weapons.fire(game.player, 1.0, 0.0)
+	var held: Array = Weapons.fire(game.player, 1.0, 1.0)
+	_check(snap.size() == 1 and held.size() == 1 and held[0].velocity.length() > snap[0].velocity.length() * 1.3 and held[0].life > snap[0].life * 2.0, "a held draw flies faster and farther than a snap shot")
+	for sh in snap + held:
+		sh.queue_free()
+	# real input: press, hold past the power time, release
+	Input.action_press("fire")
+	await _wait(0.05)
+	_check(game.player._bow_hold > 0.0, "pressing fire starts drawing the bow")
+	await _wait(0.7)
+	Input.action_release("fire")
+	await _wait(0.1)
+	_check(game.player._bow_hold < 0.0, "releasing shoots and ends the draw")
+	await _wait(0.9)
+	_check(enemy == null or not is_instance_valid(enemy) or enemy.freed, "a bow arrow frees a shadow creature")
+	_stop(game)
+	# an arrow hitting a wall sticks, quivers, then goes
+	game = await _start([
+		"..............",
+		"..............",
+		"P.........#...",
+		"##############",
+	])
+	game.player.facing = 1.0
+	var arrow: Array = Weapons.fire(game.player, 1.0, 1.0)
+	await _wait(0.75)
+	var stuck := false
+	if is_instance_valid(arrow[0]):
+		stuck = arrow[0]._stuck >= 0.0 or arrow[0].velocity == Vector2.ZERO
+	_check(stuck or not is_instance_valid(arrow[0]), "an arrow that hits a wall sticks there and then fades")
+	await _wait(0.7)
+	_check(not is_instance_valid(arrow[0]), "a stuck arrow fades away")
+	_stop(game)
+	Weapons.hero_weapon = ""
+	_check(Weapons.current() == "slingshot", "the bow is only the hero's own weapon, the swap list is unchanged")
+
+
+## Floating analog joystick (docs/26 §2.1): dead zone 12%, x^1.4 response, the ring appears under the
+## finger in the left 45%, a half push walks slower than a full push runs.
+func _test_joystick() -> void:
+	var Hud: GDScript = load("res://scripts/ui/hud.gd")
+	_check(Hud.stick_curve(Vector2(0.08, 0)) == Vector2.ZERO, "inside the 12% dead zone nothing moves")
+	var half: float = Hud.stick_curve(Vector2(0.5, 0)).x
+	_check(absf(half - pow((0.5 - 0.12) / 0.88, 1.4)) < 0.001 and half < 0.5, "x^1.4 response keeps a half push gentle")
+	_check(absf(Hud.stick_curve(Vector2(1, 0)).x - 1.0) < 0.001 and absf(Hud.stick_curve(Vector2(0, 1)).y - 1.0) < 0.001, "a full push is 1.0")
+	var game := await _start(["P.........", "##########"], {})
+	var hud: Node = game.hud
+	var view := get_viewport().get_visible_rect().size
+	var touch := InputEventScreenTouch.new()
+	touch.index = 3
+	touch.pressed = true
+	touch.position = Vector2(view.x * 0.2, view.y * 0.6)
+	hud._input(touch)
+	_check(hud._joy_touch == 3, "a touch in the left 45% takes the stick")
+	var center: Vector2 = hud._joy_base.global_position + hud._joy_base.size * 0.5
+	_check(center.distance_to(touch.position) < 2.0, "the ring appears under the finger")
+	var drag := InputEventScreenDrag.new()
+	drag.index = 3
+	drag.position = touch.position + Vector2(hud._joy_radius * 3.0, 0)
+	hud._input(drag)
+	var after: Vector2 = hud._joy_base.global_position + hud._joy_base.size * 0.5
+	_check(after.x > center.x + hud._joy_radius, "the ring follows a finger that leaves it")
+	for i in 20:
+		hud._process_joystick(0.016)
+	_check(Input.get_action_strength("move_right") > 0.95, "a full push after smoothing is full strength")
+	var rel := InputEventScreenTouch.new()
+	rel.index = 3
+	rel.pressed = false
+	hud._input(rel)
+	for i in 40:
+		hud._process_joystick(0.016)
+	_check(Input.get_action_strength("move_right") == 0.0 and hud._joy_touch == -2, "letting go stops the hero")
+	var far := InputEventScreenTouch.new()
+	far.index = 4
+	far.pressed = true
+	far.position = Vector2(view.x * 0.7, view.y * 0.6)
+	hud._input(far)
+	_check(hud._joy_touch == -2, "a touch on the right side does not take the stick")
 	await _stop(game)
 
 
