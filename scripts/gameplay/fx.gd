@@ -7,6 +7,36 @@ const DOT := preload("res://assets/vfx/dot.png")
 
 static var _soft: Texture2D
 
+## Particle budget (docs/26 §1.9): at most CAP live particle "units" in a scene; low quality asks for
+## 40%, medium 70%. Effects call take() before they spawn and give() when they end.
+const CAP := 200
+static var _live := 0
+
+
+static func quality_scale() -> float:
+	var q := "high"
+	if SaveManager != null and SaveManager.data.has("settings"):
+		q = String(SaveManager.data.settings.get("quality", "high"))
+	return {"low": 0.4, "medium": 0.7}.get(q, 1.0)
+
+
+## Asks for `amount` units; returns how many were granted (0 = skip the effect).
+static func take(amount: int) -> int:
+	var want := int(ceil(amount * quality_scale()))
+	var got := mini(want, CAP - _live)
+	if got <= 0:
+		return 0
+	_live += got
+	return got
+
+
+static func give(amount: int) -> void:
+	_live = maxi(0, _live - amount)
+
+
+static func live_units() -> int:
+	return _live
+
 
 ## A soft round puff (smoke, dust, steam, flames).
 static func soft() -> Texture2D:
@@ -235,6 +265,9 @@ static func splash(parent: Node, pos: Vector2) -> void:
 
 
 static func burst(parent: Node, pos: Vector2, color: Color, amount := 16) -> void:
+	amount = take(amount)
+	if amount <= 0:
+		return
 	var particles := CPUParticles2D.new()
 	particles.texture = DOT
 	particles.amount = amount
@@ -253,11 +286,16 @@ static func burst(parent: Node, pos: Vector2, color: Color, amount := 16) -> voi
 	particles.z_index = 8
 	parent.add_child(particles)
 	particles.emitting = true
-	particles.finished.connect(particles.queue_free)
+	particles.finished.connect(func():
+		give(amount)
+		particles.queue_free())
 
 
 ## Little puff of dust at the feet (skids, landings, dashes).
 static func dust(parent: Node, pos: Vector2, amount := 5) -> void:
+	amount = take(amount)
+	if amount <= 0:
+		return
 	var particles := CPUParticles2D.new()
 	particles.texture = DOT
 	particles.amount = amount
@@ -276,7 +314,9 @@ static func dust(parent: Node, pos: Vector2, amount := 5) -> void:
 	particles.z_index = 5
 	parent.add_child(particles)
 	particles.emitting = true
-	particles.finished.connect(particles.queue_free)
+	particles.finished.connect(func():
+		give(amount)
+		particles.queue_free())
 
 
 ## Shards flying out of a broken block or wall.

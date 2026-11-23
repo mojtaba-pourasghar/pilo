@@ -16,6 +16,7 @@ func _ready() -> void:
 	await _test_joystick()
 	await _test_bow()
 	await _test_pair1_scenery()
+	await _test_fx_budget()
 	await _test_corner_assist()
 	await _test_time_shift_safety()
 	_test_audio()
@@ -985,6 +986,35 @@ func _test_corner_assist() -> void:
 	# without help the head stops under the ledge: origin = 192 + 40 = 232
 	_check(min_y < 215.0, "clipping a ledge corner by a few pixels does not stop the jump (%.0f)" % min_y)
 	_stop(game)
+
+
+## Effects (docs/26 §1.9): the particle budget caps at 200 units, quality scales it, cut-art effects play and free themselves.
+func _test_fx_budget() -> void:
+	FX._live = 0
+	var saved: Variant = SaveManager.data.settings.get("quality", "high")
+	SaveManager.data.settings["quality"] = "high"
+	_check(FX.take(150) == 150 and FX.take(100) == 50 and FX.take(10) == 0, "the budget never grants more than 200 units")
+	FX.give(200)
+	_check(FX.live_units() == 0, "units come back when effects end")
+	SaveManager.data.settings["quality"] = "low"
+	_check(FX.take(100) == 40, "low quality asks for 40%% of the particles")
+	FX.give(40)
+	SaveManager.data.settings["quality"] = "high"
+	for name in ["hit_flash", "release", "deed_ring", "arrow_hit", "tikkit_sandburst", "dew", "warn_ring", "brass_spark", "pomegranate_splash"]:
+		_check(SpriteFX.available(name), "effect sequence %s is defined" % name)
+	var holder := Node2D.new()
+	add_child(holder)
+	var fx := SpriteFX.play(holder, "release", Vector2(50, 50))
+	_check(fx != null and fx.texture != null and FX.live_units() > 0, "a cut-art effect plays and takes budget")
+	await _wait(1.2)
+	_check(not is_instance_valid(fx) and FX.live_units() == 0, "a finished effect frees itself and returns its units")
+	for i in 40:
+		SpriteFX.play(holder, "tikkit_sandburst", Vector2.ZERO)
+	_check(FX.live_units() <= FX.CAP, "a crowd of effects stays inside the budget (%d)" % FX.live_units())
+	await _wait(1.0)
+	holder.queue_free()
+	FX._live = 0
+	SaveManager.data.settings["quality"] = saved
 
 
 ## Pair 1 scenery: seven layers, both eras and every deeds variant build and follow the camera.

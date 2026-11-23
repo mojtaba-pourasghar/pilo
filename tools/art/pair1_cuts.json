@@ -112,28 +112,32 @@
    "group": "tikkit",
    "key": "white_fx",
    "merge": 5,
-   "min_area": 150
+   "min_area": 150,
+   "recolor_magenta": true
   },
   {
    "id": "p0_fxa_bow_sling_fx",
    "group": "fx",
    "key": "white_fx",
    "merge": 5,
-   "min_area": 150
+   "min_area": 150,
+   "recolor_magenta": true
   },
   {
    "id": "p0_fxb_enemy_free_fx",
    "group": "fx",
    "key": "white_fx",
    "merge": 5,
-   "min_area": 150
+   "min_area": 150,
+   "recolor_magenta": true
   },
   {
    "id": "p0_fxc_pair1_special_fx",
    "group": "fx",
    "key": "white_fx",
    "merge": 5,
-   "min_area": 150
+   "min_area": 150,
+   "recolor_magenta": true
   },
   {
    "id": "g4_fx_sheet",

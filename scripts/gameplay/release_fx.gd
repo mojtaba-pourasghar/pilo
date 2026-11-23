@@ -21,6 +21,8 @@ static func spawn(parent: Node, pos: Vector2, butterflies := 5) -> ReleaseFX:
 	fx.count = butterflies
 	fx.position = pos
 	parent.add_child(fx)
+	# the pair-1 puff: dark smoke turning golden, then the little freed creature (cut art)
+	SpriteFX.play(parent, "release", pos)
 	return fx
 
 

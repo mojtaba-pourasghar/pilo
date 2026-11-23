@@ -98,6 +98,15 @@ def cut_sheet(cfg, src_dir, out_dir):
         return None
     img = Image.open(src)
     rgba, used = key(img, cfg.get("key", "auto"))
+    if cfg.get("recolor_magenta"):
+        # hot-pink cores that the art generator left in some effects (house rule: no pink in art) -> warm gold
+        a = np.asarray(rgba).astype(np.float32)
+        m = (a[..., 0] > 150) & (a[..., 2] > 120) & (a[..., 1] < 0.55 * np.minimum(a[..., 0], a[..., 2])) & (a[..., 3] > 0)
+        lum = np.clip((a[..., 0] + a[..., 2]) * 0.5, 0, 255)
+        a[..., 0] = np.where(m, np.minimum(255, lum * 1.05), a[..., 0])
+        a[..., 1] = np.where(m, lum * 0.82, a[..., 1])
+        a[..., 2] = np.where(m, lum * 0.30, a[..., 2])
+        rgba = Image.fromarray(a.clip(0, 255).astype(np.uint8), "RGBA")
     boxes = split_components(rgba, cfg.get("merge", 10), cfg.get("min_area", 500))
     rows = order_rows(boxes)
     odir = os.path.join(ROOT, out_dir, cfg["group"], sid)

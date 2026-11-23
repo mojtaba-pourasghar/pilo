@@ -1,0 +1,12 @@
+{
+  "_doc": "Frame sequences cut from the pair-1 effect sheets (tools/art/build_pair1.py). file = <sheet>_rRR_cCC under assets/art/pair1/<group>/<sheet>/. fps, scale, additive (glow), units = cost against the 200-particle budget.",
+  "hit_flash":   {"sheet": "fx/p0_fxb_enemy_free_fx", "frames": ["r01_c00", "r01_c01", "r01_c02"], "fps": 24, "scale": 0.7, "additive": true, "units": 6},
+  "brass_spark": {"sheet": "fx/p0_fxb_enemy_free_fx", "frames": ["r01_c03", "r01_c04", "r01_c05"], "fps": 20, "scale": 0.6, "additive": true, "units": 6},
+  "release":     {"sheet": "fx/p0_fxb_enemy_free_fx", "frames": ["r02_c02", "r02_c03", "r02_c04", "r02_c05", "r02_c06", "r02_c08"], "fps": 9, "scale": 0.8, "additive": false, "units": 12},
+  "pomegranate_splash": {"sheet": "fx/p0_fxb_enemy_free_fx", "frames": ["r03_c04"], "fps": 4, "scale": 0.7, "additive": false, "units": 8},
+  "warn_ring":   {"sheet": "fx/p0_fxb_enemy_free_fx", "frames": ["r00_c00", "r00_c01", "r00_c02"], "fps": 7, "scale": 0.7, "additive": true, "units": 4},
+  "deed_ring":   {"sheet": "fx/p0_fxc_pair1_special_fx", "frames": ["r00_c00", "r00_c01", "r00_c02", "r00_c03"], "fps": 8, "scale": 0.9, "additive": true, "units": 10},
+  "dew":         {"sheet": "fx/p0_fxc_pair1_special_fx", "frames": ["r00_c06", "r00_c07", "r00_c08", "r00_c09"], "fps": 9, "scale": 0.5, "additive": true, "units": 4},
+  "arrow_hit":   {"sheet": "fx/p0_fxa_bow_sling_fx", "frames": ["r02_c00", "r02_c01", "r02_c02", "r02_c03"], "fps": 22, "scale": 0.6, "additive": true, "units": 4},
+  "tikkit_sandburst":   {"sheet": "tikkit/p0_c1m_tikkit_moves_fx", "frames": ["r00_c00", "r00_c01", "r00_c02"], "fps": 12, "scale": 0.8, "additive": true, "units": 16}
+}

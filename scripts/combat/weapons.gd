@@ -304,6 +304,8 @@ class Shot extends Area2D:
 		queue_free()
 
 	func _burst() -> void:
+		if kind == "time_bow" and SpriteFX.available("arrow_hit"):
+			SpriteFX.play(get_parent(), "arrow_hit", global_position)
 		var color := {"slingshot": Color("b07a45"), "bubble": Color(0.75, 0.92, 1.0), "boomerang": Color("f39a2b"),
 			"fire_staff": Color(1.0, 0.55, 0.15), "star_blaster": Color(1, 0.9, 0.4), "time_bow": Color(1.0, 0.92, 0.55)}
 		FX.burst(get_parent(), global_position, color.get(kind, Color.WHITE), 6)
