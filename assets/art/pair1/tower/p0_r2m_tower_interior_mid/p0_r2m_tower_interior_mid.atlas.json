@@ -1,0 +1,76 @@
+{
+ "sheet": "p0_r2m_tower_interior_mid",
+ "key": "white",
+ "size": [
+  1776,
+  896
+ ],
+ "parts": [
+  {
+   "file": "p0_r2m_tower_interior_mid_r00_c00.png",
+   "row": 0,
+   "col": 0,
+   "box": [
+    33,
+    2,
+    283,
+    281
+   ]
+  },
+  {
+   "file": "p0_r2m_tower_interior_mid_r00_c01.png",
+   "row": 0,
+   "col": 1,
+   "box": [
+    338,
+    74,
+    851,
+    281
+   ]
+  },
+  {
+   "file": "p0_r2m_tower_interior_mid_r00_c02.png",
+   "row": 0,
+   "col": 2,
+   "box": [
+    927,
+    2,
+    1185,
+    282
+   ]
+  },
+  {
+   "file": "p0_r2m_tower_interior_mid_r00_c03.png",
+   "row": 0,
+   "col": 3,
+   "box": [
+    1253,
+    122,
+    1738,
+    283
+   ]
+  },
+  {
+   "file": "p0_r2m_tower_interior_mid_r01_c00.png",
+   "row": 1,
+   "col": 0,
+   "box": [
+    33,
+    340,
+    1744,
+    870
+   ]
+  },
+  {
+   "file": "p0_r2m_tower_interior_mid_r01_c01.png",
+   "row": 1,
+   "col": 1,
+   "box": [
+    71,
+    609,
+    335,
+    870
+   ]
+  }
+ ]
+}

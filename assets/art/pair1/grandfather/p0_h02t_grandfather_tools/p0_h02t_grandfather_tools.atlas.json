@@ -1,0 +1,230 @@
+{
+ "sheet": "p0_h02t_grandfather_tools",
+ "key": "white",
+ "size": [
+  1680,
+  944
+ ],
+ "parts": [
+  {
+   "file": "p0_h02t_grandfather_tools_r00_c00.png",
+   "row": 0,
+   "col": 0,
+   "box": [
+    178,
+    26,
+    271,
+    250
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r00_c01.png",
+   "row": 0,
+   "col": 1,
+   "box": [
+    457,
+    24,
+    552,
+    250
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r00_c02.png",
+   "row": 0,
+   "col": 2,
+   "box": [
+    751,
+    24,
+    882,
+    249
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r00_c03.png",
+   "row": 0,
+   "col": 3,
+   "box": [
+    1042,
+    22,
+    1189,
+    251
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r00_c04.png",
+   "row": 0,
+   "col": 4,
+   "box": [
+    1343,
+    21,
+    1525,
+    252
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r01_c00.png",
+   "row": 1,
+   "col": 0,
+   "box": [
+    143,
+    269,
+    290,
+    458
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r01_c01.png",
+   "row": 1,
+   "col": 1,
+   "box": [
+    423,
+    267,
+    593,
+    459
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r01_c02.png",
+   "row": 1,
+   "col": 2,
+   "box": [
+    733,
+    268,
+    896,
+    459
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r01_c03.png",
+   "row": 1,
+   "col": 3,
+   "box": [
+    1042,
+    268,
+    1204,
+    459
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r01_c04.png",
+   "row": 1,
+   "col": 4,
+   "box": [
+    1351,
+    267,
+    1542,
+    459
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r02_c00.png",
+   "row": 2,
+   "col": 0,
+   "box": [
+    142,
+    473,
+    263,
+    693
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r02_c01.png",
+   "row": 2,
+   "col": 1,
+   "box": [
+    407,
+    475,
+    577,
+    695
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r02_c02.png",
+   "row": 2,
+   "col": 2,
+   "box": [
+    733,
+    476,
+    872,
+    696
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r02_c03.png",
+   "row": 2,
+   "col": 3,
+   "box": [
+    1046,
+    474,
+    1179,
+    693
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r02_c04.png",
+   "row": 2,
+   "col": 4,
+   "box": [
+    1312,
+    468,
+    1562,
+    688
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r03_c00.png",
+   "row": 3,
+   "col": 0,
+   "box": [
+    121,
+    768,
+    270,
+    902
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r03_c01.png",
+   "row": 3,
+   "col": 1,
+   "box": [
+    396,
+    759,
+    565,
+    907
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r03_c02.png",
+   "row": 3,
+   "col": 2,
+   "box": [
+    689,
+    743,
+    883,
+    912
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r03_c03.png",
+   "row": 3,
+   "col": 3,
+   "box": [
+    995,
+    726,
+    1216,
+    917
+   ]
+  },
+  {
+   "file": "p0_h02t_grandfather_tools_r03_c04.png",
+   "row": 3,
+   "col": 4,
+   "box": [
+    1303,
+    701,
+    1559,
+    923
+   ]
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "sheet": "p0_r4_leaf_overlays",
+ "key": "white_global",
+ "size": [
+  1680,
+  944
+ ],
+ "parts": [
+  {
+   "file": "p0_r4_leaf_overlays_r00_c00.png",
+   "row": 0,
+   "col": 0,
+   "box": [
+    44,
+    41,
+    439,
+    382
+   ]
+  },
+  {
+   "file": "p0_r4_leaf_overlays_r00_c01.png",
+   "row": 0,
+   "col": 1,
+   "box": [
+    1244,
+    41,
+    1637,
+    382
+   ]
+  },
+  {
+   "file": "p0_r4_leaf_overlays_r01_c00.png",
+   "row": 1,
+   "col": 0,
+   "box": [
+    335,
+    270,
+    607,
+    643
+   ]
+  },
+  {
+   "file": "p0_r4_leaf_overlays_r01_c01.png",
+   "row": 1,
+   "col": 1,
+   "box": [
+    682,
+    229,
+    920,
+    668
+   ]
+  },
+  {
+   "file": "p0_r4_leaf_overlays_r01_c02.png",
+   "row": 1,
+   "col": 2,
+   "box": [
+    999,
+    310,
+    1329,
+    643
+   ]
+  },
+  {
+   "file": "p0_r4_leaf_overlays_r02_c00.png",
+   "row": 2,
+   "col": 0,
+   "box": [
+    44,
+    550,
+    448,
+    903
+   ]
+  },
+  {
+   "file": "p0_r4_leaf_overlays_r02_c01.png",
+   "row": 2,
+   "col": 1,
+   "box": [
+    1232,
+    550,
+    1637,
+    903
+   ]
+  }
+ ]
+}

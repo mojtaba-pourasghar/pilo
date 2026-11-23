@@ -1,0 +1,318 @@
+{
+ "sheet": "p0_h02a_grandfather_modelsheet",
+ "key": "white",
+ "size": [
+  1680,
+  944
+ ],
+ "parts": [
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r00_c00.png",
+   "row": 0,
+   "col": 0,
+   "box": [
+    57,
+    13,
+    188,
+    186
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r00_c01.png",
+   "row": 0,
+   "col": 1,
+   "box": [
+    232,
+    13,
+    350,
+    186
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r00_c02.png",
+   "row": 0,
+   "col": 2,
+   "box": [
+    394,
+    13,
+    512,
+    186
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r00_c03.png",
+   "row": 0,
+   "col": 3,
+   "box": [
+    556,
+    14,
+    675,
+    185
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r00_c04.png",
+   "row": 0,
+   "col": 4,
+   "box": [
+    721,
+    13,
+    840,
+    185
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r00_c05.png",
+   "row": 0,
+   "col": 5,
+   "box": [
+    891,
+    13,
+    1012,
+    185
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r00_c06.png",
+   "row": 0,
+   "col": 6,
+   "box": [
+    1056,
+    81,
+    1155,
+    146
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r00_c07.png",
+   "row": 0,
+   "col": 7,
+   "box": [
+    1189,
+    79,
+    1287,
+    147
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r00_c08.png",
+   "row": 0,
+   "col": 8,
+   "box": [
+    1322,
+    69,
+    1424,
+    148
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r00_c09.png",
+   "row": 0,
+   "col": 9,
+   "box": [
+    1460,
+    68,
+    1563,
+    148
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r01_c00.png",
+   "row": 1,
+   "col": 0,
+   "box": [
+    49,
+    187,
+    275,
+    584
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r01_c01.png",
+   "row": 1,
+   "col": 1,
+   "box": [
+    316,
+    187,
+    546,
+    584
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r01_c02.png",
+   "row": 1,
+   "col": 2,
+   "box": [
+    594,
+    187,
+    810,
+    583
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r01_c03.png",
+   "row": 1,
+   "col": 3,
+   "box": [
+    855,
+    272,
+    1063,
+    497
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r01_c04.png",
+   "row": 1,
+   "col": 4,
+   "box": [
+    1078,
+    191,
+    1156,
+    579
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r01_c05.png",
+   "row": 1,
+   "col": 5,
+   "box": [
+    1173,
+    288,
+    1268,
+    416
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r01_c06.png",
+   "row": 1,
+   "col": 6,
+   "box": [
+    1312,
+    283,
+    1438,
+    576
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r01_c07.png",
+   "row": 1,
+   "col": 7,
+   "box": [
+    1477,
+    189,
+    1639,
+    380
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r02_c00.png",
+   "row": 2,
+   "col": 0,
+   "box": [
+    1204,
+    397,
+    1298,
+    582
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r02_c01.png",
+   "row": 2,
+   "col": 1,
+   "box": [
+    1476,
+    408,
+    1640,
+    562
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r03_c00.png",
+   "row": 3,
+   "col": 0,
+   "box": [
+    20,
+    595,
+    194,
+    894
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r03_c01.png",
+   "row": 3,
+   "col": 1,
+   "box": [
+    220,
+    652,
+    438,
+    895
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r03_c02.png",
+   "row": 3,
+   "col": 2,
+   "box": [
+    470,
+    610,
+    673,
+    900
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r03_c03.png",
+   "row": 3,
+   "col": 3,
+   "box": [
+    699,
+    583,
+    872,
+    898
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r03_c04.png",
+   "row": 3,
+   "col": 4,
+   "box": [
+    913,
+    577,
+    1103,
+    896
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r03_c05.png",
+   "row": 3,
+   "col": 5,
+   "box": [
+    1139,
+    592,
+    1279,
+    896
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r03_c06.png",
+   "row": 3,
+   "col": 6,
+   "box": [
+    1308,
+    693,
+    1459,
+    897
+   ]
+  },
+  {
+   "file": "p0_h02a_grandfather_modelsheet_r03_c07.png",
+   "row": 3,
+   "col": 7,
+   "box": [
+    1498,
+    610,
+    1660,
+    897
+   ]
+  }
+ ]
+}

@@ -1,0 +1,43 @@
+{
+ "sheet": "p0_bg_new_mid_layers",
+ "key": "white",
+ "size": [
+  1680,
+  944
+ ],
+ "parts": [
+  {
+   "file": "p0_bg_new_mid_layers_r00_c00.png",
+   "row": 0,
+   "col": 0,
+   "box": [
+    0,
+    19,
+    1680,
+    282
+   ]
+  },
+  {
+   "file": "p0_bg_new_mid_layers_r01_c00.png",
+   "row": 1,
+   "col": 0,
+   "box": [
+    0,
+    293,
+    1680,
+    619
+   ]
+  },
+  {
+   "file": "p0_bg_new_mid_layers_r02_c00.png",
+   "row": 2,
+   "col": 0,
+   "box": [
+    0,
+    638,
+    1680,
+    926
+   ]
+  }
+ ]
+}

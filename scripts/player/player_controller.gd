@@ -93,6 +93,8 @@ var _belt := 0.0
 var _swim := 0                 # deep water areas the hero is in (swimming when > 0)
 var _sand := 0                 # quicksand areas the hero is in (slowed when > 0)
 
+## Which hero is drawn: "arsam" (new era) or "grandfather" (old era, set by the level before it enters the tree).
+@export var hero_name := "arsam"
 @onready var visual: Node2D = $Visual
 var fx: PlayerFX
 var crouching := false
@@ -103,8 +105,9 @@ var _fire_cooldown := 0.0
 
 func _ready() -> void:
 	z_index = 4
-	# Arsam from his approved frames (p1_heroes; pivot at the feet, flipped with the visual)
-	var sprite := SpriteRig.make("arsam")
+	# Arsam: jointed rig from the approved parts sheet when it exists (docs/34), else his drawn frames
+	# (p1_heroes). Pivot at the feet, flipped with the visual.
+	var sprite: CharacterRig = SkeletonRig.make(hero_name) if SkeletonRig.available(hero_name) else SpriteRig.make("arsam")
 	sprite.name = "Rig"
 	rig.replace_by(sprite)
 	rig.queue_free()
@@ -255,6 +258,8 @@ func _fire() -> void:
 	var id := Weapons.current()
 	_fire_cooldown = float(Weapons.LIST[id].cooldown)
 	Weapons.fire(self, facing)
+	if rig is SkeletonRig:
+		(rig as SkeletonRig).aim_pulse(0.35)
 	_squash = Vector2(0.9, 1.08)
 	_hold_pose("dash", 0.12)
 	AudioManager.play_sfx("whoosh", 1.4 if id == "slingshot" else 1.0, -4.0)

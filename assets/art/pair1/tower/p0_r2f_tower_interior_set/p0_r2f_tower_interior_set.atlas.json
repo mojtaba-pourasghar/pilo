@@ -1,0 +1,98 @@
+{
+ "sheet": "p0_r2f_tower_interior_set",
+ "key": "white",
+ "size": [
+  1680,
+  944
+ ],
+ "parts": [
+  {
+   "file": "p0_r2f_tower_interior_set_r00_c00.png",
+   "row": 0,
+   "col": 0,
+   "box": [
+    24,
+    29,
+    478,
+    479
+   ]
+  },
+  {
+   "file": "p0_r2f_tower_interior_set_r00_c01.png",
+   "row": 0,
+   "col": 1,
+   "box": [
+    564,
+    45,
+    668,
+    453
+   ]
+  },
+  {
+   "file": "p0_r2f_tower_interior_set_r00_c02.png",
+   "row": 0,
+   "col": 2,
+   "box": [
+    752,
+    146,
+    892,
+    309
+   ]
+  },
+  {
+   "file": "p0_r2f_tower_interior_set_r00_c03.png",
+   "row": 0,
+   "col": 3,
+   "box": [
+    956,
+    149,
+    1323,
+    403
+   ]
+  },
+  {
+   "file": "p0_r2f_tower_interior_set_r00_c04.png",
+   "row": 0,
+   "col": 4,
+   "box": [
+    1407,
+    29,
+    1492,
+    461
+   ]
+  },
+  {
+   "file": "p0_r2f_tower_interior_set_r01_c00.png",
+   "row": 1,
+   "col": 0,
+   "box": [
+    50,
+    509,
+    411,
+    793
+   ]
+  },
+  {
+   "file": "p0_r2f_tower_interior_set_r01_c01.png",
+   "row": 1,
+   "col": 1,
+   "box": [
+    548,
+    510,
+    933,
+    792
+   ]
+  },
+  {
+   "file": "p0_r2f_tower_interior_set_r01_c02.png",
+   "row": 1,
+   "col": 2,
+   "box": [
+    1131,
+    472,
+    1428,
+    811
+   ]
+  }
+ ]
+}

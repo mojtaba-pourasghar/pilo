@@ -1,0 +1,226 @@
+[
+ {
+  "n": 1,
+  "id": "p0_h01a_arsam_modelsheet",
+  "path": "assets/art/pair1_sheets/p0_h01a_arsam_modelsheet.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Arsam model sheet (faces + turnaround + poses)"
+ },
+ {
+  "n": 2,
+  "id": "p0_h01f_arsam_fuse",
+  "path": "assets/art/pair1_sheets/p0_h01f_arsam_fuse.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Arsam Fuse form (Auraform with time spirit)"
+ },
+ {
+  "n": 3,
+  "id": "p0_h02a_grandfather_modelsheet",
+  "path": "assets/art/pair1_sheets/p0_h02a_grandfather_modelsheet.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Young grandfather model sheet"
+ },
+ {
+  "n": 4,
+  "id": "p0_c1e_egg_hatch",
+  "path": "assets/art/pair1_sheets/p0_c1e_egg_hatch.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Egg and hatching sequence"
+ },
+ {
+  "n": 5,
+  "id": "p0_h01t_arsam_tools",
+  "path": "assets/art/pair1_sheets/p0_h01t_arsam_tools.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Arsam tools and upgrade levels"
+ },
+ {
+  "n": 6,
+  "id": "p0_h02t_grandfather_tools",
+  "path": "assets/art/pair1_sheets/p0_h02t_grandfather_tools.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Young grandfather tools and upgrade levels"
+ },
+ {
+  "n": 7,
+  "id": "p0_c1m_tikkit_moves_fx",
+  "path": "assets/art/pair1_sheets/p0_c1m_tikkit_moves_fx.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Tikkit four moves effects + icons"
+ },
+ {
+  "n": 8,
+  "id": "p0_fxa_bow_sling_fx",
+  "path": "assets/art/pair1_sheets/p0_fxa_bow_sling_fx.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Bow, arrow and sling effects"
+ },
+ {
+  "n": 9,
+  "id": "p0_fxb_enemy_free_fx",
+  "path": "assets/art/pair1_sheets/p0_fxb_enemy_free_fx.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy telegraph, hit and release effects"
+ },
+ {
+  "n": 10,
+  "id": "p0_fxc_pair1_special_fx",
+  "path": "assets/art/pair1_sheets/p0_fxc_pair1_special_fx.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Pair 1 special effects (deeds, mirror, Fuse)"
+ },
+ {
+  "n": 11,
+  "id": "p0_bg_old_mid_layers",
+  "path": "assets/art/pair1_sheets/p0_bg_old_mid_layers.png",
+  "size": "4096x2744",
+  "kind": "pink",
+  "title": "Old Dawn Plain parallax mid layers"
+ },
+ {
+  "n": 12,
+  "id": "p0_bg_new_mid_layers",
+  "path": "assets/art/pair1_sheets/p0_bg_new_mid_layers.png",
+  "size": "4096x2744",
+  "kind": "pink",
+  "title": "New Dawn Plain parallax mid layers"
+ },
+ {
+  "n": 13,
+  "id": "p0_bg_old_setpieces",
+  "path": "assets/art/pair1_sheets/p0_bg_old_setpieces.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Old Dawn Plain set-pieces"
+ },
+ {
+  "n": 14,
+  "id": "p0_bg_new_setpieces",
+  "path": "assets/art/pair1_sheets/p0_bg_new_setpieces.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "New Dawn Plain set-pieces"
+ },
+ {
+  "n": 15,
+  "id": "p0_ts01_tileset",
+  "path": "assets/art/pair1_sheets/p0_ts01_tileset.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Chapter 1 tileset (old and new)"
+ },
+ {
+  "n": 16,
+  "id": "p0_m1_hud_extended",
+  "path": "assets/art/pair1_sheets/p0_m1_hud_extended.png",
+  "size": "2720x1536",
+  "kind": "none",
+  "title": "Extended HUD (companion moves, Spark bar, guardian bar)"
+ },
+ {
+  "n": 17,
+  "id": "p0_m2a_open_attic",
+  "path": "assets/art/pair1_sheets/p0_m2a_open_attic.png",
+  "size": "2720x1536",
+  "kind": "none",
+  "title": "Opening panel 1: attic"
+ },
+ {
+  "n": 18,
+  "id": "p0_m2b_open_watch",
+  "path": "assets/art/pair1_sheets/p0_m2b_open_watch.png",
+  "size": "2720x1536",
+  "kind": "none",
+  "title": "Opening panel 2: watch trembles"
+ },
+ {
+  "n": 19,
+  "id": "p0_m2c_open_book",
+  "path": "assets/art/pair1_sheets/p0_m2c_open_book.png",
+  "size": "2720x1536",
+  "kind": "none",
+  "title": "Opening panel 3: notebook opens"
+ },
+ {
+  "n": 20,
+  "id": "p0_m2d_open_smoke",
+  "path": "assets/art/pair1_sheets/p0_m2d_open_smoke.png",
+  "size": "2720x1536",
+  "kind": "none",
+  "title": "Opening panel 4: light and smoke"
+ },
+ {
+  "n": 21,
+  "id": "p0_m2e_open_sky",
+  "path": "assets/art/pair1_sheets/p0_m2e_open_sky.png",
+  "size": "2720x1536",
+  "kind": "none",
+  "title": "Opening panel 5: watch flies to the sky"
+ },
+ {
+  "n": 22,
+  "id": "p0_r1_ts01c_organic_ground",
+  "path": "assets/art/pair1_sheets/p0_r1_ts01c_organic_ground.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Organic ground and path objects kit"
+ },
+ {
+  "n": 23,
+  "id": "p0_r2s_tower_interior_sky",
+  "path": "assets/art/pair1_sheets/p0_r2s_tower_interior_sky.png",
+  "size": "4096x1365",
+  "kind": "none",
+  "title": "Ruined tower interior far layers"
+ },
+ {
+  "n": 24,
+  "id": "p0_r2m_tower_interior_mid",
+  "path": "assets/art/pair1_sheets/p0_r2m_tower_interior_mid.png",
+  "size": "4096x2744",
+  "kind": "pink",
+  "title": "Ruined tower interior mid layers"
+ },
+ {
+  "n": 25,
+  "id": "p0_r2f_tower_interior_set",
+  "path": "assets/art/pair1_sheets/p0_r2f_tower_interior_set.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Ruined tower interior set-pieces"
+ },
+ {
+  "n": 26,
+  "id": "p0_r3o_intro_old",
+  "path": "assets/art/pair1_sheets/p0_r3o_intro_old.png",
+  "size": "2720x900",
+  "kind": "none",
+  "title": "Intro frames old level (3 panels)"
+ },
+ {
+  "n": 27,
+  "id": "p0_r3n_intro_new",
+  "path": "assets/art/pair1_sheets/p0_r3n_intro_new.png",
+  "size": "2720x900",
+  "kind": "none",
+  "title": "Intro frames new level (3 panels)"
+ },
+ {
+  "n": 28,
+  "id": "p0_r4_leaf_overlays",
+  "path": "assets/art/pair1_sheets/p0_r4_leaf_overlays.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Foreground leaf overlays"
+ }
+]

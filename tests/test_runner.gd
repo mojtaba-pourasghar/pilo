@@ -12,6 +12,7 @@ func _ready() -> void:
 	var backup: Dictionary = SaveManager.data.duplicate(true)
 	_test_save_merge()
 	await _test_levels_build()
+	await _test_skeleton_rig()
 	await _test_time_shift_safety()
 	_test_audio()
 	_test_level_1_layout()
@@ -902,8 +903,41 @@ func _test_hud_design() -> void:
 	_check(hud._pause.global_position.x > view.x * 0.85 and hud._joy_base.global_position.y > view.y * 0.5, "pause top-right, joystick bottom-left")
 	hud.set_time_keys(true, false)
 	_check(hud._key_past.texture.resource_path.ends_with("hud_key_past.png") and hud._key_present.texture.resource_path.ends_with("_off.png"), "a found key lights up, the other stays dim")
-	_check(game.player.rig is SpriteRig and game.pilo.rig is SpriteRig, "Arsam and the fox are drawn from their frames")
+	_check((game.player.rig is SkeletonRig or game.player.rig is SpriteRig) and game.pilo.rig is SpriteRig, "Arsam (jointed rig or frames) and the fox are drawn from pictures")
 	await _stop(game)
+
+
+## Jointed hero rigs (docs/34): every state runs, the hand pieces swap, the egg shows only when carried.
+func _test_skeleton_rig() -> void:
+	for who in ["arsam", "grandfather"]:
+		_check(SkeletonRig.available(who), "%s has a jointed rig" % who)
+		var rig := SkeletonRig.make(who)
+		add_child(rig)
+		for st in ["idle", "walk", "run", "jump", "fall", "hurt", "celebrate", "crouch", "glide", "dash", "skid"]:
+			rig.state = st
+			rig.speed = 400.0
+			await get_tree().process_frame
+			await get_tree().process_frame
+		_check(rig.get_child_count() > 0, "%s rig runs every state without errors" % who)
+		var legs_moved: bool = absf(rig._nodes["shin_f"].rotation) + absf(rig._nodes["shin_b"].rotation) > 0.01
+		_check(legs_moved, "%s legs move in the run cycle" % who)
+		rig.state = "idle"
+		rig.holding = "egg"
+		rig.aiming = false
+		await get_tree().process_frame
+		if who == "grandfather":
+			_check(rig._nodes["egg"].visible, "the egg shows while carried")
+			rig.holding = ""
+			await get_tree().process_frame
+			_check(not rig._nodes["egg"].visible, "the egg hides when not carried")
+		else:
+			rig.holding = ""
+			rig.aim_pulse(0.2)
+			await get_tree().process_frame
+			_check(rig._nodes["bow"].visible and rig._nodes["hand_grip"].visible and not rig._nodes["arm_f"].visible, "the bow stance swaps the bow hands in")
+			await get_tree().create_timer(0.3).timeout
+			_check(not rig._nodes["bow"].visible and rig._nodes["arm_f"].visible, "the bow stance ends after the shot")
+		rig.queue_free()
 
 
 ## Economy (content/09): 5 hearts, one back every 20 minutes, entry fee with the first three
