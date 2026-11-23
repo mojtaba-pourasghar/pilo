@@ -1,0 +1,790 @@
+{
+ "_doc": "Frame animations of the side-view characters (docs/36, docs/37). sheet = assets/art/v3/cut/<sheet>; row/frames index the cut atlas. fps = frames per second; loop false = hold the last frame. height = the character's standing height in game px.",
+ "arsam": {
+  "height": 118,
+  "anims": {
+   "run": {
+    "sheet": "v3_arsam_run",
+    "row": 0,
+    "frames": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "fps": 14,
+    "loop": true
+   },
+   "walk": {
+    "sheet": "v3_arsam_run",
+    "row": 1,
+    "frames": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "fps": 9,
+    "loop": true
+   },
+   "idle": {
+    "sheet": "v3_arsam_run",
+    "row": 2,
+    "frames": [
+     0,
+     1,
+     2,
+     3,
+     2,
+     1
+    ],
+    "fps": 3.5,
+    "loop": true
+   },
+   "skid": {
+    "sheet": "v3_arsam_run",
+    "row": 2,
+    "frames": [
+     4,
+     5
+    ],
+    "fps": 6,
+    "loop": true
+   },
+   "jump": {
+    "sheet": "v3_arsam_air",
+    "row": 0,
+    "frames": [
+     1,
+     2,
+     3
+    ],
+    "fps": 10,
+    "loop": false
+   },
+   "fall": {
+    "sheet": "v3_arsam_air",
+    "row": 0,
+    "frames": [
+     4
+    ],
+    "fps": 4,
+    "loop": false
+   },
+   "land": {
+    "sheet": "v3_arsam_air",
+    "row": 0,
+    "frames": [
+     5
+    ],
+    "fps": 4,
+    "loop": false
+   },
+   "glide": {
+    "sheet": "v3_arsam_air",
+    "row": 1,
+    "frames": [
+     0,
+     1,
+     2
+    ],
+    "fps": 8,
+    "loop": true
+   },
+   "float": {
+    "sheet": "v3_arsam_air",
+    "row": 1,
+    "frames": [
+     3,
+     4
+    ],
+    "fps": 6,
+    "loop": true
+   },
+   "rope": {
+    "sheet": "v3_arsam_air",
+    "row": 1,
+    "frames": [
+     5,
+     6,
+     7,
+     6
+    ],
+    "fps": 5,
+    "loop": true
+   },
+   "wall": {
+    "sheet": "v3_arsam_air",
+    "row": 2,
+    "frames": [
+     0,
+     1
+    ],
+    "fps": 6,
+    "loop": true
+   },
+   "wall_jump": {
+    "sheet": "v3_arsam_air",
+    "row": 2,
+    "frames": [
+     2,
+     3
+    ],
+    "fps": 10,
+    "loop": false
+   },
+   "dash": {
+    "sheet": "v3_arsam_air",
+    "row": 2,
+    "frames": [
+     4,
+     5
+    ],
+    "fps": 10,
+    "loop": true
+   },
+   "crouch": {
+    "sheet": "v3_arsam_air",
+    "row": 2,
+    "frames": [
+     6,
+     7
+    ],
+    "fps": 5,
+    "loop": true
+   },
+   "bow_ready": {
+    "sheet": "v3_arsam_actions",
+    "row": 0,
+    "frames": [
+     0
+    ],
+    "fps": 4,
+    "loop": false
+   },
+   "bow_draw": {
+    "sheet": "v3_arsam_actions",
+    "row": 0,
+    "frames": [
+     1,
+     2,
+     3
+    ],
+    "fps": 4,
+    "loop": false
+   },
+   "bow_loose": {
+    "sheet": "v3_arsam_actions",
+    "row": 0,
+    "frames": [
+     4,
+     5
+    ],
+    "fps": 12,
+    "loop": false
+   },
+   "aim_up": {
+    "sheet": "v3_arsam_actions",
+    "row": 1,
+    "frames": [
+     0,
+     1
+    ],
+    "fps": 6,
+    "loop": true
+   },
+   "aim_down": {
+    "sheet": "v3_arsam_actions",
+    "row": 1,
+    "frames": [
+     2,
+     3
+    ],
+    "fps": 6,
+    "loop": true
+   },
+   "hurt": {
+    "sheet": "v3_arsam_actions",
+    "row": 1,
+    "frames": [
+     4,
+     5
+    ],
+    "fps": 6,
+    "loop": false
+   },
+   "stunned": {
+    "sheet": "v3_arsam_actions",
+    "row": 1,
+    "frames": [
+     6
+    ],
+    "fps": 4,
+    "loop": true
+   },
+   "celebrate": {
+    "sheet": "v3_arsam_actions",
+    "row": 2,
+    "frames": [
+     0,
+     1,
+     2
+    ],
+    "fps": 8,
+    "loop": true
+   },
+   "wave": {
+    "sheet": "v3_arsam_actions",
+    "row": 2,
+    "frames": [
+     3,
+     4
+    ],
+    "fps": 5,
+    "loop": true
+   },
+   "surprised": {
+    "sheet": "v3_arsam_actions",
+    "row": 2,
+    "frames": [
+     5
+    ],
+    "fps": 4,
+    "loop": false
+   },
+   "sleep": {
+    "sheet": "v3_arsam_actions",
+    "row": 2,
+    "frames": [
+     6,
+     7
+    ],
+    "fps": 1.5,
+    "loop": true
+   }
+  }
+ },
+ "grandfather": {
+  "height": 132,
+  "anims": {
+   "run": {
+    "sheet": "v3_grandfather_run",
+    "row": 0,
+    "frames": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "fps": 13,
+    "loop": true
+   },
+   "walk": {
+    "sheet": "v3_grandfather_run",
+    "row": 1,
+    "frames": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "fps": 8,
+    "loop": true
+   },
+   "idle": {
+    "sheet": "v3_grandfather_run",
+    "row": 2,
+    "frames": [
+     0,
+     1,
+     2,
+     3,
+     2,
+     1
+    ],
+    "fps": 3,
+    "loop": true
+   },
+   "skid": {
+    "sheet": "v3_grandfather_run",
+    "row": 2,
+    "frames": [
+     4,
+     5
+    ],
+    "fps": 6,
+    "loop": true
+   },
+   "jump": {
+    "sheet": "v3_grandfather_air",
+    "row": 0,
+    "frames": [
+     1,
+     2,
+     3
+    ],
+    "fps": 10,
+    "loop": false
+   },
+   "fall": {
+    "sheet": "v3_grandfather_air",
+    "row": 0,
+    "frames": [
+     4
+    ],
+    "fps": 4,
+    "loop": false
+   },
+   "land": {
+    "sheet": "v3_grandfather_air",
+    "row": 0,
+    "frames": [
+     5
+    ],
+    "fps": 4,
+    "loop": false
+   },
+   "vault": {
+    "sheet": "v3_grandfather_air",
+    "row": 1,
+    "frames": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "fps": 9,
+    "loop": false
+   },
+   "rope": {
+    "sheet": "v3_grandfather_air",
+    "row": 2,
+    "frames": [
+     0,
+     1,
+     2,
+     1
+    ],
+    "fps": 5,
+    "loop": true
+   },
+   "vine": {
+    "sheet": "v3_grandfather_air",
+    "row": 2,
+    "frames": [
+     3,
+     4,
+     5
+    ],
+    "fps": 6,
+    "loop": true
+   },
+   "crouch": {
+    "sheet": "v3_grandfather_air",
+    "row": 2,
+    "frames": [
+     6,
+     7
+    ],
+    "fps": 5,
+    "loop": true
+   },
+   "carry": {
+    "sheet": "v3_grandfather_actions",
+    "row": 0,
+    "frames": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "fps": 7,
+    "loop": true
+   },
+   "place": {
+    "sheet": "v3_grandfather_actions",
+    "row": 1,
+    "frames": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "fps": 6,
+    "loop": false
+   },
+   "plant": {
+    "sheet": "v3_grandfather_actions",
+    "row": 1,
+    "frames": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "fps": 6,
+    "loop": false
+   },
+   "sling": {
+    "sheet": "v3_grandfather_actions",
+    "row": 2,
+    "frames": [
+     0,
+     1,
+     2
+    ],
+    "fps": 12,
+    "loop": true
+   },
+   "sling_loose": {
+    "sheet": "v3_grandfather_actions",
+    "row": 2,
+    "frames": [
+     3,
+     4
+    ],
+    "fps": 10,
+    "loop": false
+   },
+   "lantern": {
+    "sheet": "v3_grandfather_actions",
+    "row": 2,
+    "frames": [
+     5,
+     6,
+     7
+    ],
+    "fps": 6,
+    "loop": false
+   },
+   "hurt": {
+    "sheet": "v3_grandfather_actions",
+    "row": 3,
+    "frames": [
+     0,
+     1
+    ],
+    "fps": 6,
+    "loop": false
+   },
+   "celebrate": {
+    "sheet": "v3_grandfather_actions",
+    "row": 3,
+    "frames": [
+     2,
+     3
+    ],
+    "fps": 5,
+    "loop": true
+   },
+   "sleep": {
+    "sheet": "v3_grandfather_actions",
+    "row": 3,
+    "frames": [
+     4,
+     5
+    ],
+    "fps": 1.5,
+    "loop": true
+   },
+   "wake": {
+    "sheet": "v3_grandfather_actions",
+    "row": 3,
+    "frames": [
+     6,
+     7,
+     8
+    ],
+    "fps": 4,
+    "loop": false
+   }
+  },
+  "sheet_scale": {
+   "v3_grandfather_actions": 1.46
+  }
+ },
+ "embri": {
+  "height": 50,
+  "anims": {
+   "run": {
+    "sheet": "v3_embri_move",
+    "row": 0,
+    "frames": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "fps": 14,
+    "loop": true
+   },
+   "hop": {
+    "sheet": "v3_embri_move",
+    "row": 1,
+    "frames": [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    "fps": 10,
+    "loop": false
+   },
+   "leap": {
+    "sheet": "v3_embri_move",
+    "row": 1,
+    "frames": [
+     5,
+     6,
+     7
+    ],
+    "fps": 9,
+    "loop": false
+   },
+   "idle": {
+    "sheet": "v3_embri_move",
+    "row": 2,
+    "frames": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "fps": 4,
+    "loop": true
+   },
+   "turn": {
+    "sheet": "v3_embri_move",
+    "row": 2,
+    "frames": [
+     4,
+     5,
+     6
+    ],
+    "fps": 12,
+    "loop": false
+   },
+   "catchup": {
+    "sheet": "v3_embri_move",
+    "row": 2,
+    "frames": [
+     7,
+     8,
+     9
+    ],
+    "fps": 14,
+    "loop": true
+   },
+   "light": {
+    "sheet": "v3_embri_actions",
+    "row": 0,
+    "frames": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "fps": 6,
+    "loop": false
+   },
+   "burn": {
+    "sheet": "v3_embri_actions",
+    "row": 0,
+    "frames": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "fps": 8,
+    "loop": false
+   },
+   "happy": {
+    "sheet": "v3_embri_actions",
+    "row": 1,
+    "frames": [
+     0,
+     1,
+     2
+    ],
+    "fps": 8,
+    "loop": true
+   },
+   "pick": {
+    "sheet": "v3_embri_actions",
+    "row": 1,
+    "frames": [
+     3,
+     4,
+     5
+    ],
+    "fps": 9,
+    "loop": false
+   },
+   "surprised": {
+    "sheet": "v3_embri_actions",
+    "row": 1,
+    "frames": [
+     6,
+     7
+    ],
+    "fps": 6,
+    "loop": false
+   },
+   "hurt": {
+    "sheet": "v3_embri_actions",
+    "row": 2,
+    "frames": [
+     0,
+     1
+    ],
+    "fps": 6,
+    "loop": false
+   },
+   "sleep": {
+    "sheet": "v3_embri_actions",
+    "row": 2,
+    "frames": [
+     2,
+     3,
+     4
+    ],
+    "fps": 1.5,
+    "loop": true
+   },
+   "wake": {
+    "sheet": "v3_embri_actions",
+    "row": 2,
+    "frames": [
+     5,
+     6
+    ],
+    "fps": 4,
+    "loop": false
+   }
+  }
+ },
+ "tikkit": {
+  "height": 56,
+  "anims": {
+   "fly": {
+    "sheet": "v3_tikkit_fly",
+    "row": 0,
+    "frames": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "fps": 14,
+    "loop": true
+   },
+   "idle": {
+    "sheet": "v3_tikkit_fly",
+    "row": 0,
+    "frames": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ],
+    "fps": 8,
+    "loop": true
+   },
+   "lift": {
+    "sheet": "v3_tikkit_fly",
+    "row": 1,
+    "frames": [
+     0,
+     1,
+     2,
+     3
+    ],
+    "fps": 8,
+    "loop": false
+   },
+   "sandburst": {
+    "sheet": "v3_tikkit_fly",
+    "row": 1,
+    "frames": [
+     4,
+     5,
+     6,
+     7
+    ],
+    "fps": 10,
+    "loop": false
+   },
+   "happy": {
+    "sheet": "v3_tikkit_fly",
+    "row": 2,
+    "frames": [
+     0,
+     1,
+     2
+    ],
+    "fps": 6,
+    "loop": true
+   },
+   "hurt": {
+    "sheet": "v3_tikkit_fly",
+    "row": 2,
+    "frames": [
+     3,
+     4
+    ],
+    "fps": 6,
+    "loop": false
+   },
+   "sleep": {
+    "sheet": "v3_tikkit_fly",
+    "row": 2,
+    "frames": [
+     5,
+     6
+    ],
+    "fps": 1.5,
+    "loop": true
+   },
+   "greet": {
+    "sheet": "v3_tikkit_fly",
+    "row": 2,
+    "frames": [
+     7,
+     8,
+     9
+    ],
+    "fps": 5,
+    "loop": false
+   }
+  }
+ }
+}

@@ -1,0 +1,205 @@
+{
+ "sheet": "v3_grandfather_run",
+ "key": "white",
+ "size": [
+  1680,
+  944
+ ],
+ "rows": [
+  {
+   "base": 281,
+   "frames": [
+    {
+     "file": "v3_grandfather_run_r00_f00.png",
+     "box": [
+      31,
+      27,
+      218,
+      281
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r00_f01.png",
+     "box": [
+      251,
+      27,
+      423,
+      272
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r00_f02.png",
+     "box": [
+      458,
+      27,
+      631,
+      277
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r00_f03.png",
+     "box": [
+      651,
+      27,
+      850,
+      276
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r00_f04.png",
+     "box": [
+      856,
+      26,
+      1040,
+      281
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r00_f05.png",
+     "box": [
+      1059,
+      26,
+      1244,
+      277
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r00_f06.png",
+     "box": [
+      1264,
+      26,
+      1448,
+      277
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r00_f07.png",
+     "box": [
+      1472,
+      27,
+      1653,
+      281
+     ]
+    }
+   ]
+  },
+  {
+   "base": 589,
+   "frames": [
+    {
+     "file": "v3_grandfather_run_r01_f00.png",
+     "box": [
+      64,
+      323,
+      252,
+      589
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r01_f01.png",
+     "box": [
+      312,
+      323,
+      492,
+      589
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r01_f02.png",
+     "box": [
+      585,
+      323,
+      757,
+      589
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r01_f03.png",
+     "box": [
+      838,
+      323,
+      1027,
+      589
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r01_f04.png",
+     "box": [
+      1129,
+      323,
+      1313,
+      589
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r01_f05.png",
+     "box": [
+      1386,
+      323,
+      1567,
+      589
+     ]
+    }
+   ]
+  },
+  {
+   "base": 905,
+   "frames": [
+    {
+     "file": "v3_grandfather_run_r02_f00.png",
+     "box": [
+      81,
+      629,
+      225,
+      905
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r02_f01.png",
+     "box": [
+      354,
+      630,
+      497,
+      905
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r02_f02.png",
+     "box": [
+      636,
+      630,
+      777,
+      905
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r02_f03.png",
+     "box": [
+      908,
+      630,
+      1047,
+      905
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r02_f04.png",
+     "box": [
+      1163,
+      629,
+      1344,
+      905
+     ]
+    },
+    {
+     "file": "v3_grandfather_run_r02_f05.png",
+     "box": [
+      1425,
+      629,
+      1605,
+      905
+     ]
+    }
+   ]
+  }
+ ]
+}

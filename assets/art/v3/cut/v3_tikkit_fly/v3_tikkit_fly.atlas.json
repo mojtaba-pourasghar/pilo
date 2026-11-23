@@ -1,0 +1,259 @@
+{
+ "sheet": "v3_tikkit_fly",
+ "key": "white",
+ "size": [
+  1264,
+  1264
+ ],
+ "rows": [
+  {
+   "base": 391,
+   "frames": [
+    {
+     "file": "v3_tikkit_fly_r00_f00.png",
+     "box": [
+      17,
+      175,
+      172,
+      376
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r00_f01.png",
+     "box": [
+      168,
+      236,
+      323,
+      380
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r00_f02.png",
+     "box": [
+      319,
+      238,
+      474,
+      383
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r00_f03.png",
+     "box": [
+      470,
+      170,
+      625,
+      370
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r00_f04.png",
+     "box": [
+      621,
+      236,
+      775,
+      370
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r00_f05.png",
+     "box": [
+      771,
+      255,
+      923,
+      391
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r00_f06.png",
+     "box": [
+      926,
+      173,
+      1077,
+      382
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r00_f07.png",
+     "box": [
+      1073,
+      233,
+      1227,
+      374
+     ]
+    }
+   ]
+  },
+  {
+   "base": 729,
+   "frames": [
+    {
+     "file": "v3_tikkit_fly_r01_f00.png",
+     "box": [
+      7,
+      589,
+      167,
+      729
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r01_f01.png",
+     "box": [
+      163,
+      569,
+      323,
+      729
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r01_f02.png",
+     "box": [
+      319,
+      525,
+      479,
+      717
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r01_f03.png",
+     "box": [
+      475,
+      493,
+      635,
+      717
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r01_f04.png",
+     "box": [
+      631,
+      584,
+      791,
+      721
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r01_f05.png",
+     "box": [
+      787,
+      577,
+      947,
+      718
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r01_f06.png",
+     "box": [
+      943,
+      566,
+      1103,
+      720
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r01_f07.png",
+     "box": [
+      1099,
+      550,
+      1258,
+      721
+     ]
+    }
+   ]
+  },
+  {
+   "base": 1086,
+   "frames": [
+    {
+     "file": "v3_tikkit_fly_r02_f00.png",
+     "box": [
+      8,
+      910,
+      137,
+      1082
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r02_f01.png",
+     "box": [
+      133,
+      917,
+      262,
+      1083
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r02_f02.png",
+     "box": [
+      258,
+      910,
+      386,
+      1086
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r02_f03.png",
+     "box": [
+      382,
+      950,
+      511,
+      1086
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r02_f04.png",
+     "box": [
+      507,
+      952,
+      635,
+      1086
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r02_f05.png",
+     "box": [
+      631,
+      906,
+      760,
+      1085
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r02_f06.png",
+     "box": [
+      756,
+      907,
+      884,
+      1077
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r02_f07.png",
+     "box": [
+      880,
+      917,
+      1009,
+      1079
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r02_f08.png",
+     "box": [
+      1005,
+      948,
+      1133,
+      1079
+     ]
+    },
+    {
+     "file": "v3_tikkit_fly_r02_f09.png",
+     "box": [
+      1129,
+      931,
+      1257,
+      1079
+     ]
+    }
+   ]
+  }
+ ]
+}

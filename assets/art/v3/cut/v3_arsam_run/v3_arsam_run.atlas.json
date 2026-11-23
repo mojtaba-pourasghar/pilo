@@ -1,0 +1,205 @@
+{
+ "sheet": "v3_arsam_run",
+ "key": "white",
+ "size": [
+  1680,
+  944
+ ],
+ "rows": [
+  {
+   "base": 261,
+   "frames": [
+    {
+     "file": "v3_arsam_run_r00_f00.png",
+     "box": [
+      38,
+      34,
+      210,
+      260
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r00_f01.png",
+     "box": [
+      259,
+      47,
+      426,
+      261
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r00_f02.png",
+     "box": [
+      469,
+      35,
+      630,
+      261
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r00_f03.png",
+     "box": [
+      670,
+      27,
+      833,
+      261
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r00_f04.png",
+     "box": [
+      887,
+      38,
+      1048,
+      261
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r00_f05.png",
+     "box": [
+      1084,
+      50,
+      1246,
+      261
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r00_f06.png",
+     "box": [
+      1277,
+      35,
+      1432,
+      260
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r00_f07.png",
+     "box": [
+      1477,
+      26,
+      1639,
+      261
+     ]
+    }
+   ]
+  },
+  {
+   "base": 577,
+   "frames": [
+    {
+     "file": "v3_arsam_run_r01_f00.png",
+     "box": [
+      39,
+      329,
+      200,
+      577
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r01_f01.png",
+     "box": [
+      316,
+      329,
+      475,
+      577
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r01_f02.png",
+     "box": [
+      597,
+      329,
+      752,
+      577
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r01_f03.png",
+     "box": [
+      878,
+      329,
+      1039,
+      577
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r01_f04.png",
+     "box": [
+      1157,
+      330,
+      1319,
+      577
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r01_f05.png",
+     "box": [
+      1436,
+      329,
+      1589,
+      577
+     ]
+    }
+   ]
+  },
+  {
+   "base": 882,
+   "frames": [
+    {
+     "file": "v3_arsam_run_r02_f00.png",
+     "box": [
+      88,
+      630,
+      193,
+      882
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r02_f01.png",
+     "box": [
+      380,
+      630,
+      485,
+      882
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r02_f02.png",
+     "box": [
+      661,
+      630,
+      765,
+      882
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r02_f03.png",
+     "box": [
+      922,
+      630,
+      1026,
+      882
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r02_f04.png",
+     "box": [
+      1138,
+      640,
+      1314,
+      882
+     ]
+    },
+    {
+     "file": "v3_arsam_run_r02_f05.png",
+     "box": [
+      1419,
+      651,
+      1602,
+      881
+     ]
+    }
+   ]
+  }
+ ]
+}

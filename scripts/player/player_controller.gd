@@ -112,7 +112,13 @@ func _ready() -> void:
 	z_index = 4
 	# Arsam: jointed rig from the approved parts sheet when it exists (docs/34), else his drawn frames
 	# (p1_heroes). Pivot at the feet, flipped with the visual.
-	var sprite: CharacterRig = SkeletonRig.make(hero_name) if SkeletonRig.available(hero_name) else SpriteRig.make("arsam")
+	var sprite: CharacterRig
+	if SideRig.available(hero_name):
+		sprite = SideRig.make(hero_name)                 # side view, frame by frame (docs/36)
+	elif SkeletonRig.available(hero_name):
+		sprite = SkeletonRig.make(hero_name)
+	else:
+		sprite = SpriteRig.make("arsam")
 	sprite.name = "Rig"
 	rig.replace_by(sprite)
 	rig.queue_free()
@@ -229,8 +235,8 @@ const CORNER_FORGIVE := 8
 ## Picks something up (or puts it down with ""); the rig shows the egg in both hands.
 func carry(item: String) -> void:
 	carrying = item
-	if rig is SkeletonRig:
-		(rig as SkeletonRig).holding = item
+	if "holding" in rig:
+		rig.set("holding", item)
 
 
 func _corner_assist(rise_vy: float, delta: float) -> void:
@@ -302,16 +308,15 @@ func _update_bow(delta: float) -> void:
 			_bow_hold = 0.0
 		return
 	_bow_hold += delta
-	if rig is SkeletonRig:
-		var sk := rig as SkeletonRig
-		sk.aiming = true
-		sk.aim_angle = 0.0
-		sk.draw_amount = clampf(_bow_hold / BOW_DRAW_TIME, 0.0, 1.0)
+	if "aiming" in rig:
+		rig.set("aiming", true)
+		rig.set("aim_angle", 0.0)
+		rig.set("draw_amount", clampf(_bow_hold / BOW_DRAW_TIME, 0.0, 1.0))
 	if not Input.is_action_pressed("fire") or not controls_enabled:
 		var power := 0.0 if _bow_hold < BOW_SNAP_TIME else clampf((_bow_hold - BOW_SNAP_TIME) / (BOW_POWER_TIME - BOW_SNAP_TIME), 0.0, 1.0)
 		_bow_hold = -1.0
-		if rig is SkeletonRig:
-			(rig as SkeletonRig).aiming = false
+		if "aiming" in rig:
+			rig.set("aiming", false)
 		_fire(power)
 
 
@@ -320,8 +325,8 @@ func _fire(power := 1.0) -> void:
 	var id := Weapons.current()
 	_fire_cooldown = float(Weapons.LIST[id].cooldown)
 	Weapons.fire(self, facing, power)
-	if rig is SkeletonRig:
-		(rig as SkeletonRig).aim_pulse(0.35)
+	if rig.has_method("aim_pulse"):
+		rig.aim_pulse(0.35)
 	_squash = Vector2(0.9, 1.08)
 	_hold_pose("dash", 0.12)
 	AudioManager.play_sfx("whoosh", 1.4 if id == "slingshot" else 1.0, -4.0)

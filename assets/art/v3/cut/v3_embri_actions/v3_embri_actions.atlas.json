@@ -1,0 +1,232 @@
+{
+ "sheet": "v3_embri_actions",
+ "key": "white",
+ "size": [
+  1680,
+  944
+ ],
+ "rows": [
+  {
+   "base": 294,
+   "frames": [
+    {
+     "file": "v3_embri_actions_r00_f00.png",
+     "box": [
+      29,
+      89,
+      176,
+      290
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r00_f01.png",
+     "box": [
+      193,
+      81,
+      340,
+      290
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r00_f02.png",
+     "box": [
+      356,
+      88,
+      503,
+      290
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r00_f03.png",
+     "box": [
+      520,
+      83,
+      670,
+      290
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r00_f04.png",
+     "box": [
+      707,
+      90,
+      948,
+      293
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r00_f05.png",
+     "box": [
+      983,
+      121,
+      1211,
+      294
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r00_f06.png",
+     "box": [
+      1225,
+      109,
+      1444,
+      294
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r00_f07.png",
+     "box": [
+      1446,
+      112,
+      1661,
+      294
+     ]
+    }
+   ]
+  },
+  {
+   "base": 573,
+   "frames": [
+    {
+     "file": "v3_embri_actions_r01_f00.png",
+     "box": [
+      29,
+      372,
+      183,
+      564
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r01_f01.png",
+     "box": [
+      205,
+      362,
+      359,
+      569
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r01_f02.png",
+     "box": [
+      387,
+      393,
+      537,
+      572
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r01_f03.png",
+     "box": [
+      595,
+      404,
+      800,
+      573
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r01_f04.png",
+     "box": [
+      815,
+      402,
+      1004,
+      572
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r01_f05.png",
+     "box": [
+      1030,
+      404,
+      1226,
+      573
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r01_f06.png",
+     "box": [
+      1274,
+      396,
+      1433,
+      572
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r01_f07.png",
+     "box": [
+      1464,
+      401,
+      1629,
+      572
+     ]
+    }
+   ]
+  },
+  {
+   "base": 848,
+   "frames": [
+    {
+     "file": "v3_embri_actions_r02_f00.png",
+     "box": [
+      33,
+      658,
+      203,
+      844
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r02_f01.png",
+     "box": [
+      256,
+      659,
+      434,
+      845
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r02_f02.png",
+     "box": [
+      498,
+      682,
+      664,
+      847
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r02_f03.png",
+     "box": [
+      726,
+      673,
+      893,
+      847
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r02_f04.png",
+     "box": [
+      955,
+      671,
+      1122,
+      847
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r02_f05.png",
+     "box": [
+      1249,
+      674,
+      1404,
+      848
+     ]
+    },
+    {
+     "file": "v3_embri_actions_r02_f06.png",
+     "box": [
+      1482,
+      668,
+      1637,
+      848
+     ]
+    }
+   ]
+  }
+ ]
+}

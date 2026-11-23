@@ -1,0 +1,223 @@
+{
+ "sheet": "v3_arsam_air",
+ "key": "white",
+ "size": [
+  1680,
+  944
+ ],
+ "rows": [
+  {
+   "base": 289,
+   "frames": [
+    {
+     "file": "v3_arsam_air_r00_f00.png",
+     "box": [
+      44,
+      83,
+      219,
+      285
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r00_f01.png",
+     "box": [
+      325,
+      62,
+      488,
+      282
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r00_f02.png",
+     "box": [
+      595,
+      26,
+      750,
+      257
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r00_f03.png",
+     "box": [
+      870,
+      12,
+      1013,
+      249
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r00_f04.png",
+     "box": [
+      1146,
+      58,
+      1300,
+      269
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r00_f05.png",
+     "box": [
+      1419,
+      126,
+      1584,
+      289
+     ]
+    }
+   ]
+  },
+  {
+   "base": 591,
+   "frames": [
+    {
+     "file": "v3_arsam_air_r01_f00.png",
+     "box": [
+      20,
+      358,
+      265,
+      556
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r01_f01.png",
+     "box": [
+      292,
+      355,
+      514,
+      556
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r01_f02.png",
+     "box": [
+      537,
+      360,
+      755,
+      548
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r01_f03.png",
+     "box": [
+      775,
+      352,
+      914,
+      563
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r01_f04.png",
+     "box": [
+      965,
+      352,
+      1105,
+      564
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r01_f05.png",
+     "box": [
+      1159,
+      309,
+      1320,
+      589
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r01_f06.png",
+     "box": [
+      1344,
+      309,
+      1510,
+      591
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r01_f07.png",
+     "box": [
+      1523,
+      309,
+      1668,
+      590
+     ]
+    }
+   ]
+  },
+  {
+   "base": 887,
+   "frames": [
+    {
+     "file": "v3_arsam_air_r02_f00.png",
+     "box": [
+      28,
+      655,
+      147,
+      887
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r02_f01.png",
+     "box": [
+      222,
+      660,
+      352,
+      887
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r02_f02.png",
+     "box": [
+      428,
+      649,
+      589,
+      886
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r02_f03.png",
+     "box": [
+      636,
+      648,
+      807,
+      887
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r02_f04.png",
+     "box": [
+      856,
+      735,
+      1058,
+      877
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r02_f05.png",
+     "box": [
+      1098,
+      735,
+      1295,
+      877
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r02_f06.png",
+     "box": [
+      1343,
+      734,
+      1476,
+      882
+     ]
+    },
+    {
+     "file": "v3_arsam_air_r02_f07.png",
+     "box": [
+      1522,
+      735,
+      1656,
+      881
+     ]
+    }
+   ]
+  }
+ ]
+}

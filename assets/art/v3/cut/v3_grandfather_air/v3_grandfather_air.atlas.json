@@ -1,0 +1,196 @@
+{
+ "sheet": "v3_grandfather_air",
+ "key": "white",
+ "size": [
+  1264,
+  1264
+ ],
+ "rows": [
+  {
+   "base": 391,
+   "frames": [
+    {
+     "file": "v3_grandfather_air_r00_f00.png",
+     "box": [
+      25,
+      147,
+      197,
+      391
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r00_f01.png",
+     "box": [
+      206,
+      122,
+      395,
+      391
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r00_f02.png",
+     "box": [
+      428,
+      78,
+      597,
+      358
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r00_f03.png",
+     "box": [
+      637,
+      55,
+      808,
+      278
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r00_f04.png",
+     "box": [
+      830,
+      122,
+      1007,
+      378
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r00_f05.png",
+     "box": [
+      1058,
+      205,
+      1228,
+      391
+     ]
+    }
+   ]
+  },
+  {
+   "base": 803,
+   "frames": [
+    {
+     "file": "v3_grandfather_air_r01_f00.png",
+     "box": [
+      27,
+      516,
+      244,
+      787
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r01_f01.png",
+     "box": [
+      257,
+      549,
+      468,
+      794
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r01_f02.png",
+     "box": [
+      513,
+      455,
+      694,
+      798
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r01_f03.png",
+     "box": [
+      735,
+      395,
+      945,
+      802
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r01_f04.png",
+     "box": [
+      985,
+      436,
+      1246,
+      803
+     ]
+    }
+   ]
+  },
+  {
+   "base": 1196,
+   "frames": [
+    {
+     "file": "v3_grandfather_air_r02_f00.png",
+     "box": [
+      19,
+      825,
+      144,
+      1186
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r02_f01.png",
+     "box": [
+      171,
+      825,
+      366,
+      1133
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r02_f02.png",
+     "box": [
+      324,
+      825,
+      525,
+      1107
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r02_f03.png",
+     "box": [
+      514,
+      827,
+      631,
+      1196
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r02_f04.png",
+     "box": [
+      643,
+      826,
+      769,
+      1196
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r02_f05.png",
+     "box": [
+      789,
+      824,
+      919,
+      1196
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r02_f06.png",
+     "box": [
+      893,
+      1008,
+      1042,
+      1195
+     ]
+    },
+    {
+     "file": "v3_grandfather_air_r02_f07.png",
+     "box": [
+      1073,
+      1049,
+      1235,
+      1196
+     ]
+    }
+   ]
+  }
+ ]
+}

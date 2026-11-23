@@ -911,7 +911,7 @@ func _test_hud_design() -> void:
 	_check(hud._pause.global_position.x > view.x * 0.85 and hud._joy_base.global_position.y > view.y * 0.5, "pause top-right, joystick bottom-left")
 	hud.set_time_keys(true, false)
 	_check(hud._key_past.texture.resource_path.ends_with("hud_key_past.png") and hud._key_present.texture.resource_path.ends_with("_off.png"), "a found key lights up, the other stays dim")
-	_check((game.player.rig is SkeletonRig or game.player.rig is SpriteRig) and game.pilo.rig is SpriteRig, "Arsam (jointed rig or frames) and the fox are drawn from pictures")
+	_check((game.player.rig is SideRig or game.player.rig is SkeletonRig or game.player.rig is SpriteRig) and game.pilo.rig is SpriteRig, "Arsam (jointed rig or frames) and the fox are drawn from pictures")
 	await _stop(game)
 
 
@@ -1070,7 +1070,7 @@ func _test_pair1_old_level() -> void:
 	add_child(game)
 	for i in 3:
 		await get_tree().physics_frame
-	_check(game.player.hero_name == "grandfather" and game.player.rig is SkeletonRig, "the hero is the jointed grandfather")
+	_check(game.player.hero_name == "grandfather" and (game.player.rig is SideRig or game.player.rig is SkeletonRig), "the hero is the side-view grandfather")
 	_check(game._background is Pair1Parallax and game._background.era == "old", "the old pair-1 scenery is used")
 	_check(get_tree().get_nodes_in_group("pair_site").size() == 4, "four deed sites are placed")
 	_check(Weapons.current() == "slingshot", "the grandfather shoots the slingshot")

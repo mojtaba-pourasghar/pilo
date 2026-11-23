@@ -1,0 +1,161 @@
+{
+ "sheet": "v3_terrain_old",
+ "key": "magenta",
+ "size": [
+  1680,
+  944
+ ],
+ "rows": [
+  {
+   "base": 145,
+   "frames": [
+    {
+     "file": "v3_terrain_old_r00_f00.png",
+     "box": [
+      42,
+      28,
+      1639,
+      147
+     ]
+    }
+   ]
+  },
+  {
+   "base": 296,
+   "frames": [
+    {
+     "file": "v3_terrain_old_r01_f00.png",
+     "box": [
+      42,
+      179,
+      1639,
+      298
+     ]
+    }
+   ]
+  },
+  {
+   "base": 451,
+   "frames": [
+    {
+     "file": "v3_terrain_old_r02_f00.png",
+     "box": [
+      41,
+      332,
+      1639,
+      453
+     ]
+    }
+   ]
+  },
+  {
+   "base": 814,
+   "frames": [
+    {
+     "file": "v3_terrain_old_r03_f00.png",
+     "box": [
+      29,
+      530,
+      276,
+      783
+     ]
+    },
+    {
+     "file": "v3_terrain_old_r03_f01.png",
+     "box": [
+      319,
+      521,
+      582,
+      791
+     ]
+    },
+    {
+     "file": "v3_terrain_old_r03_f02.png",
+     "box": [
+      629,
+      525,
+      704,
+      816
+     ]
+    },
+    {
+     "file": "v3_terrain_old_r03_f03.png",
+     "box": [
+      739,
+      526,
+      796,
+      765
+     ]
+    },
+    {
+     "file": "v3_terrain_old_r03_f04.png",
+     "box": [
+      830,
+      525,
+      915,
+      816
+     ]
+    },
+    {
+     "file": "v3_terrain_old_r03_f05.png",
+     "box": [
+      950,
+      526,
+      1003,
+      766
+     ]
+    },
+    {
+     "file": "v3_terrain_old_r03_f06.png",
+     "box": [
+      1040,
+      486,
+      1294,
+      672
+     ]
+    },
+    {
+     "file": "v3_terrain_old_r03_f07.png",
+     "box": [
+      1314,
+      524,
+      1500,
+      667
+     ]
+    },
+    {
+     "file": "v3_terrain_old_r03_f08.png",
+     "box": [
+      1522,
+      560,
+      1653,
+      664
+     ]
+    }
+   ]
+  },
+  {
+   "base": 896,
+   "frames": [
+    {
+     "file": "v3_terrain_old_r04_f00.png",
+     "box": [
+      1032,
+      703,
+      1535,
+      898
+     ]
+    },
+    {
+     "file": "v3_terrain_old_r04_f01.png",
+     "box": [
+      1573,
+      703,
+      1650,
+      898
+     ]
+    }
+   ]
+  }
+ ]
+}
