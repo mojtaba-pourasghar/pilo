@@ -134,6 +134,13 @@
    "key": "white_fx",
    "merge": 5,
    "min_area": 150
+  },
+  {
+   "id": "g4_fx_sheet",
+   "group": "fx",
+   "key": "pink",
+   "merge": 3,
+   "min_area": 250
   }
  ],
  "scenes": [

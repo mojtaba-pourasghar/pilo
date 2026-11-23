@@ -15,6 +15,7 @@ func _ready() -> void:
 	await _test_skeleton_rig()
 	await _test_joystick()
 	await _test_bow()
+	await _test_pair1_scenery()
 	await _test_corner_assist()
 	await _test_time_shift_safety()
 	_test_audio()
@@ -984,6 +985,22 @@ func _test_corner_assist() -> void:
 	# without help the head stops under the ledge: origin = 192 + 40 = 232
 	_check(min_y < 215.0, "clipping a ledge corner by a few pixels does not stop the jump (%.0f)" % min_y)
 	_stop(game)
+
+
+## Pair 1 scenery: seven layers, both eras and every deeds variant build and follow the camera.
+func _test_pair1_scenery() -> void:
+	for combo in [["old", "full"], ["new", "full"], ["new", "none"]]:
+		var game := await _start(["P.........", "##########"], {"scenery": "pair1", "era": combo[0], "variant": combo[1]})
+		var bg: Node = game._background
+		_check(bg is Pair1Parallax, "%s/%s: the pair 1 scenery is used" % combo)
+		_check(bg._layers.size() >= 1 and bg._corners.size() == 4, "%s/%s: mid layers and four foreground leaf corners" % combo)
+		var before: float = bg._layers[0].node.position.x
+		game.player.position.x += 600.0
+		await _wait(0.4)
+		_check(not is_equal_approx(bg._layers[0].node.position.x, before), "%s/%s: the far layer moves with the camera" % combo)
+		if combo[1] == "none":
+			_check(bg._layers.size() == 1, "the bare plain keeps only the far hills")
+		_stop(game)
 
 
 ## Floating analog joystick (docs/26 §2.1): dead zone 12%, x^1.4 response, the ring appears under the

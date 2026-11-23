@@ -43,6 +43,8 @@ def key(img, mode):
         mode = detect_bg(img)
     if mode == "white":
         return key_white(img), "white"
+    if mode == "pink":
+        return key_pink(img, tol=60, soft=40), "pink"
     if mode == "white_fx":
         return key_white(img, tol=10, fx_band=16), "white_fx"
     if mode == "white_global":

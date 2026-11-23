@@ -95,7 +95,17 @@ func _ready() -> void:
 
 	info = LevelBuilder.build(data, _world_root, self, palette)
 	# chapter 1 (format 4): the five-layer scenery from the approved p6 art; older worlds keep theirs
-	var layered: CanvasLayer = ForestParallax.new() if String(data.get("chapter", "")) == "ch01" else LayeredBackground.new()
+	var layered: CanvasLayer
+	if String(data.get("scenery", "")) == "pair1":
+		# pair 1 (docs/33): the seven-layer scenery from the approved sheets; era and deeds variant from the level
+		var pair := Pair1Parallax.new()
+		pair.era = String(data.get("era", "new"))
+		pair.variant = String(data.get("variant", "full"))
+		layered = pair
+	elif String(data.get("chapter", "")) == "ch01":
+		layered = ForestParallax.new()
+	else:
+		layered = LayeredBackground.new()
 	layered.level_size = info.size
 	layered.world_id = String(world.id)
 	_background = layered
