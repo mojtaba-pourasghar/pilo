@@ -1,0 +1,170 @@
+[
+ {
+  "n": 1,
+  "id": "v3_enemy_murkwisp",
+  "path": "assets/art/v3/v3_enemy_murkwisp.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy: Murkwisp (floating smoke) + freed Cindrel"
+ },
+ {
+  "n": 2,
+  "id": "v3_enemy_murkling",
+  "path": "assets/art/v3/v3_enemy_murkling.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy: Murkling (walker) + freed Nimbeak"
+ },
+ {
+  "n": 3,
+  "id": "v3_enemy_stiltmurk",
+  "path": "assets/art/v3/v3_enemy_stiltmurk.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy: Stiltmurk (stilt thrower) + freed Rootstomp"
+ },
+ {
+  "n": 4,
+  "id": "v3_enemy_barkshield",
+  "path": "assets/art/v3/v3_enemy_barkshield.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy: Barkshield (shield) + freed Shardling"
+ },
+ {
+  "n": 5,
+  "id": "v3_enemy_weaver",
+  "path": "assets/art/v3/v3_enemy_weaver.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy: Murkweaver (thread spider) + freed Lanternit"
+ },
+ {
+  "n": 6,
+  "id": "v3_enemy_gloombat",
+  "path": "assets/art/v3/v3_enemy_gloombat.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy: Gloombat (diving bat) + freed Lampmoth"
+ },
+ {
+  "n": 7,
+  "id": "v3_enemy_rollerbug",
+  "path": "assets/art/v3/v3_enemy_rollerbug.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy: Rollerbug (rolls down slopes) + freed"
+ },
+ {
+  "n": 8,
+  "id": "v3_enemy_spitter",
+  "path": "assets/art/v3/v3_enemy_spitter.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy: Spitter (seed-shooting plant) + freed"
+ },
+ {
+  "n": 9,
+  "id": "v3_clockcrow_frames",
+  "path": "assets/art/v3/v3_clockcrow_frames.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Guardian: Clockcrow frames + freed Tickwing"
+ },
+ {
+  "n": 10,
+  "id": "v3_stumpguard_frames",
+  "path": "assets/art/v3/v3_stumpguard_frames.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Guardian: Stumpguard frames + freed Verdlin baby"
+ },
+ {
+  "n": 11,
+  "id": "v3_obst_hazards",
+  "path": "assets/art/v3/v3_obst_hazards.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Hazards: crumbling bridge, falling stones, spike roots, web, geyser, swinging log"
+ },
+ {
+  "n": 12,
+  "id": "v3_obst_platforms",
+  "path": "assets/art/v3/v3_obst_platforms.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Platforms and boosters: moving, leaf, spring, ramp, zipline"
+ },
+ {
+  "n": 13,
+  "id": "v3_obst_gates",
+  "path": "assets/art/v3/v3_obst_gates.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Gates, switches, checkpoint, exit"
+ },
+ {
+  "n": 14,
+  "id": "v3_collect_items",
+  "path": "assets/art/v3/v3_collect_items.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Collectibles: dew-drops, seeds, hearts, pickups"
+ },
+ {
+  "n": 15,
+  "id": "v3_scene_ruins_old",
+  "path": "assets/art/v3/v3_scene_ruins_old.png",
+  "size": "3072x1024",
+  "kind": "none",
+  "title": "Scene: sunlit stone ruins hall (old era)"
+ },
+ {
+  "n": 16,
+  "id": "v3_scene_cave_old",
+  "path": "assets/art/v3/v3_scene_cave_old.png",
+  "size": "3072x1024",
+  "kind": "none",
+  "title": "Scene: cave under the hill (old era)"
+ },
+ {
+  "n": 17,
+  "id": "v3_scene_canyon_old",
+  "path": "assets/art/v3/v3_scene_canyon_old.png",
+  "size": "3072x1024",
+  "kind": "none",
+  "title": "Scene: canyon with waterfall and bridge (old era)"
+ },
+ {
+  "n": 18,
+  "id": "v3_scene_canopy_old",
+  "path": "assets/art/v3/v3_scene_canopy_old.png",
+  "size": "1536x3072",
+  "kind": "none",
+  "title": "Scene: inside the giant tree, vertical shaft (old era)"
+ },
+ {
+  "n": 19,
+  "id": "v3_scene_cave_new",
+  "path": "assets/art/v3/v3_scene_cave_new.png",
+  "size": "3072x1024",
+  "kind": "none",
+  "title": "Scene: smoky cave (new era)"
+ },
+ {
+  "n": 20,
+  "id": "v3_scene_canyon_new",
+  "path": "assets/art/v3/v3_scene_canyon_new.png",
+  "size": "3072x1024",
+  "kind": "none",
+  "title": "Scene: broken canyon (new era)"
+ },
+ {
+  "n": 21,
+  "id": "v3_scene_canopy_new",
+  "path": "assets/art/v3/v3_scene_canopy_new.png",
+  "size": "1536x3072",
+  "kind": "none",
+  "title": "Scene: giant tree shaft with smoke (new era)"
+ }
+]

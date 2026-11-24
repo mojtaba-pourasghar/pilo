@@ -35,12 +35,6 @@ TimeShift="*res://scripts/puzzle/time_shift_manager.gd"
 LevelManager="*res://scripts/progression/level_manager.gd"
 ProgressManager="*res://scripts/progression/progress_manager.gd"
 
-[physics]
-
-common/physics_ticks_per_second=120
-common/physics_jitter_fix=0.0
-common/physics_interpolation=true
-
 [display]
 
 window/size/viewport_width=1280
@@ -62,6 +56,12 @@ texture={
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true
+
+[physics]
+
+common/physics_ticks_per_second=120
+common/physics_jitter_fix=0.0
+common/physics_interpolation=true
 
 [rendering]
 
