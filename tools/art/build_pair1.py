@@ -121,7 +121,18 @@ def cut_sheet(cfg, src_dir, out_dir):
             X0, Y0 = max(0, x0 - pad), max(0, y0 - pad)
             X1, Y1 = min(img.width, x1 + pad), min(img.height, y1 + pad)
             name = f"{sid}_r{r:02d}_c{c:02d}.png"
-            rgba.crop((X0, Y0, X1, Y1)).save(os.path.join(odir, name))
+            crop = rgba.crop((X0, Y0, X1, Y1))
+            if cfg.get("keep_largest"):
+                # stray fragments inside the box (loose leaf bits) are dropped: only the main piece stays
+                arr = np.asarray(crop).copy()
+                solid = arr[..., 3] > 24
+                lab, cnt = ndi.label(ndi.binary_dilation(solid, iterations=6))
+                if cnt > 1:
+                    sizes = ndi.sum(solid, lab, range(1, cnt + 1))
+                    keep = lab == (int(np.argmax(sizes)) + 1)
+                    arr[..., 3] = np.where(keep & solid, arr[..., 3], 0)
+                    crop = Image.fromarray(arr, "RGBA")
+            crop.save(os.path.join(odir, name))
             atlas["parts"].append({"file": name, "row": r, "col": c, "box": [X0, Y0, X1, Y1]})
     json.dump(atlas, open(os.path.join(odir, sid + ".atlas.json"), "w"), indent=1)
     prev = Image.new("RGBA", img.size, (60, 70, 100, 255))

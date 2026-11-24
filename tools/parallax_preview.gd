@@ -13,6 +13,19 @@ func _ready() -> void:
 	bg.era = String(args.get("era", "new"))
 	bg.variant = String(args.get("variant", "full"))
 	add_child(bg)
+	await get_tree().process_frame
+	match String(args.get("hide", "")):
+		"front": bg._front.visible = false
+		"sky": bg._sky.visible = false
+		"rays": bg._rays.visible = false
+		"both":
+			bg._front.get_child(4).visible = false
+			bg._front.get_child(5).visible = false
+		"motes": bg._front.get_child(4).visible = false
+		"leaves": bg._front.get_child(5).visible = false
+		"layers":
+			for e in bg._layers:
+				e.node.visible = false
 	var cam := Camera2D.new()
 	cam.position = Vector2(float(args.get("x", "1200")), float(args.get("y", "1000")))
 	add_child(cam)

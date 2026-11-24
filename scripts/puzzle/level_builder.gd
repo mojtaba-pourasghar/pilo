@@ -333,6 +333,13 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 	_build_secret_rooms(wet, w, h, root, palette)    # water (with what floats in it) is never a hidden room
 	_build_pit_shade(grid, w, h, root)
 	TimeParts.build(data, root, game, palette)
+	if data.has("terrain"):
+		var terrain := TerrainCurve.new()
+		terrain.era = String(data.terrain.get("era", "old"))
+		terrain.segments = data.terrain.segments
+		terrain.bottom_y = float(h * TILE)
+		root.add_child(terrain)
+		info["terrain"] = terrain
 	info["sites"] = PairSites.build_all(data.get("objects", []), root, game)
 	var layers := sort_time_layers(root)
 	info.layer_past = layers[0]

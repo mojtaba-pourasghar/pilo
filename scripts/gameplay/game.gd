@@ -130,6 +130,9 @@ func _ready() -> void:
 	_camera = GameCamera.new()
 	_camera.name = "Camera2D"
 	_camera.target = player
+	if data.has("framing"):
+		_camera.framing = Vector2(float(data.framing.x), float(data.framing.y))
+		_camera.zoom_mul = float(data.framing.zoom)
 	_camera.limit_left = 0
 	_camera.limit_top = 0
 	_camera.limit_right = int(info.size.x)
@@ -177,6 +180,8 @@ func _ready() -> void:
 
 	_grade = TimeGrade.new()
 	add_child(_grade)
+	if String(data.get("scenery", "")) == "pair1":
+		_grade.visible = false          # pair 1 has no time lens: the painted colours stay as drawn
 	TimeShift.time_changed.connect(_on_time_changed)
 	TimeShift.charge_changed.connect(func(v: float): hud.set_lens_charge(v / TimeShift.MAX_CHARGE))
 	TimeShift.return_countdown.connect(func(left: float): hud.set_return_countdown(left))

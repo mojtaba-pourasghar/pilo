@@ -10,6 +10,9 @@ func _ready() -> void:
 		args[parts[0]] = parts[1] if parts.size() > 1 else "1"
 	UIKit.ensure_theme(get_tree())
 	LevelManager.current_level = int(args.get("level", "1"))
+	if args.has("pair"):          # --pair=old_01: a pair-1 level (data/levels/pair1)
+		LevelManager.override_level = LevelManager.load_pair_level(String(args.pair))
+		LevelManager.current_level = int(LevelManager.override_level.get("id", 101))
 	var scenes := {"menu": LevelManager.MENU_SCENE, "map": LevelManager.MAP_SCENE,
 		"store": LevelManager.STORE_SCENE, "game": LevelManager.GAME_SCENE, "boot": "res://scenes/boot/boot.tscn",
 		"intro": LevelManager.INTRO_SCENE, "village": LevelManager.VILLAGE_SCENE}

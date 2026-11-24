@@ -110,6 +110,10 @@ var _fire_cooldown := 0.0
 
 func _ready() -> void:
 	z_index = 4
+	# curved ground: stay glued to slopes and keep a steady speed uphill and downhill
+	floor_snap_length = 28.0
+	floor_max_angle = deg_to_rad(40.0)
+	floor_constant_speed = true
 	# Arsam: jointed rig from the approved parts sheet when it exists (docs/34), else his drawn frames
 	# (p1_heroes). Pivot at the feet, flipped with the visual.
 	var sprite: CharacterRig

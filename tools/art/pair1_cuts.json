@@ -105,7 +105,8 @@
    "group": "overlays",
    "key": "white_global",
    "merge": 20,
-   "min_area": 4000
+   "min_area": 4000,
+   "keep_largest": true
   },
   {
    "id": "p0_c1m_tikkit_moves_fx",
