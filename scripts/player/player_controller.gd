@@ -51,6 +51,12 @@ const UPDRAFT_MAX := -560.0
 var controls_enabled := true
 ## What the hero carries ("" | "egg"): a carried egg slows him to x0.7 and rules out dash and long jumps (docs/33).
 var carrying := ""
+## The ground material under the hero (SurfaceFX): grass | soil | sand | snow | stone | wood | water. Set by the level.
+var surface := "grass"
+var rise_vy_before_land := 0.0
+## Rain made the ground wet: friction and grip x0.7.
+var wet := false
+var _step_t := 0.0
 var has_lantern := true
 const CARRY_SPEED := 0.7
 var facing := 1.0
@@ -216,6 +222,7 @@ func _physics_process(delta: float) -> void:
 		_jump_held = false
 
 	var rise_vy := velocity.y
+	rise_vy_before_land = velocity.y
 	move_and_slide()
 	if rise_vy < -150.0 and is_on_ceiling():
 		_corner_assist(rise_vy, delta)
@@ -227,6 +234,8 @@ func _physics_process(delta: float) -> void:
 	if on_floor and not _was_on_floor:
 		_squash = Vector2(1.25, 0.8)
 		landed.emit()
+		if get_parent():
+			SurfaceFX.land(get_parent(), global_position + Vector2(0, FEET), surface, clampf(absf(rise_vy_before_land) / 600.0, 0.4, 1.4))
 	_was_on_floor = on_floor
 	if dir != 0.0 and dashing <= 0.0 and _hurt_lock <= 0.0:
 		facing = signf(dir)
@@ -268,9 +277,9 @@ func _horizontal(dir: float, delta: float, on_floor: bool) -> void:
 	if _wind.x != 0.0 and not on_floor:
 		drift = signf(_wind.x) * WIND_PUSH
 	var target := signf(dir) * cap * analog + drift
-	var rate := FRICTION
+	var rate := FRICTION * (0.7 if wet and on_floor else 1.0)
 	if dir != 0.0:
-		rate = GROUND_ACCEL if on_floor else AIR_ACCEL
+		rate = (GROUND_ACCEL * (0.8 if wet else 1.0)) if on_floor else AIR_ACCEL
 		if on_floor and signf(dir) != signf(velocity.x) and absf(velocity.x) > 200.0:
 			rate = SKID_DECEL
 	if absf(velocity.x) > cap and signf(velocity.x) == signf(target):
@@ -424,6 +433,12 @@ func _animate(delta: float, on_floor: bool, dir: float) -> void:
 			state = "crawl" if absf(velocity.x) > 20.0 and rig.has_cycle("crawl") else "crouch"
 		else:
 			state = "walk" if absf(velocity.x) > 20.0 else "idle"
+	# material feedback: a step puff by the surface under the hero, every stride while he runs
+	if on_floor and (state == "walk" or state == "run") and get_parent():
+		_step_t -= delta * clampf(absf(velocity.x) / 260.0, 0.6, 2.2)
+		if _step_t <= 0.0:
+			_step_t = 0.22
+			SurfaceFX.step(get_parent(), global_position + Vector2(0, FEET), surface, facing)
 	rig.state = state
 	rig.speed = velocity.x
 	rig.run_speed = run_speed

@@ -121,6 +121,7 @@ func _ready() -> void:
 
 	player = PLAYER_SCENE.instantiate()
 	player.hero_name = String(data.get("hero", "arsam"))
+	player.surface = String(data.get("surface", "grass"))
 	Weapons.hero_weapon = String(data.get("weapon", ""))
 	player.position = info.start
 	_world_root.add_child(player)
@@ -147,6 +148,14 @@ func _ready() -> void:
 	pilo.position = info.start + Vector2(-64, -80)
 	_world_root.add_child(pilo)
 	pilo.apply_color(String(SaveManager.data.get("pilo_color", "classic")))
+	if data.has("ambient"):
+		var amb := AmbientFX.new()
+		amb.config = data.ambient
+		amb.game = self
+		amb.terrain = info.get("terrain", null)
+		amb.level_width = info.size.x
+		amb.level_height = info.size.y
+		add_child(amb)
 	_apply_loadout()
 	if String(data.get("companion", "pilo")) == "none":
 		# pair-1 levels have their own companions (docs/36); the old fox is not part of them

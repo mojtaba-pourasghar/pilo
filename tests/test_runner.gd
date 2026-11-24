@@ -17,6 +17,7 @@ func _ready() -> void:
 	await _test_bow()
 	await _test_pair1_scenery()
 	await _test_fx_budget()
+	await _test_ambient()
 	_test_deeds()
 	await _test_pair_sites()
 	await _test_pair1_old_level()
@@ -1099,6 +1100,53 @@ func _test_pair1_old_level() -> void:
 	LevelManager.override_level = {}
 	await _stop(game)
 	DeedsStore.clear()
+
+
+## Material feedback and living scenery (docs/40 §8): every surface has its effects, rain makes the ground
+## slippery, critters move, gusts warn before they push.
+func _test_ambient() -> void:
+	var holder := Node2D.new()
+	add_child(holder)
+	for surface in SurfaceFX.TABLE:
+		var before := holder.get_child_count()
+		SurfaceFX.land(holder, Vector2(100, 100), surface, 1.0)
+		SurfaceFX.step(holder, Vector2(100, 100), surface, 1.0)
+		_check(holder.get_child_count() > before, "%s: a landing and a step make effects" % surface)
+		await _wait(0.05)
+	await _wait(1.2)
+	FX._live = 0
+	holder.queue_free()
+	var game := await _start(["P.........", "##########"], {"ambient": {"weather": "rain", "critters": ["squirrel", "snail", "butterfly"], "critter_count": 6, "wet": true}})
+	var amb: Node = null
+	for c in game.get_children():
+		if c is AmbientFX:
+			amb = c
+	_check(amb != null and amb.critters.size() == 6, "the level builds its ambient scenery with 6 critters")
+	_check(amb._particles != null and amb._particles.amount > 0, "rain falls (particles)")
+	_check(game.player.wet, "rain makes the ground wet")
+	var c0: Node2D = amb.critters[0]
+	var x0 := c0.position.x
+	await _wait(1.5)
+	_check(absf(c0.position.x - x0) > 1.0 or c0._pause > 0.0, "a critter moves or pauses on its own")
+	var fl: Node2D = null
+	for c in amb.critters:
+		if c.kind == "butterfly":
+			fl = c
+	_check(fl != null and fl.position.y < 800.0, "a butterfly flies above the ground")
+	_stop(game)
+	# gusts: a warning first, then the push
+	game = await _start(["P.........", "##########"], {"ambient": {"weather": "wind", "critters": [], "critter_count": 0}})
+	amb = null
+	for c in game.get_children():
+		if c is AmbientFX:
+			amb = c
+	amb._gust_t = 0.01
+	await _wait(0.3)
+	_check(amb._gust_warn > 0.0 or amb._gust_left > 0.0, "a gust is announced first")
+	_check(amb._gust_left <= 0.0, "the push starts only after the warning")
+	await _wait(1.2)
+	_check(amb._gust_left > 0.0, "then the gust pushes")
+	_stop(game)
 
 
 ## Effects (docs/26 §1.9): the particle budget caps at 200 units, quality scales it, cut-art effects play and free themselves.

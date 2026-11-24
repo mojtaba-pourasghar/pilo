@@ -41,7 +41,6 @@ GRID = {
     "v3_arsam_run": [8, 6, 6], "v3_arsam_air": [6, 8, 8], "v3_arsam_actions": [6, 7, 8],
     "v3_grandfather_run": [8, 6, 6], "v3_grandfather_air": [6, 5, 8], "v3_grandfather_actions": [6, 8, 8, 9],
     "v3_embri_move": [8, 8, 10], "v3_embri_actions": [8, 8, 7], "v3_tikkit_fly": [8, 8, 10],
-    "v3_critters_forest": [18, 11, 12, 16, 24, 20],
 }
 
 
@@ -65,7 +64,7 @@ SLIVER_FILTER = {"v3_critters_forest"}
 # sheets whose rows hold several animations: frames per animation; animations are separated by wide gaps and each
 # animation is split into equal cells (its frames lie at an even pitch)
 GROUPS = {
-    "v3_critters_forest": [[8, 6, 4], [8, 3], [6, 6], [8, 4, 4], [6, 6, 6, 6], [6, 6, 3, 5]],  # OLD layout; the new sheet is cut by AUTO_ROWS
+    "v3_critters_forest_OLD": [[8, 6, 4], [8, 3], [6, 6], [8, 4, 4], [6, 6, 6, 6], [6, 6, 3, 5]],  # OLD layout; the new sheet is cut by AUTO_ROWS
 }
 
 
@@ -240,7 +239,7 @@ def cut_grid(name, counts):
 
 
 # effect sheets: every row is one animation (or a few); frames = the groups separated by empty gaps
-AUTO_ROWS = ["v3_fx_ground_impacts", "v3_fx_light", "v3_fx_water", "v3_fx_night", "v3_fx_heat",
+AUTO_ROWS = ["v3_critters_forest", "v3_critters_forest_b", "v3_fx_ground_impacts", "v3_fx_light", "v3_fx_water", "v3_fx_night", "v3_fx_heat",
              "v3_fx_snow", "v3_fx_rain_wind", "v3_clouds", "v3_plants_sway"]
 
 

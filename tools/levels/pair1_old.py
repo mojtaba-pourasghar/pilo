@@ -75,7 +75,8 @@ level = {
     "title": "دشت صبح", "era": "old", "scenery": "pair1", "hero": "grandfather", "weapon": "", "companion": "none",
     "framing": {"x": 0.30, "y": 0.62, "zoom": 0.86},
     "lens": False, "dual_physics": False, "weapon_level_required": 1, "bee_span": 140,
-    "terrain": terrain,
+    "terrain": terrain, "surface": "grass",
+    "ambient": {"weather": "none", "critters": ["squirrel", "butterfly", "snail", "bird", "ladybug", "dragonfly", "frog"], "critter_count": 18},
     "objects": [
         {"type": "seed", "x": 46, "y": 12, "deed": "bridge_planted", "width": 8},
         {"type": "shrine", "x": 100, "y": round(ground(100.5), 2), "deed": "shrine_lit"},

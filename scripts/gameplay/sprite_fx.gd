@@ -29,8 +29,10 @@ static func available(name: String) -> bool:
 	return _data.has(name)
 
 
-static func _frame(sheet: String, cell: String) -> Texture2D:
+static func _frame(sheet: String, cell: String, root := "") -> Texture2D:
 	var path := "%s%s/%s_%s.png" % [ROOT, sheet, sheet.get_file(), cell]
+	if root == "v3":                       # assets/art/v3/cut/<sheet>/<sheet>_<cell>.png
+		path = "res://assets/art/v3/cut/%s/%s_%s.png" % [sheet, sheet, cell]
 	if not _textures.has(path):
 		_textures[path] = load(path) if ResourceLoader.exists(path) else null
 	return _textures[path]
@@ -48,7 +50,10 @@ static func play(parent: Node, name: String, pos: Vector2, scale_mul := 1.0, fli
 	var fx := SpriteFX.new()
 	fx._units = units
 	for cell in spec.frames:
-		var tex := _frame(String(spec.sheet), String(cell))
+		var name_cell := str(cell)
+		if spec.has("row"):                # v3 sheets: frames are indices into a row
+			name_cell = "r%02d_f%02d" % [int(spec.row), int(cell)]
+		var tex := _frame(String(spec.sheet), name_cell, String(spec.get("root", "")))
 		if tex:
 			fx._frames.append(tex)
 	if fx._frames.is_empty():

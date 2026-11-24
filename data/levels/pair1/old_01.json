@@ -173,6 +173,20 @@
    ]
   ]
  },
+ "surface": "grass",
+ "ambient": {
+  "weather": "none",
+  "critters": [
+   "squirrel",
+   "butterfly",
+   "snail",
+   "bird",
+   "ladybug",
+   "dragonfly",
+   "frog"
+  ],
+  "critter_count": 18
+ },
  "objects": [
   {
    "type": "seed",
