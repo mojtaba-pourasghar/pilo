@@ -77,6 +77,7 @@ class FrameRig extends EnemyRig:
 	var stand := 70.0
 	var rows: Dictionary = {}
 	var fps := 8.0
+	var loops: Array = ["move", "alert"]
 	var mode := "move"
 	var _sprite: Sprite2D
 	var _cache: Dictionary = {}
@@ -89,7 +90,7 @@ class FrameRig extends EnemyRig:
 		_sprite.centered = false
 		_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 		add_child(_sprite)
-		var frames := _frames("move")
+		var frames := _frames(str(rows.keys()[0]) if rows.has("move") == false else "move")
 		var hs: Array = []
 		for fr in frames:
 			hs.append(fr.h)
@@ -114,7 +115,7 @@ class FrameRig extends EnemyRig:
 		if frames.is_empty():
 			return
 		var n := frames.size()
-		var idx := int(_clock) % n if mode == "move" or mode == "alert" else mini(int(_clock), n - 1)
+		var idx := int(_clock) % n if loops.has(mode) else mini(int(_clock), n - 1)
 		var fr: Dictionary = frames[idx]
 		var tex: Texture2D = fr.tex
 		if tex == null:

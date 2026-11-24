@@ -116,6 +116,11 @@ objects = [
     {"type": "spin_beam", "x": 84, "y": B - 4.2, "arm": 2.3, "speed": 45, "phase": 0},
     {"type": "spin_beam", "x": 94, "y": B - 4.2, "arm": 2.3, "speed": 60, "phase": 45},
     {"type": "spin_beam", "x": 89, "y": B - 4.2, "arm": 2.0, "speed": 30, "phase": 20, "when": ["none"]},
+    # high route over the tower: floating islands (docs/44)
+    {"type": "island", "x": 79, "y": B - 7.0, "width": 3, "variant": 0, "bob": 8},
+    {"type": "island", "x": 87.5, "y": B - 9.0, "width": 3, "variant": 1, "bob": 12, "phase": 1.5},
+    {"type": "island", "x": 92, "y": B - 9.2, "width": 3.5, "variant": 2, "drift": 40},
+    {"type": "island", "x": 99.5, "y": B - 7.4, "width": 3, "variant": 4, "bob": 10, "phase": 3.0},
     {"type": "falling_rock", "x": 98, "y": B - 9, "drop": 9.2, "reach": 200},
     {"type": "form_point", "x": 96, "y": g(96), "form": "bubble"},
     # N5: the shrine hall

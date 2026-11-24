@@ -23,6 +23,7 @@ var _home := Vector2.ZERO
 var _range := 640.0
 var _cool := 0.0
 var _flash := 0.0
+var _rig: SideEnemy.FrameRig
 var _rocks: Array = []        ## thrown pomegranates: [position, velocity]
 
 
@@ -40,6 +41,14 @@ func _ready() -> void:
 	add_child(shape)
 	_home = position
 	state = "idle"
+	if SideRig._sheet_atlas("v3f_g_stumpguard").size() > 0:
+		_rig = SideEnemy.FrameRig.new()
+		_rig.sheet = "v3f_g_stumpguard"
+		_rig.stand = 150.0
+		_rig.fps = 8.0
+		_rig.rows = {"idle": 0, "tell": 1, "roll": 2, "throw": 3, "rest": 4, "hurt": 5, "freed": 6, "move": 0}
+		_rig.loops = ["idle", "tell", "roll", "rest"]
+		add_child(_rig)
 	_t = 1.0
 
 
@@ -148,6 +157,8 @@ func _physics_process(delta: float) -> void:
 		elif r[0].y > _home.y + 8.0:
 			SpriteFX.play(get_parent(), "pomegranate_splash", r[0], 0.9)
 			_rocks.erase(r)
+	if _rig != null:
+		_sync_rig()
 	queue_redraw()
 
 
@@ -164,6 +175,30 @@ func _throw(p: Node2D) -> void:
 
 
 func _draw() -> void:
+	if _rig != null:
+		_draw_rocks_and_glow()
+		return
+	_draw_placeholder()
+
+
+func _sync_rig() -> void:
+	_rig.scale.x = facing
+	_rig.mode = {"throw_tell": "tell"}.get(state, state)
+	_rig.modulate = Color(1, 1, 1).lerp(Color(2, 2, 2), _flash * 2.0)
+
+
+func _draw_rocks_and_glow() -> void:
+	if weak():
+		var glow := 0.5 + 0.5 * sin(Time.get_ticks_msec() * 0.012)
+		var back := Vector2(-facing * 44.0, -60.0)
+		draw_line(back + Vector2(0, -30), back + Vector2(0, 26), Color(1.0, 0.8, 0.3, 0.3 + 0.3 * glow), 8.0)
+	for r in _rocks:
+		var rp: Vector2 = to_local(r[0])
+		draw_circle(rp, 11.0, Color("2a1f3d"))
+		draw_circle(rp, 9.0, Color("d0453a"))
+
+
+func _draw_placeholder() -> void:
 	var tell := state == "tell" or state == "throw_tell"
 	var c := Vector2(0, -55)
 	draw_set_transform(c, _rot if state == "roll" else 0.0)

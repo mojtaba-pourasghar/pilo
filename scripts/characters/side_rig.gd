@@ -79,6 +79,17 @@ static func _texture(sheet: String, file: String) -> Texture2D:
 	return _tex[key]
 
 
+## One cut picture of a sheet (row, frame) for props that are drawn by code: {tex, h} or {} when missing.
+static func pic(sheet: String, row: int, idx: int) -> Texture2D:
+	var atlas := _sheet_atlas(sheet)
+	if atlas.is_empty() or row >= atlas.rows.size():
+		return null
+	var frames: Array = atlas.rows[row].frames
+	if idx >= frames.size():
+		return null
+	return _texture(sheet, String(frames[idx].file))
+
+
 ## Frame data of one animation: [{tex, dx, dy}] in sheet pixels (dx = 0: centred on the picture, dy above the ground line).
 static func build_frames(def: Dictionary) -> Array:
 	var atlas := _sheet_atlas(String(def.sheet))

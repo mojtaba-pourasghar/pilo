@@ -86,6 +86,8 @@ static func _make(kind: String) -> Part:
 			return QuickSand.new()
 		"boulder_chase":
 			return BoulderChase.new()
+		"island":
+			return Island.new()
 	return null
 
 
@@ -104,6 +106,17 @@ class Part extends Node2D:
 
 	func player() -> CharacterBody2D:
 		return game.player if game and game.get("player") else null
+
+	## Draws one painted picture centred at `at`, `w` px wide (keeps the aspect), rotated; false if the art is missing.
+	func pic(sheet: String, row: int, idx: int, at: Vector2, w: float, rot := 0.0, bottom := false) -> bool:
+		var tex := SideRig.pic(sheet, row, idx)
+		if tex == null:
+			return false
+		var h := w * tex.get_height() / maxf(tex.get_width(), 1.0)
+		draw_set_transform(at, rot)
+		draw_texture_rect(tex, Rect2(-w * 0.5, -h if bottom else -h * 0.5, w, h), false)
+		draw_set_transform(Vector2.ZERO)
+		return true
 
 
 ## A plank on two ropes. The hero grabs it when he is in the air within reach and presses jump (or just touches
@@ -174,6 +187,9 @@ class RopeSwing extends Part:
 		draw_line(Vector2(18, 0), hp + Vector2(26, 0), Color("2a1f3d"), 7.0)
 		draw_line(Vector2(-18, 0), hp + Vector2(-26, 0), rope, 4.0)
 		draw_line(Vector2(18, 0), hp + Vector2(26, 0), rope, 4.0)
+		if pic("v3f_i_bridges", 1, 4, hp + Vector2(0, 4), 92.0, -angle):
+			draw_circle(Vector2.ZERO, 8.0, Color("2a1f3d"))
+			return
 		var plank := PackedVector2Array([hp + Vector2(-44, -4), hp + Vector2(44, -4), hp + Vector2(44, 12), hp + Vector2(-44, 12)])
 		draw_colored_polygon(plank, Color("b07a45"))
 		draw_polyline(plank + PackedVector2Array([plank[0]]), Color("2a1f3d"), 3.0)
@@ -344,6 +360,9 @@ class Crumble extends Part:
 			if int(entry[2]) == 2 and b.position.y > entry[1] + 400.0:
 				continue
 			var c := b.position
+			var look: int = [1, 2, 3][int(entry[2])]
+			if pic("v3f_i_bridges", 1, look, c + Vector2(0, 2), 74.0, 0.0 if int(entry[2]) < 2 else float(entry[4]) * 0.002):
+				continue
 			var r := Rect2(c.x - 30, c.y - 8, 60, 16)
 			var col := Color("b07a45") if int(entry[2]) == 0 else Color("8a5a2b")
 			draw_rect(r, col)
@@ -456,6 +475,52 @@ class SteamVent extends Part:
 
 ## The common test: is the hero inside this part's box? (box = size in px, centred horizontally on the part,
 ## standing on its y)
+## A floating island you can stand on (docs/44): `width` tiles, `variant` 0-7 picks the painted island, `bob` px up/down
+## (it rises and falls slowly), `drift` px sideways. The top of the island is the walkable edge (one-way).
+class Island extends Part:
+	var _body: AnimatableBody2D
+	var _w := 192.0
+	var _t := 0.0
+	var _bob := 0.0
+	var _drift := 0.0
+	var _variant := 0
+
+	func _build() -> void:
+		_w = float(data.get("width", 3)) * TILE
+		_variant = int(data.get("variant", 0))
+		_bob = float(data.get("bob", 0))
+		_drift = float(data.get("drift", 0))
+		_t = float(data.get("phase", 0.0))
+		_body = AnimatableBody2D.new()
+		_body.collision_layer = 1
+		_body.collision_mask = 0
+		_body.sync_to_physics = false
+		var shape := CollisionShape2D.new()
+		var rect := RectangleShape2D.new()
+		rect.size = Vector2(_w * 0.86, 18.0)
+		shape.shape = rect
+		shape.one_way_collision = true
+		shape.position = Vector2(0, 9)
+		_body.add_child(shape)
+		add_child(_body)
+
+	func _physics_process(delta: float) -> void:
+		_t += delta
+		_body.position = Vector2(sin(_t * 0.7) * _drift, sin(_t * 1.1) * _bob)
+		queue_redraw()
+
+	func _draw() -> void:
+		var row := _variant / 4
+		var tex := SideRig.pic("v3f_i_islands", row, _variant % 4)
+		if tex == null:
+			draw_rect(Rect2(_body.position + Vector2(-_w * 0.5, 0), Vector2(_w, 24)), Color("5a8a3a"))
+			return
+		var w := _w * 1.08
+		var h := w * tex.get_height() / tex.get_width()
+		var top := _body.position + Vector2(0, h * 0.5 - 14.0)
+		draw_texture_rect(tex, Rect2(top - Vector2(w, h) * 0.5, Vector2(w, h)), false)
+
+
 class Zone extends Part:
 	var box := Vector2(128, 48)
 
@@ -780,6 +845,7 @@ class ShotTarget extends StaticBody2D:
 	var group_id := ""
 	var hit_done := false
 	var _flash := 0.0
+	var _after := 0.0
 	var _t := 0.0
 	var size := Vector2(46, 46)
 
@@ -813,6 +879,8 @@ class ShotTarget extends StaticBody2D:
 	func _process(delta: float) -> void:
 		_t += delta
 		_flash = maxf(0.0, _flash - delta)
+		if hit_done:
+			_after += delta
 		queue_redraw()
 
 	func _draw() -> void:
@@ -824,6 +892,16 @@ class ShotTarget extends StaticBody2D:
 			draw_line(Vector2(sway, -size.y - rope_len), Vector2(0, -size.y), Color("a8743f") if not hit_done else Color(0.7, 0.5, 0.3, 0.3), 4.0)
 			draw_circle(c, 14.0, Color("2a1f3d"))
 			draw_circle(c, 11.0, Color("d9b44a") if not hit_done else Color(0.8, 0.8, 0.8, 0.3))
+			return
+		var idx := 1 + int(_t * 6.0) % 3
+		if hit_done:
+			var since := _after
+			idx = 4 if since < 0.15 else (5 if since < 0.3 else (6 + int((since - 0.3) * 8.0) if since < 0.6 else 9))
+		var tex := SideRig.pic("v3f_i_shrine_gate", 1, idx)
+		if tex != null:
+			var th := 104.0
+			var tw := tex.get_width() * th / tex.get_height()
+			draw_texture_rect(tex, Rect2(Vector2(-tw * 0.5, 6.0 - th), Vector2(tw, th)), false)
 			return
 		var col := Color("6fe0f0") if not hit_done else Color("2a6a80")
 		var pts := PackedVector2Array([c + Vector2(0, -24), c + Vector2(15, -4), c + Vector2(10, 20), c + Vector2(-10, 20), c + Vector2(-15, -4)])
@@ -882,6 +960,8 @@ class Gate extends Part:
 	func _draw() -> void:
 		var h := TILE * height
 		var y := _door.position.y
+		if _open and y <= -h * 1.45:
+			return                    # raised out of sight
 		draw_rect(Rect2(-22, y - h * 0.5, 44, h), Color("2a1f3d"))
 		draw_rect(Rect2(-18, y - h * 0.5 + 4, 36, h - 8), Color("8a8f9a"))
 		draw_circle(Vector2(0, y), 16.0, Color("2a1f3d"))
@@ -920,6 +1000,8 @@ class SpinBeam extends Part:
 
 	func _draw() -> void:
 		draw_arc(Vector2.ZERO, arm, 0, TAU, 40, Color(1, 1, 1, 0.07), 2.0)
+		if pic("v3f_i_spinbeams", 1, 0, Vector2.ZERO, arm * 2.0 + 24.0, _ang):
+			return
 		for k in 4:
 			var dir := Vector2.from_angle(_ang + k * PI * 0.5)
 			var n := Vector2(-dir.y, dir.x)

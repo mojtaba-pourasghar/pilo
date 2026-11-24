@@ -39,6 +39,13 @@ func _process(delta: float) -> void:
 
 
 func _draw() -> void:
+	# painted flag (docs/44): folded until the hero reaches it, then waving
+	var flag := SideRig.pic("v3f_i_markers", 0, 5 + int(_t * 8.0) % 4 if active else int(_t * 4.0) % 5)
+	if flag != null:
+		var fh := 150.0
+		var fw := flag.get_width() * fh / flag.get_height()
+		draw_texture_rect(flag, Rect2(Vector2(31.0 - fw * 0.35, 64.0 - fh), Vector2(fw, fh)), false)
+		return
 	# rendered flag: limp and grey until the hero reaches it, then up and waving in the wind
 	if WorldArt.pic("checkpoint_on"):
 		var sway := sin(_t * 4.0) * 0.04 * _raise
