@@ -1,0 +1,355 @@
+{
+ "sheet": "v3f_e_barkshield",
+ "key": "magenta",
+ "size": [
+  1776,
+  896
+ ],
+ "rows": [
+  {
+   "base": 160,
+   "frames": [
+    {
+     "file": "v3f_e_barkshield_r00_f00.png",
+     "box": [
+      52,
+      16,
+      198,
+      160
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r00_f01.png",
+     "box": [
+      275,
+      15,
+      417,
+      160
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r00_f02.png",
+     "box": [
+      493,
+      15,
+      636,
+      160
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r00_f03.png",
+     "box": [
+      712,
+      15,
+      852,
+      160
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r00_f04.png",
+     "box": [
+      927,
+      15,
+      1068,
+      160
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r00_f05.png",
+     "box": [
+      1144,
+      15,
+      1288,
+      160
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r00_f06.png",
+     "box": [
+      1376,
+      15,
+      1513,
+      160
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r00_f07.png",
+     "box": [
+      1596,
+      15,
+      1735,
+      160
+     ]
+    }
+   ]
+  },
+  {
+   "base": 311,
+   "frames": [
+    {
+     "file": "v3f_e_barkshield_r01_f00.png",
+     "box": [
+      51,
+      184,
+      210,
+      311
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r01_f01.png",
+     "box": [
+      314,
+      185,
+      482,
+      311
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r01_f02.png",
+     "box": [
+      582,
+      188,
+      766,
+      311
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r01_f03.png",
+     "box": [
+      861,
+      188,
+      1090,
+      311
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r01_f04.png",
+     "box": [
+      1190,
+      190,
+      1412,
+      311
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r01_f05.png",
+     "box": [
+      1540,
+      184,
+      1696,
+      311
+     ]
+    }
+   ]
+  },
+  {
+   "base": 459,
+   "frames": [
+    {
+     "file": "v3f_e_barkshield_r02_f00.png",
+     "box": [
+      71,
+      334,
+      204,
+      459
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r02_f01.png",
+     "box": [
+      339,
+      334,
+      473,
+      459
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r02_f02.png",
+     "box": [
+      627,
+      334,
+      761,
+      459
+     ]
+    }
+   ]
+  },
+  {
+   "base": 602,
+   "frames": [
+    {
+     "file": "v3f_e_barkshield_r03_f00.png",
+     "box": [
+      104,
+      482,
+      233,
+      602
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r03_f01.png",
+     "box": [
+      379,
+      480,
+      513,
+      602
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r03_f02.png",
+     "box": [
+      655,
+      481,
+      788,
+      602
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r03_f03.png",
+     "box": [
+      928,
+      480,
+      1057,
+      601
+     ]
+    }
+   ]
+  },
+  {
+   "base": 732,
+   "frames": [
+    {
+     "file": "v3f_e_barkshield_r04_f00.png",
+     "box": [
+      51,
+      625,
+      251,
+      732
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r04_f01.png",
+     "box": [
+      335,
+      626,
+      532,
+      732
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r04_f02.png",
+     "box": [
+      616,
+      625,
+      849,
+      732
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r04_f03.png",
+     "box": [
+      933,
+      626,
+      1155,
+      731
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r04_f04.png",
+     "box": [
+      1264,
+      625,
+      1445,
+      732
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r04_f05.png",
+     "box": [
+      1559,
+      646,
+      1693,
+      732
+     ]
+    }
+   ]
+  },
+  {
+   "base": 881,
+   "frames": [
+    {
+     "file": "v3f_e_barkshield_r05_f00.png",
+     "box": [
+      73,
+      790,
+      166,
+      881
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r05_f01.png",
+     "box": [
+      315,
+      772,
+      407,
+      880
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r05_f02.png",
+     "box": [
+      527,
+      774,
+      618,
+      880
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r05_f03.png",
+     "box": [
+      742,
+      761,
+      835,
+      880
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r05_f04.png",
+     "box": [
+      951,
+      768,
+      1041,
+      880
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r05_f05.png",
+     "box": [
+      1155,
+      784,
+      1246,
+      881
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r05_f06.png",
+     "box": [
+      1369,
+      783,
+      1460,
+      880
+     ]
+    },
+    {
+     "file": "v3f_e_barkshield_r05_f07.png",
+     "box": [
+      1600,
+      783,
+      1693,
+      880
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,92 @@
+{
+ "sheet": "v3f_i_islands",
+ "key": "white_fx",
+ "size": [
+  1680,
+  944
+ ],
+ "rows": [
+  {
+   "base": 458,
+   "frames": [
+    {
+     "file": "v3f_i_islands_r00_f00.png",
+     "box": [
+      58,
+      180,
+      198,
+      339
+     ]
+    },
+    {
+     "file": "v3f_i_islands_r00_f01.png",
+     "box": [
+      353,
+      159,
+      553,
+      374
+     ]
+    },
+    {
+     "file": "v3f_i_islands_r00_f02.png",
+     "box": [
+      697,
+      115,
+      1029,
+      408
+     ]
+    },
+    {
+     "file": "v3f_i_islands_r00_f03.png",
+     "box": [
+      1163,
+      44,
+      1627,
+      458
+     ]
+    }
+   ]
+  },
+  {
+   "base": 881,
+   "frames": [
+    {
+     "file": "v3f_i_islands_r01_f00.png",
+     "box": [
+      58,
+      551,
+      352,
+      854
+     ]
+    },
+    {
+     "file": "v3f_i_islands_r01_f01.png",
+     "box": [
+      445,
+      472,
+      782,
+      881
+     ]
+    },
+    {
+     "file": "v3f_i_islands_r01_f02.png",
+     "box": [
+      915,
+      533,
+      1180,
+      868
+     ]
+    },
+    {
+     "file": "v3f_i_islands_r01_f03.png",
+     "box": [
+      1307,
+      513,
+      1626,
+      876
+     ]
+    }
+   ]
+  }
+ ]
+}

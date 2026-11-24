@@ -1,0 +1,355 @@
+{
+ "sheet": "v3f_e_weaver",
+ "key": "white_fx",
+ "size": [
+  1264,
+  1264
+ ],
+ "rows": [
+  {
+   "base": 232,
+   "frames": [
+    {
+     "file": "v3f_e_weaver_r00_f00.png",
+     "box": [
+      47,
+      0,
+      181,
+      231
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r00_f01.png",
+     "box": [
+      240,
+      0,
+      393,
+      231
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r00_f02.png",
+     "box": [
+      461,
+      0,
+      607,
+      231
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r00_f03.png",
+     "box": [
+      670,
+      0,
+      795,
+      232
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r00_f04.png",
+     "box": [
+      868,
+      0,
+      1019,
+      231
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r00_f05.png",
+     "box": [
+      1063,
+      0,
+      1220,
+      230
+     ]
+    }
+   ]
+  },
+  {
+   "base": 477,
+   "frames": [
+    {
+     "file": "v3f_e_weaver_r01_f00.png",
+     "box": [
+      166,
+      251,
+      274,
+      442
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r01_f01.png",
+     "box": [
+      429,
+      251,
+      537,
+      476
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r01_f02.png",
+     "box": [
+      701,
+      251,
+      843,
+      477
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r01_f03.png",
+     "box": [
+      971,
+      288,
+      1118,
+      477
+     ]
+    }
+   ]
+  },
+  {
+   "base": 728,
+   "frames": [
+    {
+     "file": "v3f_e_weaver_r02_f00.png",
+     "box": [
+      55,
+      497,
+      166,
+      728
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r02_f01.png",
+     "box": [
+      264,
+      497,
+      364,
+      725
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r02_f02.png",
+     "box": [
+      467,
+      497,
+      576,
+      694
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r02_f03.png",
+     "box": [
+      675,
+      497,
+      785,
+      686
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r02_f04.png",
+     "box": [
+      878,
+      497,
+      993,
+      663
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r02_f05.png",
+     "box": [
+      1084,
+      497,
+      1190,
+      664
+     ]
+    }
+   ]
+  },
+  {
+   "base": 864,
+   "frames": [
+    {
+     "file": "v3f_e_weaver_r03_f00.png",
+     "box": [
+      42,
+      747,
+      231,
+      864
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r03_f01.png",
+     "box": [
+      277,
+      734,
+      479,
+      864
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r03_f02.png",
+     "box": [
+      530,
+      734,
+      727,
+      864
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r03_f03.png",
+     "box": [
+      767,
+      725,
+      984,
+      864
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r03_f04.png",
+     "box": [
+      1038,
+      737,
+      1221,
+      864
+     ]
+    }
+   ]
+  },
+  {
+   "base": 1068,
+   "frames": [
+    {
+     "file": "v3f_e_weaver_r04_f00.png",
+     "box": [
+      65,
+      887,
+      161,
+      1048
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r04_f01.png",
+     "box": [
+      255,
+      886,
+      374,
+      1056
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r04_f02.png",
+     "box": [
+      473,
+      922,
+      578,
+      1065
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r04_f03.png",
+     "box": [
+      648,
+      910,
+      795,
+      1068
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r04_f04.png",
+     "box": [
+      851,
+      921,
+      1000,
+      1058
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r04_f05.png",
+     "box": [
+      1094,
+      924,
+      1214,
+      1039
+     ]
+    }
+   ]
+  },
+  {
+   "base": 1238,
+   "frames": [
+    {
+     "file": "v3f_e_weaver_r05_f00.png",
+     "box": [
+      56,
+      1093,
+      158,
+      1238
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r05_f01.png",
+     "box": [
+      204,
+      1102,
+      316,
+      1238
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r05_f02.png",
+     "box": [
+      365,
+      1102,
+      484,
+      1238
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r05_f03.png",
+     "box": [
+      533,
+      1094,
+      632,
+      1237
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r05_f04.png",
+     "box": [
+      672,
+      1102,
+      780,
+      1238
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r05_f05.png",
+     "box": [
+      822,
+      1101,
+      925,
+      1237
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r05_f06.png",
+     "box": [
+      963,
+      1098,
+      1065,
+      1238
+     ]
+    },
+    {
+     "file": "v3f_e_weaver_r05_f07.png",
+     "box": [
+      1104,
+      1093,
+      1208,
+      1237
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,92 @@
+{
+ "sheet": "v3f_i_spinbeams",
+ "key": "magenta",
+ "size": [
+  1776,
+  896
+ ],
+ "rows": [
+  {
+   "base": 412,
+   "frames": [
+    {
+     "file": "v3f_i_spinbeams_r00_f00.png",
+     "box": [
+      52,
+      39,
+      422,
+      408
+     ]
+    },
+    {
+     "file": "v3f_i_spinbeams_r00_f01.png",
+     "box": [
+      499,
+      35,
+      1161,
+      412
+     ]
+    },
+    {
+     "file": "v3f_i_spinbeams_r00_f02.png",
+     "box": [
+      1436,
+      110,
+      1630,
+      323
+     ]
+    }
+   ]
+  },
+  {
+   "base": 860,
+   "frames": [
+    {
+     "file": "v3f_i_spinbeams_r01_f00.png",
+     "box": [
+      22,
+      451,
+      415,
+      860
+     ]
+    },
+    {
+     "file": "v3f_i_spinbeams_r01_f01.png",
+     "box": [
+      436,
+      450,
+      830,
+      860
+     ]
+    },
+    {
+     "file": "v3f_i_spinbeams_r01_f02.png",
+     "box": [
+      853,
+      450,
+      1240,
+      860
+     ]
+    },
+    {
+     "file": "v3f_i_spinbeams_r01_f03.png",
+     "box": [
+      1253,
+      464,
+      1522,
+      732
+     ]
+    },
+    {
+     "file": "v3f_i_spinbeams_r01_f04.png",
+     "box": [
+      1550,
+      450,
+      1756,
+      860
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -226,6 +226,16 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 					root.add_child(item)
 				"e", "y", "h":
 					var enemy: Enemy
+					var side_kinds: Dictionary = data.get("enemy_kinds", {})
+					if side_kinds.has(c):
+						enemy = SideEnemy.new()
+						enemy.kind = String(side_kinds[c])
+						enemy.span = float(data.get("bee_span", 150))
+						enemy.game = game
+						enemy.position = pos + Vector2(32, TILE if c != "y" else 40.0)
+						root.add_child(enemy)
+						info.enemies += 1
+						continue
 					match ENEMIES[c]:
 						"shroom":
 							enemy = Shroom.new()

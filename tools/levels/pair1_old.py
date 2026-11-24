@@ -167,6 +167,7 @@ level = {
                   {"from": 76 * T, "art": ""}, {"from": 113 * T, "art": "v3_scene_roots_old"}, {"from": 128 * T, "art": ""}],
     "scenes": [["S1", 0], ["S2", 24], ["S3", 50], ["S4", 76], ["S5", 113], ["S6", 128]],
     "swipe_start": True,
+    "enemy_kinds": {"e": "imp", "y": "wisp"},
     "briefing": {
         "backdrop": "v3_scene_valley_old", "duration": 11.5, "zoom": [1.0, 1.12], "pan": [-0.03, 0.0],
         "actors": [{"who": "grandfather", "at": [0.30, 0.80], "scale": 2.4, "anim": "sleep"}],

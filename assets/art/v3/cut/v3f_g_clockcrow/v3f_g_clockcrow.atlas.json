@@ -1,0 +1,364 @@
+{
+ "sheet": "v3f_g_clockcrow",
+ "key": "white_fx",
+ "size": [
+  1680,
+  944
+ ],
+ "rows": [
+  {
+   "base": 134,
+   "frames": [
+    {
+     "file": "v3f_g_clockcrow_r00_f00.png",
+     "box": [
+      44,
+      18,
+      218,
+      133
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r00_f01.png",
+     "box": [
+      252,
+      14,
+      422,
+      133
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r00_f02.png",
+     "box": [
+      457,
+      17,
+      627,
+      134
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r00_f03.png",
+     "box": [
+      664,
+      26,
+      824,
+      133
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r00_f04.png",
+     "box": [
+      868,
+      26,
+      1031,
+      133
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r00_f05.png",
+     "box": [
+      1073,
+      31,
+      1244,
+      133
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r00_f06.png",
+     "box": [
+      1279,
+      31,
+      1443,
+      133
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r00_f07.png",
+     "box": [
+      1485,
+      31,
+      1654,
+      134
+     ]
+    }
+   ]
+  },
+  {
+   "base": 277,
+   "frames": [
+    {
+     "file": "v3f_g_clockcrow_r01_f00.png",
+     "box": [
+      52,
+      154,
+      249,
+      263
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r01_f01.png",
+     "box": [
+      305,
+      156,
+      504,
+      264
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r01_f02.png",
+     "box": [
+      567,
+      158,
+      772,
+      263
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r01_f03.png",
+     "box": [
+      832,
+      159,
+      1036,
+      263
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r01_f04.png",
+     "box": [
+      1072,
+      159,
+      1274,
+      264
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r01_f05.png",
+     "box": [
+      1400,
+      142,
+      1557,
+      277
+     ]
+    }
+   ]
+  },
+  {
+   "base": 395,
+   "frames": [
+    {
+     "file": "v3f_g_clockcrow_r02_f00.png",
+     "box": [
+      53,
+      283,
+      217,
+      394
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r02_f01.png",
+     "box": [
+      297,
+      285,
+      470,
+      395
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r02_f02.png",
+     "box": [
+      548,
+      283,
+      725,
+      395
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r02_f03.png",
+     "box": [
+      804,
+      285,
+      982,
+      394
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r02_f04.png",
+     "box": [
+      1061,
+      284,
+      1239,
+      394
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r02_f05.png",
+     "box": [
+      1318,
+      289,
+      1519,
+      394
+     ]
+    }
+   ]
+  },
+  {
+   "base": 528,
+   "frames": [
+    {
+     "file": "v3f_g_clockcrow_r03_f00.png",
+     "box": [
+      57,
+      408,
+      278,
+      528
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r03_f01.png",
+     "box": [
+      354,
+      425,
+      543,
+      527
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r03_f02.png",
+     "box": [
+      619,
+      433,
+      804,
+      528
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r03_f03.png",
+     "box": [
+      893,
+      424,
+      1068,
+      527
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r03_f04.png",
+     "box": [
+      1144,
+      411,
+      1291,
+      528
+     ]
+    }
+   ]
+  },
+  {
+   "base": 643,
+   "frames": [
+    {
+     "file": "v3f_g_clockcrow_r04_f00.png",
+     "box": [
+      46,
+      553,
+      299,
+      643
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r04_f01.png",
+     "box": [
+      347,
+      550,
+      575,
+      643
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r04_f02.png",
+     "box": [
+      622,
+      553,
+      852,
+      643
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r04_f03.png",
+     "box": [
+      903,
+      551,
+      1138,
+      643
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r04_f04.png",
+     "box": [
+      1186,
+      558,
+      1418,
+      642
+     ]
+    }
+   ]
+  },
+  {
+   "base": 925,
+   "frames": [
+    {
+     "file": "v3f_g_clockcrow_r05_f00.png",
+     "box": [
+      54,
+      664,
+      363,
+      923
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r05_f01.png",
+     "box": [
+      379,
+      661,
+      552,
+      923
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r05_f02.png",
+     "box": [
+      586,
+      658,
+      975,
+      924
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r05_f03.png",
+     "box": [
+      1004,
+      664,
+      1191,
+      924
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r05_f04.png",
+     "box": [
+      1226,
+      793,
+      1415,
+      924
+     ]
+    },
+    {
+     "file": "v3f_g_clockcrow_r05_f05.png",
+     "box": [
+      1457,
+      772,
+      1652,
+      925
+     ]
+    }
+   ]
+  }
+ ]
+}

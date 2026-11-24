@@ -248,6 +248,10 @@
   ]
  ],
  "swipe_start": true,
+ "enemy_kinds": {
+  "e": "imp",
+  "y": "wisp"
+ },
  "briefing": {
   "backdrop": "v3_scene_valley_new",
   "duration": 11.0,

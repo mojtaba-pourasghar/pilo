@@ -1,0 +1,395 @@
+{
+ "sheet": "v3f_i_markers",
+ "key": "white_fx",
+ "size": [
+  1776,
+  896
+ ],
+ "rows": [
+  {
+   "base": 225,
+   "frames": [
+    {
+     "file": "v3f_i_markers_r00_f00.png",
+     "box": [
+      51,
+      15,
+      156,
+      225
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r00_f01.png",
+     "box": [
+      225,
+      15,
+      328,
+      225
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r00_f02.png",
+     "box": [
+      357,
+      15,
+      457,
+      225
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r00_f03.png",
+     "box": [
+      480,
+      15,
+      581,
+      224
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r00_f04.png",
+     "box": [
+      609,
+      15,
+      712,
+      225
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r00_f05.png",
+     "box": [
+      982,
+      15,
+      1141,
+      224
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r00_f06.png",
+     "box": [
+      1162,
+      15,
+      1319,
+      225
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r00_f07.png",
+     "box": [
+      1340,
+      15,
+      1503,
+      224
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r00_f08.png",
+     "box": [
+      1524,
+      15,
+      1689,
+      225
+     ]
+    }
+   ]
+  },
+  {
+   "base": 423,
+   "frames": [
+    {
+     "file": "v3f_i_markers_r01_f00.png",
+     "box": [
+      36,
+      242,
+      179,
+      422
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r01_f01.png",
+     "box": [
+      215,
+      244,
+      348,
+      423
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r01_f02.png",
+     "box": [
+      354,
+      243,
+      748,
+      423
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r01_f03.png",
+     "box": [
+      758,
+      243,
+      892,
+      423
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r01_f04.png",
+     "box": [
+      940,
+      243,
+      1342,
+      423
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r01_f05.png",
+     "box": [
+      1345,
+      243,
+      1621,
+      423
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r01_f06.png",
+     "box": [
+      1625,
+      242,
+      1762,
+      423
+     ]
+    }
+   ]
+  },
+  {
+   "base": 579,
+   "frames": [
+    {
+     "file": "v3f_i_markers_r02_f00.png",
+     "box": [
+      117,
+      440,
+      231,
+      579
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r02_f01.png",
+     "box": [
+      413,
+      440,
+      506,
+      579
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r02_f02.png",
+     "box": [
+      663,
+      440,
+      760,
+      579
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r02_f03.png",
+     "box": [
+      948,
+      440,
+      1048,
+      579
+     ]
+    }
+   ]
+  },
+  {
+   "base": 723,
+   "frames": [
+    {
+     "file": "v3f_i_markers_r03_f00.png",
+     "box": [
+      196,
+      595,
+      324,
+      723
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r03_f01.png",
+     "box": [
+      399,
+      594,
+      528,
+      723
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r03_f02.png",
+     "box": [
+      607,
+      595,
+      736,
+      723
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r03_f03.png",
+     "box": [
+      822,
+      594,
+      953,
+      723
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r03_f04.png",
+     "box": [
+      1043,
+      594,
+      1171,
+      723
+     ]
+    }
+   ]
+  },
+  {
+   "base": 867,
+   "frames": [
+    {
+     "file": "v3f_i_markers_r04_f00.png",
+     "box": [
+      15,
+      759,
+      98,
+      854
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r04_f01.png",
+     "box": [
+      111,
+      760,
+      179,
+      853
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r04_f02.png",
+     "box": [
+      195,
+      760,
+      264,
+      853
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r04_f03.png",
+     "box": [
+      281,
+      760,
+      352,
+      853
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r04_f04.png",
+     "box": [
+      368,
+      760,
+      437,
+      853
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r04_f05.png",
+     "box": [
+      454,
+      760,
+      532,
+      853
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r04_f06.png",
+     "box": [
+      548,
+      760,
+      615,
+      853
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r04_f07.png",
+     "box": [
+      636,
+      760,
+      711,
+      853
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r04_f08.png",
+     "box": [
+      761,
+      731,
+      869,
+      867
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r04_f09.png",
+     "box": [
+      920,
+      751,
+      1012,
+      859
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r04_f10.png",
+     "box": [
+      1045,
+      753,
+      1139,
+      859
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r04_f11.png",
+     "box": [
+      1165,
+      750,
+      1270,
+      859
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r04_f12.png",
+     "box": [
+      1289,
+      748,
+      1405,
+      859
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r04_f13.png",
+     "box": [
+      1478,
+      740,
+      1597,
+      859
+     ]
+    },
+    {
+     "file": "v3f_i_markers_r04_f14.png",
+     "box": [
+      1640,
+      731,
+      1752,
+      860
+     ]
+    }
+   ]
+  }
+ ]
+}
