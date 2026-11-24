@@ -1142,7 +1142,7 @@ func _test_pair1_scenery() -> void:
 		await _wait(0.4)
 		_check(not is_equal_approx(bg._layers[0].node.position.x, before), "%s/%s: the far layer moves with the camera" % combo)
 		if combo[1] == "none":
-			_check(bg._layers.size() == 1, "the bare plain keeps only the far hills")
+			_check(bg._layers.size() == 2, "the bare plain keeps only the far scenery (far + village)")
 		_stop(game)
 
 

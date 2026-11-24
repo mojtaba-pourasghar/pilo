@@ -31,6 +31,14 @@ const ERAS := {
 		"tint": Color(0.95, 1, 1),
 	},
 }
+const LAYERS_V3 := "res://assets/art/v3/layers/%s_%s.png"
+const SKY_V3 := {"old": "res://assets/art/v3/v3_bg_old_sky.png", "new": "res://assets/art/v3/v3_bg_new_sky.png"}
+## v3 layers (docs/36 §8): name -> [x factor, y factor, height as a fraction of the screen, where the layer's
+## bottom edge rests as a fraction of the screen height]. Far = slow, near = fast; the hero's ground is at ~0.74.
+const V3 := {
+	"old": [["far", 0.06, 0.10, 0.34, 0.60], ["village", 0.14, 0.20, 0.34, 0.68], ["trees", 0.30, 0.38, 0.58, 0.92, 1.6], ["near", 0.52, 0.60, 0.34, 0.96]],
+	"new": [["far", 0.06, 0.10, 0.50, 0.66], ["village", 0.14, 0.20, 0.50, 0.74], ["trees", 0.30, 0.38, 0.58, 0.92, 1.6]],
+}
 const BARE := "g3_bg_new_bare_v1.png"
 const CORNERS := ["r00_c00", "r00_c01", "r02_c00", "r02_c01"]      ## top-left, top-right, bottom-left, bottom-right
 
@@ -40,6 +48,7 @@ var era := "new"
 var variant := "full"           ## "full" | "partial" | "none" (deeds of the old level)
 
 var _view := Vector2(1280, 720)
+var _v3 := false
 var _sky: TextureRect
 var _rays: Control
 var _layers: Array = []          ## {node, fx, fy, period}
@@ -56,12 +65,21 @@ func _ready() -> void:
 	root.set_anchors_preset(Control.PRESET_FULL_RECT)
 	root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(root)
-	_build_sky(root, cfg)
-	var mids: Array = cfg.mids
-	if era == "new" and variant == "none":
-		mids = mids.slice(0, 1)       # the other strips carry the lush tree and bridge: only the far hills stay
-	for spec in mids:
-		_add_mid(spec, cfg.tint)
+	if ResourceLoader.exists(SKY_V3.get(era, "")) and ResourceLoader.exists(LAYERS_V3 % [era, "far"]):
+		_v3 = true
+		_build_sky(root, cfg)
+		var specs: Array = V3.get(era, V3.old)
+		if era == "new" and variant == "none":
+			specs = specs.slice(0, 2)       # no grown tree: only the far scenery
+		for spec in specs:
+			_add_v3_layer(spec)
+	else:
+		_build_sky(root, cfg)
+		var mids: Array = cfg.mids
+		if era == "new" and variant == "none":
+			mids = mids.slice(0, 1)       # the other strips carry the lush tree and bridge: only the far hills stay
+		for spec in mids:
+			_add_mid(spec, cfg.tint)
 	_build_front()
 	_add_particles(root)
 
@@ -74,10 +92,13 @@ func _build_sky(root: Control, cfg: Dictionary) -> void:
 	_sky = TextureRect.new()
 	var path := SCENE + (BARE if (era == "new" and variant == "none") else String(cfg.scene))
 	var tex := _tex(path)
+	if ResourceLoader.exists(SKY_V3.get(era, "")):
+		tex = _tex(SKY_V3[era])
+		path = SKY_V3[era]
 	if tex:
 		var atlas := AtlasTexture.new()
 		atlas.atlas = tex
-		var keep := 1.0 if path.ends_with(BARE) else 0.62      # the top of the scene is sky and far land
+		var keep := 1.0 if (path.ends_with(BARE) or path == SKY_V3.get(era, "")) else 0.62      # the top of the scene is sky and far land
 		atlas.region = Rect2(0, 0, tex.get_width(), tex.get_height() * keep)
 		_sky.texture = atlas
 	_sky.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -148,6 +169,39 @@ func _add_mid(spec: Array, tint: Color) -> void:
 		s.material = _fade()
 		node.add_child(s)
 	_layers.append({"node": node, "fx": float(spec[1]), "fy": float(spec[2]), "period": w * 2.0})
+
+
+## One v3 layer picture, repeated sideways (every other copy mirrored so seams never show).
+func _add_v3_layer(spec: Array) -> void:
+	var tex := _tex(LAYERS_V3 % [era, String(spec[0])])
+	if tex == null:
+		return
+	var node := Node2D.new()
+	add_child(node)
+	var h := _view.y * float(spec[3])
+	var k := h / tex.get_height()
+	var w := tex.get_width() * k
+	var gap := float(spec[5]) if spec.size() > 5 else 0.0
+	if gap > 0.0:
+		# set-piece layer: the picture appears alone with open scenery between the copies (never mirrored)
+		var step := w * (1.0 + gap)
+		for i in 5:
+			var sp := Sprite2D.new()
+			sp.texture = tex
+			sp.centered = false
+			sp.scale = Vector2(k, k)
+			sp.position = Vector2(i * step, -h)
+			node.add_child(sp)
+		_layers.append({"node": node, "fx": float(spec[1]), "fy": float(spec[2]), "period": step * 3.0, "rest": float(spec[4])})
+		return
+	for i in 5:
+		var sp := Sprite2D.new()
+		sp.texture = tex
+		sp.centered = false
+		sp.scale = Vector2(-k if i % 2 == 1 else k, k)
+		sp.position = Vector2(i * w + (w if i % 2 == 1 else 0.0), -h)
+		node.add_child(sp)
+	_layers.append({"node": node, "fx": float(spec[1]), "fy": float(spec[2]), "period": w * 2.0, "rest": float(spec[4])})
 
 
 ## A set piece (tree, bridge, shrine...) at a world x, standing `bottom` px above the screen bottom.
@@ -271,7 +325,8 @@ func _process(delta: float) -> void:
 		var node: Node2D = entry.node
 		var period: float = entry.period
 		node.position.x = -fposmod(left * entry.fx, period) if period > 0.0 else -left * entry.fx
-		node.position.y = _view.y - rise * entry.fy
+		var rest := _view.y * float(entry.get("rest", 1.0))
+		node.position.y = rest - rise * entry.fy
 	_place_corners()
 
 
