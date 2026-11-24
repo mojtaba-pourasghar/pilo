@@ -1075,6 +1075,8 @@ func _test_pair1_old_level() -> void:
 	_check(game.player.hero_name == "grandfather" and (game.player.rig is SideRig or game.player.rig is SkeletonRig), "the hero is the side-view grandfather")
 	_check(game._background is Pair1Parallax and game._background.era == "old", "the old pair-1 scenery is used")
 	_check(get_tree().get_nodes_in_group("pair_site").size() == 4, "four deed sites are placed")
+	_check(get_tree().get_nodes_in_group("route_part").size() >= 8, "the route mechanics of the scenes are placed")
+	_check(data.scenes.size() == 6, "the level has six scenes")
 	_check(Weapons.current() == "slingshot", "the grandfather shoots the slingshot")
 	_check(not game.pilo.visible, "the old fox is not in the pair-1 level")
 	Engine.time_scale = 3.0

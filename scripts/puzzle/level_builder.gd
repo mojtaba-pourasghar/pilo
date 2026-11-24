@@ -330,7 +330,8 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 		info.chaser.stop_x = info.exit.position.x - 96.0
 	root.add_child(mechanisms)
 	info.mechanisms = mechanisms
-	_build_secret_rooms(wet, w, h, root, palette)    # water (with what floats in it) is never a hidden room
+	if not data.has("terrain"):                      # curved-ground levels place their hidden rooms by hand
+		_build_secret_rooms(wet, w, h, root, palette)    # water (with what floats in it) is never a hidden room
 	_build_pit_shade(grid, w, h, root)
 	TimeParts.build(data, root, game, palette)
 	if data.has("terrain"):
