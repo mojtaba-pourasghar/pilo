@@ -341,6 +341,7 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 		root.add_child(terrain)
 		info["terrain"] = terrain
 	info["sites"] = PairSites.build_all(data.get("objects", []), root, game)
+	info["route_parts"] = RouteParts.build_all(data.get("objects", []), root, game)
 	var layers := sort_time_layers(root)
 	info.layer_past = layers[0]
 	info.layer_present = layers[1]

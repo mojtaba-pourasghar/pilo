@@ -22,6 +22,7 @@ var draw_amount := 0.0
 var squash := Vector2.ONE
 var show_shadow := true
 var play_speed := 1.0
+var hang := ""                 ## "rope" | "vine": hanging on something
 var lock_anim := ""            ## preview/cutscenes: force one animation
 
 var _sprite: Sprite2D
@@ -153,6 +154,10 @@ func _pick_animation() -> void:
 			_set_anim(lock_anim)
 		return
 	var want := "idle"
+	if hang != "" and anims.has(hang):
+		if hang != _anim:
+			_set_anim(hang)
+		return
 	var stride := clampf(absf(speed) / maxf(run_speed, 1.0), 0.0, 1.0)
 	if _once != "" and _once_left > 0.0:
 		want = _once

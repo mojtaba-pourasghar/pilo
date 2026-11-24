@@ -51,6 +51,9 @@ const UPDRAFT_MAX := -560.0
 var controls_enabled := true
 ## What the hero carries ("" | "egg"): a carried egg slows him to x0.7 and rules out dash and long jumps (docs/33).
 var carrying := ""
+## Hanging on something (RouteParts): "" | "rope" | "vine". The part moves the hero; hang_node is the vine.
+var hanging := ""
+var hang_node: Node2D
 ## The ground material under the hero (SurfaceFX): grass | soil | sand | snow | stone | wood | water. Set by the level.
 var surface := "grass"
 var rise_vy_before_land := 0.0
@@ -145,6 +148,17 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if hanging != "":
+		# a rope or a vine holds the hero: the part moves him; we only keep the animation and fx going
+		if "hang" in rig:
+			rig.set("hang", hanging)
+		rig.state = "idle"
+		rig.speed = 0.0
+		_hurt_lock -= delta
+		invulnerable = maxf(0.0, invulnerable - delta)
+		return
+	if "hang" in rig:
+		rig.set("hang", "")
 	var dir := 0.0
 	var can_move := controls_enabled and _hurt_lock <= 0.0
 	if can_move:
@@ -194,6 +208,8 @@ func _physics_process(delta: float) -> void:
 		_horizontal(dir, delta, false)
 	else:
 		velocity.y = minf(velocity.y + GRAVITY * delta, MAX_FALL)
+		if wall_jump and is_on_wall_only() and velocity.y > 90.0:
+			velocity.y = 90.0                      # slide down a wall slowly (wall-jump heroes)
 		gliding = can_glide and can_move and not on_floor and velocity.y > 0.0 and glide_left > 0.0 \
 			and Input.is_action_pressed("jump") and not _jump_held
 		if gliding:
@@ -475,6 +491,8 @@ func stomp_bounce() -> void:
 
 ## A hit from an enemy or hazard at x = `source_x`. Returns false while invulnerable.
 func take_hit(source_x: float) -> bool:
+	hanging = ""
+	hang_node = null
 	if invulnerable > 0.0 or hearts <= 0:
 		return false
 	if shield > 0:
@@ -523,7 +541,7 @@ func _air_jump() -> void:
 ## The companion picked in the village and the tools in the bag change how the hero moves.
 func apply_loadout() -> void:
 	var c := Loadout.companion()
-	wall_jump = c == "squirrel"
+	wall_jump = c == "squirrel" or hero_name == "arsam"
 	swim_fast = c == "turtle"
 	sand_free = c == "mole"
 	ice_grip = c == "penguin"

@@ -18,6 +18,7 @@ func _ready() -> void:
 	await _test_pair1_scenery()
 	await _test_fx_budget()
 	await _test_ambient()
+	await _test_route_parts()
 	_test_deeds()
 	await _test_pair_sites()
 	await _test_pair1_old_level()
@@ -1100,6 +1101,93 @@ func _test_pair1_old_level() -> void:
 	LevelManager.override_level = {}
 	await _stop(game)
 	DeedsStore.clear()
+
+
+## Route mechanics (docs/38 §4): rope swing, vine, ramp, crumbling bridge, falling rock, steam vent.
+func _test_route_parts() -> void:
+	var rows := ["....................", "....................", "....................", "....................", "....................", "....................", "P...................", "####################"]
+	var game := await _start(rows, {"objects": [
+		{"type": "rope_swing", "x": 6, "y": 1, "length": 3},
+		{"type": "vine", "x": 10, "y": 1, "length": 4},
+		{"type": "ramp", "x": 14, "y": 7},
+		{"type": "crumble", "x": 16, "y": 7, "count": 3},
+		{"type": "falling_rock", "x": 3, "y": 1, "drop": 6, "reach": 200},
+		{"type": "steam_vent", "x": 18, "y": 7, "period": 1.0, "height": 3}]})
+	var parts: Array = get_tree().get_nodes_in_group("route_part")
+	_check(parts.size() == 6, "all six route parts are built (%d)" % parts.size())
+	var p: Node = game.player
+	var rope: Node = null
+	var vine: Node = null
+	var ramp: Node = null
+	var crumble: Node = null
+	var rock: Node = null
+	var vent: Node = null
+	for x in parts:
+		match x.get_script().get_global_name():
+			"RouteParts.RopeSwing": rope = x
+			_: pass
+		var gn := String(x.data.get("type", ""))
+		if gn == "rope_swing": rope = x
+		elif gn == "vine": vine = x
+		elif gn == "ramp": ramp = x
+		elif gn == "crumble": crumble = x
+		elif gn == "falling_rock": rock = x
+		elif gn == "steam_vent": vent = x
+	# rope: grab in the air, the hero follows the plank, jump lets go with speed
+	p.global_position = rope.to_global(rope.handle()) + Vector2(0, 52)
+	p.velocity = Vector2(0, 100)
+	await _wait(0.1)
+	_check(p.hanging == "rope", "the hero grabs the rope swing in the air")
+	var a0: float = rope.angle
+	await _wait(0.6)
+	_check(not is_equal_approx(rope.angle, a0) and p.global_position.distance_to(rope.to_global(rope.handle()) + Vector2(0, 52)) < 4.0, "the swing moves and carries the hero")
+	Input.action_press("jump")
+	await _wait(0.05)
+	Input.action_release("jump")
+	await _wait(0.1)
+	_check(p.hanging == "" and p.velocity.y < 0.0, "jump lets go of the rope with an upward launch")
+	# vine
+	p.global_position = vine.global_position + Vector2(0, 120)
+	p.velocity = Vector2(0, 160)
+	await _wait(0.15)
+	_check(p.hanging == "vine", "the hero catches the vine")
+	var y0: float = p.global_position.y
+	Input.action_press("jump")
+	await _wait(0.4)
+	Input.action_release("jump")
+	_check(p.global_position.y < y0 - 40.0, "holding up climbs the vine")
+	p.hanging = ""
+	# ramp
+	p.global_position = ramp.global_position + Vector2(-90, -40)
+	p.velocity = Vector2(480, 0)
+	await _wait(0.5)
+	_check(p.velocity.y < -200.0 or p.global_position.y < ramp.global_position.y - 70.0, "running over a ramp launches the hero")
+	# crumble: a foot on a plank starts it falling
+	var planks: Array = crumble._planks
+	p.global_position = planks[1][0].global_position + Vector2(0, -42)
+	p.velocity = Vector2.ZERO
+	await _wait(0.2)
+	_check(int(planks[1][2]) >= 1, "a plank starts to crack under the hero's foot")
+	await _wait(0.8)
+	_check(int(planks[1][2]) == 2 or planks[1][0].position.y > planks[1][1] + 10.0, "the plank falls")
+	# falling rock: the shadow shows, then the rock drops (it may already have fallen at the start: reset it)
+	rock._state = 0
+	rock._home = Vector2.ZERO
+	rock._hit = false
+	p.global_position = rock.global_position + Vector2(40, 200)
+	await _wait(0.2)
+	_check(rock._state == 1, "the rock shows its shadow first")
+	await _wait(1.0)
+	_check(rock._state >= 2, "then the rock drops")
+	# steam vent lifts
+	p.global_position = vent.global_position + Vector2(0, -30)
+	p.velocity = Vector2.ZERO
+	var best := 0.0
+	for i in 90:
+		await get_tree().physics_frame
+		best = maxf(best, -p.velocity.y)
+	_check(best > 200.0, "the steam column lifts the hero (%.0f)" % best)
+	_stop(game)
 
 
 ## Material feedback and living scenery (docs/40 §8): every surface has its effects, rain makes the ground
