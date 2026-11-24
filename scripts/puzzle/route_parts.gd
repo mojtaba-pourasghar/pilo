@@ -41,6 +41,20 @@ static func _make(kind: String) -> Part:
 			return FallingRock.new()
 		"steam_vent":
 			return SteamVent.new()
+		"spike_pit":
+			return SpikePit.new()
+		"tar":
+			return Tar.new()
+		"snapper":
+			return Snapper.new()
+		"door_trap":
+			return DoorTrap.new()
+		"net":
+			return NetTrap.new()
+		"quicksand":
+			return QuickSand.new()
+		"boulder_chase":
+			return BoulderChase.new()
 	return null
 
 
@@ -405,3 +419,297 @@ class SteamVent extends Part:
 		elif _on:
 			var h := height * TILE * smoothstep(0.55, 0.65, phase)
 			draw_rect(Rect2(-30, -h, 60, h), Color(1, 1, 1, 0.18))
+
+
+# ---- "you get stuck" traps (docs/40 section 9.3). None is ever required: each one sits beside a plain route. ----
+
+## The common test: is the hero inside this part's box? (box = size in px, centred horizontally on the part,
+## standing on its y)
+class Zone extends Part:
+	var box := Vector2(128, 48)
+
+	func inside(p: Node2D) -> bool:
+		var local := to_local(p.global_position + Vector2(0, 30))
+		return absf(local.x) < box.x * 0.5 and local.y > -box.y and local.y < 24.0
+
+
+## Thorny roots in a pit: a hit and a push out, with a short grace so it never chains.
+class SpikePit extends Zone:
+	var _cool := 0.0
+
+	func _build() -> void:
+		box = Vector2(float(data.get("width", 2)) * TILE, 44)
+
+	func _physics_process(delta: float) -> void:
+		_cool = maxf(0.0, _cool - delta)
+		var p := player()
+		if p != null and _cool <= 0.0 and inside(p) and p.invulnerable <= 0.0:
+			_cool = 1.0
+			p.take_hit(global_position.x - signf(p.velocity.x if absf(p.velocity.x) > 10.0 else 1.0) * 80.0)
+			p.velocity.y = -640.0
+		queue_redraw()
+
+	func _draw() -> void:
+		var up := 10.0 + 8.0 * sin(Time.get_ticks_msec() * 0.004 + position.x)
+		var n := int(box.x / 26.0)
+		for i in n:
+			var x := -box.x * 0.5 + 13.0 + i * 26.0
+			var pts := PackedVector2Array([Vector2(x - 11, 0), Vector2(x, -22 - up), Vector2(x + 11, 0)])
+			draw_colored_polygon(pts, Color("5a3a2a"))
+			draw_polyline(pts + PackedVector2Array([pts[0]]), Color("2a1f3d"), 2.5)
+
+
+## Sticky tar: speed x0.4 and a weak jump while inside; jumping three times frees a hero from it.
+class Tar extends Zone:
+	var _taps := 0
+
+	func _build() -> void:
+		box = Vector2(float(data.get("width", 3)) * TILE, 26)
+
+	func _physics_process(_delta: float) -> void:
+		var p := player()
+		if p == null:
+			return
+		if inside(p) and p.is_on_floor():
+			p.tar = 0.4
+			if Input.is_action_just_pressed("jump"):
+				_taps += 1
+				if _taps >= 3:
+					_taps = 0
+					p.velocity.y = -760.0
+					p.tar = 1.0
+		else:
+			if p.tar < 1.0:
+				p.tar = 1.0
+			_taps = 0
+		queue_redraw()
+
+	func _draw() -> void:
+		var r := Rect2(-box.x * 0.5, -10, box.x, 14)
+		draw_rect(r, Color("2a1f3d"))
+		draw_rect(Rect2(r.position.x + 3, r.position.y + 2, r.size.x - 6, 8), Color("463a52"))
+		for i in 4:
+			var bx := -box.x * 0.5 + 24.0 + i * (box.x - 48.0) / 3.0
+			var t := fmod(Time.get_ticks_msec() * 0.0015 + i * 0.37, 1.0)
+			draw_circle(Vector2(bx, -8 - t * 8), 3.0 * (1.0 - t), Color("6b5a7a"))
+
+
+## A snapping plant: the mouth opens and shuts on a rhythm; it bites only while it closes.
+class Snapper extends Zone:
+	var _t := 0.0
+	var _cool := 0.0
+
+	func _build() -> void:
+		box = Vector2(96, 70)
+		_t = randf() * 2.0
+
+	func _physics_process(delta: float) -> void:
+		_t += delta
+		_cool = maxf(0.0, _cool - delta)
+		var phase := fmod(_t, 2.0) / 2.0
+		var p := player()
+		if p != null and phase > 0.80 and phase < 0.92 and _cool <= 0.0 and inside(p) and p.invulnerable <= 0.0:
+			_cool = 1.2
+			p.take_hit(global_position.x)
+		queue_redraw()
+
+	func _draw() -> void:
+		var phase := fmod(_t, 2.0) / 2.0
+		var open := 1.0 - smoothstep(0.80, 0.9, phase) if phase > 0.5 else smoothstep(0.0, 0.5, phase)
+		draw_rect(Rect2(-6, -30, 12, 30), Color("3f8f3e"))
+		for sgn in [-1.0, 1.0]:
+			var pts := PackedVector2Array([Vector2(0, -34), Vector2(sgn * 46, -34 - 40 * open), Vector2(sgn * 52, -34 - 6 * open), Vector2(sgn * 14, -22)])
+			draw_colored_polygon(pts, Color("d0453a"))
+			draw_polyline(pts + PackedVector2Array([pts[0]]), Color("2a1f3d"), 3.0)
+			for k in 3:
+				var tx: float = sgn * (14.0 + k * 12.0)
+				draw_line(Vector2(tx, -30 - 8 * open), Vector2(tx + sgn * 3, -24 - 6 * open), Color("f6efe0"), 3.0)
+
+
+## A stone door that drops behind the hero when he steps on the trigger; a pressure plate inside opens it again.
+class DoorTrap extends Zone:
+	var height := 3.0
+	var _door: StaticBody2D
+	var _closed := false
+	var _plate_x := 0.0
+
+	func _build() -> void:
+		height = float(data.get("height", 3))
+		box = Vector2(TILE * 0.5, TILE * height)
+		_plate_x = float(data.get("plate", 6)) * TILE
+		_door = StaticBody2D.new()
+		_door.collision_layer = 1
+		var shape := CollisionShape2D.new()
+		var rect := RectangleShape2D.new()
+		rect.size = Vector2(TILE * 0.5, TILE * height)
+		shape.shape = rect
+		_door.add_child(shape)
+		_door.position = Vector2(0, -TILE * height * 0.5 - TILE * height)    # starts raised, out of the way
+		add_child(_door)
+		shape.disabled = true
+
+	func _physics_process(delta: float) -> void:
+		var p := player()
+		if p == null:
+			return
+		var raised_y := -TILE * height * 0.5 - TILE * height
+		var down_y := -TILE * height * 0.5
+		var shape: CollisionShape2D = _door.get_child(0)
+		if not _closed:
+			# the trigger is a spot just in front of the door's column
+			if absf(p.global_position.x - (global_position.x + TILE * 1.2)) < 28.0 and p.is_on_floor():
+				_closed = true
+				shape.set_deferred("disabled", false)
+				AudioManager.play_sfx("creak", 0.8, -2.0)
+			_door.position.y = move_toward(_door.position.y, raised_y, 900.0 * delta)
+		else:
+			var plate := to_global(Vector2(_plate_x, 0))
+			if absf(p.global_position.x - plate.x) < 40.0 and p.is_on_floor():
+				_closed = false
+				shape.set_deferred("disabled", true)
+				SpriteFX.play(get_parent(), "stone_chips", global_position + Vector2(0, -20), 0.8)
+			_door.position.y = move_toward(_door.position.y, down_y, 900.0 * delta)
+		queue_redraw()
+
+	func _draw() -> void:
+		var h := TILE * height
+		draw_rect(Rect2(-16, _door.position.y - h * 0.5, 32, h), Color("2a1f3d"))
+		draw_rect(Rect2(-13, _door.position.y - h * 0.5 + 3, 26, h - 6), Color("8a8f9a"))
+		var plate := Rect2(_plate_x - 24, -6, 48, 8)
+		draw_rect(plate, Color("2a1f3d"))
+		draw_rect(Rect2(plate.position.x + 3, plate.position.y + 2, plate.size.x - 6, 4), Color("d9b44a") if _closed else Color("6b6f78"))
+
+
+## A net of sticky violet thread: the hero hangs in it and must press jump three times to tear free.
+class NetTrap extends Zone:
+	var _stuck := false
+	var _taps := 0
+	var _torn := 0.0
+
+	func _build() -> void:
+		box = Vector2(float(data.get("width", 2)) * TILE, float(data.get("height", 3)) * TILE)
+
+	func inside(p: Node2D) -> bool:
+		var local := to_local(p.global_position)
+		return absf(local.x) < box.x * 0.5 and local.y > -box.y and local.y < 20.0
+
+	func _physics_process(delta: float) -> void:
+		var p := player()
+		_torn = maxf(0.0, _torn - delta)
+		if p == null:
+			return
+		if not _stuck and _torn <= 0.0 and inside(p):
+			_stuck = true
+			_taps = 0
+			p.velocity = Vector2.ZERO
+		if _stuck:
+			p.velocity = Vector2(0, minf(p.velocity.y, 20.0))
+			if Input.is_action_just_pressed("jump") or Input.is_action_just_pressed("fire"):
+				_taps += 1
+				SpriteFX.play(get_parent(), "brass_spark", p.global_position, 0.5)
+				if _taps >= 3:
+					_stuck = false
+					_torn = 5.0
+					p.velocity = Vector2(p.facing * 240.0, -420.0)
+		queue_redraw()
+
+	func _draw() -> void:
+		var a := 0.15 if _torn > 0.0 else 0.85
+		var w := box.x * 0.5
+		var h := box.y
+		for i in 5:
+			var y := -h + i * h / 4.0
+			draw_line(Vector2(-w, y), Vector2(w, y), Color(0.55, 0.35, 0.8, a), 3.0)
+		for i in 5:
+			var x := -w + i * w / 2.0
+			draw_line(Vector2(x, -h), Vector2(x, 0), Color(0.55, 0.35, 0.8, a), 3.0)
+
+
+## Quicksand: the hero sinks slowly (speed x0.45, jump x0.78); jumping repeatedly climbs out.
+class QuickSand extends Zone:
+	var _in := false
+
+	func _build() -> void:
+		box = Vector2(float(data.get("width", 3)) * TILE, 30)
+
+	func _physics_process(_delta: float) -> void:
+		var p := player()
+		if p == null:
+			return
+		var now := inside(p) and p.is_on_floor()
+		if now and not _in:
+			_in = true
+			p._sand += 1
+		elif not now and _in:
+			_in = false
+			p._sand = maxi(0, p._sand - 1)
+		queue_redraw()
+
+	func _draw() -> void:
+		var r := Rect2(-box.x * 0.5, -6, box.x, 12)
+		draw_rect(r, Color("c9a35a"))
+		draw_rect(Rect2(r.position.x, r.position.y, r.size.x, 4), Color("e8c98a"))
+		var t := Time.get_ticks_msec() * 0.002
+		for i in 3:
+			draw_arc(Vector2(-box.x * 0.3 + i * box.x * 0.3, -4), 7.0 + sin(t + i) * 2.0, 0, TAU, 14, Color("8a6a30"), 2.0)
+
+
+## A boulder that chases: when the hero crosses the trigger it shows a rumble warning for 0.8 s, then rolls after him
+## at a speed a running hero can beat; a jump over it or a shelter notch avoids it.
+class BoulderChase extends Part:
+	var length := 20.0
+	var _state := 0
+	var _t := 0.0
+	var _x := 0.0
+	var _rot := 0.0
+	var _hit := false
+
+	func _build() -> void:
+		length = float(data.get("length", 20))
+
+	func _ground_y(wx: float) -> float:
+		var terrain: Node = null
+		if game != null and game.get("info") is Dictionary:
+			terrain = game.info.get("terrain", null)
+		if terrain != null and terrain.has_method("height_at"):
+			var h: float = terrain.height_at(wx)
+			if h != INF:
+				return h
+		return global_position.y
+
+	func _physics_process(delta: float) -> void:
+		var p := player()
+		if p == null:
+			return
+		match _state:
+			0:
+				if p.global_position.x > global_position.x:
+					_state = 1
+					_t = 0.8
+					_x = global_position.x - TILE * 6.0
+			1:
+				_t -= delta
+				if _t <= 0.0:
+					_state = 2
+			2:
+				_x += 330.0 * delta
+				_rot += 330.0 * delta / 40.0
+				if not _hit and p.global_position.distance_to(Vector2(_x, _ground_y(_x) - 40.0)) < 54.0 and p.invulnerable <= 0.0:
+					_hit = true
+					p.take_hit(_x)
+					p.velocity = Vector2(300, -520)
+				if _x > global_position.x + length * TILE:
+					_state = 3
+		queue_redraw()
+
+	func _draw() -> void:
+		if _state < 1 or _state == 3:
+			return
+		var c := to_local(Vector2(_x, _ground_y(_x) - 40.0))
+		draw_circle(c, 44.0, Color("2a1f3d"))
+		draw_circle(c, 40.0, Color("8d8f9a"))
+		for i in 4:
+			var a := _rot + i * TAU / 4.0
+			draw_line(c, c + Vector2(cos(a), sin(a)) * 34.0, Color("6b6f78"), 3.0)
+		if _state == 1:
+			draw_line(to_local(Vector2(_x - 120.0, _ground_y(_x) - 6.0)), to_local(Vector2(_x - 40.0, _ground_y(_x) - 6.0)), Color(1, 0.6, 0.2, 0.7), 6.0)

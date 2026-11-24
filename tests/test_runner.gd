@@ -19,6 +19,7 @@ func _ready() -> void:
 	await _test_fx_budget()
 	await _test_ambient()
 	await _test_route_parts()
+	await _test_traps()
 	_test_deeds()
 	await _test_pair_sites()
 	await _test_pair1_old_level()
@@ -1199,11 +1200,106 @@ func _test_route_parts() -> void:
 	# steam vent lifts
 	p.global_position = vent.global_position + Vector2(0, -30)
 	p.velocity = Vector2.ZERO
+	vent._t = 0.56 * vent.period            # start of the blow: the test must not depend on the random phase
 	var best := 0.0
 	for i in 90:
 		await get_tree().physics_frame
 		best = maxf(best, -p.velocity.y)
 	_check(best > 200.0, "the steam column lifts the hero (%.0f)" % best)
+	_stop(game)
+
+
+## "You get stuck" traps (docs/40 section 9.3): each one catches the hero in its own way and lets him out.
+func _test_traps() -> void:
+	var rows := ["....................", "....................", "....................", "....................", "....................", "....................", "P...................", "####################"]
+	var game := await _start(rows, {"objects": [
+		{"type": "spike_pit", "x": 3, "y": 7, "width": 2},
+		{"type": "tar", "x": 6, "y": 7, "width": 3},
+		{"type": "snapper", "x": 9, "y": 7},
+		{"type": "net", "x": 11, "y": 7, "width": 2, "height": 3},
+		{"type": "quicksand", "x": 14, "y": 7, "width": 3},
+		{"type": "door_trap", "x": 17, "y": 7, "height": 3, "plate": 2},
+		{"type": "boulder_chase", "x": 19, "y": 7, "length": 6}]})
+	var p: Node = game.player
+	var by := {}
+	for x in get_tree().get_nodes_in_group("route_part"):
+		by[String(x.data.get("type", ""))] = x
+	_check(by.size() == 7, "all seven traps are built (%d)" % by.size())
+	# spike pit: a hit and a push out
+	var hearts0: int = p.hearts
+	p.global_position = by.spike_pit.global_position + Vector2(0, -34)
+	p.velocity = Vector2.ZERO
+	p.invulnerable = 0.0
+	await _wait(0.2)
+	_check(p.hearts < hearts0 and p.velocity.y < 0.0 or p.hearts < hearts0, "the spike pit costs a heart and throws the hero out")
+	p.invulnerable = 0.0
+	p.hearts = hearts0
+	# tar: slows; three jumps free him
+	p.global_position = by.tar.global_position + Vector2(0, -34)
+	p.velocity = Vector2.ZERO
+	await _wait(0.3)
+	_check(is_equal_approx(p.tar, 0.4), "tar slows the hero to 40 percent")
+	for i in 3:
+		Input.action_press("jump")
+		await _wait(0.06)
+		Input.action_release("jump")
+		await _wait(0.06)
+	await _wait(0.1)
+	_check(p.tar >= 0.99 or p.velocity.y < -300.0, "three jumps free him from the tar")
+	p.tar = 1.0
+	# snapper: bites only while closing (phase 0.8-0.92)
+	var sn: Node = by.snapper
+	p.global_position = sn.global_position + Vector2(0, -34)
+	p.velocity = Vector2.ZERO
+	p.invulnerable = 0.0
+	sn._t = 0.0
+	hearts0 = p.hearts
+	await _wait(0.4)
+	_check(p.hearts == hearts0, "an open snapping plant does not bite")
+	sn._t = 1.5
+	sn._cool = 0.0
+	await _wait(0.6)
+	_check(p.hearts < hearts0, "a closing snapping plant bites")
+	p.hearts = hearts0
+	p.invulnerable = 0.0
+	# net: stuck until three presses
+	var net: Node = by.net
+	p.global_position = net.global_position + Vector2(0, -70)
+	p.velocity = Vector2.ZERO
+	await _wait(0.2)
+	_check(net._stuck, "the net catches the hero")
+	for i in 3:
+		Input.action_press("jump")
+		await _wait(0.06)
+		Input.action_release("jump")
+		await _wait(0.06)
+	await _wait(0.1)
+	_check(not net._stuck, "three presses tear the net")
+	# quicksand
+	var qs: Node = by.quicksand
+	p.global_position = qs.global_position + Vector2(0, -34)
+	p.velocity = Vector2.ZERO
+	await _wait(0.3)
+	_check(p._sand >= 1, "quicksand holds the hero")
+	p.global_position = Vector2(120, 400)
+	await _wait(0.3)
+	# door trap: closes behind, the plate opens it
+	var dt: Node = by.door_trap
+	p.global_position = dt.global_position + Vector2(64.0 * 1.2, -40)
+	p.velocity = Vector2.ZERO
+	await _wait(0.4)
+	_check(dt._closed, "the door drops after the trigger")
+	p.global_position = dt.global_position + Vector2(2 * 64.0, -40)
+	p.velocity = Vector2.ZERO
+	await _wait(0.4)
+	_check(not dt._closed, "the pressure plate opens the door again")
+	# boulder chase: warns, then rolls
+	var bc: Node = by.boulder_chase
+	p.global_position = bc.global_position + Vector2(80, -40)
+	await _wait(0.2)
+	_check(bc._state == 1, "the boulder rumbles first")
+	await _wait(1.2)
+	_check(bc._state == 2, "then it rolls after the hero")
 	_stop(game)
 
 
@@ -1289,7 +1385,7 @@ func _test_pair1_scenery() -> void:
 		var game := await _start(["P.........", "##########"], {"scenery": "pair1", "era": combo[0], "variant": combo[1]})
 		var bg: Node = game._background
 		_check(bg is Pair1Parallax, "%s/%s: the pair 1 scenery is used" % combo)
-		_check(bg._layers.size() >= 1 and bg._corners.size() == 4, "%s/%s: mid layers and four foreground leaf corners" % combo)
+		_check(bg._layers.size() >= 1 and bg._corners.is_empty(), "%s/%s: mid layers and no dark corner frames" % combo)
 		var before: float = bg._layers[0].node.position.x
 		game.player.position.x += 600.0
 		await _wait(0.4)

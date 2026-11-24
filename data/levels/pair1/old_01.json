@@ -324,6 +324,17 @@
    "length": 4
   },
   {
+   "type": "tar",
+   "x": 17,
+   "y": 15.5,
+   "width": 3
+  },
+  {
+   "type": "snapper",
+   "x": 41,
+   "y": 16.66
+  },
+  {
    "type": "crumble",
    "x": 65,
    "y": 12.4,
@@ -350,10 +361,29 @@
    "deed": "shrine_lit"
   },
   {
+   "type": "spike_pit",
+   "x": 62,
+   "y": 15.2,
+   "width": 2
+  },
+  {
+   "type": "net",
+   "x": 71,
+   "y": 12.93,
+   "width": 2,
+   "height": 3
+  },
+  {
    "type": "ramp",
    "x": 103,
    "y": 16.82,
    "power": 1.2
+  },
+  {
+   "type": "boulder_chase",
+   "x": 88,
+   "y": 8.9,
+   "length": 18
   },
   {
    "type": "steam_vent",

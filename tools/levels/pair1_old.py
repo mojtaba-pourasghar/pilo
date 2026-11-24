@@ -135,13 +135,19 @@ objects = [
     {"type": "rope_swing", "x": 37, "y": 6, "length": 6, "start": -30},
     {"type": "seed", "x": 31, "y": round(ground(31.5), 2), "deed": "bridge_planted", "width": 8},
     {"type": "vine", "x": 44, "y": B - 7, "length": 4},
+    # S1/S2 beside plain routes: a tar puddle (walk around over the stones), a snapping plant under the vine ledge
+    {"type": "tar", "x": 17, "y": round(ground(17.5), 2), "width": 3},
+    {"type": "snapper", "x": 41, "y": round(ground(41.5), 2)},
     # S3 ruins
     {"type": "crumble", "x": 65, "y": B - 3.6, "count": 6},
     {"type": "falling_rock", "x": 55, "y": B - 9, "drop": 9.5, "reach": 220},
     {"type": "falling_rock", "x": 70, "y": B - 10, "drop": 10.0, "reach": 200},
     {"type": "shrine", "x": 74, "y": round(ground(74.5), 2), "deed": "shrine_lit"},
+    {"type": "spike_pit", "x": 62, "y": B - 0.8, "width": 2},
+    {"type": "net", "x": 71, "y": round(ground(71.5), 2), "width": 2, "height": 3},
     # S4 hill
     {"type": "ramp", "x": 103, "y": round(ground(103.5), 2), "power": 1.2},
+    {"type": "boulder_chase", "x": 88, "y": round(ground(88.5), 2), "length": 18},
     # S5 steam valley
     {"type": "steam_vent", "x": 117, "y": round(ground(117.5), 2), "period": 2.0, "height": 4},
     {"type": "steam_vent", "x": 121, "y": round(ground(121.5), 2), "period": 2.4, "height": 4},

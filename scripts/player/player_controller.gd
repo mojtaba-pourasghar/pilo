@@ -53,6 +53,8 @@ var controls_enabled := true
 var carrying := ""
 ## Hanging on something (RouteParts): "" | "rope" | "vine". The part moves the hero; hang_node is the vine.
 var hanging := ""
+## Sticky ground (tar): 1.0 = normal, 0.4 = speed x0.4 and a weak jump.
+var tar := 1.0
 var hang_node: Node2D
 ## The ground material under the hero (SurfaceFX): grass | soil | sand | snow | stone | wood | water. Set by the level.
 var surface := "grass"
@@ -221,7 +223,7 @@ func _physics_process(delta: float) -> void:
 	_wind = Vector2.ZERO
 
 	if _buffer > 0.0 and _coyote > 0.0 and can_move and _swim == 0:
-		velocity.y = (JUMP_VELOCITY - absf(velocity.x) * (JUMP_SPEED_BONUS if carrying == "" else 0.0)) * jump_scale
+		velocity.y = (JUMP_VELOCITY - absf(velocity.x) * (JUMP_SPEED_BONUS if carrying == "" else 0.0)) * jump_scale * (0.7 if tar < 1.0 else 1.0)
 		if _sand > 0 and not sand_free:
 			velocity.y *= 0.78
 		_buffer = 0.0
@@ -288,6 +290,7 @@ func _horizontal(dir: float, delta: float, on_floor: bool) -> void:
 	var cap := run_speed if (_run_hold > RUN_AFTER and mag >= RUN_STICK) else walk_speed
 	if carrying != "":
 		cap *= CARRY_SPEED
+	cap *= tar
 	var analog := minf(mag / RUN_STICK, 1.0) if mag > 0.0 else 0.0
 	var drift := 0.0
 	if _wind.x != 0.0 and not on_floor:

@@ -49,6 +49,7 @@ var variant := "full"           ## "full" | "partial" | "none" (deeds of the old
 
 var _view := Vector2(1280, 720)
 var _v3 := false
+var corner_frames := false
 ## Own backdrops per scene (docs/40 section 9): [{from: px, art: "v3_scene_valley_old" | "" }] ordered by x. Inside a zone
 ## with art, that painting replaces the standard hills/trees layers (it has its own middle ground); between zones the
 ## paintings crossfade over BACKDROP_FADE px. A missing picture file simply means "use the standard layers".
@@ -265,12 +266,13 @@ func add_set_piece(path: String, x: float, bottom: float, factor: float, height:
 	return s
 
 
-## L6: dark leaves at the screen corners, in front of the hero; they sway a little.
+## L6: the foreground layer (particles). The dark leaf frames at the screen corners were removed on the owner's
+## request (24 Nov): the scene must stay light and open. Set `corner_frames = true` to bring them back.
 func _build_front() -> void:
 	_front = CanvasLayer.new()
 	_front.layer = 5
 	add_child(_front)
-	for i in CORNERS.size():
+	for i in (CORNERS.size() if corner_frames else 0):
 		var tex := _tex("%soverlays/p0_r4_leaf_overlays/p0_r4_leaf_overlays_%s.png" % [ART, CORNERS[i]])
 		if tex == null:
 			continue
