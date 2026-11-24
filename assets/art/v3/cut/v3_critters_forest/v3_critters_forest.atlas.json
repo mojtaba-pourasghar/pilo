@@ -1,0 +1,981 @@
+{
+ "sheet": "v3_critters_forest",
+ "key": "white",
+ "size": [
+  1680,
+  944
+ ],
+ "rows": [
+  {
+   "base": 177,
+   "frames": [
+    {
+     "file": "v3_critters_forest_r00_f00.png",
+     "box": [
+      17,
+      67,
+      110,
+      149
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f01.png",
+     "box": [
+      106,
+      67,
+      200,
+      148
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f02.png",
+     "box": [
+      196,
+      68,
+      290,
+      150
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f03.png",
+     "box": [
+      286,
+      68,
+      380,
+      150
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f04.png",
+     "box": [
+      376,
+      68,
+      470,
+      150
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f05.png",
+     "box": [
+      466,
+      68,
+      560,
+      150
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f06.png",
+     "box": [
+      556,
+      69,
+      650,
+      150
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f07.png",
+     "box": [
+      646,
+      72,
+      740,
+      150
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f08.png",
+     "box": [
+      784,
+      33,
+      850,
+      177
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f09.png",
+     "box": [
+      859,
+      33,
+      924,
+      177
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f10.png",
+     "box": [
+      932,
+      33,
+      997,
+      177
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f11.png",
+     "box": [
+      1006,
+      33,
+      1071,
+      177
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f12.png",
+     "box": [
+      1079,
+      33,
+      1145,
+      177
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f13.png",
+     "box": [
+      1154,
+      33,
+      1218,
+      177
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f14.png",
+     "box": [
+      1274,
+      58,
+      1361,
+      151
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f15.png",
+     "box": [
+      1376,
+      59,
+      1459,
+      151
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f16.png",
+     "box": [
+      1471,
+      59,
+      1556,
+      151
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r00_f17.png",
+     "box": [
+      1566,
+      59,
+      1650,
+      151
+     ]
+    }
+   ]
+  },
+  {
+   "base": 288,
+   "frames": [
+    {
+     "file": "v3_critters_forest_r01_f00.png",
+     "box": [
+      16,
+      219,
+      164,
+      284
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r01_f01.png",
+     "box": [
+      160,
+      219,
+      308,
+      277
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r01_f02.png",
+     "box": [
+      304,
+      219,
+      452,
+      279
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r01_f03.png",
+     "box": [
+      448,
+      223,
+      596,
+      283
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r01_f04.png",
+     "box": [
+      592,
+      219,
+      740,
+      278
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r01_f05.png",
+     "box": [
+      736,
+      220,
+      884,
+      276
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r01_f06.png",
+     "box": [
+      880,
+      222,
+      1028,
+      277
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r01_f07.png",
+     "box": [
+      1024,
+      222,
+      1172,
+      272
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r01_f08.png",
+     "box": [
+      1238,
+      206,
+      1363,
+      288
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r01_f09.png",
+     "box": [
+      1367,
+      206,
+      1490,
+      288
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r01_f10.png",
+     "box": [
+      1494,
+      206,
+      1618,
+      288
+     ]
+    }
+   ]
+  },
+  {
+   "base": 429,
+   "frames": [
+    {
+     "file": "v3_critters_forest_r02_f00.png",
+     "box": [
+      16,
+      349,
+      135,
+      429
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r02_f01.png",
+     "box": [
+      156,
+      350,
+      276,
+      429
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r02_f02.png",
+     "box": [
+      293,
+      353,
+      412,
+      429
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r02_f03.png",
+     "box": [
+      427,
+      354,
+      549,
+      429
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r02_f04.png",
+     "box": [
+      566,
+      354,
+      690,
+      429
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r02_f05.png",
+     "box": [
+      686,
+      354,
+      825,
+      429
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r02_f06.png",
+     "box": [
+      821,
+      356,
+      959,
+      428
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r02_f07.png",
+     "box": [
+      955,
+      360,
+      1093,
+      429
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r02_f08.png",
+     "box": [
+      1089,
+      360,
+      1227,
+      429
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r02_f09.png",
+     "box": [
+      1223,
+      360,
+      1361,
+      429
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r02_f10.png",
+     "box": [
+      1357,
+      360,
+      1495,
+      429
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r02_f11.png",
+     "box": [
+      1491,
+      359,
+      1630,
+      429
+     ]
+    }
+   ]
+  },
+  {
+   "base": 578,
+   "frames": [
+    {
+     "file": "v3_critters_forest_r03_f00.png",
+     "box": [
+      17,
+      485,
+      120,
+      568
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f01.png",
+     "box": [
+      116,
+      485,
+      220,
+      566
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f02.png",
+     "box": [
+      216,
+      486,
+      320,
+      567
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f03.png",
+     "box": [
+      316,
+      489,
+      420,
+      566
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f04.png",
+     "box": [
+      416,
+      491,
+      520,
+      566
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f05.png",
+     "box": [
+      516,
+      494,
+      620,
+      566
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f06.png",
+     "box": [
+      616,
+      493,
+      720,
+      565
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f07.png",
+     "box": [
+      716,
+      496,
+      820,
+      567
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f08.png",
+     "box": [
+      859,
+      492,
+      960,
+      578
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f09.png",
+     "box": [
+      956,
+      488,
+      1058,
+      578
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f10.png",
+     "box": [
+      1054,
+      487,
+      1156,
+      578
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f11.png",
+     "box": [
+      1152,
+      488,
+      1254,
+      578
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f12.png",
+     "box": [
+      1292,
+      508,
+      1383,
+      578
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f13.png",
+     "box": [
+      1386,
+      496,
+      1477,
+      567
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f14.png",
+     "box": [
+      1480,
+      499,
+      1570,
+      566
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r03_f15.png",
+     "box": [
+      1566,
+      509,
+      1662,
+      577
+     ]
+    }
+   ]
+  },
+  {
+   "base": 730,
+   "frames": [
+    {
+     "file": "v3_critters_forest_r04_f00.png",
+     "box": [
+      16,
+      641,
+      91,
+      730
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f01.png",
+     "box": [
+      87,
+      642,
+      162,
+      730
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f02.png",
+     "box": [
+      158,
+      644,
+      234,
+      726
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f03.png",
+     "box": [
+      230,
+      642,
+      305,
+      730
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f04.png",
+     "box": [
+      301,
+      645,
+      376,
+      729
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f05.png",
+     "box": [
+      372,
+      644,
+      448,
+      730
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f06.png",
+     "box": [
+      495,
+      646,
+      564,
+      730
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f07.png",
+     "box": [
+      560,
+      647,
+      629,
+      730
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f08.png",
+     "box": [
+      625,
+      650,
+      694,
+      729
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f09.png",
+     "box": [
+      690,
+      650,
+      759,
+      730
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f10.png",
+     "box": [
+      755,
+      652,
+      824,
+      727
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f11.png",
+     "box": [
+      820,
+      654,
+      890,
+      726
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f12.png",
+     "box": [
+      935,
+      648,
+      998,
+      730
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f13.png",
+     "box": [
+      994,
+      649,
+      1057,
+      730
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f14.png",
+     "box": [
+      1053,
+      652,
+      1116,
+      730
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f15.png",
+     "box": [
+      1112,
+      652,
+      1175,
+      730
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f16.png",
+     "box": [
+      1171,
+      654,
+      1234,
+      725
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f17.png",
+     "box": [
+      1230,
+      654,
+      1293,
+      724
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f18.png",
+     "box": [
+      1336,
+      652,
+      1393,
+      730
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f19.png",
+     "box": [
+      1389,
+      653,
+      1446,
+      729
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f20.png",
+     "box": [
+      1442,
+      655,
+      1499,
+      729
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f21.png",
+     "box": [
+      1495,
+      655,
+      1552,
+      730
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f22.png",
+     "box": [
+      1548,
+      657,
+      1605,
+      724
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r04_f23.png",
+     "box": [
+      1601,
+      656,
+      1659,
+      724
+     ]
+    }
+   ]
+  },
+  {
+   "base": 882,
+   "frames": [
+    {
+     "file": "v3_critters_forest_r05_f00.png",
+     "box": [
+      16,
+      804,
+      80,
+      873
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f01.png",
+     "box": [
+      85,
+      804,
+      148,
+      873
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f02.png",
+     "box": [
+      154,
+      803,
+      217,
+      873
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f03.png",
+     "box": [
+      222,
+      804,
+      282,
+      869
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f04.png",
+     "box": [
+      278,
+      807,
+      348,
+      868
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f05.png",
+     "box": [
+      353,
+      808,
+      414,
+      869
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f06.png",
+     "box": [
+      461,
+      798,
+      534,
+      881
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f07.png",
+     "box": [
+      540,
+      799,
+      613,
+      881
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f08.png",
+     "box": [
+      618,
+      799,
+      690,
+      881
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f09.png",
+     "box": [
+      696,
+      799,
+      770,
+      881
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f10.png",
+     "box": [
+      771,
+      802,
+      847,
+      871
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f11.png",
+     "box": [
+      843,
+      802,
+      924,
+      880
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f12.png",
+     "box": [
+      970,
+      806,
+      1043,
+      882
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f13.png",
+     "box": [
+      1040,
+      806,
+      1112,
+      882
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f14.png",
+     "box": [
+      1108,
+      806,
+      1182,
+      882
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f15.png",
+     "box": [
+      1223,
+      838,
+      1313,
+      882
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f16.png",
+     "box": [
+      1309,
+      828,
+      1400,
+      881
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f17.png",
+     "box": [
+      1396,
+      806,
+      1487,
+      855
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f18.png",
+     "box": [
+      1483,
+      817,
+      1574,
+      871
+     ]
+    },
+    {
+     "file": "v3_critters_forest_r05_f19.png",
+     "box": [
+      1570,
+      830,
+      1661,
+      882
+     ]
+    }
+   ]
+  }
+ ],
+ "groups": [
+  [
+   8,
+   6,
+   4
+  ],
+  [
+   8,
+   3
+  ],
+  [
+   6,
+   6
+  ],
+  [
+   8,
+   4,
+   4
+  ],
+  [
+   6,
+   6,
+   6,
+   6
+  ],
+  [
+   6,
+   6,
+   3,
+   5
+  ]
+ ]
+}
