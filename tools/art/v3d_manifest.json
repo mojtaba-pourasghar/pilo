@@ -1,0 +1,82 @@
+[
+ {
+  "n": 1,
+  "id": "v3_fx_ground_impacts",
+  "path": "assets/art/v3/v3_fx_ground_impacts.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Ground impacts per surface (dust, sand, snow powder, splash, leaves, stone chips)"
+ },
+ {
+  "n": 2,
+  "id": "v3_fx_light",
+  "path": "assets/art/v3/v3_fx_light.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Light effects (sun shafts, lantern glow, glints, flares)"
+ },
+ {
+  "n": 3,
+  "id": "v3_fx_water",
+  "path": "assets/art/v3/v3_fx_water.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Water: river flow, waterfall, foam, ripples, drips"
+ },
+ {
+  "n": 4,
+  "id": "v3_critters_forest",
+  "path": "assets/art/v3/v3_critters_forest.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Forest critters that run on walls, trunks and branches"
+ },
+ {
+  "n": 5,
+  "id": "v3_fx_night",
+  "path": "assets/art/v3/v3_fx_night.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Night effects: pulsing glowing flowers, fireflies, spores"
+ },
+ {
+  "n": 6,
+  "id": "v3_fx_heat",
+  "path": "assets/art/v3/v3_fx_heat.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Heat and sun effects: glints, dust devil, sand drift"
+ },
+ {
+  "n": 7,
+  "id": "v3_fx_snow",
+  "path": "assets/art/v3/v3_fx_snow.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Snow effects: flakes, powder, sparkle, breath, slide trail"
+ },
+ {
+  "n": 8,
+  "id": "v3_fx_rain_wind",
+  "path": "assets/art/v3/v3_fx_rain_wind.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Rain, wind, lightning"
+ },
+ {
+  "n": 9,
+  "id": "v3_clouds",
+  "path": "assets/art/v3/v3_clouds.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Cloud sprites: puffy, streaks, storm, rain clouds"
+ },
+ {
+  "n": 10,
+  "id": "v3_plants_sway",
+  "path": "assets/art/v3/v3_plants_sway.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Plants for swaying: grass, flowers, ferns, reeds, vines"
+ }
+]
