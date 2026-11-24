@@ -165,6 +165,16 @@ func _ready() -> void:
 		if _follower:
 			_follower.queue_free()
 			_follower = null
+		var team: Array = data.get("team", [])
+		if not team.is_empty():
+			var pc := PairCompanion.new()
+			pc.team = team
+			pc.id = String(team[0])
+			pc.target = player
+			pc.game = self
+			pc.position = player.position + Vector2(-90, -20)
+			_world_root.add_child(pc)
+			_follower = pc
 	if bool(data.get("dark", false)):
 		_make_dark()
 
@@ -264,6 +274,8 @@ func _physics_process(delta: float) -> void:
 			_light_keepers()
 			if try_pair_act():
 				pass
+			elif _follower is PairCompanion:
+				(_follower as PairCompanion).act(self)
 			elif Loadout.companion() == "" or _follower == null:
 				pilo.act(self)
 			else:
@@ -589,6 +601,8 @@ func on_collect(item: Collectible) -> void:
 
 func add_coins(amount: int, pos: Vector2, from_block := true) -> void:
 	coins += amount
+	if _follower is PairCompanion:
+		(_follower as PairCompanion).cheer()
 	hud.set_coins(coins)
 	if not from_block:
 		AudioManager.play_sfx("coin")
@@ -705,6 +719,9 @@ func _set_pilo_out(out: bool) -> void:
 ## The next companion (Pilo first, then the ones the hero owns), straight from the screen.
 func cycle_companion() -> void:
 	if _busy or finished:
+		return
+	if _follower is PairCompanion:
+		(_follower as PairCompanion).swap()
 		return
 	var team: Array = [""]
 	for id in Loadout.COMPANIONS:

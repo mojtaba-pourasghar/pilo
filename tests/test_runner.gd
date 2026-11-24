@@ -20,6 +20,7 @@ func _ready() -> void:
 	await _test_ambient()
 	await _test_route_parts()
 	await _test_traps()
+	await _test_pair_companion()
 	_test_deeds()
 	await _test_pair_sites()
 	await _test_pair1_old_level()
@@ -1300,6 +1301,74 @@ func _test_traps() -> void:
 	_check(bc._state == 1, "the boulder rumbles first")
 	await _wait(1.2)
 	_check(bc._state == 2, "then it rolls after the hero")
+	_stop(game)
+
+
+## The pair-1 companions (docs/40 section 1.2): Embri and Tikkit follow the hero in side view, transform to help him
+## (lantern, cannon, rocket / bubble, sand bridge, wings), and swap like a trainer's team.
+func _test_pair_companion() -> void:
+	var rows := ["....................", "....................", "....................", "....................", "....................", "....................", "P...................", "####################"]
+	var game := await _start(rows, {"companion": "none", "team": ["embri", "tikkit"], "objects": [
+		{"type": "tar", "x": 6, "y": 7, "width": 3},
+		{"type": "form_point", "x": 4, "y": 7, "form": "rocket"}]})
+	var pc: Node = game._follower
+	_check(pc is PairCompanion and pc.id == "embri", "the level starts with Embri as the active companion")
+	_check(pc._rig is SideRig, "the companion is drawn in side view, frame by frame")
+	var p: Node = game.player
+	p.global_position = Vector2(8 * 64.0, 6 * 64.0)
+	p.reset_physics_interpolation()
+	await _wait(1.2)
+	_check(pc.global_position.distance_to(p.global_position) < 330.0, "Embri keeps up with the hero (%.0f px)" % pc.global_position.distance_to(p.global_position))
+	# a marked form point picks the form
+	p.global_position = Vector2(4 * 64.0 + 32.0, 6 * 64.0)
+	p.velocity = Vector2.ZERO
+	await _wait(0.3)
+	var name: String = pc.act(game)
+	_check(name == "rocket", "near a rocket mark the button uses the rocket form (%s)" % name)
+	await _wait(0.25)
+	_check(p.velocity.y < -600.0 or p.global_position.y < 6 * 64.0 - 80.0, "the rocket form launches the hero upward")
+	_check(pc.act(game) == "", "forms have a cooldown")
+	pc.cooldown = 0.0
+	pc.form = ""
+	pc.form_left = 0.0
+	# the cannon burns tar nearby
+	p.global_position = Vector2(6.5 * 64.0, 6 * 64.0)
+	pc.global_position = p.global_position + Vector2(-60, 0)
+	pc.form_index["embri"] = 1
+	pc.cooldown = 0.0
+	var before := get_tree().get_nodes_in_group("route_part").size()
+	for fp in get_tree().get_nodes_in_group("form_point"):
+		fp.remove_from_group("form_point")
+	pc.act(game)
+	await _wait(0.3)
+	var tar_left := 0
+	for x in get_tree().get_nodes_in_group("route_part"):
+		if is_instance_valid(x) and String(x.data.get("type", "")) == "tar" and not x.is_queued_for_deletion():
+			tar_left += 1
+	_check(tar_left == 0, "the fire cannon burns the tar away")
+	# swap to Tikkit like a trainer's team
+	pc.cooldown = 0.0
+	pc.form = ""
+	pc.form_left = 0.0
+	game.cycle_companion()
+	await _wait(0.3)
+	_check(pc.id == "tikkit" and pc.flyer(), "swapping changes the active companion to Tikkit, who flies")
+	pc.form_index["tikkit"] = 0
+	pc.cooldown = 0.0
+	var form2: String = pc.act(game)
+	_check(form2 == "bubble" and p.invulnerable > 2.0, "Tikkit's bubble form shields the hero for 2.5 s")
+	pc.form_left = 0.0
+	pc._end_form()
+	pc.cooldown = 0.0
+	pc.form_index["tikkit"] = 1
+	pc.act(game)
+	await _wait(0.2)
+	_check(pc._bridge != null and is_instance_valid(pc._bridge), "the sand bridge form puts a platform ahead of the hero")
+	pc.form_left = 0.0
+	pc._end_form()
+	game.cycle_companion()
+	await _wait(0.2)
+	_check(pc.id == "embri", "swapping again returns to Embri")
 	_stop(game)
 
 

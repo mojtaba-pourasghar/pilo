@@ -41,6 +41,8 @@ static func _make(kind: String) -> Part:
 			return FallingRock.new()
 		"steam_vent":
 			return SteamVent.new()
+		"form_point":
+			return FormPoint.new()
 		"spike_pit":
 			return SpikePit.new()
 		"tar":
@@ -713,3 +715,26 @@ class BoulderChase extends Part:
 			draw_line(c, c + Vector2(cos(a), sin(a)) * 34.0, Color("6b6f78"), 3.0)
 		if _state == 1:
 			draw_line(to_local(Vector2(_x - 120.0, _ground_y(_x) - 6.0)), to_local(Vector2(_x - 40.0, _ground_y(_x) - 6.0)), Color(1, 0.6, 0.2, 0.7), 6.0)
+
+
+## A mark on the scene: here the companion's form helps most (docs/40 section 1.2). Only a hint (a soft glowing
+## sign near the spot); the form works anywhere, the mark just tells the player where to use it.
+class FormPoint extends Part:
+	var form := "rocket"
+	var _t := 0.0
+
+	func _build() -> void:
+		form = String(data.get("form", "rocket"))
+		add_to_group("form_point")
+		z_index = 3
+
+	func _process(delta: float) -> void:
+		_t += delta
+		queue_redraw()
+
+	func _draw() -> void:
+		var pulse := 0.5 + 0.5 * sin(_t * 3.0)
+		var col := Color(1.0, 0.85, 0.4, 0.5 + 0.3 * pulse)
+		draw_arc(Vector2(0, -60), 26.0 + pulse * 4.0, 0, TAU, 28, col, 3.0)
+		draw_circle(Vector2(0, -60), 7.0, Color(1.0, 0.95, 0.7, 0.8))
+		draw_line(Vector2(0, -34), Vector2(0, -6), col, 2.0)
