@@ -49,6 +49,13 @@ var variant := "full"           ## "full" | "partial" | "none" (deeds of the old
 
 var _view := Vector2(1280, 720)
 var _v3 := false
+## Own backdrops per scene (docs/40 section 9): [{from: px, art: "v3_scene_valley_old" | "" }] ordered by x. Inside a zone
+## with art, that painting replaces the standard hills/trees layers (it has its own middle ground); between zones the
+## paintings crossfade over BACKDROP_FADE px. A missing picture file simply means "use the standard layers".
+var backdrops: Array = []
+const BACKDROP_FADE := 420.0
+const BACKDROP_PATH := "res://assets/art/v3/%s.png"
+var _backs: Array = []           ## {rect: TextureRect, from: float, to: float}
 var _sky: TextureRect
 var _rays: Control
 var _layers: Array = []          ## {node, fx, fy, period}
@@ -80,6 +87,7 @@ func _ready() -> void:
 			mids = mids.slice(0, 1)       # the other strips carry the lush tree and bridge: only the far hills stay
 		for spec in mids:
 			_add_mid(spec, cfg.tint)
+	_build_backdrops(root)
 	_build_front()
 	_add_particles(root)
 
@@ -147,6 +155,41 @@ func _fade() -> ShaderMaterial:
 		_fade_material = ShaderMaterial.new()
 		_fade_material.shader = sh
 	return _fade_material
+
+
+func _build_backdrops(root: Control) -> void:
+	var zones: Array = []
+	for i in backdrops.size():
+		var b: Dictionary = backdrops[i]
+		var art := String(b.get("art", ""))
+		var to := float(backdrops[i + 1].from) if i + 1 < backdrops.size() else 1.0e9
+		var tex: Texture2D = _tex(BACKDROP_PATH % art) if art != "" and ResourceLoader.exists(BACKDROP_PATH % art) else null
+		zones.append({"from": float(b.from), "to": to, "tex": tex})
+	for z in zones:
+		if z.tex == null:
+			continue
+		var r := TextureRect.new()
+		r.texture = z.tex
+		r.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		r.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		r.modulate.a = 0.0
+		root.add_child(r)
+		root.move_child(r, 2)                 # above the sky and the light shafts, below the standard layers' nodes
+		_backs.append({"rect": r, "from": z.from, "to": z.to})
+
+
+func _update_backdrops(cx: float, left: float) -> float:
+	## Returns how much the backdrops cover the standard layers (0..1).
+	var cover := 0.0
+	for b in _backs:
+		var a: float = smoothstep(b.from - BACKDROP_FADE, b.from + BACKDROP_FADE * 0.2, cx) 			* (1.0 - smoothstep(b.to - BACKDROP_FADE * 0.2, b.to + BACKDROP_FADE, cx))
+		var r: TextureRect = b.rect
+		r.modulate.a = a
+		r.size = _view * 1.12
+		r.position = Vector2(-_view.x * 0.06 - fposmod(left * 0.03, 40.0), -_view.y * 0.06)
+		cover = maxf(cover, a)
+	return cover
 
 
 ## One mid strip, repeated sideways with every other copy mirrored (so seams never show).
@@ -327,6 +370,9 @@ func _process(delta: float) -> void:
 		node.position.x = -fposmod(left * entry.fx, period) if period > 0.0 else -left * entry.fx
 		var rest := _view.y * float(entry.get("rest", 1.0))
 		node.position.y = rest - rise * entry.fy
+	var covered := _update_backdrops(center.x, left)
+	for entry in _layers:
+		entry.node.modulate.a = 1.0 - covered
 	_place_corners()
 
 

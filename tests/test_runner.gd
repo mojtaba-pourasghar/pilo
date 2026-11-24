@@ -1077,6 +1077,21 @@ func _test_pair1_old_level() -> void:
 	_check(get_tree().get_nodes_in_group("pair_site").size() == 4, "four deed sites are placed")
 	_check(get_tree().get_nodes_in_group("route_part").size() >= 8, "the route mechanics of the scenes are placed")
 	_check(data.scenes.size() == 6, "the level has six scenes")
+	var pbg: Node = game._background
+	_check(pbg is Pair1Parallax and pbg.backdrops.size() == 5, "the level gives each scene its own backdrop zone")
+	_check(pbg._backs.size() >= 2, "the backdrop paintings that exist are loaded (%d)" % pbg._backs.size())
+	game.player.position.x = 36.0 * 64.0
+	await _wait(0.5)
+	var vis := 0.0
+	for bk in pbg._backs:
+		vis = maxf(vis, bk.rect.modulate.a)
+	_check(vis > 0.9, "inside the valley scene its painting is fully shown")
+	game.player.position.x = 8.0 * 64.0
+	await _wait(0.5)
+	vis = 0.0
+	for bk in pbg._backs:
+		vis = maxf(vis, bk.rect.modulate.a)
+	_check(vis < 0.1, "in the meadow the standard layers show (no backdrop)")
 	_check(Weapons.current() == "slingshot", "the grandfather shoots the slingshot")
 	_check(not game.pilo.visible, "the old fox is not in the pair-1 level")
 	Engine.time_scale = 3.0

@@ -247,6 +247,28 @@
   ],
   "critter_count": 22
  },
+ "backdrops": [
+  {
+   "from": 1536,
+   "art": "v3_scene_valley_old"
+  },
+  {
+   "from": 3200,
+   "art": "v3_scene_ruins_old"
+  },
+  {
+   "from": 4864,
+   "art": ""
+  },
+  {
+   "from": 7232,
+   "art": "v3_scene_roots_old"
+  },
+  {
+   "from": 8192,
+   "art": ""
+  }
+ ],
  "scenes": [
   [
    "S1",

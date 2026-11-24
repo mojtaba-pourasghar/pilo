@@ -157,6 +157,8 @@ level = {
     "terrain": terrain, "surface": "grass",
     "ambient": {"weather": "none", "critters": ["squirrel", "butterfly", "snail", "bird", "ladybug", "dragonfly", "frog"],
                 "critter_count": 22},
+    "backdrops": [{"from": 24 * T, "art": "v3_scene_valley_old"}, {"from": 50 * T, "art": "v3_scene_ruins_old"},
+                  {"from": 76 * T, "art": ""}, {"from": 113 * T, "art": "v3_scene_roots_old"}, {"from": 128 * T, "art": ""}],
     "scenes": [["S1", 0], ["S2", 24], ["S3", 50], ["S4", 76], ["S5", 113], ["S6", 128]],
     "objects": objects,
     "map": rows,

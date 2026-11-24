@@ -105,6 +105,7 @@ func _ready() -> void:
 		var pair := Pair1Parallax.new()
 		pair.era = String(data.get("era", "new"))
 		pair.variant = String(data.get("variant", "full"))
+		pair.backdrops = data.get("backdrops", [])
 		layered = pair
 	elif String(data.get("chapter", "")) == "ch01":
 		layered = ForestParallax.new()
