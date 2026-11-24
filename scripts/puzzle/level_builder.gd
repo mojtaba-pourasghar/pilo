@@ -341,6 +341,12 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 		terrain.bottom_y = float(h * TILE)
 		root.add_child(terrain)
 		info["terrain"] = terrain
+	if data.has("stumpguard"):
+		var sg := Stumpguard.new()
+		sg.game = game
+		sg.position = Vector2(float(data.stumpguard.x) * TILE + TILE * 0.5, float(data.stumpguard.y) * TILE)
+		root.add_child(sg)
+		info["guardian_node"] = sg
 	info["sites"] = PairSites.build_all(data.get("objects", []), root, game)
 	info["route_parts"] = RouteParts.build_all(data.get("objects", []), root, game)
 	var layers := sort_time_layers(root)

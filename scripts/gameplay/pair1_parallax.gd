@@ -164,6 +164,9 @@ func _build_backdrops(root: Control) -> void:
 		var b: Dictionary = backdrops[i]
 		var art := String(b.get("art", ""))
 		var to := float(backdrops[i + 1].from) if i + 1 < backdrops.size() else 1.0e9
+		var keyed := art + "_k"            # a picture whose white sky was keyed out is preferred (the sky shows through)
+		if art != "" and ResourceLoader.exists(BACKDROP_PATH % keyed):
+			art = keyed
 		var tex: Texture2D = _tex(BACKDROP_PATH % art) if art != "" and ResourceLoader.exists(BACKDROP_PATH % art) else null
 		zones.append({"from": float(b.from), "to": to, "tex": tex})
 	for z in zones:

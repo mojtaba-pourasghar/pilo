@@ -82,6 +82,8 @@ func _ready() -> void:
 	level_id = LevelManager.current_level
 	world = LevelManager.world_of(level_id)
 	data = LevelManager.load_level(level_id)
+	if String(data.get("era", "")) == "new" and not data.has("variant"):
+		data["variant"] = DeedsStore.variant()          # the deeds of the old level decide this level (docs/33 section 5)
 	if world.is_empty() and data.has("world"):
 		world = LevelManager.world_by_id(String(data.world))      # pair levels live outside the nine worlds
 	if data.is_empty():
@@ -118,7 +120,7 @@ func _ready() -> void:
 	move_child(_background, 0)
 	friend_rescued = not info.needs_rescue
 	if info.exit:
-		info.exit.set_locked(not friend_rescued or info.time_key)
+		info.exit.set_locked(not friend_rescued or info.time_key or data.get("lock_exit", false) == true)
 
 	player = PLAYER_SCENE.instantiate()
 	player.hero_name = String(data.get("hero", "arsam"))
@@ -745,6 +747,47 @@ func cycle_companion() -> void:
 ## acts), 1 the guide map (shows both keys for a moment, three times a level), 2 the mirror (light
 ## too) - or, while carrying something between the times (K12), that thing.
 var map_uses := 3
+
+
+## A shot target was hit: a rope drops the nest nearby, a crystal or button counts toward its gate.
+func on_target_hit(target: Node) -> void:
+	var kind := String(target.get("kind"))
+	if kind == "rope":
+		for n in get_tree().get_nodes_in_group("hatch_nest"):
+			if n.global_position.distance_to(target.global_position) < 420.0:
+				n.release()
+	else:
+		var opens := String(target.data.get("opens", ""))
+		for g in get_tree().get_nodes_in_group("gate"):
+			if String(g.data.get("id", "")) == opens:
+				g.trigger()
+
+
+## The nest has hatched: Tikkit joins the hero (and is the active companion).
+func tikkit_joins(pos: Vector2) -> void:
+	SpriteFX.play(_world_root, "tikkit_sandburst", pos, 1.0)
+	if _follower is PairCompanion:
+		var pc := _follower as PairCompanion
+		if not pc.team.has("tikkit"):
+			pc.team.append("tikkit")
+		pc.swap() if pc.id != "tikkit" else null
+		return
+	var pc2 := PairCompanion.new()
+	pc2.team = ["tikkit"]
+	pc2.id = "tikkit"
+	pc2.target = player
+	pc2.game = self
+	pc2.position = pos
+	_world_root.add_child(pc2)
+	_follower = pc2
+	_notice(Strings.t("app_companion_joined", {"name": "Tikkit"}), UIKit.GREEN, true)
+
+
+## The guardian is free: the exit opens.
+func on_stumpguard_freed(_g: Node) -> void:
+	if info.exit:
+		info.exit.set_locked(false)
+	_notice(Strings.t("app_companion_joined", {"name": "Verdlin"}), UIKit.GREEN, true)
 
 
 ## The tool button near a deed site (plant the seed, light the shrine). True = a site used it.

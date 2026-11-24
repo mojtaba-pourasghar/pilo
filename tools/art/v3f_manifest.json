@@ -1,0 +1,154 @@
+[
+ {
+  "n": 1,
+  "id": "v3f_e_wisp",
+  "path": "assets/art/v3/v3f_e_wisp.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy v2: Wispfiend (smoke spirit) + freed Cindrel"
+ },
+ {
+  "n": 2,
+  "id": "v3f_e_imp",
+  "path": "assets/art/v3/v3f_e_imp.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy v2: Murkling (masked imp) + freed Nimbeak"
+ },
+ {
+  "n": 3,
+  "id": "v3f_e_stilt",
+  "path": "assets/art/v3/v3f_e_stilt.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy v2: Stiltmurk (stilt walker) + freed Rootstomp"
+ },
+ {
+  "n": 4,
+  "id": "v3f_e_barkshield",
+  "path": "assets/art/v3/v3f_e_barkshield.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy v2: Barkshield (shield knight) + freed Shardling"
+ },
+ {
+  "n": 5,
+  "id": "v3f_e_weaver",
+  "path": "assets/art/v3/v3f_e_weaver.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy v2: Murkweaver (thread spider) + freed Lanternit"
+ },
+ {
+  "n": 6,
+  "id": "v3f_e_bat",
+  "path": "assets/art/v3/v3f_e_bat.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy v2: Gloombat (diving bat) + freed Lampmoth"
+ },
+ {
+  "n": 7,
+  "id": "v3f_e_roller",
+  "path": "assets/art/v3/v3f_e_roller.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy v2: Rollerbug (armored roller) + freed beetle"
+ },
+ {
+  "n": 8,
+  "id": "v3f_e_spitter",
+  "path": "assets/art/v3/v3f_e_spitter.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy v2: Spitter (seed cannon plant) + freed bloom"
+ },
+ {
+  "n": 9,
+  "id": "v3f_e_hauler",
+  "path": "assets/art/v3/v3f_e_hauler.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy v2: Haulmurk (porter) + freed Gustbag"
+ },
+ {
+  "n": 10,
+  "id": "v3f_e_sparker",
+  "path": "assets/art/v3/v3f_e_sparker.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Enemy v2: Sparkchaser (fast spark imp) + freed Flintling"
+ },
+ {
+  "n": 11,
+  "id": "v3f_g_stumpguard",
+  "path": "assets/art/v3/v3f_g_stumpguard.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Guardian v2: Stumpguard (K1) full animation + freed Verdlin baby"
+ },
+ {
+  "n": 12,
+  "id": "v3f_g_clockcrow",
+  "path": "assets/art/v3/v3f_g_clockcrow.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Guardian v2: Clockcrow full animation + freed Tickwing"
+ },
+ {
+  "n": 13,
+  "id": "v3f_i_spinbeams",
+  "path": "assets/art/v3/v3f_i_spinbeams.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Interactive: spinning cross beams (parts and variants)"
+ },
+ {
+  "n": 14,
+  "id": "v3f_i_swings",
+  "path": "assets/art/v3/v3f_i_swings.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Interactive: rope swings, vines, anchors"
+ },
+ {
+  "n": 15,
+  "id": "v3f_i_islands",
+  "path": "assets/art/v3/v3f_i_islands.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Interactive: floating islands (platforms)"
+ },
+ {
+  "n": 16,
+  "id": "v3f_i_bridges",
+  "path": "assets/art/v3/v3f_i_bridges.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Interactive: bridges (living root, rope, plank states, stone arch)"
+ },
+ {
+  "n": 17,
+  "id": "v3f_i_shrine_gate",
+  "path": "assets/art/v3/v3f_i_shrine_gate.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Interactive: shrine, gates, crystals, levers, nest and hatching"
+ },
+ {
+  "n": 18,
+  "id": "v3f_i_hazards2",
+  "path": "assets/art/v3/v3f_i_hazards2.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Interactive: falling rock, boulder, steam vent, ramp, spikes, platforms"
+ },
+ {
+  "n": 19,
+  "id": "v3f_i_markers",
+  "path": "assets/art/v3/v3f_i_markers.png",
+  "size": "2720x1536",
+  "kind": "pink",
+  "title": "Interactive: checkpoint, exit portal, signs, form markers, coins"
+ }
+]

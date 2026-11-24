@@ -16,6 +16,16 @@ const TILE := 64.0
 static func build_all(objects: Array, root: Node2D, game: Node) -> Array:
 	var made: Array = []
 	for obj in objects:
+		if not wanted(obj, game):
+			continue
+		if String(obj.get("type", "")) == "shot_target":
+			var tgt := ShotTarget.new()
+			tgt.game = game
+			tgt.position = Vector2(float(obj.x) * TILE + TILE * 0.5, float(obj.y) * TILE)
+			tgt.setup(obj)
+			root.add_child(tgt)
+			made.append(tgt)
+			continue
 		var part := _make(String(obj.get("type", "")))
 		if part == null:
 			continue
@@ -25,6 +35,19 @@ static func build_all(objects: Array, root: Node2D, game: Node) -> Array:
 		root.add_child(part)
 		made.append(part)
 	return made
+
+
+## An object may be limited to a variant of the new level (docs/33 section 5): "when": ["full", "partial", "none"],
+## or to a deed: "needs_deed" (only if done) / "no_deed" (only if not done).
+static func wanted(obj: Dictionary, game: Node) -> bool:
+	var variant := String(game.data.get("variant", "")) if game != null and game.get("data") is Dictionary else ""
+	if obj.has("when") and variant != "" and not (obj.when as Array).has(variant):
+		return false
+	if obj.has("needs_deed") and not DeedsStore.has(String(obj.needs_deed)):
+		return false
+	if obj.has("no_deed") and DeedsStore.has(String(obj.no_deed)):
+		return false
+	return true
 
 
 static func _make(kind: String) -> Part:
@@ -43,6 +66,12 @@ static func _make(kind: String) -> Part:
 			return SteamVent.new()
 		"form_point":
 			return FormPoint.new()
+		"spin_beam":
+			return SpinBeam.new()
+		"gate":
+			return Gate.new()
+		"hatch_nest":
+			return HatchNest.new()
 		"spike_pit":
 			return SpikePit.new()
 		"tar":
@@ -738,3 +767,221 @@ class FormPoint extends Part:
 		draw_arc(Vector2(0, -60), 26.0 + pulse * 4.0, 0, TAU, 28, col, 3.0)
 		draw_circle(Vector2(0, -60), 7.0, Color(1.0, 0.95, 0.7, 0.8))
 		draw_line(Vector2(0, -34), Vector2(0, -6), col, 2.0)
+
+
+# ---- parts of the NEW-era level (docs/33 section 5, docs/40 section 2): shooting targets, doors, the hatching nest ----
+
+## Something the hero shoots: a hanging rope, a crystal, a button. Arrows and stones call receive_hit(); `kind` says what
+## it does when hit: "rope" (drops what hangs on it), "crystal" (counts toward opening a door), "button" (opens a door).
+class ShotTarget extends StaticBody2D:
+	var game: Node
+	var data: Dictionary = {}
+	var kind := "crystal"
+	var group_id := ""
+	var hit_done := false
+	var _flash := 0.0
+	var _t := 0.0
+	var size := Vector2(46, 46)
+
+	func setup(obj: Dictionary) -> void:
+		data = obj
+		kind = String(obj.get("kind", "crystal"))
+		group_id = String(obj.get("group", ""))
+		collision_layer = 4          # the layer shots test (enemies' layer)
+		collision_mask = 0
+		add_to_group("route_part")
+		add_to_group("shot_target")
+		z_index = 2
+		var shape := CollisionShape2D.new()
+		var rect := RectangleShape2D.new()
+		rect.size = size
+		shape.shape = rect
+		shape.position = Vector2(0, -size.y * 0.5)
+		add_child(shape)
+
+	func receive_hit(_how: String, _from: Vector2) -> bool:
+		if hit_done:
+			return true
+		hit_done = true
+		_flash = 0.3
+		SpriteFX.play(get_parent(), "hit_flash", global_position + Vector2(0, -size.y * 0.5), 0.8)
+		AudioManager.play_sfx("star", 1.1, -6.0)
+		if game != null and game.has_method("on_target_hit"):
+			game.on_target_hit(self)
+		return true
+
+	func _process(delta: float) -> void:
+		_t += delta
+		_flash = maxf(0.0, _flash - delta)
+		queue_redraw()
+
+	func _draw() -> void:
+		var c := Vector2(0, -size.y * 0.5)
+		if kind == "rope":
+			var sway := sin(_t * 1.6) * 4.0
+			var rope_len := float(data.get("rope", 3)) * 64.0
+			draw_line(Vector2(sway, -size.y - rope_len), Vector2(0, -size.y), Color("2a1f3d"), 7.0)
+			draw_line(Vector2(sway, -size.y - rope_len), Vector2(0, -size.y), Color("a8743f") if not hit_done else Color(0.7, 0.5, 0.3, 0.3), 4.0)
+			draw_circle(c, 14.0, Color("2a1f3d"))
+			draw_circle(c, 11.0, Color("d9b44a") if not hit_done else Color(0.8, 0.8, 0.8, 0.3))
+			return
+		var col := Color("6fe0f0") if not hit_done else Color("2a6a80")
+		var pts := PackedVector2Array([c + Vector2(0, -24), c + Vector2(15, -4), c + Vector2(10, 20), c + Vector2(-10, 20), c + Vector2(-15, -4)])
+		draw_colored_polygon(pts, col.lightened(0.15 * sin(_t * 3.0)) if not hit_done else col)
+		draw_polyline(pts + PackedVector2Array([pts[0]]), Color("2a1f3d"), 3.0)
+		if _flash > 0.0:
+			draw_circle(c, 34.0, Color(1, 1, 0.8, _flash))
+
+
+## A stone gate that rises when its `opens` id is triggered (by targets of the same group, the shrine or a variant).
+class Gate extends Part:
+	var gate_id := "gate"
+	var height := 4.0
+	var need := 1
+	var _door: StaticBody2D
+	var _open := false
+	var _got := 0
+
+	func _build() -> void:
+		gate_id = String(data.get("id", "gate"))
+		height = float(data.get("height", 4))
+		need = int(data.get("need", 1))
+		add_to_group("gate")
+		_door = StaticBody2D.new()
+		_door.collision_layer = 1
+		var shape := CollisionShape2D.new()
+		var rect := RectangleShape2D.new()
+		rect.size = Vector2(TILE * 0.7, TILE * height)
+		shape.shape = rect
+		_door.add_child(shape)
+		_door.position = Vector2(0, -TILE * height * 0.5)
+		add_child(_door)
+		if bool(data.get("start_open", false)):
+			open(true)
+
+	func trigger() -> void:
+		_got += 1
+		if _got >= need:
+			open()
+
+	func open(instant := false) -> void:
+		if _open:
+			return
+		_open = true
+		_door.get_child(0).set_deferred("disabled", true)
+		if instant:
+			_door.position.y = -TILE * height * 1.6
+		else:
+			create_tween().tween_property(_door, "position:y", -TILE * height * 1.6, 0.9)
+			AudioManager.play_sfx("creak", 0.9, -2.0)
+			SpriteFX.play(get_parent(), "stone_chips", global_position + Vector2(0, -TILE * height * 0.5), 1.0)
+
+	func _process(_delta: float) -> void:
+		queue_redraw()
+
+	func _draw() -> void:
+		var h := TILE * height
+		var y := _door.position.y
+		draw_rect(Rect2(-22, y - h * 0.5, 44, h), Color("2a1f3d"))
+		draw_rect(Rect2(-18, y - h * 0.5 + 4, 36, h - 8), Color("8a8f9a"))
+		draw_circle(Vector2(0, y), 16.0, Color("2a1f3d"))
+		draw_circle(Vector2(0, y), 12.0, Color("6fe0f0") if _open else Color("d9b44a"))
+
+
+## Two beams crossed like a plus on a hub, turning slowly: the cross-shaped rotating hazard of the tower. Touching an
+## arm costs a heart; the rhythm is regular and shown by a faint ring. `speed` in degrees per second.
+class SpinBeam extends Part:
+	var arm := 150.0
+	var speed := 45.0
+	var _ang := 0.0
+	var _cool := 0.0
+
+	func _build() -> void:
+		arm = float(data.get("arm", 2.4)) * TILE
+		speed = float(data.get("speed", 45.0))
+		_ang = deg_to_rad(float(data.get("phase", 0.0)))
+
+	func _physics_process(delta: float) -> void:
+		_ang += deg_to_rad(speed) * delta
+		_cool = maxf(0.0, _cool - delta)
+		var p := player()
+		if p != null and _cool <= 0.0 and p.invulnerable <= 0.0:
+			var local := to_local(p.global_position + Vector2(0, -30))
+			for k in 4:
+				var dir := Vector2.from_angle(_ang + k * PI * 0.5)
+				var along := local.dot(dir)
+				if along > 20.0 and along < arm:
+					var off := absf(local.cross(dir))
+					if off < 22.0:
+						_cool = 1.0
+						p.take_hit(global_position.x - dir.x * 40.0)
+						break
+		queue_redraw()
+
+	func _draw() -> void:
+		draw_arc(Vector2.ZERO, arm, 0, TAU, 40, Color(1, 1, 1, 0.07), 2.0)
+		for k in 4:
+			var dir := Vector2.from_angle(_ang + k * PI * 0.5)
+			var n := Vector2(-dir.y, dir.x)
+			var tip := dir * arm
+			var pts := PackedVector2Array([n * 11.0, tip + n * 11.0, tip - n * 11.0, -n * 11.0])
+			draw_colored_polygon(pts, Color("a8743f"))
+			draw_polyline(pts + PackedVector2Array([pts[0]]), Color("2a1f3d"), 3.0)
+			draw_circle(tip, 13.0, Color("2a1f3d"))
+			draw_circle(tip, 9.0, Color("8d8f9a"))
+		draw_circle(Vector2.ZERO, 20.0, Color("2a1f3d"))
+		draw_circle(Vector2.ZERO, 15.0, Color("d9b44a"))
+
+
+## The egg's nest: a rope target holds it up; when the rope is shot the nest falls, the egg cracks and Tikkit hatches
+## (2.3 s), then joins the hero. With the deed `egg_saved` the nest hangs in the branch within reach (full), without it
+## the egg lies cracked in smoke lower down (none). Either way the hatch happens.
+class HatchNest extends Part:
+	var _state := 0              ## 0 hanging, 1 falling, 2 hatching, 3 done
+	var _t := 0.0
+	var _y := 0.0
+	var _ground_y := 0.0
+	var cracked := false
+
+	func _build() -> void:
+		cracked = bool(data.get("cracked", false))
+		_ground_y = float(data.get("drop", 4)) * TILE
+		add_to_group("hatch_nest")
+
+	func release() -> void:
+		if _state == 0:
+			_state = 1
+
+	func _physics_process(delta: float) -> void:
+		match _state:
+			1:
+				_t += delta
+				_y = minf(_y + _t * 1500.0 * delta, _ground_y)
+				if _y >= _ground_y:
+					_state = 2
+					_t = 0.0
+					SpriteFX.play(get_parent(), "dust_soil", global_position + Vector2(0, _ground_y), 1.0)
+			2:
+				_t += delta
+				if _t >= 2.3:
+					_state = 3
+					if game != null and game.has_method("tikkit_joins"):
+						game.tikkit_joins(global_position + Vector2(0, _ground_y - 40.0))
+		queue_redraw()
+
+	func _draw() -> void:
+		var base := Vector2(0, _y)
+		draw_arc(base + Vector2(0, -6), 34.0, 0.15, PI - 0.15, 18, Color("2a1f3d"), 12.0)
+		draw_arc(base + Vector2(0, -6), 34.0, 0.15, PI - 0.15, 18, Color("8a5a2b"), 8.0)
+		if _state < 3:
+			var glow := 0.5 + 0.5 * sin(Time.get_ticks_msec() * 0.006)
+			var egg := Vector2(0, -34) + base
+			var shell := Color("f1e6d0") if not cracked else Color("8a7a8a")
+			if _state == 2:
+				shell = Color("f6efe0").lerp(Color(1, 0.95, 0.6), clampf(_t / 2.3, 0, 1))
+				draw_circle(egg, 40.0 + _t * 22.0, Color(1, 0.9, 0.5, 0.12 + 0.2 * (_t / 2.3)))
+			draw_circle(egg, 22.0, Color("2a1f3d"))
+			draw_circle(egg, 19.0, shell)
+			draw_line(egg + Vector2(-8, -6), egg + Vector2(0, 2), Color("2a1f3d"), 2.0)
+			draw_line(egg + Vector2(0, 2), egg + Vector2(8, -4), Color("2a1f3d"), 2.0)
+			draw_circle(egg + Vector2(0, 0), 6.0 + glow * 2.0, Color(1, 0.9, 0.5, 0.6))

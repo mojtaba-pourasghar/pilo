@@ -24,6 +24,8 @@ static func tex(cell: String) -> Texture2D:
 static func build_all(objects: Array, root: Node2D, game: Node) -> Array:
 	var made: Array = []
 	for obj in objects:
+		if not RouteParts.wanted(obj, game):
+			continue
 		var site := _make(obj)
 		if site == null:
 			continue
@@ -43,6 +45,8 @@ static func _make(obj: Dictionary) -> Site:
 			return NestSite.new()
 		"seed":
 			return SeedSite.new()
+		"bridge":
+			return ReadyBridge.new()
 		"shrine":
 			return ShrineSite.new()
 		"door":
@@ -260,3 +264,13 @@ class DoorSite extends Site:
 		var tw := create_tween()
 		tw.tween_property(_body, "position:y", _body.position.y - TILE * 3.2, 0.7)
 		tw.tween_callback(func(): _body.get_child(0).set_deferred("disabled", true))
+
+
+## The living bridge that the old level planted: already there in the new level (no deed to earn).
+class ReadyBridge extends SeedSite:
+	func setup(obj: Dictionary) -> void:
+		super.setup(obj)
+		_plant()
+
+	func complete() -> void:
+		done = true

@@ -21,6 +21,7 @@ func _ready() -> void:
 	await _test_route_parts()
 	await _test_traps()
 	await _test_pair_companion()
+	await _test_pair1_new_level()
 	_test_deeds()
 	await _test_pair_sites()
 	await _test_pair1_old_level()
@@ -1370,6 +1371,105 @@ func _test_pair_companion() -> void:
 	await _wait(0.2)
 	_check(pc.id == "embri", "swapping again returns to Embri")
 	_stop(game)
+
+
+## The new level of pair 1: the deeds choose the variant, shooting the rope hatches Tikkit, crystals open the gate,
+## the spinning beams hurt, the guardian is freed by three shots while its thread glows and the exit opens.
+func _test_pair1_new_level() -> void:
+	var data := LevelManager.load_pair_level("new_01")
+	_check(not data.is_empty() and String(data.hero) == "arsam" and String(data.weapon) == "time_bow", "new_01 is Arsam's level with the bow")
+	for combo in [["none", []], ["partial", ["egg_saved"]], ["full", ["egg_saved", "bridge_planted", "shrine_lit"]]]:
+		DeedsStore.clear()
+		for d in combo[1]:
+			DeedsStore.add(d)
+		LevelManager.override_level = LevelManager.load_pair_level("new_01")
+		LevelManager.current_level = 102
+		var g: Node = load("res://scenes/gameplay/game.tscn").instantiate()
+		add_child(g)
+		for i in 3:
+			await get_tree().physics_frame
+		var v: String = g.data.variant
+		_check(v == combo[0], "deeds %s give the %s variant (%s)" % [str(combo[1].size()), combo[0], v])
+		var types := {}
+		for x in get_tree().get_nodes_in_group("route_part"):
+			var t := String(x.data.get("type", ""))
+			types[t] = int(types.get(t, 0)) + 1
+		var bridges := get_tree().get_nodes_in_group("pair_site").filter(func(n): return String(n.data.get("type", "")) == "bridge").size()
+		match combo[0]:
+			"full":
+				_check(bridges == 1 and not types.has("rope_swing"), "full: the living bridge is there, no rope swings")
+				_check(int(types.get("shot_target", 0)) == 1 and int(types.get("spin_beam", 0)) == 2, "full: one rope target, two spinning beams")
+			"none":
+				_check(bridges == 0 and int(types.get("rope_swing", 0)) == 2, "none: no bridge, two rope swings instead")
+				_check(int(types.get("spin_beam", 0)) == 3 and int(types.get("shot_target", 0)) == 4, "none: an extra beam, the rope and three crystals")
+		g.queue_free()
+		await get_tree().process_frame
+		LevelManager.override_level = {}
+	DeedsStore.clear()
+	# a full play of the mechanics in the none variant
+	LevelManager.override_level = LevelManager.load_pair_level("new_01")
+	LevelManager.current_level = 102
+	var game: Node = load("res://scenes/gameplay/game.tscn").instantiate()
+	add_child(game)
+	for i in 3:
+		await get_tree().physics_frame
+	var p: Node = game.player
+	_check(game._follower == null, "no companion before the egg hatches")
+	var rope: Node = null
+	var nest: Node = null
+	var crystals: Array = []
+	var gate: Node = null
+	var beam: Node = null
+	for x in get_tree().get_nodes_in_group("route_part"):
+		var t := String(x.data.get("type", ""))
+		if t == "shot_target" and String(x.kind) == "rope":
+			rope = x
+		elif t == "shot_target":
+			crystals.append(x)
+		elif t == "hatch_nest":
+			nest = x
+		elif t == "gate":
+			gate = x
+		elif t == "spin_beam" and beam == null:
+			beam = x
+	_check(nest != null and nest.cracked, "without egg_saved the egg lies cracked in smoke")
+	rope.receive_hit("shot", p.global_position)
+	await _wait(1.5)
+	_check(nest._state >= 2, "shooting the rope drops the nest and the egg starts to hatch")
+	await _wait(2.6)
+	_check(game._follower is PairCompanion and game._follower.id == "tikkit", "Tikkit hatches and joins the hero")
+	# crystals open the gate (need 3)
+	_check(not gate._open, "the shrine gate is closed without the deed")
+	for c in crystals:
+		c.receive_hit("shot", p.global_position)
+	await _wait(0.2)
+	_check(gate._open, "three crystals open the gate")
+	# a spinning beam hurts
+	p.global_position = beam.global_position + Vector2(100, 40)
+	p.invulnerable = 0.0
+	var hearts: int = p.hearts
+	for i in 160:
+		await get_tree().physics_frame
+		if p.hearts < hearts:
+			break
+	_check(p.hearts < hearts, "a spinning beam hurts the hero that stays in its sweep")
+	# the guardian: bounces off while not resting; three shots while resting free it
+	var sg: Node = null
+	for e in get_tree().get_nodes_in_group("keeper"):
+		sg = e
+	_check(sg is Stumpguard, "the guardian is in the arena")
+	sg.state = "idle"
+	_check(not sg.receive_hit("shot", Vector2.ZERO), "a shot bounces off the bark while it is not resting")
+	for i in 3:
+		sg.state = "rest"
+		sg._t = 2.0
+		_check(sg.receive_hit("shot", Vector2.ZERO), "a shot on the glowing thread counts (%d)" % (i + 1))
+		await _wait(0.05)
+	_check(sg.freed and game.info.exit != null, "three hits free the guardian")
+	LevelManager.override_level = {}
+	game.queue_free()
+	await get_tree().process_frame
+	DeedsStore.clear()
 
 
 ## Material feedback and living scenery (docs/40 §8): every surface has its effects, rain makes the ground
