@@ -29,6 +29,7 @@ SHEETS = {
     "v3_fx_ground_impacts": (6, 40), "v3_fx_light": (6, 40), "v3_fx_water": (6, 40), "v3_critters_forest": (6, 40),
     "v3_fx_night": (6, 40), "v3_fx_heat": (6, 40), "v3_fx_snow": (6, 40), "v3_fx_rain_wind": (6, 40), "v3_clouds": (6, 40),
     "v3_plants_sway": (6, 40),
+    "v3_cut_props": (6, 40), "v3_ui_mission_kit": (6, 40), "v3_swap_fx": (6, 40), "v3_embri_forms": (6, 40), "v3_tikkit_forms": (6, 40),
     "v3_terrain_old": (6, 1500), "v3_terrain_new": (6, 1500), "v3_props_motion": (8, 1500), "v3_props_tower": (8, 1500),
     "v3_bg_old_far": (8, 20000), "v3_bg_old_village": (8, 20000), "v3_bg_old_near": (8, 20000),
     "v3_bg_old_front": (8, 20000), "v3_bg_new_far": (8, 20000), "v3_bg_new_village": (8, 20000),
@@ -239,7 +240,7 @@ def cut_grid(name, counts):
 
 
 # effect sheets: every row is one animation (or a few); frames = the groups separated by empty gaps
-AUTO_ROWS = ["v3_critters_forest", "v3_critters_forest_b", "v3_fx_ground_impacts", "v3_fx_light", "v3_fx_water", "v3_fx_night", "v3_fx_heat",
+AUTO_ROWS = ["v3_cut_props", "v3_ui_mission_kit", "v3_swap_fx", "v3_embri_forms", "v3_tikkit_forms", "v3_critters_forest", "v3_critters_forest_b", "v3_fx_ground_impacts", "v3_fx_light", "v3_fx_water", "v3_fx_night", "v3_fx_heat",
              "v3_fx_snow", "v3_fx_rain_wind", "v3_clouds", "v3_plants_sway"]
 
 

@@ -185,6 +185,10 @@ func _ready() -> void:
 	hud.setup(LevelManager.level_title(level_id), info.stars, info.keys > 0 or info.time_key, lens_enabled)
 	hud.set_hearts(player.hearts, player.max_hearts)
 	hud.set_weapon(Weapons.current())
+	if data.has("briefing") and not bool(data.get("skip_intro", false)):
+		_play_mission_intro.call_deferred()
+	elif data.get("swipe_start", false) == true:
+		_show_swipe_hint.call_deferred()
 	hud.set_companion(Loadout.companion())
 	hud.set_coins(0)
 	hud.set_diamonds(0, info.diamonds)
@@ -747,6 +751,47 @@ func cycle_companion() -> void:
 ## acts), 1 the guide map (shows both keys for a moment, three times a level), 2 the mirror (light
 ## too) - or, while carrying something between the times (K12), that thing.
 var map_uses := 3
+
+
+## The animated mission briefing before a level (docs/40 section 3): the game is paused while it plays; tap skips.
+func _play_mission_intro() -> void:
+	var intro := MissionIntro.new()
+	intro.spec = data.briefing
+	intro.game = self
+	add_child(intro)
+	get_tree().paused = true
+	await intro.finished
+	get_tree().paused = false
+	if data.get("swipe_start", false) == true:
+		_show_swipe_hint()
+
+
+## "Drag to start": a hand circles over the joystick until the hero is first moved.
+func _show_swipe_hint() -> void:
+	var layer := CanvasLayer.new()
+	layer.layer = 30
+	add_child(layer)
+	var view := get_viewport().get_visible_rect().size
+	var label := UIKit.make_label(Strings.t("swipe_start"), 38, Color("fff6dc"), 8, Color("1d2440"))
+	label.size = Vector2(view.x * 0.5, 60)
+	label.position = Vector2(view.x * 0.25, view.y * 0.30)
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	layer.add_child(label)
+	var hand := Label.new()
+	hand.text = "👆"
+	hand.add_theme_font_size_override("font_size", 74)
+	hand.position = Vector2(view.x * 0.12, view.y * 0.62)
+	layer.add_child(hand)
+	var tw := hand.create_tween().set_loops()
+	tw.tween_property(hand, "position:x", view.x * 0.20, 0.7).set_trans(Tween.TRANS_SINE)
+	tw.tween_property(hand, "position:x", view.x * 0.12, 0.7).set_trans(Tween.TRANS_SINE)
+	while is_inside_tree() and Input.get_action_strength("move_right") < 0.2 and Input.get_action_strength("move_left") < 0.2:
+		await get_tree().process_frame
+	if is_instance_valid(layer):
+		var fade := layer.create_tween()
+		fade.tween_property(label, "modulate:a", 0.0, 0.4)
+		fade.parallel().tween_property(hand, "modulate:a", 0.0, 0.4)
+		fade.tween_callback(layer.queue_free)
 
 
 ## A shot target was hit: a rope drops the nest nearby, a crystal or button counts toward its gate.

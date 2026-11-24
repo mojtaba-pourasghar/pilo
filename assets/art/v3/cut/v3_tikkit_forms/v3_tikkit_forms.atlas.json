@@ -1,0 +1,277 @@
+{
+ "sheet": "v3_tikkit_forms",
+ "key": "magenta",
+ "size": [
+  1776,
+  896
+ ],
+ "rows": [
+  {
+   "base": 282,
+   "frames": [
+    {
+     "file": "v3_tikkit_forms_r00_f00.png",
+     "box": [
+      44,
+      124,
+      171,
+      261
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r00_f01.png",
+     "box": [
+      193,
+      99,
+      354,
+      274
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r00_f02.png",
+     "box": [
+      372,
+      84,
+      549,
+      277
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r00_f03.png",
+     "box": [
+      568,
+      65,
+      770,
+      282
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r00_f04.png",
+     "box": [
+      791,
+      65,
+      996,
+      282
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r00_f05.png",
+     "box": [
+      1030,
+      65,
+      1233,
+      282
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r00_f06.png",
+     "box": [
+      1276,
+      66,
+      1478,
+      282
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r00_f07.png",
+     "box": [
+      1524,
+      67,
+      1724,
+      282
+     ]
+    }
+   ]
+  },
+  {
+   "base": 547,
+   "frames": [
+    {
+     "file": "v3_tikkit_forms_r01_f00.png",
+     "box": [
+      14,
+      388,
+      154,
+      545
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r01_f01.png",
+     "box": [
+      169,
+      388,
+      308,
+      542
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r01_f02.png",
+     "box": [
+      314,
+      389,
+      465,
+      538
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r01_f03.png",
+     "box": [
+      472,
+      388,
+      638,
+      542
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r01_f04.png",
+     "box": [
+      650,
+      388,
+      836,
+      547
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r01_f05.png",
+     "box": [
+      867,
+      388,
+      1000,
+      541
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r01_f06.png",
+     "box": [
+      1013,
+      389,
+      1148,
+      541
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r01_f07.png",
+     "box": [
+      1162,
+      389,
+      1296,
+      541
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r01_f08.png",
+     "box": [
+      1328,
+      388,
+      1459,
+      542
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r01_f09.png",
+     "box": [
+      1482,
+      388,
+      1607,
+      540
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r01_f10.png",
+     "box": [
+      1632,
+      388,
+      1746,
+      535
+     ]
+    }
+   ]
+  },
+  {
+   "base": 832,
+   "frames": [
+    {
+     "file": "v3_tikkit_forms_r02_f00.png",
+     "box": [
+      24,
+      623,
+      190,
+      832
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r02_f01.png",
+     "box": [
+      210,
+      624,
+      375,
+      832
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r02_f02.png",
+     "box": [
+      395,
+      623,
+      556,
+      832
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r02_f03.png",
+     "box": [
+      576,
+      623,
+      739,
+      832
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r02_f04.png",
+     "box": [
+      829,
+      630,
+      1013,
+      832
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r02_f05.png",
+     "box": [
+      1033,
+      650,
+      1195,
+      832
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r02_f06.png",
+     "box": [
+      1213,
+      656,
+      1375,
+      832
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r02_f07.png",
+     "box": [
+      1394,
+      662,
+      1554,
+      832
+     ]
+    },
+    {
+     "file": "v3_tikkit_forms_r02_f08.png",
+     "box": [
+      1574,
+      624,
+      1739,
+      832
+     ]
+    }
+   ]
+  }
+ ]
+}

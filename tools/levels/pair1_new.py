@@ -140,6 +140,20 @@ level = {
                   {"from": 76 * T, "art": "v3_scene_tower_inside"}, {"from": 112 * T, "art": ""},
                   {"from": 136 * T, "art": "v3_scene_antlerion_den_new"}],
     "scenes": [["N1", 0], ["N2", 24], ["N3", 52], ["N4", 76], ["N5", 112], ["N6", 136]],
+    "swipe_start": True,
+    "briefing": {
+        "backdrop": "v3_scene_valley_new", "duration": 11.0, "zoom": [1.0, 1.1], "pan": [0.03, 0.0],
+        "actors": [{"who": "arsam", "at": [0.24, 0.80], "scale": 2.4, "anim": "idle"}],
+        "props": [{"sheet": "v3_cut_props", "row": 1, "n": 4, "fps": 6, "at": [0.74, 0.74], "scale": 0.8, "from": 5.2, "loop": True}],
+        "events": [
+            {"t": 0.5, "caption": "intro_new1_a", "dur": 2.4},
+            {"t": 3.0, "actor": 0, "anim": "walk", "move": [0.50, 0.80], "dur": 2.4, "after": "idle"},
+            {"t": 5.2, "prop": 0, "show": True, "restart": True, "caption": "intro_new1_b", "dur": 3.0},
+            {"t": 5.6, "actor": 0, "anim": "surprised"},
+            {"t": 8.0, "actor": 0, "anim": "idle", "caption": "intro_new1_c", "dur": 2.0},
+            {"t": 9.2, "objective": True, "text": "intro_new1_goal"},
+        ],
+    },
     "objects": objects,
     "map": rows,
 }

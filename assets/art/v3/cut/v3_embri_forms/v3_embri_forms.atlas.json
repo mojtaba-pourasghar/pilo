@@ -1,0 +1,223 @@
+{
+ "sheet": "v3_embri_forms",
+ "key": "white_fx",
+ "size": [
+  1264,
+  1264
+ ],
+ "rows": [
+  {
+   "base": 368,
+   "frames": [
+    {
+     "file": "v3_embri_forms_r00_f00.png",
+     "box": [
+      22,
+      218,
+      145,
+      368
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r00_f01.png",
+     "box": [
+      175,
+      169,
+      293,
+      367
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r00_f02.png",
+     "box": [
+      326,
+      150,
+      437,
+      358
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r00_f03.png",
+     "box": [
+      473,
+      119,
+      584,
+      343
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r00_f04.png",
+     "box": [
+      621,
+      119,
+      733,
+      339
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r00_f05.png",
+     "box": [
+      774,
+      172,
+      918,
+      350
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r00_f06.png",
+     "box": [
+      936,
+      172,
+      1081,
+      350
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r00_f07.png",
+     "box": [
+      1097,
+      172,
+      1244,
+      350
+     ]
+    }
+   ]
+  },
+  {
+   "base": 727,
+   "frames": [
+    {
+     "file": "v3_embri_forms_r01_f00.png",
+     "box": [
+      24,
+      588,
+      131,
+      727
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r01_f01.png",
+     "box": [
+      147,
+      491,
+      1111,
+      726
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r01_f02.png",
+     "box": [
+      1134,
+      599,
+      1241,
+      727
+     ]
+    }
+   ]
+  },
+  {
+   "base": 1124,
+   "frames": [
+    {
+     "file": "v3_embri_forms_r02_f00.png",
+     "box": [
+      20,
+      966,
+      126,
+      1124
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r02_f01.png",
+     "box": [
+      147,
+      948,
+      243,
+      1123
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r02_f02.png",
+     "box": [
+      264,
+      942,
+      350,
+      1116
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r02_f03.png",
+     "box": [
+      372,
+      934,
+      457,
+      1112
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r02_f04.png",
+     "box": [
+      485,
+      919,
+      569,
+      1123
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r02_f05.png",
+     "box": [
+      591,
+      883,
+      674,
+      1123
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r02_f06.png",
+     "box": [
+      686,
+      865,
+      771,
+      1123
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r02_f07.png",
+     "box": [
+      783,
+      844,
+      870,
+      1123
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r02_f08.png",
+     "box": [
+      895,
+      901,
+      988,
+      1123
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r02_f09.png",
+     "box": [
+      1001,
+      948,
+      1112,
+      1123
+     ]
+    },
+    {
+     "file": "v3_embri_forms_r02_f10.png",
+     "box": [
+      1135,
+      997,
+      1241,
+      1124
+     ]
+    }
+   ]
+  }
+ ]
+}

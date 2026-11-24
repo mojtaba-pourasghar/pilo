@@ -22,6 +22,7 @@ func _ready() -> void:
 	await _test_traps()
 	await _test_pair_companion()
 	await _test_pair1_new_level()
+	await _test_mission_intro()
 	_test_deeds()
 	await _test_pair_sites()
 	await _test_pair1_old_level()
@@ -1063,13 +1064,45 @@ func _test_pair_sites() -> void:
 	DeedsStore.clear()
 
 
+## Tests play levels without the animated briefing (it pauses the game); the briefing has its own test.
+func _no_intro(d: Dictionary) -> Dictionary:
+	d["skip_intro"] = true
+	return d
+
+
+## The animated briefing: it plays, pauses the game, shows captions and the objective, and a tap skips it.
+func _test_mission_intro() -> void:
+	var d := LevelManager.load_pair_level("old_01")
+	_check(d.has("briefing") and d.briefing.events.size() >= 5 and d.briefing.actors.size() == 1, "old_01 has an animated briefing with actors and events")
+	LevelManager.override_level = d
+	LevelManager.current_level = 101
+	var game: Node = load("res://scenes/gameplay/game.tscn").instantiate()
+	add_child(game)
+	await _wait(0.3)
+	var intro: Node = null
+	for c in game.get_children():
+		if c is MissionIntro:
+			intro = c
+	_check(intro != null and get_tree().paused, "the briefing plays and pauses the game")
+	await get_tree().create_timer(3.2, true).timeout
+	_check(intro._caption.modulate.a > 0.1 or intro._t > 3.0, "captions appear on the timeline")
+	var rig: SideRig = intro._actors[0][0]
+	_check(rig.lock_anim in ["wake", "idle", "walk"], "the hero wakes up on the timeline (%s)" % rig.lock_anim)
+	intro.finish()
+	await get_tree().create_timer(0.6, true).timeout
+	_check(not get_tree().paused, "a tap skips the briefing and the game continues")
+	LevelManager.override_level = {}
+	game.queue_free()
+	await get_tree().process_frame
+
+
 ## The old level of pair 1 (docs/33 §3): built from its data with the grandfather, the pair-1 scenery,
 ## deed sites; a blind bot reaches the gate with no deed done (never a dead end).
 func _test_pair1_old_level() -> void:
 	DeedsStore.clear()
 	var data := LevelManager.load_pair_level("old_01")
 	_check(not data.is_empty() and String(data.hero) == "grandfather" and String(data.era) == "old", "old_01 is defined for the grandfather")
-	LevelManager.override_level = data
+	LevelManager.override_level = _no_intro(data)
 	LevelManager.current_level = 101
 	var game: Node = load("res://scenes/gameplay/game.tscn").instantiate()
 	add_child(game)
@@ -1382,7 +1415,7 @@ func _test_pair1_new_level() -> void:
 		DeedsStore.clear()
 		for d in combo[1]:
 			DeedsStore.add(d)
-		LevelManager.override_level = LevelManager.load_pair_level("new_01")
+		LevelManager.override_level = _no_intro(LevelManager.load_pair_level("new_01"))
 		LevelManager.current_level = 102
 		var g: Node = load("res://scenes/gameplay/game.tscn").instantiate()
 		add_child(g)
@@ -1407,7 +1440,7 @@ func _test_pair1_new_level() -> void:
 		LevelManager.override_level = {}
 	DeedsStore.clear()
 	# a full play of the mechanics in the none variant
-	LevelManager.override_level = LevelManager.load_pair_level("new_01")
+	LevelManager.override_level = _no_intro(LevelManager.load_pair_level("new_01"))
 	LevelManager.current_level = 102
 	var game: Node = load("res://scenes/gameplay/game.tscn").instantiate()
 	add_child(game)

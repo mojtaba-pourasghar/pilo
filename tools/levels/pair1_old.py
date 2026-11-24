@@ -166,6 +166,20 @@ level = {
     "backdrops": [{"from": 24 * T, "art": "v3_scene_valley_old"}, {"from": 50 * T, "art": "v3_scene_ruins_old"},
                   {"from": 76 * T, "art": ""}, {"from": 113 * T, "art": "v3_scene_roots_old"}, {"from": 128 * T, "art": ""}],
     "scenes": [["S1", 0], ["S2", 24], ["S3", 50], ["S4", 76], ["S5", 113], ["S6", 128]],
+    "swipe_start": True,
+    "briefing": {
+        "backdrop": "v3_scene_valley_old", "duration": 11.5, "zoom": [1.0, 1.12], "pan": [-0.03, 0.0],
+        "actors": [{"who": "grandfather", "at": [0.30, 0.80], "scale": 2.4, "anim": "sleep"}],
+        "props": [{"sheet": "v3_cut_props", "row": 0, "n": 6, "fps": 5, "at": [0.72, 0.80], "scale": 1.0, "start_shown": True, "loop": False, "from": 0.4}],
+        "events": [
+            {"t": 0.5, "caption": "intro_old1_a", "dur": 2.4},
+            {"t": 3.0, "actor": 0, "anim": "wake"},
+            {"t": 4.4, "actor": 0, "anim": "idle", "caption": "intro_old1_b", "dur": 3.0},
+            {"t": 7.6, "actor": 0, "anim": "walk", "move": [0.46, 0.80], "dur": 2.0, "after": "idle"},
+            {"t": 8.0, "caption": "intro_old1_c", "dur": 2.0},
+            {"t": 9.4, "objective": True, "text": "intro_old1_goal"},
+        ],
+    },
     "objects": objects,
     "map": rows,
 }

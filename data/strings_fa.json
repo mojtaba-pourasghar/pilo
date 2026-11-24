@@ -709,5 +709,15 @@
  "world_sky_islands_subtitle": "عقاب طوفان آسمان را آشفته کرده",
  "world_sky_islands_title": "جزیره‌های آسمانی",
  "world_snow_mountain_subtitle": "غول یخی قله را بسته",
- "world_snow_mountain_title": "کوهستان برفی"
+ "world_snow_mountain_title": "کوهستان برفی",
+ "intro_skip": "رد کردن (لمس)",
+ "swipe_start": "برای شروع بکش",
+ "intro_old1_a": "صبح است؛ دشت هنوز خواب است…",
+ "intro_old1_b": "پدربزرگِ جوان بیدار می‌شود. امروز باید از تخمِ کوچک مراقبت کند.",
+ "intro_old1_c": "ولی دودِ بنفش از دور می‌آید!",
+ "intro_old1_goal": "تخم را به لانهٔ بلند برسان",
+ "intro_new1_a": "سال‌ها گذشته؛ دشت خسته است.",
+ "intro_new1_b": "اگر آن روز تخم نجات یافته باشد، هنوز جایی منتظر است.",
+ "intro_new1_c": "آرسام ردپای دود را دنبال می‌کند.",
+ "intro_new1_goal": "تخم را پیدا کن"
 }
