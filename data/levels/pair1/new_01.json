@@ -248,6 +248,7 @@
   ]
  ],
  "swipe_start": true,
+ "pair_name": "new_01",
  "enemy_kinds": {
   "e": "imp",
   "y": "wisp"

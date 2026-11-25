@@ -146,7 +146,7 @@ func act(_game: Node) -> String:
 		return ""
 	var name := _best_form()
 	form = name
-	cooldown = COOLDOWN
+	cooldown = Upgrades.companion_cooldown(id, COOLDOWN)
 	_still = 0.0
 	_begin_form(name)
 	formed.emit(name)

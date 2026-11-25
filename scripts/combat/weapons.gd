@@ -86,7 +86,7 @@ static func fire(shooter: Node2D, facing: float, power := 1.0) -> Array:
 			var flight := (target.global_position.distance_to(origin) / speed) if target else 0.45
 			shot.velocity.y -= 0.5 * float(cfg.gravity) * flight
 		shot.fall = float(cfg.gravity)
-		shot.life = float(cfg.life) * (lerpf(0.55, 1.5, power) if id == "time_bow" else 1.0)
+		shot.life = float(cfg.life) * (lerpf(0.55, 1.5, power) if id == "time_bow" else 1.0) * Upgrades.range_mul(id)
 		shot.power = power
 		shot.homing = target if id != "boomerang" else null
 		shot.position = origin

@@ -59,3 +59,8 @@
 | Great clock transition | `assets/art/pair1_sheets/g5v3_clock_v3.png` | ✅ final |
 | Chapter map (6 dual nodes) | `assets/art/pair1_sheets/g5v3_map_v3.png` | ✅ final |
 | Auraling card reveal | `assets/art/pair1_sheets/g5v3_card_v3.png` | ✅ final |
+| Market hub v3 (6 tabs, bundles) | `assets/art/v3/v3_ui_market_hub.png` | ✅ built (`scenes/menus/market.tscn`) |
+| Market: tool upgrade kit | `assets/art/v3/v3_ui_tools_upgrade.png` | ✅ built (tab 1) |
+| Market: companions + evolution | `assets/art/v3/v3_ui_companions_shop.png` | ✅ built |
+| Market: coins / video / daily gift | `assets/art/v3/v3_ui_coins_shop.png` | ✅ built (hearts tab) |
+| Market: heroes | `assets/art/v3/v3_ui_heroes_shop.png` | ⏸ Q17 (heroes not in the story) |

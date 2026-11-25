@@ -213,15 +213,29 @@ class SeedSite extends Site:
 
 
 class ShrineSite extends Site:
+	var _lit_t := -1.0
+	var _painted := false
+
 	func _build_art() -> void:
 		_sprite = Sprite2D.new()
-		_sprite.texture = PairSites.tex("r01_c02")
+		# the painted shrine (docs/44, v3f_i_shrine_gate row 0): dark, then the lantern catches and glows
+		var painted := SideRig.pic("v3f_i_shrine_gate", 0, 0)
+		_painted = painted != null
+		_sprite.texture = painted if _painted else PairSites.tex("r01_c02")
 		if _sprite.texture:
-			var k := 190.0 / _sprite.texture.get_height()
+			var k := 200.0 / _sprite.texture.get_height()
 			_sprite.scale = Vector2(k, k)
-			_sprite.position = Vector2(0, -95)
+			_sprite.position = Vector2(0, -100)
 		add_child(_sprite)
 		reach = 130.0
+
+	func _tick(delta: float) -> void:
+		if _painted and _lit_t >= 0.0:
+			_lit_t += delta
+			var idx := mini(1 + int(_lit_t * 8.0), 7) if _lit_t < 1.0 else 5 + int(_lit_t * 5.0) % 3
+			var t := SideRig.pic("v3f_i_shrine_gate", 0, idx)
+			if t:
+				_sprite.texture = t
 
 	func act() -> bool:
 		if done or not near():
@@ -229,7 +243,10 @@ class ShrineSite extends Site:
 		var p := player()
 		if p and p.get("has_lantern") == false:
 			return false
-		_sprite.texture = PairSites.tex("r01_c03")
+		if _painted:
+			_lit_t = 0.0
+		else:
+			_sprite.texture = PairSites.tex("r01_c03")
 		complete()
 		for node in get_tree().get_nodes_in_group("pair_site"):
 			if node is DoorSite and String(node.data.get("id", "")) == String(data.get("opens", "")):
@@ -239,6 +256,8 @@ class ShrineSite extends Site:
 
 class DoorSite extends Site:
 	var _body: StaticBody2D
+	var _gate: Sprite2D
+	var _open_t := -1.0
 
 	func _build_art() -> void:
 		_body = StaticBody2D.new()
@@ -256,11 +275,31 @@ class DoorSite extends Site:
 		_body.position = Vector2(0, -h * 0.5)
 		slab.position = Vector2(0, -h * 0.5)
 		add_child(_body)
+		var painted := SideRig.pic("v3f_i_shrine_gate", 1, 0)
+		if painted:
+			slab.visible = false
+			_gate = Sprite2D.new()
+			_gate.texture = painted
+			var k := h * 1.15 / painted.get_height()
+			_gate.scale = Vector2(k, k)
+			_gate.position = Vector2(0, -h * 1.15 * 0.5 + 4.0)
+			add_child(_gate)
+
+	func _tick(delta: float) -> void:
+		if _gate and _open_t >= 0.0:
+			_open_t += delta
+			var t := SideRig.pic("v3f_i_shrine_gate", 1, mini(int(_open_t * 7.0), 5))
+			if t:
+				_gate.texture = t
 
 	func open() -> void:
 		if done:
 			return
 		done = true
+		if _gate:
+			_open_t = 0.0
+			_body.get_child(0).set_deferred("disabled", true)
+			return
 		var tw := create_tween()
 		tw.tween_property(_body, "position:y", _body.position.y - TILE * 3.2, 0.7)
 		tw.tween_callback(func(): _body.get_child(0).set_deferred("disabled", true))

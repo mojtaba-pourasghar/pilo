@@ -87,6 +87,15 @@ func _draw() -> void:
 
 
 func _draw_gate() -> void:
+	# v3 levels: the painted gate (docs/44, v3f_i_markers row 1): closed, opening, then the light breathing inside
+	if game != null and game.get("data") is Dictionary and game.data.has("terrain"):
+		var idx := 0 if locked else 5 + int(_t * 8.0) % 7
+		var tex := SideRig.pic("v3f_i_markers", 1, idx)
+		if tex != null:
+			var gh := 230.0
+			var gw := tex.get_width() * gh / tex.get_height()
+			draw_texture_rect(tex, Rect2(Vector2(32 - gw * 0.5, 66 - gh), Vector2(gw, gh)), false)
+			return
 	var texture := WorldArt.tex("time_gate", "locked" if locked else "open")
 	if texture:
 		# the rendered gate, feet on the ground under it; the portal glows and breathes

@@ -23,6 +23,7 @@ func _ready() -> void:
 	await _test_pair_companion()
 	await _test_pair1_new_level()
 	await _test_mission_intro()
+	await _test_v3f_art_and_market()
 	_test_deeds()
 	await _test_pair_sites()
 	await _test_pair1_old_level()
@@ -1093,6 +1094,83 @@ func _test_mission_intro() -> void:
 	_check(not get_tree().paused, "a tap skips the briefing and the game continues")
 	LevelManager.override_level = {}
 	game.queue_free()
+	await get_tree().process_frame
+
+
+## docs/44 art in the game (frame enemies, the guardian, islands) and the v3 market with upgrades.
+func _test_v3f_art_and_market() -> void:
+	for kind in ["imp", "wisp", "clockcrow", "stilt", "bat"]:
+		var e := SideEnemy.new()
+		e.kind = kind
+		add_child(e)
+		await get_tree().process_frame
+		var r: SideEnemy.FrameRig = e.rig
+		_check(r != null and not r._frames("move").is_empty() and not r._frames("freed").is_empty(), "frame enemy %s has move and freed frames" % kind)
+		e.defeat("shot")
+		_check(e.freed and r.mode == "freed", "a shot frees the %s and it plays its freed row" % kind)
+		await get_tree().process_frame
+		e.queue_free()
+	var sg := Stumpguard.new()
+	add_child(sg)
+	await get_tree().process_frame
+	_check(sg._rig != null and not sg._rig._frames("roll").is_empty(), "the stump guardian draws its painted frames")
+	sg.state = "roll"
+	sg._sync_rig()
+	_check(sg._rig.mode == "roll", "the guardian's frames follow its state")
+	sg.queue_free()
+	var isl := RouteParts.Island.new()
+	isl.setup({"type": "island", "width": 3, "variant": 2, "bob": 10})
+	add_child(isl)
+	await get_tree().physics_frame
+	_check(isl._body != null and isl._body.get_child(0).shape.size.x > 150.0, "a floating island has a walkable top")
+	isl.queue_free()
+	# upgrades: coins buy tool levels, the shot flies further; gems evolve a companion, its cooldown shrinks
+	var keep_coins := Economy.coins()
+	var keep_gems := Economy.gems()
+	SaveManager.data["upgrades"] = {}
+	Economy.add_coins(1000)
+	_check(Upgrades.level("bow") == 1 and is_equal_approx(Upgrades.range_mul("time_bow"), 1.0), "tools start at level 1")
+	_check(Upgrades.buy("bow") and Upgrades.level("bow") == 2 and Upgrades.range_mul("time_bow") > 1.1, "an upgrade raises the level and the range")
+	Economy.add_gems(30)
+	_check(Upgrades.buy("embri", true) and Upgrades.companion_cooldown("embri", 6.0) < 6.0, "evolving a companion shortens its form cooldown")
+	SaveManager.data["upgrades"] = {}
+	Economy.spend_coins(maxi(0, Economy.coins() - keep_coins))
+	Economy.spend_gems(maxi(0, Economy.gems() - keep_gems))
+	var market: Control = load(LevelManager.STORE_SCENE).instantiate()
+	add_child(market)
+	await get_tree().process_frame
+	_check(market._tab == 4 and market._content.get_child_count() > 6, "the market opens on the bundle cards with their plates")
+	market._show(0)
+	await get_tree().process_frame
+	_check(market._tab == 0, "the tools tab shows the upgrade kit")
+	market._show(2)
+	await get_tree().process_frame
+	_check(market._tab == 2, "the companions tab shows the companion screen")
+	market.queue_free()
+	await get_tree().process_frame
+	# the v3 result screen and the great clock
+	var res := ResultV3.new()
+	res.stars = 2
+	res.coins = 12
+	add_child(res)
+	await get_tree().process_frame
+	var got := [""]
+	res.action.connect(func(id): got[0] = id)
+	res._done("next")
+	_check(got[0] == "next", "the result screen reports the chosen button")
+	DeedsStore.clear()
+	DeedsStore.add("egg_saved")
+	_check(GreatClock._done("egg_saved") and not GreatClock._done("bridge_planted"), "the great clock lights only the deeds that were done")
+	var clock := GreatClock.new()
+	add_child(clock)
+	await get_tree().process_frame
+	var pick := [""]
+	clock.chosen.connect(func(id): pick[0] = id)
+	clock._pick("new")
+	_check(pick[0] == "new", "the great clock leads on to the new level")
+	DeedsStore.clear()
+	var d := LevelManager.load_pair_level("old_01")
+	_check(String(d.get("next_pair", "")) == "new_01" and String(d.get("pair_name", "")) == "old_01", "the old level leads to its new pair")
 	await get_tree().process_frame
 
 

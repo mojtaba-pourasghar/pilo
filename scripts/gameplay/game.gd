@@ -1166,6 +1166,9 @@ func on_exit_reached() -> void:
 	var outro: Array = data.get("outro", [])
 	if not outro.is_empty():
 		await dialogue.play(outro)
+	if data.has("terrain") and data.has("pair_name"):
+		_show_result_v3(result)
+		return
 	var popup := LEVEL_COMPLETE.new()
 	popup.level_id = level_id
 	popup.stars_found = stars_collected.size()
@@ -1186,6 +1189,33 @@ func on_exit_reached() -> void:
 	SaveManager.save_game()
 	popup.action.connect(_on_complete_action)
 	add_child(popup)
+
+
+## The v3 result screen (g5v3_result_v3) for pair levels; after the old level the great clock shows the deeds
+## and leads on to the new level of the pair.
+func _show_result_v3(_result: Dictionary) -> void:
+	var r := rating()
+	Economy.on_win(r)
+	var best: Dictionary = SaveManager.data.get("ratings", {})
+	best[str(level_id)] = maxi(int(best.get(str(level_id), 0)), r)
+	SaveManager.data["ratings"] = best
+	SaveManager.save_game()
+	var screen := ResultV3.new()
+	screen.stars = r
+	screen.coins = coins
+	add_child(screen)
+	var id: String = await screen.action
+	if id == "retry":
+		LevelManager.play_pair_level(String(data.pair_name))
+		return
+	var next := String(data.get("next_pair", ""))
+	if next == "":
+		LevelManager.goto_village()
+		return
+	var clock := GreatClock.new()
+	add_child(clock)
+	var pick: String = await clock.chosen
+	LevelManager.play_pair_level(next if pick == "new" else String(data.pair_name))
 
 
 ## 1 star: finished; 2: no heart lost or a treasure found; 3: also a good time (40 s per 64

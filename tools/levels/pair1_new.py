@@ -146,6 +146,7 @@ level = {
                   {"from": 136 * T, "art": "v3_scene_antlerion_den_new"}],
     "scenes": [["N1", 0], ["N2", 24], ["N3", 52], ["N4", 76], ["N5", 112], ["N6", 136]],
     "swipe_start": True,
+    "pair_name": "new_01",
     "enemy_kinds": {"e": "imp", "y": "wisp"},
     "briefing": {
         "backdrop": "v3_scene_valley_new", "duration": 11.0, "zoom": [1.0, 1.1], "pan": [0.03, 0.0],

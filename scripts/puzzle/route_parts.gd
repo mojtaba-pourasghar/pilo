@@ -422,6 +422,8 @@ class FallingRock extends Part:
 		if _state == 1 or _state == 2:
 			var a := 0.25 + 0.35 * (1.0 - _timer / 0.8) if _state == 1 else 0.6
 			draw_colored_polygon(_ellipse(Vector2(0, _ground_y), Vector2(46, 9)), Color(0, 0, 0, a))
+		if _state != 3 and pic("v3f_i_hazards2", 0, 0, _home + Vector2(0, 16), 66.0, _vy * 0.0004):
+			return
 		if _state != 3:
 			draw_circle(_home + Vector2(0, 16), 28.0, Color("2a1f3d"))
 			draw_circle(_home + Vector2(0, 16), 25.0, Color("8d8f9a"))
@@ -462,6 +464,13 @@ class SteamVent extends Part:
 
 	func _draw() -> void:
 		var phase := fmod(_t, period) / period
+		if SideRig.pic("v3f_i_hazards2", 0, 4) != null:
+			if _on:
+				var ch := height * TILE * smoothstep(0.55, 0.65, phase)
+				draw_rect(Rect2(-26, -ch, 52, ch), Color(1, 0.85, 1, 0.16))
+			var look := 6 if _on else (5 if phase > 0.4 and phase <= 0.55 else 4)
+			pic("v3f_i_hazards2", 0, look, Vector2(0, 6), 74.0, 0.0, true)
+			return
 		draw_rect(Rect2(-26, -10, 52, 12), Color("2a1f3d"))
 		draw_rect(Rect2(-22, -8, 44, 8), Color("7a7f8a"))
 		if phase > 0.4 and phase <= 0.55:                  # warm-up puffs
@@ -710,6 +719,8 @@ class NetTrap extends Zone:
 		queue_redraw()
 
 	func _draw() -> void:
+		if pic("v3f_i_hazards2", 3, 5 if _torn > 0.0 else 4, Vector2(0, 4), box.x * 1.05, 0.0, true):
+			return
 		var a := 0.15 if _torn > 0.0 else 0.85
 		var w := box.x * 0.5
 		var h := box.y
@@ -802,6 +813,10 @@ class BoulderChase extends Part:
 		if _state < 1 or _state == 3:
 			return
 		var c := to_local(Vector2(_x, _ground_y(_x) - 40.0))
+		if _state == 1:
+			draw_line(to_local(Vector2(_x - 120.0, _ground_y(_x) - 6.0)), to_local(Vector2(_x - 40.0, _ground_y(_x) - 6.0)), Color(1, 0.6, 0.2, 0.7), 6.0)
+		if pic("v3f_i_hazards2", 0, 3, c, 96.0, _rot):
+			return
 		draw_circle(c, 44.0, Color("2a1f3d"))
 		draw_circle(c, 40.0, Color("8d8f9a"))
 		for i in 4:
@@ -897,7 +912,7 @@ class ShotTarget extends StaticBody2D:
 		if hit_done:
 			var since := _after
 			idx = 4 if since < 0.15 else (5 if since < 0.3 else (6 + int((since - 0.3) * 8.0) if since < 0.6 else 9))
-		var tex := SideRig.pic("v3f_i_shrine_gate", 1, idx)
+		var tex := SideRig.pic("v3f_i_shrine_gate", 2, idx)
 		if tex != null:
 			var th := 104.0
 			var tw := tex.get_width() * th / tex.get_height()
@@ -919,6 +934,7 @@ class Gate extends Part:
 	var _door: StaticBody2D
 	var _open := false
 	var _got := 0
+	var _frame := 0
 
 	func _build() -> void:
 		gate_id = String(data.get("id", "gate"))
@@ -949,8 +965,10 @@ class Gate extends Part:
 		_door.get_child(0).set_deferred("disabled", true)
 		if instant:
 			_door.position.y = -TILE * height * 1.6
+			_frame = 5
 		else:
 			create_tween().tween_property(_door, "position:y", -TILE * height * 1.6, 0.9)
+			create_tween().tween_property(self, "_frame", 5, 0.9)
 			AudioManager.play_sfx("creak", 0.9, -2.0)
 			SpriteFX.play(get_parent(), "stone_chips", global_position + Vector2(0, -TILE * height * 0.5), 1.0)
 
@@ -960,6 +978,12 @@ class Gate extends Part:
 	func _draw() -> void:
 		var h := TILE * height
 		var y := _door.position.y
+		var gate_tex := SideRig.pic("v3f_i_shrine_gate", 1, _frame)
+		if gate_tex != null:
+			var gh := h * 1.15
+			var gw := gate_tex.get_width() * gh / gate_tex.get_height()
+			draw_texture_rect(gate_tex, Rect2(Vector2(-gw * 0.5, -gh + 6.0), Vector2(gw, gh)), false)
+			return
 		if _open and y <= -h * 1.45:
 			return                    # raised out of sight
 		draw_rect(Rect2(-22, y - h * 0.5, 44, h), Color("2a1f3d"))
@@ -1053,6 +1077,19 @@ class HatchNest extends Part:
 
 	func _draw() -> void:
 		var base := Vector2(0, _y)
+		# painted nest (docs/44, v3f_i_shrine_gate row 4): hanging, falling, egg shaking and cracking, chick hatching
+		var idx := 5
+		match _state:
+			0:
+				idx = 7 if cracked else 5
+			1:
+				idx = 2 + int(_t * 8.0) % 2
+			2:
+				idx = [5, 6, 7, 8, 9][mini(int(_t / 2.3 * 5.0), 4)]
+			3:
+				idx = 4
+		if pic("v3f_i_shrine_gate", 4, idx, base + Vector2(0, 4), 96.0, 0.0, true):
+			return
 		draw_arc(base + Vector2(0, -6), 34.0, 0.15, PI - 0.15, 18, Color("2a1f3d"), 12.0)
 		draw_arc(base + Vector2(0, -6), 34.0, 0.15, PI - 0.15, 18, Color("8a5a2b"), 8.0)
 		if _state < 3:

@@ -4,7 +4,7 @@ extends Node
 const GAME_SCENE := "res://scenes/gameplay/game.tscn"
 const MENU_SCENE := "res://scenes/menus/main_menu.tscn"
 const MAP_SCENE := "res://scenes/menus/world_map.tscn"
-const STORE_SCENE := "res://scenes/menus/store.tscn"
+const STORE_SCENE := "res://scenes/menus/market.tscn"   ## the v3 market (docs/40 section 6); the old shop: store.tscn
 const INTRO_SCENE := "res://scenes/story/intro.tscn"
 const VILLAGE_SCENE := "res://scenes/menus/village.tscn"
 

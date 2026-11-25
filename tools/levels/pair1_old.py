@@ -124,7 +124,7 @@ for x in (14, 41, 52, 79, 93, 119, 134):
     on_ground(x, "e")
 put(26, B - 5, "y")
 put(66, B - 7, "y")
-put(95, B - 12, "y")
+put(95, B - 12, "h")  # the clock crow watches the egg route (docs/40 section 2)
 on_ground(149, "E")
 rows = ["".join(r) for r in grid]
 
@@ -167,7 +167,9 @@ level = {
                   {"from": 76 * T, "art": ""}, {"from": 113 * T, "art": "v3_scene_roots_old"}, {"from": 128 * T, "art": ""}],
     "scenes": [["S1", 0], ["S2", 24], ["S3", 50], ["S4", 76], ["S5", 113], ["S6", 128]],
     "swipe_start": True,
-    "enemy_kinds": {"e": "imp", "y": "wisp"},
+    "pair_name": "old_01",
+    "next_pair": "new_01",
+    "enemy_kinds": {"e": "imp", "y": "wisp", "h": "clockcrow"},
     "briefing": {
         "backdrop": "v3_scene_valley_old", "duration": 11.5, "zoom": [1.0, 1.12], "pan": [-0.03, 0.0],
         "actors": [{"who": "grandfather", "at": [0.30, 0.80], "scale": 2.4, "anim": "sleep"}],

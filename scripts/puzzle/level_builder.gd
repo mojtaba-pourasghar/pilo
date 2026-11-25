@@ -232,7 +232,8 @@ static func build(data: Dictionary, root: Node2D, game: Node, palette: Dictionar
 						enemy.kind = String(side_kinds[c])
 						enemy.span = float(data.get("bee_span", 150))
 						enemy.game = game
-						enemy.position = pos + Vector2(32, TILE if c != "y" else 40.0)
+						var flies := ["fly", "hover"].has(String(SideEnemy.spec(enemy.kind).get("behavior", "walk")))
+						enemy.position = pos + Vector2(32, 40.0 if flies else TILE)
 						root.add_child(enemy)
 						info.enemies += 1
 						continue

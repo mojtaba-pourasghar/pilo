@@ -327,10 +327,85 @@ def cut_auto(name, min_gap=7, min_area=40):
     print(f"OK {name}: rows {[len(r['frames']) for r in atlas['rows']]} ({used})")
 
 
+# sheets whose rows touch (glow/flags reach across the empty line): cut by connected parts instead
+COMPONENT_ROWS = {"v3f_i_shrine_gate", "v3f_i_markers"}
+
+
+SPLIT_EXPECT = {"v3f_i_shrine_gate": [8, 6, 10, 8, 0], "v3f_i_markers": [9, 12, 4, 5, 15]}
+
+
+def cut_split(name):
+    """Rows separated by near-empty lines (a few stray glow pixels allowed); frames by empty columns, and a part much
+    wider than the row's typical frame (glows touching) is split into equal frames."""
+    path = os.path.join(SRC, name + ".png")
+    img = Image.open(path)
+    rgba, used = b1.key(img, "auto")
+    a = np.asarray(rgba)[..., 3] > 24
+    prof = a.sum(axis=1)
+    bands, y0 = [], None
+    for y, v in enumerate(prof):
+        if v > 12 and y0 is None:
+            y0 = y
+        elif v <= 12 and y0 is not None:
+            if y - y0 > 30:
+                bands.append((y0, y))
+            y0 = None
+    if y0 is not None and a.shape[0] - y0 > 30:
+        bands.append((y0, a.shape[0]))
+    odir = os.path.join(OUT, name)
+    os.makedirs(odir, exist_ok=True)
+    for f in os.listdir(odir):
+        os.remove(os.path.join(odir, f))
+    atlas = {"sheet": name, "key": used, "size": list(img.size), "rows": []}
+    for r, (y0, y1) in enumerate(bands):
+        col = a[y0:y1].sum(axis=0)
+        parts, x0 = [], None
+        for x, v in enumerate(col):
+            if v > 1 and x0 is None:
+                x0 = x
+            elif v <= 1 and x0 is not None:
+                if x - x0 > 14:
+                    parts.append((x0, x))
+                x0 = None
+        if x0 is not None:
+            parts.append((x0, a.shape[1]))
+        widths = sorted(x1 - x0 for x0, x1 in parts)
+        med = widths[len(widths) // 2] if widths else 1
+        want = SPLIT_EXPECT.get(name, [])
+        if r < len(want) and want[r] and parts:
+            n_want = want[r]
+            if len(parts) != n_want:
+                # glows joined/broke frames: frames lie at an even pitch over the row's extent
+                lo, hi = parts[0][0], parts[-1][1]
+                parts = [(lo + (hi - lo) * i // n_want, lo + (hi - lo) * (i + 1) // n_want) for i in range(n_want)]
+            med = 10 ** 9
+        cells = []
+        for (x0, x1) in parts:
+            k = int(round((x1 - x0) / med)) if (x1 - x0) > med * 1.6 else 1
+            for i in range(k):
+                cells.append((x0 + (x1 - x0) * i // k, x0 + (x1 - x0) * (i + 1) // k))
+        frames, base = [], 0
+        for (x0, x1) in cells:
+            sub = a[y0:y1, x0:x1]
+            if sub.sum() < 300:
+                continue
+            ys, xs = np.where(sub)
+            box = [int(x0 + xs.min()), int(y0 + ys.min()), int(x0 + xs.max() + 1), int(y0 + ys.max() + 1)]
+            base = max(base, box[3])
+            fn = f"{name}_r{r:02d}_f{len(frames):02d}.png"
+            rgba.crop(box).save(os.path.join(odir, fn))
+            frames.append({"file": fn, "box": box})
+        atlas["rows"].append({"base": int(base), "frames": frames})
+    json.dump(atlas, open(os.path.join(odir, name + ".atlas.json"), "w"), indent=1)
+    print(f"OK {name}: rows {[len(r['frames']) for r in atlas['rows']]} ({used})")
+
+
 def cut(name, merge, min_area):
+    if name in COMPONENT_ROWS:
+        return cut_split(name)
     if name in GROUPS:
         return cut_groups(name, GROUPS[name])
-    if name in AUTO_ROWS:
+    if name in AUTO_ROWS and name not in COMPONENT_ROWS:
         return cut_auto(name)
     if name in GRID:
         return cut_grid(name, GRID[name])
