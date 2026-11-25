@@ -51,7 +51,7 @@ do not build that screen; ask in `comms/DECISION_QUEUE.md`.
 
 - مرجع داستان: `docs/SCENARIO.md`؛ محتوا: `docs/content/`؛ دستور ساخت: `docs/BUILD_BRIEF.md`؛ مشخصات فنی: `docs/02_godot_spec.md`؛ فهرست اسناد: `README_FOR_CLAUDE_CODE.md`.
 - ارتباط با مدیر پروژه: `comms/` (هر بار شروع و قبل از هر کامیت `git pull` و آن پوشه را بخوان).
-- **موتور فعلی (v3) کار می‌کند؛ تکاملش بده، از صفر ننویس.**
+- **۲۵ نوامبر ۲۰۲۶ (مالک): بازنویسی کامل در `game_v4/` به سبک Rayman Adventures** (فقط الگو، بدون کپی). کار تازه فقط در `game_v4/`؛ v3 (ریشهٔ مخزن) فقط تا جایگزینی نگه داشته می‌شود. مرجع: `docs/45_v4_rayman_style_rewrite.md`، هنر: `docs/46_art_v4.md`.
 - کارنامهٔ ساخت: `docs/15_work_log_claude_code.md` (اول کار بخوان؛ بعد از هر گام به‌روز کن). کارنامهٔ v3: `docs/WORK_LOG.md`.
 - هر چیز تازه: کامیت «گام N: …» و پوش. **مستقیم روی master** (تصمیم صاحب پروژه)؛ فقط با آزمون‌های سبز پوش کن.
 - اگر مشخصات تناقض داشت **بایست و بپرس** (`comms/DECISION_QUEUE.md`).
