@@ -14,7 +14,7 @@ const BOTTOM := 1600.0
 ##  F  the last run, two creatures, the gate
 ## Ground runs (smooth curves; each a solid piece): the gaps are the ravine and the pond.
 const GROUND := [
-	[[-400, 900], [200, 900], [600, 850], [1000, 900], [1350, 880], [1700, 900], [2300, 900], [2650, 880]],
+	[[-400, 900], [250, 900], [330, 880], [360, 800], [640, 790], [760, 820], [980, 830], [1010, 900], [1350, 900], [1420, 860], [1700, 900], [2300, 900], [2650, 880]],
 	[[3750, 760], [3950, 700], [4100, 700], [4350, 820], [4650, 1000], [4900, 1140], [5050, 1180]],
 	[[5750, 1180], [5900, 1180], [6050, 1180]],
 	[[6050, 560], [6400, 540], [6800, 580], [7200, 560], [7800, 560]],
@@ -59,6 +59,9 @@ var _trail: Line2D
 var _dust: CPUParticles2D
 var _finished := false
 var _checkpoint := 0
+var _fg: Node2D
+var _bar: Control
+var hud_dist: Label
 
 
 func _ready() -> void:
@@ -168,6 +171,13 @@ func _process(_delta: float) -> void:
 		_trail.add_point(q)
 	if hero.global_position.y > BOTTOM:
 		respawn()
+	if _fg and cam:
+		var fw: float = _fg.get_meta("w") if _fg.has_meta("w") else _fg.get("width")
+		_fg.position.x = -fposmod(cam.global_position.x * 1.35 * cam.zoom.x, fw)
+		_fg.position.y = get_viewport_rect().size.y - 760.0 + 110.0
+	if hud_dist:
+		hud_dist.text = _fa(maxi(0, int((hero.global_position.x - 120.0) / 100.0)))
+		_bar.set("k", clampf((hero.global_position.x - 120.0) / (EXIT.x - 120.0), 0.0, 1.0))
 	for i in CHECKPOINTS.size():
 		if hero.global_position.x > float(CHECKPOINTS[i][0]) and hero.is_on_floor():
 			_checkpoint = maxi(_checkpoint, i)
@@ -203,7 +213,7 @@ func add_dew() -> void:
 
 func cage_freed() -> void:
 	freed_cages += 1
-	hud_cages.text = _fa(freed_cages) + " / " + _fa(CAGES.size())
+	hud_cages.text = _fa(freed_cages) + "/" + _fa(CAGES.size())
 
 
 func finish() -> void:
@@ -248,35 +258,10 @@ func _ground(run: Array) -> void:
 	col.polygon = poly
 	body.add_child(col)
 	add_child(body)
-	# soil: warm earth, darker with depth (vertex colours), a rounded cliff at each end
-	var soil := Polygon2D.new()
-	soil.polygon = poly
-	var cols := PackedColorArray()
-	for q in poly:
-		cols.append(Color("8a5a34").lerp(Color("4a2c1a"), clampf((q.y - 700.0) / 700.0, 0.0, 1.0)))
-	soil.vertex_colors = cols
-	add_child(soil)
-	var edge := Line2D.new()
-	edge.points = top
-	edge.width = 30.0
-	edge.default_color = Color("3f8f3e")
-	edge.joint_mode = Line2D.LINE_JOINT_ROUND
-	edge.begin_cap_mode = Line2D.LINE_CAP_ROUND
-	edge.end_cap_mode = Line2D.LINE_CAP_ROUND
-	add_child(edge)
-	var light := Line2D.new()
-	var up := PackedVector2Array()
-	for q in top:
-		up.append(q + Vector2(0, -8))
-	light.points = up
-	light.width = 12.0
-	light.default_color = Color("7cc95a")
-	light.joint_mode = Line2D.LINE_JOINT_ROUND
-	add_child(light)
-	# tufts and flowers along the top
-	var deco := Deco.new()
-	deco.top = top
-	add_child(deco)
+	var look := Scenery.MossTerrain.new()
+	look.top = top
+	look.depth = BOTTOM + 400.0
+	add_child(look)
 
 
 func _ledge(at: Vector2, w: float) -> void:
@@ -340,34 +325,62 @@ func _dew_arc(a: Vector2, b: Vector2, h: float, n: int) -> void:
 
 
 func _build_background() -> void:
+	RenderingServer.set_default_clear_color(Scenery.PAL.sky_low)
 	var pb := ParallaxBackground.new()
 	add_child(pb)
-	var layers := [["sky", 0.0, Color("9fd3f0")], ["far", 0.12, Color("8ea6cf")], ["mid", 0.3, Color("7fb36a")], ["near", 0.55, Color("4f8f45")]]
+	# [kind, motion x, motion y, painted file]
+	var layers := [["sky", 0.0, 0.0, "sky"], ["far", 0.15, 0.35, "far"], ["mid", 0.35, 0.55, "mid"], ["back", 0.7, 0.85, "near"], ["shafts", 0.5, 0.6, ""]]
 	for L in layers:
 		var pl := ParallaxLayer.new()
-		pl.motion_scale = Vector2(float(L[1]), 0.0 if L[0] == "sky" else 0.75 + float(L[1]) * 0.3)
+		pl.motion_scale = Vector2(float(L[1]), float(L[2]))
 		pb.add_child(pl)
-		var path := "res://art/bg/meadow_old_%s.png" % L[0]
-		if ResourceLoader.exists(path):
+		var path := "res://art/bg/forest_old_%s.png" % L[3]
+		if L[3] != "" and ResourceLoader.exists(path):
 			var spr := Sprite2D.new()
 			spr.texture = load(path)
 			spr.centered = false
-			var sc := 1100.0 / spr.texture.get_height()
+			var sc := 1300.0 / spr.texture.get_height()
 			spr.scale = Vector2(sc, sc)
-			spr.position = Vector2(0, -60)
+			spr.position = Vector2(0, -260)
 			pl.motion_mirroring = Vector2(spr.texture.get_width() * sc, 0)
 			pl.add_child(spr)
 		else:
-			var hills := Hills.new()
-			hills.kind = String(L[0])
-			hills.col = L[2]
-			pl.add_child(hills)
-			pl.motion_mirroring = Vector2(2560, 0)
+			var f := Scenery.ForestLayer.new()
+			f.kind = String(L[0])
+			pl.add_child(f)
+			pl.motion_mirroring = Vector2(f.width, 0)
+	# the dark foreground at the frame's bottom edge, sliding faster than the path
+	var fg_layer := CanvasLayer.new()
+	fg_layer.layer = 5
+	add_child(fg_layer)
+	_fg = Scenery.Foreground.new()
+	fg_layer.add_child(_fg)
+	var front := "res://art/bg/forest_old_front.png"
+	if ResourceLoader.exists(front):
+		# the painted foreground replaces the placeholder clumps (two copies side by side for the loop)
+		_fg.set_script(null)
+		_fg = Node2D.new()
+		fg_layer.add_child(_fg)
+		var tex: Texture2D = load(front)
+		var sc := 760.0 / tex.get_height()
+		for i in 2:
+			var spr := Sprite2D.new()
+			spr.texture = tex
+			spr.centered = false
+			spr.scale = Vector2(sc, sc)
+			spr.position = Vector2(i * tex.get_width() * sc, 0)
+			_fg.add_child(spr)
+		_fg.set_meta("w", tex.get_width() * sc)
+	else:
+		var fg2 := Scenery.Foreground.new()
+		fg2.position.x = _fg.width
+		_fg.add_child(fg2)
 
 
 func _build_hud() -> void:
 	var layer := CanvasLayer.new()
 	layer.layer = 20
+	layer.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(layer)
 	_trail = Line2D.new()
 	_trail.width = 14.0
@@ -376,19 +389,37 @@ func _build_hud() -> void:
 	_trail.begin_cap_mode = Line2D.LINE_CAP_ROUND
 	_trail.end_cap_mode = Line2D.LINE_CAP_ROUND
 	layer.add_child(_trail)
+	var view := get_viewport_rect().size
+	hud_dist = _label("۰", 40)
+	hud_dist.position = Vector2(view.x * 0.5 - 150, 10)
+	hud_dist.size = Vector2(110, 50)
+	hud_dist.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_bar = HudBar.new()
+	_bar.position = Vector2(view.x * 0.5 - 30, 24)
+	layer.add_child(_bar)
+	var retry := RoundButton.new()
+	retry.kind = "retry"
+	retry.position = Vector2(54, 50)
+	retry.pressed.connect(func(): get_tree().reload_current_scene())
+	layer.add_child(retry)
+	var pause := RoundButton.new()
+	pause.kind = "pause"
+	pause.position = Vector2(view.x - 54, 50)
+	pause.pressed.connect(func(): get_tree().paused = not get_tree().paused)
+	layer.add_child(pause)
 	var drop_icon := Dew.new()
-	drop_icon.position = Vector2(48, 50)
+	drop_icon.position = Vector2(view.x - 250, 52)
 	drop_icon.icon = true
 	layer.add_child(drop_icon)
-	hud_dew = _label("۰", 34)
-	hud_dew.position = Vector2(76, 26)
+	hud_dew = _label("۰", 30)
+	hud_dew.position = Vector2(view.x - 228, 30)
 	var cage_icon := Cage.new()
 	cage_icon.icon = true
-	cage_icon.position = Vector2(220, 74)
-	cage_icon.scale = Vector2(0.4, 0.4)
+	cage_icon.position = Vector2(view.x - 150, 70)
+	cage_icon.scale = Vector2(0.32, 0.32)
 	layer.add_child(cage_icon)
-	hud_cages = _label("۰ / " + _fa(CAGES.size()), 34)
-	hud_cages.position = Vector2(250, 26)
+	hud_cages = _label("۰/" + _fa(CAGES.size()), 30)
+	hud_cages.position = Vector2(view.x - 126, 30)
 	var help := _label(Strings.t("v4_help"), 19)
 	help.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	help.custom_minimum_size = Vector2(900, 0)
@@ -684,3 +715,41 @@ class ExitGate extends Area2D:
 		for i in 3:
 			var st := _t * (1.5 + i * 0.4) + i * 2.0
 			draw_arc(Vector2(0, -120), 14.0 + i * 12.0, st, st + 3.5, 20, Color(1, 0.95, 0.75, 0.8 - i * 0.2), 5.0)
+
+
+## The level's progress bar next to the distance (top centre).
+class HudBar extends Control:
+	var k := 0.0:
+		set(v):
+			k = v
+			queue_redraw()
+
+	func _draw() -> void:
+		var r := Rect2(0, 0, 200, 22)
+		draw_rect(r.grow(4), Color(0.05, 0.12, 0.1, 0.55))
+		draw_rect(r, Color(1, 1, 1, 0.85), false, 3.0)
+		draw_rect(Rect2(4, 4, 192 * k, 14), Color("8fe0f0"))
+
+
+## A round glass button of the HUD (retry / pause), placeholder until the UI art.
+class RoundButton extends Button:
+	var kind := "retry"
+
+	func _ready() -> void:
+		flat = true
+		focus_mode = Control.FOCUS_NONE
+		size = Vector2(76, 76)
+		position -= size * 0.5
+		for st in ["normal", "hover", "pressed", "focus"]:
+			add_theme_stylebox_override(st, StyleBoxEmpty.new())
+
+	func _draw() -> void:
+		var c := size * 0.5
+		draw_circle(c, 34.0, Color(0.05, 0.15, 0.12, 0.45))
+		draw_arc(c, 34.0, 0, TAU, 32, Color(1, 1, 1, 0.85), 3.0)
+		if kind == "pause":
+			draw_rect(Rect2(c + Vector2(-11, -13), Vector2(8, 26)), Color.WHITE)
+			draw_rect(Rect2(c + Vector2(3, -13), Vector2(8, 26)), Color.WHITE)
+		else:
+			draw_arc(c, 15.0, -PI * 0.2, PI * 1.4, 20, Color.WHITE, 5.0)
+			draw_colored_polygon(PackedVector2Array([c + Vector2(13, -16), c + Vector2(20, -2), c + Vector2(6, -4)]), Color.WHITE)

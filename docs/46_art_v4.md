@@ -17,41 +17,45 @@ Character cut-out PARTS SHEET for 2D skeletal animation, one young adventurer ma
 
 ---
 
-## ۲) کیت محیط دشت قدیم — `game_v4/art/kits/meadow_old_kit.png`
+> **به‌روزرسانی ۲۵ نوامبر (ویدئوهای مرجع):** ساختار لایه‌ها مثل ویدئوها: **مه دور ← تنه‌های غول میانی ← ردیف زمینِ پشتی مه‌آلود ← پرتو نور ← مسیر اصلی (توده‌های سنگ خزه‌دار پله‌ای با حفره‌های تیره) ← پیش‌زمینهٔ تیره لبهٔ قاب**؛ هر مرحله **یک فضای رنگی** (این مرحله: جنگل سبز صبح با مه سبز-فیروزه‌ای). نمونهٔ کدی همین ساختار را دارد؛ این عکس‌ها جایش می‌نشینند.
+
+## ۲) کیت مسیر جنگل قدیم — `game_v4/art/kits/forest_old_kit.png`
 - **اندازه:** 2048x2048 · **پس‌زمینه:** مجنتا #FF00FF
-- **کاربرد:** زمین و سکوهای مرحله از همین قطعه‌ها چیده می‌شوند (نه کاشی تکراری).
+- **کاربرد:** زمین و همهٔ اجزای مسیر از این قطعه‌ها چیده می‌شود (بدون کاشی، بدون بلوک).
 
 ```
-2D platformer ENVIRONMENT KIT sheet, side view, sunny ancient Persian meadow in springtime. Separate pieces with empty space around each, arranged in rows: Row 1: three long GROUND TOP strips (thick grassy earth with flowers and small stones on top, rich soil body below, rounded bottom edge), one gentle UP-SLOPE piece and one DOWN-SLOPE piece. Row 2: a LEFT CLIFF EDGE end-cap and a RIGHT CLIFF EDGE end-cap (grass curling over the edge, roots hanging), a big ROUNDED BOULDER platform, a FLOATING EARTH ISLAND with dangling roots. Row 3: two WOODEN PLANK PLATFORMS (one short, one long) with rope bindings, a carved STONE PILLAR (tall, can be climbed), a broken stone ARCH piece. Row 4: decorations: three FLOWER BUSHES, two SMALL TREES, tall GRASS TUFTS, MUSHROOMS, a blue-tiled ancient VASE, a SIGNPOST without text. Row 5: FOREGROUND silhouettes for in front of the camera: big dark leaves, a tall grass clump, a branch. Every ground piece has a clear flat walkable top line. lush hand-painted 2D storybook illustration, soft painterly brush textures, rich saturated but gentle colors, warm rim light, subtle thin dark-brown outlines, rounded organic shapes, Persian-inspired motifs, kid-friendly, high detail, crisp clean edges. IMPORTANT BACKGROUND RULE: the entire background is solid flat pure magenta RGB(255,0,255) #FF00FF, perfectly uniform, no shadows, no gradient. No part of any subject is pink or magenta. At least 80 px of empty magenta between pieces, nothing touching, nothing cropped. No text, letters, numbers, labels, watermark or logo. Original design, do not imitate any existing game or brand.
+2D side-view PLATFORMER PATH KIT for a lush ancient forest, green morning light with soft green-teal mist. Separate pieces with empty space around each, arranged in rows: Row 1: three big MOSSY ROCK TERRAIN MASSES (wide chunky stone blocks overgrown with thick rounded moss on top, moss drips hanging over the edge, big rounded stone slabs in the body, a dark hollow cave opening in one of them), each with a clear walkable top line; one STEP-UP piece (a rock riser about one character height) and one gentle SLOPE piece. Row 2: a LEFT EDGE and a RIGHT EDGE end-cap of the mossy rock (moss curling over, roots hanging), a FLOATING MOSSY ROCK island with roots. Row 3: a huge TREE TRUNK segment (straight, with bark texture, climbable), two curved TREE BRANCHES with leaves (walkable on top), a hanging green VINE with a flower at its end, a rope-and-plank SWING. Row 4: a big red BOUNCE MUSHROOM with white spots, a floating LILY LEAF with a pink flower, a cracked stone vent with a rising WIND of petals, a small stone ruin arch. Row 5: decorations: ferns, tall grass tufts, glowing flowers, hanging moss strands, small mushrooms, a broken tiled vase. lush hand-painted 2D storybook illustration, soft painterly brush textures, rich saturated but gentle colors, warm rim light, subtle thin dark-brown outlines, rounded organic shapes, Persian-inspired motifs, kid-friendly, high detail, crisp clean edges. IMPORTANT BACKGROUND RULE: the entire background is solid flat pure magenta RGB(255,0,255) #FF00FF, perfectly uniform, no shadows, no gradient, no floor. No part of any subject is pink or magenta. At least 80 px of empty magenta between pieces, nothing touching, nothing cropped. No text, letters, numbers, labels, watermark or logo. Original design, do not imitate any existing game or brand.
 ```
 
----
+## ۳) لایه‌های عمق جنگل قدیم — ۵ تصویر جدا
+همه **3072x1024**، **بی‌درز تکرارپذیر از چپ به راست**. رنگ همه یک خانواده باشد (سبز-فیروزه‌ای مه‌آلود)؛ هرچه دورتر، کم‌رنگ‌تر و مه‌آلودتر.
 
-## ۳) پس‌زمینهٔ دشت قدیم — ۴ لایهٔ جدا (برای عمق)
-
-همه **3072x1024** (پانورامای ۳ به ۱). همه باید **از چپ به راست بی‌درز تکرارپذیر** باشند (لبهٔ چپ و راست به هم بخورند).
-
-### ۳-الف) آسمان — `game_v4/art/bg/meadow_old_sky.png` (تصویر کامل)
+### ۳-الف) آسمان و مه — `game_v4/art/bg/forest_old_sky.png` (تصویر کامل)
 ```
-Seamless horizontally tileable 3:1 panorama SKY for a 2D side-scroller: soft morning sky, warm golden light near the horizon fading to fresh blue above, a few big fluffy painterly clouds, gentle sun glow at left. No ground, no mountains, no characters. lush hand-painted 2D storybook illustration, soft painterly brush textures, rich saturated but gentle colors. No text, letters, numbers, watermark or logo.
+Seamless horizontally tileable 3:1 panorama of the SKY AND MIST deep inside a forest at morning: soft pale green-teal glow, bright haze near the middle, a few soft light rays coming down from above. No trees in front, no ground, no characters. lush hand-painted 2D storybook illustration, soft painterly brush textures, rich saturated but gentle colors, warm rim light, subtle thin dark-brown outlines, rounded organic shapes, Persian-inspired motifs, kid-friendly, high detail, crisp clean edges. No text, letters, numbers, watermark or logo.
 ```
 
-### ۳-ب) کوه‌های دور — `game_v4/art/bg/meadow_old_far.png` (پس‌زمینهٔ مجنتا)
+### ۳-ب) جنگل دور در مه — `game_v4/art/bg/forest_old_far.png` (مجنتا)
 ```
-Seamless horizontally tileable 3:1 panorama strip of FAR DISTANT MOUNTAINS for parallax: soft hazy blue-violet mountain range with snowy peaks and a tiny far-away palace with turquoise domes on one hill, atmospheric perspective, low contrast. The mountains sit in the lower half; everything above them is EMPTY. lush hand-painted 2D storybook illustration, soft painterly brush textures. IMPORTANT: the empty sky area and everything that is not mountain is solid flat pure magenta RGB(255,0,255) #FF00FF, perfectly uniform. No part of the mountains is pink or magenta. No text, letters, numbers, watermark or logo.
-```
-
-### ۳-ج) تپه‌های میانی — `game_v4/art/bg/meadow_old_mid.png` (پس‌زمینهٔ مجنتا)
-```
-Seamless horizontally tileable 3:1 panorama strip of MIDDLE-DISTANCE ROLLING HILLS for parallax: green meadow hills with cypress trees, a winding stream, a small stone bridge, an ancient tiled pavilion, orchards in blossom, medium detail, slightly hazy. The hills fill the lower 55 percent; everything above is EMPTY. lush hand-painted 2D storybook illustration, soft painterly brush textures, rich saturated but gentle colors, warm rim light. IMPORTANT: everything that is not hills is solid flat pure magenta RGB(255,0,255) #FF00FF, perfectly uniform. No part of the hills is pink or magenta. No text, letters, numbers, watermark or logo.
+Seamless horizontally tileable 3:1 panorama strip of a FAR FOREST seen through thick morning mist: tall pale tree silhouettes and soft round canopies, very low contrast, washed-out pale green-teal, hanging vines barely visible. It fills the whole height except the top 15 percent. lush hand-painted 2D storybook illustration, soft painterly brush textures, rich saturated but gentle colors, warm rim light, subtle thin dark-brown outlines, rounded organic shapes, Persian-inspired motifs, kid-friendly, high detail, crisp clean edges but very soft and hazy. IMPORTANT: everything that is not forest is solid flat pure magenta RGB(255,0,255) #FF00FF. No part of the forest is pink or magenta. No text, letters, numbers, watermark or logo.
 ```
 
-### ۳-د) درخت‌های نزدیک — `game_v4/art/bg/meadow_old_near.png` (پس‌زمینهٔ مجنتا)
+### ۳-ج) تنه‌های غول میانی — `game_v4/art/bg/forest_old_mid.png` (مجنتا)
 ```
-Seamless horizontally tileable 3:1 panorama strip of NEAR BACKGROUND for parallax just behind the play area: big old trees with twisted trunks and lush canopies, flowering bushes, tall grass, wildflowers, a few stone ruins, rich detail and strong color, darker at the bottom. The trees rise from the bottom edge and leave the upper 30 percent EMPTY between the canopies. lush hand-painted 2D storybook illustration, soft painterly brush textures, rich saturated but gentle colors, warm rim light, subtle thin dark-brown outlines. IMPORTANT: everything that is not trees or plants is solid flat pure magenta RGB(255,0,255) #FF00FF, perfectly uniform. No part of the plants is pink or magenta. No text, letters, numbers, watermark or logo.
+Seamless horizontally tileable 3:1 panorama strip of GIANT ANCIENT TREE TRUNKS in the middle distance: 5 to 6 huge twisted trunks with big roots, thick drooping canopies at the top edge, hanging vines and moss, medium contrast, green-teal with light mist between them. lush hand-painted 2D storybook illustration, soft painterly brush textures, rich saturated but gentle colors, warm rim light, subtle thin dark-brown outlines, rounded organic shapes, Persian-inspired motifs, kid-friendly, high detail, crisp clean edges. IMPORTANT: the gaps between the trunks and everything that is not tree are solid flat pure magenta RGB(255,0,255) #FF00FF. No part of the trees is pink or magenta. No text, letters, numbers, watermark or logo.
 ```
 
----
+### ۳-د) ردیف زمین پشتی — `game_v4/art/bg/forest_old_near.png` (مجنتا)
+```
+Seamless horizontally tileable 3:1 panorama strip of a BACK TIER OF TERRAIN just behind the play path: stepped mossy rock masses at different heights (some higher, some lower), thick moss tops, ferns, small trees, broken stone ruins, slightly hazy so it stays behind the main path, darker green. It occupies the lower 45 percent; everything above is EMPTY. lush hand-painted 2D storybook illustration, soft painterly brush textures, rich saturated but gentle colors, warm rim light, subtle thin dark-brown outlines, rounded organic shapes, Persian-inspired motifs, kid-friendly, high detail, crisp clean edges. IMPORTANT: everything that is not terrain or plants is solid flat pure magenta RGB(255,0,255) #FF00FF. No part of the terrain is pink or magenta. No text, letters, numbers, watermark or logo.
+```
+
+### ۳-ه) پیش‌زمینهٔ تیره — `game_v4/art/bg/forest_old_front.png` (مجنتا)
+```
+Seamless horizontally tileable 3:1 panorama strip of a DARK FOREGROUND for the bottom edge of the screen, in front of the camera: big dark silhouette leaves, fern fronds, grass clumps and a few branches, almost black dark green, slightly soft and blurry like out of focus. Clumps of different heights along the bottom edge; the upper 65 percent is EMPTY. IMPORTANT: everything that is not foliage is solid flat pure magenta RGB(255,0,255) #FF00FF. No part of the foliage is pink or magenta. No text, letters, numbers, watermark or logo.
+```
+
+> نسخهٔ قبلی این بخش‌ها (`meadow_old_*`) لغو شد؛ اگر ساخته‌ای، نیازی به آن‌ها نیست.
 
 ## دسته‌های بعد (بعد از تأیید نمونه)
 اعضای آرسام، کیت و لایه‌های دشت جدید، دشمن‌ها به‌صورت اعضای جدا، ساعتک و قفس، شبنم، افکت‌ها.

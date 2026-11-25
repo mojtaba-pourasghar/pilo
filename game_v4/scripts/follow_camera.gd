@@ -10,7 +10,7 @@ var _shake := 0.0
 
 
 func _ready() -> void:
-	zoom = Vector2(0.9, 0.9)
+	zoom = Vector2(0.58, 0.58)
 	position_smoothing_enabled = false
 	make_current()
 	snap()
@@ -28,7 +28,7 @@ func shake(px: float) -> void:
 
 func _target() -> Vector2:
 	var view := get_viewport_rect().size / zoom
-	return Vector2(hero.global_position.x + _ahead, _ground_y - view.y * 0.12)
+	return Vector2(hero.global_position.x + _ahead, _ground_y - view.y * 0.16)
 
 
 func _process(delta: float) -> void:
