@@ -161,33 +161,34 @@ Hand-painted 2D game art in a soft digital gouache and watercolor look, visible 
 IMPORTANT BACKGROUND RULE: the entire background is solid flat pure magenta RGB(255,0,255) #FF00FF, perfectly uniform, no shadow, no gradient, no floor, no texture. No part of any subject is pink or magenta. At least 80 px of empty magenta between all pieces, nothing touching, nothing cropped. No text, letters, numbers, labels, watermark or logo. Original design, do not imitate any existing game, character or brand.
 ```
 
-### 13–17) لایه‌های جنگل جدید · 1920x1080 (۱۶:۹)
+### 13–17) لایه‌های جنگل جدید — نسخهٔ Canva (Magic Media)
 
-> **۲۵ نوامبر — نسخهٔ کوتاه (ابزار تصویر پرامپت‌های بلند و نسبت ۳:۱ را نساخت):** این شش تصویر را در **۱۶:۹ (1920x1080)** بساز؛ بی‌درز کردن لبه‌ها و برش با من است.
+**تنظیم Canva برای هر پنج:** Magic Media → Images · سبک **Watercolor** (اگر نبود: Painterly یا Concept art) · نسبت **Landscape 16:9**.
+**برای ۱۴ تا ۱۷:** روی زمینهٔ سفید ساخته می‌شوند → Edit image → **BG Remover** → Download با **Transparent background** (PNG). اگر BG Remover نداری، همان نسخهٔ سفید را بفرست؛ سفید را خودم حذف می‌کنم.
 
-**13) `game_v4/art/bg/forest_new_sky.png`** — تصویر کامل
+**13) `game_v4/art/bg/forest_new_sky.png`**
 ```
-Soft hand-painted watercolor sky for a 2D game background. Gentle gradient from cool grey-turquoise at the top to pale lavender at the bottom. Thin bands of soft violet-grey mist and two faint sunbeams from the upper left. Quiet and mysterious mood. Only sky and mist, empty. No trees, no land, no objects, no text.
-```
-
-**14) `game_v4/art/bg/forest_new_far.png`** — پس‌زمینهٔ مجنتا
-```
-Hand-painted watercolor 2D game background layer: a row of distant forest trees in thick cool mist, pale grey-turquoise silhouettes, some trees bare, very soft and low contrast, with drifting grey-violet haze between them. The trees fill the bottom 80 percent of the image. The empty area above and around the trees is flat solid magenta #FF00FF. No pink in the trees. No text.
+Dreamy hand-painted watercolor sky deep inside an ancient forest, soft gradient from cool grey-turquoise at the top to pale lavender below, drifting bands of violet-grey mist, two soft golden sunbeams falling from the top left, calm quiet mysterious mood, visible soft brush texture, wide empty sky only, no trees, no ground
 ```
 
-**15) `game_v4/art/bg/forest_new_mid.png`** — پس‌زمینهٔ مجنتا
+**14) `game_v4/art/bg/forest_new_far.png`**
 ```
-Hand-painted watercolor 2D game background layer: five huge old twisted tree trunks standing side by side with big roots, some dry and cracked, thin leafy canopies at the top, hanging vines, grey-violet smoke curling around the roots, cool grey-turquoise colors, soft mist. The spaces between the trunks are flat solid magenta #FF00FF. No pink in the trees. No text.
-```
-
-**16) `game_v4/art/bg/forest_new_near.png`** — پس‌زمینهٔ مجنتا
-```
-Hand-painted watercolor 2D game background layer: a low strip of old rocky ground at the bottom of the image, stepped mossy rocks at different heights, cracked stones, broken ruins with turquoise tiles, dry ferns, small bare trees, grey-violet smoke in the hollows, slightly hazy grey-green. The ground fills only the bottom half. Everything above is flat solid magenta #FF00FF. No pink in the rocks. No text.
+Distant misty forest for a 2D side-scrolling game background, a long row of tall pale grey-turquoise tree silhouettes, some trees bare, soft violet haze drifting between the trunks, very soft and low contrast, dreamy hand-painted watercolor, side view, trees standing on the bottom edge, isolated on a plain white background
 ```
 
-**17) `game_v4/art/bg/forest_new_front.png`** — پس‌زمینهٔ مجنتا
+**15) `game_v4/art/bg/forest_new_mid.png`**
 ```
-Hand-painted 2D game foreground layer: dark silhouettes of big leaves, ferns, grass and a few thorny branches along the bottom edge of the image, almost black dark green, soft and slightly blurry, with thin dark grey smoke wisps. Plants only along the bottom third, different heights. Everything above is flat solid magenta #FF00FF. No pink in the plants. No text.
+Five giant ancient twisted tree trunks side by side for a 2D side-scrolling game background, huge roots, some trunks cracked and dry, thin leafy canopies at the top, hanging old vines, soft grey-violet smoke curling around the roots, faint glowing green veins in the bark, cool turquoise tones, hand-painted watercolor, side view, isolated on a plain white background
+```
+
+**16) `game_v4/art/bg/forest_new_near.png`**
+```
+Long side-view strip of old forest ground for a 2D side-scrolling game, mossy rocks stepping up and down at different heights, cracked stones, broken ancient ruins with turquoise Persian tiles, dry ferns, small bare trees, violet-grey smoke pooling in the hollows, misty grey-green, hand-painted watercolor, isolated on a plain white background
+```
+
+**17) `game_v4/art/bg/forest_new_front.png`**
+```
+Dark foreground plants for a 2D side-scrolling game, a row of big leaf silhouettes, ferns, tall grass and a few thorny branches along the bottom, almost black deep green with a faint cool edge light, soft out-of-focus blur, thin dark grey smoke wisps, hand-painted, side view, isolated on a plain white background
 ```
 
 ### 18) افکت‌ها — `game_v4/art/fx/fx_forest.png` · 2048x2048 · مجنتا
