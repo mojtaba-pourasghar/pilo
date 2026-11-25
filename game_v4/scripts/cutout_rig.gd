@@ -86,6 +86,18 @@ func _target_pose(delta: float) -> Dictionary:
 		"wall":
 			return {"lean": -0.15, "bob": 0.0, "thigh_f": -0.9, "knee_f": 1.3, "thigh_b": -0.2, "knee_b": 0.9, "foot_f": -0.6, "foot_b": -0.4,
 				"sh_f": -2.6, "el_f": -0.5, "sh_b": -2.2, "el_b": -0.7, "head": 0.2, "spread": 0.0, "staff": 0.0}
+		"hang":
+			var sw := clampf(body.velocity.x / 700.0, -1.0, 1.0)
+			return {"lean": -0.1 * sw, "bob": -6.0, "thigh_f": -0.5 - 0.4 * sw, "knee_f": 0.6, "thigh_b": 0.2 - 0.3 * sw, "knee_b": 0.7,
+				"foot_f": 0.2, "foot_b": 0.3, "sh_f": -3.0, "el_f": 0.05, "sh_b": -2.85, "el_b": 0.1, "head": -0.2, "spread": 0.0, "staff": 0.0}
+		"slide":
+			return {"lean": -0.35, "bob": 14.0, "thigh_f": -1.2, "knee_f": 0.5, "thigh_b": -0.5, "knee_b": 1.3, "foot_f": -0.2, "foot_b": 0.2,
+				"sh_f": -1.2, "el_f": -0.2, "sh_b": 0.9, "el_b": -0.3, "head": 0.1, "spread": 0.0, "staff": 0.0}
+		"wallrun":
+			_phase += delta * 22.0
+			var s2 := sin(_phase)
+			return {"lean": -0.7, "bob": 0.0, "thigh_f": -1.2 - 0.6 * s2, "knee_f": 1.0, "thigh_b": -1.2 + 0.6 * s2, "knee_b": 1.0,
+				"foot_f": -0.8, "foot_b": -0.8, "sh_f": -1.4 + 0.6 * s2, "el_f": -0.6, "sh_b": -1.4 - 0.6 * s2, "el_b": -0.6, "head": 0.3, "spread": 0.0, "staff": 0.0}
 		"strike":
 			var k := 1.0 - body.strike_t / 0.32          # 0 -> 1 through the swing
 			var sw := lerpf(-2.7, 0.9, smoothstep(0.0, 0.55, k))

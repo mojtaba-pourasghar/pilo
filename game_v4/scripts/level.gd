@@ -5,24 +5,47 @@ extends Node2D
 
 const BOTTOM := 1600.0
 
-## Ground runs: smooth curves through these points (px). Each run is one solid piece.
+## The way of the sample level (old meadow): an organic route, no floating blocks.
+##  A  rolling meadow, a smoke creature, a bounce mushroom up into the big tree
+##  B  wall-run up the trunk, along curved branches through the crown (a cage at the far end)
+##  C  vines over the ravine: grab, swing, let go
+##  D  a steep bank: slide down along a ribbon of dew, onto sinking lily leaves over the pond
+##  E  a petal wind stream up the cliff (glide in it); a hidden cage behind the leaves at the top
+##  F  the last run, two creatures, the gate
+## Ground runs (smooth curves; each a solid piece): the gaps are the ravine and the pond.
 const GROUND := [
-	[[-400, 900], [0, 900], [500, 880], [900, 820], [1250, 860], [1600, 900], [2000, 900]],
-	[[2000, 900], [2300, 900], [2500, 760], [2700, 700], [2900, 700]],
-	[[3500, 700], [3800, 640], [4100, 620], [4300, 620]],
-	[[5400, 760], [5800, 760], [6200, 720], [6600, 760], [7200, 760], [7600, 740]],
+	[[-400, 900], [200, 900], [600, 850], [1000, 900], [1350, 880], [1700, 900], [2300, 900], [2650, 880]],
+	[[3750, 760], [3950, 700], [4100, 700], [4350, 820], [4650, 1000], [4900, 1140], [5050, 1180]],
+	[[5750, 1180], [5900, 1180], [6050, 1180]],
+	[[6050, 560], [6400, 540], [6800, 580], [7200, 560], [7800, 560]],
 ]
-## Thin platforms you can jump up through and drop down through: [x, y, width]
-const LEDGES := [[1050, 690, 220], [1350, 560, 200], [2420, 560, 160], [3150, 560, 220], [4600, 560, 200], [4950, 460, 180],
-	[6100, 560, 260], [6100, 1020, 300]]
-## Walls for wall jumps: [x, top y, bottom y, width]
-const WALLS := [[2900, 260, 700, 70], [3120, 120, 600, 70]]
-## Dew drops in arcs: [x0, y0, x1, y1, height, count]
-const DEW_ARCS := [[300, 820, 800, 790, 140, 7], [1080, 640, 1420, 500, 90, 5], [2350, 560, 2700, 640, 120, 6],
-	[3300, 520, 3500, 640, 60, 4], [4300, 560, 5400, 700, 260, 12], [6150, 980, 6380, 980, 30, 4], [6700, 700, 7300, 700, 120, 8]]
-const ENEMIES := [[1600, 900], [3900, 630], [6800, 760]]
-const CAGES := [[1380, 560], [3040, 120], [6250, 1020]]
-const EXIT := Vector2(7450, 740)
+const TRUNKS := [[1850, 300, 900, 130]]                                   ## x, top, bottom, width
+const BRANCHES := [
+	[[1915, 640], [2100, 620], [2280, 640]],
+	[[1785, 470], [1600, 450], [1480, 470]],
+	[[1915, 360], [2150, 330], [2400, 350], [2620, 330]],
+]
+const VINES := [[2900, 240, 290, 0.5], [3250, 220, 300, -0.4], [3600, 250, 280, 0.3]]    ## x, y, length, start angle
+const MUSHROOMS := [[1550, 900]]
+const PONDS := [[5050, 1190, 700]]
+const LEAVES := [[5180, 1180], [5390, 1175], [5600, 1180]]
+const WINDS := [[5960, 1180, 170, 760]]                                    ## x, bottom, width, height
+const BUSHES := [[6420, 520]]
+## Dew ribbons: smooth paths the drops follow (they show the way, like a trail): [points], spacing
+const DEW_PATHS := [
+	[[[300, 820], [600, 770], [900, 820], [1200, 810]], 60],
+	[[[1480, 820], [1520, 600], [1580, 420]], 60],
+	[[[1960, 290], [2200, 260], [2450, 280], [2620, 270]], 70],
+	[[[2700, 600], [2900, 680], [3080, 600], [3250, 690], [3420, 600], [3600, 680], [3760, 620]], 70],
+	[[[4150, 640], [4400, 760], [4650, 930], [4900, 1080]], 60],
+	[[[5180, 1100], [5290, 1040], [5390, 1100], [5500, 1040], [5600, 1100]], 55],
+	[[[5960, 1050], [5960, 850], [5960, 650], [6060, 480]], 70],
+	[[[6600, 480], [6900, 430], [7200, 480], [7400, 470]], 70],
+]
+const ENEMIES := [[1200, 860], [6700, 520], [7050, 520]]
+const CAGES := [[2600, 330], [6420, 545], [5600, 1170]]
+const CHECKPOINTS := [[120, 880], [1700, 880], [3850, 700], [5000, 1160], [6150, 540]]
+const EXIT := Vector2(7600, 560)
 
 var hero: HeroBody
 var rig: CutoutRig
@@ -35,6 +58,7 @@ var freed_cages := 0
 var _trail: Line2D
 var _dust: CPUParticles2D
 var _finished := false
+var _checkpoint := 0
 
 
 func _ready() -> void:
@@ -42,12 +66,44 @@ func _ready() -> void:
 	_build_background()
 	for run in GROUND:
 		_ground(run)
-	for l in LEDGES:
-		_ledge(Vector2(l[0], l[1]), float(l[2]))
-	for w in WALLS:
-		_wall(float(w[0]), float(w[1]), float(w[2]), float(w[3]))
-	for a in DEW_ARCS:
-		_dew_arc(Vector2(a[0], a[1]), Vector2(a[2], a[3]), float(a[4]), int(a[5]))
+	for t in TRUNKS:
+		var trunk := PathParts.Trunk.new()
+		trunk.position = Vector2(t[0], 0)
+		trunk.top = float(t[1])
+		trunk.bottom = float(t[2])
+		trunk.w = float(t[3])
+		add_child(trunk)
+	for br in BRANCHES:
+		var branch := PathParts.Branch.new()
+		branch.points = PathParts.vecs(br)
+		add_child(branch)
+	for v in VINES:
+		var vine := PathParts.Vine.new()
+		vine.position = Vector2(v[0], v[1])
+		vine.length = float(v[2])
+		vine.angle = float(v[3])
+		add_child(vine)
+	for m in MUSHROOMS:
+		var mush := PathParts.Mushroom.new()
+		mush.position = Vector2(m[0], m[1])
+		add_child(mush)
+	for pd in PONDS:
+		var pond := PathParts.Pond.new()
+		pond.position = Vector2(pd[0], pd[1])
+		pond.w = float(pd[2])
+		pond.level = self
+		add_child(pond)
+	for lf in LEAVES:
+		var leaf := PathParts.Leaf.new()
+		leaf.position = Vector2(lf[0], lf[1])
+		add_child(leaf)
+	for wd in WINDS:
+		var wind := PathParts.Wind.new()
+		wind.position = Vector2(wd[0], wd[1])
+		wind.size = Vector2(wd[2], wd[3])
+		add_child(wind)
+	for dp in DEW_PATHS:
+		_dew_path(PathParts.vecs(dp[0]), float(dp[1]))
 	for e in ENEMIES:
 		var m := Murk.new()
 		m.position = Vector2(e[0], e[1] - 120)
@@ -62,6 +118,11 @@ func _ready() -> void:
 	gate.position = EXIT
 	gate.level = self
 	add_child(gate)
+	for bu in BUSHES:
+		var bush := PathParts.Bush.new()
+		bush.position = Vector2(bu[0], bu[1])
+		bush.z_index = 20
+		add_child(bush)
 	# the hero
 	control = TouchControl.new()
 	add_child(control)
@@ -106,7 +167,10 @@ func _process(_delta: float) -> void:
 	for q in control.trail:
 		_trail.add_point(q)
 	if hero.global_position.y > BOTTOM:
-		_respawn()
+		respawn()
+	for i in CHECKPOINTS.size():
+		if hero.global_position.x > float(CHECKPOINTS[i][0]) and hero.is_on_floor():
+			_checkpoint = maxi(_checkpoint, i)
 
 
 func _on_landed(speed: float) -> void:
@@ -122,9 +186,13 @@ func _puff(at: Vector2, n: int) -> void:
 	_dust.emitting = true
 
 
-func _respawn() -> void:
-	hero.global_position = Vector2(120, 880)
+func respawn() -> void:
+	var c: Array = CHECKPOINTS[_checkpoint]
+	hero.global_position = Vector2(c[0], c[1])
 	hero.velocity = Vector2.ZERO
+	if hero.vine:
+		hero.vine.call("let_go")
+		hero.vine = null
 	cam.call("snap")
 
 
@@ -241,6 +309,24 @@ func _wall(x: float, top: float, bottom: float, w: float) -> void:
 	var stone := Pillar.new()
 	stone.size = rect.size
 	body.add_child(stone)
+
+
+## Drops spaced evenly along a smooth path.
+func _dew_path(pts: Array, spacing: float) -> void:
+	var line := PathParts.smooth(pts, 8.0)
+	var acc := spacing
+	var i := 0
+	for k in line.size() - 1:
+		var seg := line[k].distance_to(line[k + 1])
+		while acc <= seg:
+			var d := Dew.new()
+			d.position = line[k].lerp(line[k + 1], acc / seg)
+			d.level = self
+			d.phase = i * 0.35
+			add_child(d)
+			acc += spacing
+			i += 1
+		acc -= seg
 
 
 func _dew_arc(a: Vector2, b: Vector2, h: float, n: int) -> void:

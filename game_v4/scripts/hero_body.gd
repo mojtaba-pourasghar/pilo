@@ -43,6 +43,16 @@ var _drop_t := 0.0
 var _wall_lock := 0.0
 var _prev_air_vy := 0.0
 
+## path pieces (docs/45 section 5): a vine he hangs on, a wind stream that lifts him, wall-runs up tree trunks, slides
+var vine: Node = null              ## the vine he hangs on (it moves him)
+var wind_lift := 0.0               ## upward push of a wind stream this step (set by the stream)
+var wallrun_t := 0.0
+var _wallrun_used := false
+var _vine_cool := 0.0
+const WALLRUN_TIME := 0.42
+const WALLRUN_V := 640.0
+const SLIDE_MAX := 860.0
+
 
 func _ready() -> void:
 	collision_layer = 1
@@ -92,6 +102,31 @@ func _physics_process(delta: float) -> void:
 			velocity.y = maxf(velocity.y, 900.0)
 	if req.strike != Vector2.INF:
 		_strike(req.strike)
+	_vine_cool = maxf(0.0, _vine_cool - delta)
+
+	# hanging on a vine: the vine swings him; a flick / tap lets go with the swing's speed (and a boost)
+	if vine != null:
+		state = "hang"
+		if _buffer > 0.0 or req.leap != Vector2.INF or bool(req.drop):
+			var v: Vector2 = vine.call("release_velocity")
+			vine.call("let_go")
+			vine = null
+			_vine_cool = 0.35
+			_buffer = 0.0
+			if not bool(req.drop):
+				velocity = v + Vector2(signf(v.x if absf(v.x) > 40.0 else facing) * 120.0, -620.0)
+			else:
+				velocity = v * 0.5
+			facing = signf(velocity.x) if absf(velocity.x) > 20.0 else facing
+			state = "jump"
+			jumped.emit()
+		else:
+			vine.call("pump", run, delta)
+			global_position = vine.call("grip_point")
+			velocity = vine.call("release_velocity")
+			if absf(velocity.x) > 30.0:
+				facing = signf(velocity.x)
+			return
 
 	# horizontal
 	if _leap_vx != INF and not grounded:
@@ -114,6 +149,19 @@ func _physics_process(delta: float) -> void:
 	if absf(velocity.x) > 30.0:
 		facing = signf(velocity.x)
 
+	# wall-run: running hard into a tree trunk carries him up it for a moment (once until he lands again)
+	if grounded:
+		_wallrun_used = false
+	if wallrun_t > 0.0:
+		wallrun_t -= delta
+		velocity.y = -WALLRUN_V
+		if not is_on_wall() or absf(run) < 0.1:
+			wallrun_t = 0.0
+	elif is_on_wall() and not _wallrun_used and absf(run) > 0.6 and absf(velocity.x) > 10.0 and signf(run) == -signf(get_wall_normal().x):
+		if grounded or velocity.y < 200.0:
+			wallrun_t = WALLRUN_TIME
+			_wallrun_used = true
+
 	# walls (slide down, jump off)
 	on_wall = 0.0
 	if not grounded and is_on_wall() and velocity.y > 0.0:
@@ -135,10 +183,21 @@ func _physics_process(delta: float) -> void:
 	var g := G_UP if velocity.y < 0.0 else G_DOWN
 	if absf(velocity.y) < APEX_BAND and not grounded:
 		g *= 0.5
-	velocity.y += g * delta
-	gliding = not grounded and velocity.y > 0.0 and hold and on_wall == 0.0
+	if wallrun_t <= 0.0:
+		velocity.y += g * delta
+	# a wind stream: lifts strongly while gliding, a little otherwise
+	if wind_lift > 0.0 and not grounded:
+		velocity.y -= wind_lift * (1.0 if hold else 0.45) * delta
+		velocity.y = maxf(velocity.y, -720.0)
+	wind_lift = 0.0
+	gliding = not grounded and (velocity.y > 0.0 or wind_lift > 0.0) and hold and on_wall == 0.0 and wallrun_t <= 0.0
 	if gliding:
 		velocity.y = minf(velocity.y, GLIDE_FALL)
+	# steep ground: he slides down it, faster than running (the slide slopes of the paths)
+	if grounded and get_floor_angle() > deg_to_rad(24.0):
+		var down := signf(get_floor_normal().x)
+		if absf(run) < 0.05 or signf(run) == down:
+			velocity.x = move_toward(velocity.x, down * SLIDE_MAX, 2600.0 * delta)
 	velocity.y = minf(velocity.y, FALL_MAX)
 
 	var was_air := not grounded
@@ -214,9 +273,27 @@ func _strike(at: Vector2) -> void:
 	best.hit(self)
 
 
+## A bounce mushroom / flower throws him up.
+func bounce(power: float) -> void:
+	velocity.y = -power
+	_coyote = 0.0
+	_wallrun_used = false
+	state = "jump"
+	jumped.emit()
+
+
+## A vine asks whether he can take it (in the air, not just let go).
+func can_grab() -> bool:
+	return vine == null and _vine_cool <= 0.0 and not is_on_floor()
+
+
 func _update_state(run: float) -> void:
 	if strike_t > 0.0:
 		state = "strike"
+	elif wallrun_t > 0.0:
+		state = "wallrun"
+	elif is_on_floor() and get_floor_angle() > deg_to_rad(24.0) and absf(velocity.x) > 300.0:
+		state = "slide"
 	elif is_on_floor():
 		if absf(velocity.x) < 30.0:
 			state = "idle"
