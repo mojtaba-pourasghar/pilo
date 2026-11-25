@@ -123,10 +123,9 @@ IMPORTANT BACKGROUND RULE: the entire background is solid flat pure magenta RGB(
 
 ### 7–11) لایه‌های جنگل قدیم · همه 3072x1024 · بی‌درز چپ‌به‌راست
 
-**7) `game_v4/art/bg/forest_old_sky.png`** — تصویر کامل
+**7) `game_v4/art/bg/forest_old_sky.png`** — تصویر کامل · اگر ۳:۱ ممکن نبود، **21:9** بساز (بالا و پایینش را می‌بُرم)
 ```
-Hand-painted 2D game art in a soft digital gouache and watercolor look, visible gentle brushstrokes, clean shapes, rounded organic forms, rich harmonious color with strong atmospheric perspective and colored mist, soft volumetric light from the upper left with a warm rim light, environments without outlines, polished high-end mobile game quality.
-Seamless horizontally tileable 3:1 panorama: the SKY AND MIST deep inside a forest at morning, a soft pale green-turquoise glow, brighter golden haze in the middle band, a few soft light rays falling from above. No trees in front, no ground, no characters. No text, letters, numbers, watermark or logo.
+A wide panoramic BACKGROUND SKY for a 2D side-scrolling game, painted in a soft digital gouache and watercolor look with gentle visible brushstrokes. ONLY air and light, nothing else: a smooth vertical gradient from soft green-turquoise at the top to a warm pale golden-cream glow across the middle and lower part, soft floating bands of pale green mist, a few large very soft cloud-like mist shapes, four or five wide diagonal light rays falling gently from the upper left. Calm, bright, morning feeling, low contrast. ABSOLUTELY NOTHING SOLID: no trees, no leaves, no branches, no ground, no grass, no hills, no mountains, no horizon line, no buildings, no sun disk, no birds, no characters. The left edge and the right edge must match exactly so the image repeats seamlessly side by side. No text, letters, numbers, watermark or logo.
 ```
 
 **8) `game_v4/art/bg/forest_old_far.png`** — مجنتا
@@ -160,13 +159,36 @@ Hand-painted 2D game art in a soft digital gouache and watercolor look, visible 
 IMPORTANT BACKGROUND RULE: the entire background is solid flat pure magenta RGB(255,0,255) #FF00FF, perfectly uniform, no shadow, no gradient, no floor, no texture. No part of any subject is pink or magenta. At least 80 px of empty magenta between all pieces, nothing touching, nothing cropped. No text, letters, numbers, labels, watermark or logo. Original design, do not imitate any existing game, character or brand.
 ```
 
-### 13–17) لایه‌های جنگل جدید · 3072x1024 · بی‌درز
-همان پنج پرامپت ۷ تا ۱۱، با این جایگزینی‌ها:
-- **13) `bg/forest_new_sky.png`**: به‌جای «soft pale green-turquoise glow, brighter golden haze» بنویس **«cool grey-turquoise glow with soft violet haze, a dim pale sun behind thin purple smoke»**.
-- **14) `bg/forest_new_far.png`**: به‌جای «washed-out pale green-turquoise» بنویس **«washed-out grey-turquoise with drifting violet smoke between the trees»**.
-- **15) `bg/forest_new_mid.png`**: اضافه کن **«some trunks are dry and cracked, purple smoke curls around the roots, faint glowing green veins»**.
-- **16) `bg/forest_new_near.png`**: اضافه کن **«collapsed ruins, cracked stones, purple smoke in the hollows»**.
-- **17) `bg/forest_new_front.png`**: اضافه کن **«a few dry thorny branches and wisps of purple smoke among the leaves»**.
+### 13–17) لایه‌های جنگل جدید · 3072x1024 (یا 21:9) · بی‌درز چپ‌به‌راست
+
+**13) `game_v4/art/bg/forest_new_sky.png`** — تصویر کامل
+```
+A wide panoramic BACKGROUND SKY for a 2D side-scrolling game, painted in a soft digital gouache and watercolor look with gentle visible brushstrokes. ONLY air and light, nothing else: a smooth vertical gradient from cool grey-turquoise at the top to a pale dusty lavender glow across the middle and lower part, thin drifting bands of soft violet smoke-mist, a few large very soft mist shapes, two or three weak diagonal light rays from the upper left, a slightly sad, quiet, mysterious feeling, low contrast. ABSOLUTELY NOTHING SOLID: no trees, no leaves, no branches, no ground, no grass, no hills, no mountains, no horizon line, no buildings, no sun disk, no birds, no characters. The left edge and the right edge must match exactly so the image repeats seamlessly side by side. No text, letters, numbers, watermark or logo.
+```
+
+**14) `game_v4/art/bg/forest_new_far.png`** — مجنتا
+```
+Hand-painted 2D game art in a soft digital gouache and watercolor look, visible gentle brushstrokes, rounded organic forms, strong atmospheric perspective and colored mist, environments without outlines, polished high-end mobile game quality.
+Seamless horizontally tileable 3:1 panorama strip: the SAME ancient FAR FOREST many years later, seen through cool mist: tall pale tree silhouettes, some bare and thin, soft round canopies, faint hanging vines, drifting bands of soft violet smoke between the trees, very low contrast, washed-out grey-turquoise. It fills the whole height except the top 15 percent. IMPORTANT: everything that is not forest or smoke is solid flat pure magenta RGB(255,0,255) #FF00FF, perfectly uniform. No part of the forest or smoke is pink or magenta (the smoke is cool violet-grey, never pink). The left and right edges match for seamless repeat. No text, letters, numbers, watermark or logo.
+```
+
+**15) `game_v4/art/bg/forest_new_mid.png`** — مجنتا
+```
+Hand-painted 2D game art in a soft digital gouache and watercolor look, visible gentle brushstrokes, rounded organic forms, strong atmospheric perspective and colored mist, environments without outlines, polished high-end mobile game quality.
+Seamless horizontally tileable 3:1 panorama strip: GIANT ANCIENT TREE TRUNKS in the middle distance many years later, 5 or 6 huge twisted trunks with wide roots, some trunks dry and cracked with fewer leaves, thinner drooping canopies along the top edge, old hanging vines, curls of violet smoke around the roots, faint glowing green veins in the bark, medium-low contrast, cool grey-turquoise with mist between them. IMPORTANT: the gaps between trunks and everything that is not tree or smoke are solid flat pure magenta RGB(255,0,255) #FF00FF, perfectly uniform. No part of the trees or smoke is pink or magenta (the smoke is cool violet-grey, never pink). The left and right edges match for seamless repeat. No text, letters, numbers, watermark or logo.
+```
+
+**16) `game_v4/art/bg/forest_new_near.png`** — مجنتا
+```
+Hand-painted 2D game art in a soft digital gouache and watercolor look, visible gentle brushstrokes, rounded organic forms, strong atmospheric perspective and colored mist, environments without outlines, polished high-end mobile game quality.
+Seamless horizontally tileable 3:1 panorama strip: a BACK TIER OF TERRAIN just behind the play path, many years later: stepped rock masses at different heights with thin patchy moss, cracked stones, collapsed ruins with broken turquoise tiles, dry ferns, a few small bare trees, violet smoke pooling in the hollows, faint glowing green veins on old stones, slightly hazy and darker grey-green so it stays behind the main path. It occupies the lower 45 percent; everything above is empty. IMPORTANT: everything that is not terrain, plants or smoke is solid flat pure magenta RGB(255,0,255) #FF00FF, perfectly uniform. No part of the terrain or smoke is pink or magenta (the smoke is cool violet-grey, never pink). The left and right edges match for seamless repeat. No text, letters, numbers, watermark or logo.
+```
+
+**17) `game_v4/art/bg/forest_new_front.png`** — مجنتا
+```
+Hand-painted 2D game art in a soft digital gouache look, rounded organic forms, environments without outlines, polished high-end mobile game quality.
+Seamless horizontally tileable 3:1 panorama strip: a DARK FOREGROUND for the bottom edge of the screen, in front of the camera: big dark silhouette leaves, dry fern fronds, a few dry thorny branches, grass clumps and thin wisps of dark violet-grey smoke among them, almost black deep grey-green with a faint cool rim of light, slightly soft and out of focus. Clumps of different heights along the bottom edge; the upper 65 percent is empty. IMPORTANT: everything that is not foliage or smoke is solid flat pure magenta RGB(255,0,255) #FF00FF, perfectly uniform. No part of the foliage or smoke is pink or magenta. The left and right edges match for seamless repeat. No text, letters, numbers, watermark or logo.
+```
 
 ### 18) افکت‌ها — `game_v4/art/fx/fx_forest.png` · 2048x2048 · مجنتا
 ```
