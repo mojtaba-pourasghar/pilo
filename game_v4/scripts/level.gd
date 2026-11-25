@@ -47,6 +47,13 @@ const ENEMIES := [[1200, 860], [6700, 520], [7050, 520]]
 const CAGES := [[2600, 330], [6420, 545], [5600, 1170]]
 const CHECKPOINTS := [[120, 880], [1700, 880], [3850, 700], [5000, 1160], [6150, 540]]
 const EXIT := Vector2(7600, 560)
+## The story on the path (docs/47 section 2): a short goal banner when the hero enters each chunk.
+const SECTIONS := [[0, "v4_s1"], [1700, "v4_s2"], [2750, "v4_s3"], [3900, "v4_s4"], [5750, "v4_s5"], [6600, "v4_s6"]]
+const GOLD_DEW := [[3250, 440]]                       ## big golden dew: 8 s of double dew
+const TREASURES := [[6480, 470, 8], [2400, 200, 6]]   ## hidden dew caches: x, y, drops (the companion guides there)
+const BURIED := [[1250, 900], [4200, 700]]            ## sparkles in the ground: strike to dig out drops
+const EGG := Vector2(6520, 548)                       ## the time egg, hidden behind the leaves
+const STARS := [50, 100, 150]                         ## dew for 1, 2, 3 stars
 
 var hero: HeroBody
 var rig: CutoutRig
@@ -60,6 +67,13 @@ var _trail: Line2D
 var _dust: CPUParticles2D
 var _finished := false
 var _checkpoint := 0
+var golden_t := 0.0
+var combo := 0
+var _combo_t := 0.0
+var _section := -1
+var egg_found := false
+var companion: Companion
+var _combo_label: Label
 var _fg: Node2D
 var _bar: Control
 var hud_dist: Label
@@ -117,7 +131,30 @@ func _ready() -> void:
 		var cage := Cage.new()
 		cage.position = Vector2(c[0], c[1])
 		cage.level = self
+		if int(c[0]) == 6420:
+			cage.add_to_group("hidden")
 		add_child(cage)
+	for g in GOLD_DEW:
+		var gd := Dew.new()
+		gd.big = true
+		gd.position = Vector2(g[0], g[1])
+		gd.level = self
+		add_child(gd)
+	for tr in TREASURES:
+		var cache := Treasure.new()
+		cache.position = Vector2(tr[0], tr[1])
+		cache.drops = int(tr[2])
+		cache.level = self
+		add_child(cache)
+	for bd in BURIED:
+		var spot := Buried.new()
+		spot.position = Vector2(bd[0], bd[1])
+		spot.level = self
+		add_child(spot)
+	var egg := TimeEgg.new()
+	egg.position = EGG
+	egg.level = self
+	add_child(egg)
 	var gate := ExitGate.new()
 	gate.position = EXIT
 	gate.level = self
@@ -153,6 +190,11 @@ func _ready() -> void:
 	add_child(cam)
 	control.camera = cam
 	hero.landed.connect(_on_landed)
+	companion = Companion.new()
+	companion.hero = hero
+	companion.level = self
+	add_child(companion)
+	Living.air(self, get_viewport_rect().size)
 	hero.jumped.connect(func(): _puff(hero.global_position, 6))
 	_dust = CPUParticles2D.new()
 	_dust.emitting = false
@@ -180,6 +222,18 @@ func _process(_delta: float) -> void:
 		_trail.add_point(q)
 	if hero.global_position.y > BOTTOM:
 		respawn()
+	golden_t = maxf(0.0, golden_t - _delta)
+	_combo_t -= _delta
+	if _combo_t <= 0.0:
+		combo = 0
+	if _combo_label:
+		_combo_label.modulate.a = clampf(_combo_t * 2.0, 0.0, 1.0)
+	for i in range(SECTIONS.size() - 1, -1, -1):
+		if hero.global_position.x >= float(SECTIONS[i][0]):
+			if i > _section:
+				_section = i
+				_banner(Strings.t(String(SECTIONS[i][1])))
+			break
 	if _fg and cam:
 		var fw: float = _fg.get_meta("w") if _fg.has_meta("w") else _fg.get("width")
 		_fg.position.x = -fposmod(cam.global_position.x * 1.35 * cam.zoom.x, fw)
@@ -215,9 +269,53 @@ func respawn() -> void:
 	cam.call("snap")
 
 
-func add_dew() -> void:
-	dew += 1
+func add_dew(n := 1) -> void:
+	var value := n * (2 if golden_t > 0.0 else 1)
+	dew += value
 	hud_dew.text = _fa(dew)
+	combo += 1
+	_combo_t = 0.7
+	if combo >= 3:
+		if _combo_label == null:
+			_combo_label = _label("", 34)
+		_combo_label.text = "×" + _fa(combo)
+		var sp: Vector2 = cam.get_canvas_transform() * (hero.global_position + Vector2(40, -200))
+		_combo_label.position = sp
+		_combo_label.add_theme_color_override("font_color", Color("ffd34d") if golden_t > 0.0 else Color("fff6dc"))
+
+
+func golden() -> void:
+	golden_t = 8.0
+	_banner(Strings.t("v4_golden"))
+	if companion:
+		companion.cheer()
+
+
+func egg() -> void:
+	egg_found = true
+	_banner(Strings.t("v4_egg"))
+	if companion:
+		companion.cheer()
+
+
+## A short goal banner sliding down from the top (the path's story, docs/47 section 2).
+var _last_banner: Label
+
+func _banner(text: String) -> void:
+	if is_instance_valid(_last_banner):
+		_last_banner.queue_free()
+	var l := _label(text, 38)
+	_last_banner = l
+	var view := get_viewport_rect().size
+	l.size = Vector2(view.x, 60)
+	l.position = Vector2(0, -70)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	l.add_theme_color_override("font_color", Color("ffe9a8"))
+	var tw := l.create_tween()
+	tw.tween_property(l, "position:y", 96.0, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tw.tween_interval(2.4)
+	tw.tween_property(l, "modulate:a", 0.0, 0.5)
+	tw.tween_callback(l.queue_free)
 
 
 func cage_freed() -> void:
@@ -229,10 +327,19 @@ func finish() -> void:
 	if _finished:
 		return
 	_finished = true
-	var l := _label(Strings.t("v4_done") + "\n" + Strings.t("v4_dew") + " " + _fa(dew) + "   " + Strings.t("v4_cages") + " " + _fa(freed_cages), 46)
-	l.position = Vector2(340, 250)
-	l.size = Vector2(600, 200)
-	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hero.control = null
+	hero.velocity.x = 0.0
+	var view := get_viewport_rect().size
+	var panel := ResultPanel.new()
+	panel.dew = dew
+	panel.stars = STARS
+	panel.cages = freed_cages
+	panel.cages_total = CAGES.size()
+	panel.egg = egg_found
+	panel.size = view
+	for c in get_children():
+		if c is CanvasLayer and c.layer == 20:
+			c.add_child(panel)
 
 
 # ---------------------------------------------------------------- building (placeholders until the painted kit)
@@ -355,6 +462,21 @@ func _build_background() -> void:
 			spr.position = Vector2(0, float(fit[1]))
 			pl.motion_mirroring = Vector2(spr.texture.get_width() * sc, 0)
 			pl.add_child(spr)
+			# alive, not a photograph: the trees sway, mist drifts in front of each layer, birds cross the far forest
+			var mw: float = spr.texture.get_width() * sc
+			match String(L[3]):
+				"far":
+					Living.sway(spr, 2.0, 0.6)
+					var birds := Living.Birds.new()
+					birds.width = mw
+					pl.add_child(birds)
+					_add_mist(pl, mw, 520.0, Color(0.88, 0.97, 0.92, 0.2), 12.0)
+				"mid":
+					Living.sway(spr, 5.0, 0.8)
+					_add_mist(pl, mw, 760.0, Color(0.85, 0.96, 0.9, 0.16), 20.0)
+				"near":
+					Living.sway(spr, 3.0, 1.0)
+					_add_mist(pl, mw, 980.0, Color(0.8, 0.93, 0.86, 0.12), 28.0)
 			if L[3] == "sky":
 				var spr2 := Sprite2D.new()
 				spr2.texture = spr.texture
@@ -388,12 +510,22 @@ func _build_background() -> void:
 			spr.centered = false
 			spr.scale = Vector2(sc, sc)
 			spr.position = Vector2(i * tex.get_width() * sc, 0)
+			Living.sway(spr, 9.0, 1.3, 0.0)
 			_fg.add_child(spr)
 		_fg.set_meta("w", tex.get_width() * sc)
 	else:
 		var fg2 := Scenery.Foreground.new()
 		fg2.position.x = _fg.width
 		_fg.add_child(fg2)
+
+
+func _add_mist(pl: Node, width: float, y: float, col: Color, drift: float) -> void:
+	var m := Living.Mist.new()
+	m.width = width
+	m.y = y
+	m.color = col
+	m.drift = drift
+	pl.add_child(m)
 
 
 func _build_hud() -> void:
@@ -563,8 +695,34 @@ class Dew extends Area2D:
 	var level: Node
 	var phase := 0.0
 	var icon := false
+	var big := false
 	var _t := 0.0
 	var _taken := false
+	var _pull: Node2D = null
+
+	func attract(to: Node2D) -> void:
+		if not _taken:
+			_pull = to
+
+	func _physics_process(delta: float) -> void:
+		if _pull and not _taken:
+			var goal := _pull.global_position + Vector2(0, -70)
+			global_position = global_position.move_toward(goal, 900.0 * delta)
+			if global_position.distance_to(goal) < 30.0:
+				_take()
+
+	func _take() -> void:
+		_taken = true
+		if big:
+			level.golden()
+			level.add_dew(5)
+		else:
+			level.add_dew()
+		var tw := create_tween()
+		tw.tween_property(self, "position:y", position.y - 50.0, 0.25)
+		tw.parallel().tween_property(self, "scale", Vector2(1.6, 1.6), 0.25)
+		tw.parallel().tween_property(self, "modulate:a", 0.0, 0.25)
+		tw.tween_callback(queue_free)
 
 	func _ready() -> void:
 		if icon:
@@ -576,15 +734,10 @@ class Dew extends Area2D:
 		c.radius = 26.0
 		s.shape = c
 		add_child(s)
+		add_to_group("dew")
 		body_entered.connect(func(b):
 			if b is HeroBody and not _taken:
-				_taken = true
-				level.add_dew()
-				var tw := create_tween()
-				tw.tween_property(self, "position:y", position.y - 50.0, 0.25)
-				tw.parallel().tween_property(self, "scale", Vector2(1.6, 1.6), 0.25)
-				tw.parallel().tween_property(self, "modulate:a", 0.0, 0.25)
-				tw.tween_callback(queue_free))
+				_take())
 
 	func _process(delta: float) -> void:
 		_t += delta
@@ -593,10 +746,12 @@ class Dew extends Area2D:
 	func _draw() -> void:
 		var bob := sin(_t * 3.0 + phase) * 4.0
 		var c := Vector2(0, bob)
-		var ft := Kit.item(int(_t * 10.0 + phase * 3.0) % 3)
+		var ft := Kit.item((6 + int(_t * 8.0) % 4) if big else int(_t * 10.0 + phase * 3.0) % 3)
 		if ft:
-			draw_circle(c, 22.0 + sin(_t * 5.0 + phase) * 2.0, Color(1, 0.85, 0.3, 0.18))
-			Kit.draw_at(self, ft, c + Vector2(0, 22), 46.0 if not icon else 40.0)
+			var gold: bool = level != null and level.get("golden_t") > 0.0
+			draw_circle(c, (22.0 if not big else 46.0) + sin(_t * 5.0 + phase) * 2.0, Color(1, 0.55, 0.2, 0.3) if gold else Color(1, 0.85, 0.3, 0.18))
+			Kit.draw_at(self, ft, c + Vector2(0, 22 if not big else 44), (46.0 if not icon else 40.0) * (2.0 if big else 1.0),
+				0.0, false, Color(1.25, 0.85, 0.6) if gold else Color.WHITE)
 			return
 		draw_circle(c, 15.0 + sin(_t * 5.0 + phase) * 1.5, Color(1, 0.85, 0.3, 0.25))
 		var pts := PackedVector2Array([c + Vector2(0, -15), c + Vector2(8, -3), c + Vector2(9, 5), c + Vector2(0, 11), c + Vector2(-9, 5), c + Vector2(-8, -3)])
@@ -686,12 +841,17 @@ class Cage extends Area2D:
 		_t += delta
 		queue_redraw()
 
+	var found := false
+
 	func hit(_by: Node) -> void:
 		if opened:
 			return
 		opened = true
+		found = true
 		remove_from_group("strikeable")
 		level.cage_freed()
+		if level.companion:
+			level.companion.cheer()
 		var tw := create_tween()
 		tw.tween_property(self, "_t", _t + 2.0, 1.0)
 
@@ -799,3 +959,161 @@ class RoundButton extends Button:
 		else:
 			draw_arc(c, 15.0, -PI * 0.2, PI * 1.4, 20, Color.WHITE, 5.0)
 			draw_colored_polygon(PackedVector2Array([c + Vector2(13, -16), c + Vector2(20, -2), c + Vector2(6, -4)]), Color.WHITE)
+
+
+## A hidden cache of dew (behind leaves, above a hard path): touching it bursts the drops out.
+class Treasure extends Area2D:
+	var level: Node
+	var drops := 6
+	var found := false
+	var _t := 0.0
+
+	func _ready() -> void:
+		add_to_group("hidden")
+		collision_layer = 0
+		collision_mask = 1
+		var sh := CollisionShape2D.new()
+		var c := CircleShape2D.new()
+		c.radius = 60.0
+		sh.shape = c
+		add_child(sh)
+		body_entered.connect(func(b):
+			if b is HeroBody and not found:
+				found = true
+				for i in drops:
+					var d := Dew.new()
+					d.level = level
+					d.position = position + Vector2.from_angle(-PI * 0.5 + (i - drops * 0.5) * 0.35) * 30.0
+					level.add_child(d)
+					d.attract(b)
+				queue_redraw())
+
+	func _process(delta: float) -> void:
+		_t += delta
+		queue_redraw()
+
+	func _draw() -> void:
+		if found:
+			return
+		var vase := Kit.env(26)
+		draw_circle(Vector2(0, -10), 40.0 + sin(_t * 4.0) * 5.0, Color(1, 0.85, 0.3, 0.25))
+		Kit.draw_at(self, vase, Vector2(0, 30), 70.0)
+
+
+## A sparkle in the ground: strike it and dew jumps out.
+class Buried extends Node2D:
+	var level: Node
+	var dug := false
+	var _t := 0.0
+
+	func _ready() -> void:
+		add_to_group("strikeable")
+
+	func hit(by: Node) -> void:
+		if dug:
+			return
+		dug = true
+		remove_from_group("strikeable")
+		for i in 5:
+			var d := Dew.new()
+			d.level = level
+			d.position = position + Vector2((i - 2) * 30.0, -60.0 - absf(i - 2) * -10.0)
+			level.add_child(d)
+			d.attract(by)
+
+	func _process(delta: float) -> void:
+		_t += delta
+		queue_redraw()
+
+	func _draw() -> void:
+		if dug:
+			return
+		for i in 4:
+			var a := _t * 2.0 + i * TAU / 4.0
+			var r := 10.0 + sin(_t * 5.0 + i) * 4.0
+			draw_circle(Vector2(cos(a) * 18.0, -8 + sin(a) * 6.0), r * 0.35, Color(1, 0.95, 0.6, 0.85))
+		draw_circle(Vector2(0, -6), 6.0, Color(1, 1, 0.85, 0.9))
+
+
+## The time egg, hidden in the level (the next companion hatches from it after the level).
+class TimeEgg extends Area2D:
+	var level: Node
+	var found := false
+	var _t := 0.0
+
+	func _ready() -> void:
+		add_to_group("hidden")
+		collision_layer = 0
+		collision_mask = 1
+		var sh := CollisionShape2D.new()
+		var c := CircleShape2D.new()
+		c.radius = 50.0
+		sh.shape = c
+		sh.position = Vector2(0, -40)
+		add_child(sh)
+		body_entered.connect(func(b):
+			if b is HeroBody and not found:
+				found = true
+				level.egg()
+				var tw := create_tween()
+				tw.tween_property(self, "position:y", position.y - 120.0, 0.6).set_ease(Tween.EASE_OUT)
+				tw.parallel().tween_property(self, "modulate:a", 0.0, 0.6)
+				tw.tween_callback(queue_free))
+
+	func _process(delta: float) -> void:
+		_t += delta
+		queue_redraw()
+
+	func _draw() -> void:
+		draw_circle(Vector2(0, -40), 46.0 + sin(_t * 3.0) * 4.0, Color(1, 0.9, 0.55, 0.3))
+		Kit.draw_at(self, Kit.tex("tikkit_parts", 9), Vector2(0, 4), 80.0, sin(_t * 6.0) * 0.08)
+
+
+## The end of the level: the dew counts up, stars light at their thresholds, cages and the egg.
+class ResultPanel extends Control:
+	var dew := 0
+	var stars: Array = []
+	var cages := 0
+	var cages_total := 3
+	var egg := false
+	var _shown := 0.0
+
+	func _ready() -> void:
+		mouse_filter = Control.MOUSE_FILTER_STOP
+		var tw := create_tween()
+		tw.tween_property(self, "_shown", float(dew), clampf(dew / 60.0, 0.8, 2.4))
+		var again := Button.new()
+		again.text = Strings.t("v4_again")
+		again.add_theme_font_size_override("font_size", 30)
+		again.position = Vector2(size.x * 0.5 - 90, size.y * 0.72)
+		again.size = Vector2(180, 64)
+		again.pressed.connect(func(): get_tree().reload_current_scene())
+		add_child(again)
+
+	func _process(_delta: float) -> void:
+		queue_redraw()
+
+	func _draw() -> void:
+		var c := size * 0.5
+		draw_rect(Rect2(Vector2.ZERO, size), Color(0.05, 0.12, 0.1, 0.55))
+		draw_rect(Rect2(c - Vector2(330, 230), Vector2(660, 400)), Color(0.12, 0.25, 0.2, 0.92))
+		draw_rect(Rect2(c - Vector2(330, 230), Vector2(660, 400)), Color(1, 0.9, 0.6, 0.8), false, 4.0)
+		var font := ThemeDB.fallback_font
+		var title := Strings.t("v4_done")
+		draw_string(font, c + Vector2(-200, -160), title, HORIZONTAL_ALIGNMENT_CENTER, 400, 48, Color("ffe9a8"))
+		# stars light when the counted dew passes each threshold
+		for i in 3:
+			var p := c + Vector2(-120 + i * 120, -80)
+			var lit: bool = _shown >= float(stars[i])
+			var pts := PackedVector2Array()
+			for k in 10:
+				var r := 40.0 if k % 2 == 0 else 17.0
+				var a := -PI * 0.5 + k * PI / 5.0
+				pts.append(p + Vector2(cos(a), sin(a)) * r)
+			draw_colored_polygon(pts, Color("ffd34d") if lit else Color(0.25, 0.32, 0.3))
+		Kit.draw_at(self, Kit.item(0), c + Vector2(-150, 40), 60.0)
+		draw_string(font, c + Vector2(-110, 30), str(int(_shown)), HORIZONTAL_ALIGNMENT_LEFT, 200, 46, Color.WHITE)
+		Kit.draw_at(self, Kit.item(16), c + Vector2(70, 50), 70.0)
+		draw_string(font, c + Vector2(110, 30), "%d/%d" % [cages, cages_total], HORIZONTAL_ALIGNMENT_LEFT, 200, 46, Color.WHITE)
+		if egg:
+			Kit.draw_at(self, Kit.tex("tikkit_parts", 9), c + Vector2(240, 50), 70.0)

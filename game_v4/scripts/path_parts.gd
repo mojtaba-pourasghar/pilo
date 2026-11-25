@@ -171,9 +171,15 @@ class Vine extends Node2D:
 		var tp := Vector2(sin(angle), cos(angle)) * length
 		var vt := Kit.env(11)
 		if vt:
-			var sc := length / float(vt.get_height())
-			draw_set_transform(Vector2.ZERO, -angle, Vector2(sc * 1.4, sc))
-			draw_texture(vt, Vector2(-vt.get_width() * 0.5, 0))
+			var w := 46.0
+			var seg := w * float(vt.get_height()) / vt.get_width()
+			var dir := tp.normalized()
+			var n := int(ceil(length / seg))
+			for i in n:
+				var a := dir * (i * seg * 0.92)
+				var sway := sin(Time.get_ticks_msec() * 0.002 + i) * 0.04
+				draw_set_transform(a, dir.angle() - PI * 0.5 + sway, Vector2(w / vt.get_width(), seg / vt.get_height()))
+				draw_texture(vt, Vector2(-vt.get_width() * 0.5, 0))
 			draw_set_transform(Vector2.ZERO)
 			return
 		var mid := tp * 0.5 + Vector2(cos(angle), -sin(angle)) * (_vel * 6.0)
