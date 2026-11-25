@@ -4,6 +4,7 @@ extends Node2D
 ## painted kit arrives (art/kits, art/bg); then the same layout is dressed with the painted pieces.
 
 const BOTTOM := 1600.0
+const ERA_ART := "forest_old"          ## which painted layers (art/layers/<ERA_ART>_*.png)
 
 ## The way of the sample level (old meadow): an organic route, no floating blocks.
 ##  A  rolling meadow, a smoke creature, a bounce mushroom up into the big tree
@@ -121,6 +122,14 @@ func _ready() -> void:
 	gate.position = EXIT
 	gate.level = self
 	add_child(gate)
+	for cp in CHECKPOINTS.slice(1):
+		var lantern := Sprite2D.new()
+		lantern.texture = Kit.item(19)
+		if lantern.texture:
+			lantern.scale = Vector2.ONE * 90.0 / lantern.texture.get_height()
+			lantern.offset = Vector2(0, -lantern.texture.get_height() * 0.5)
+			lantern.position = Vector2(float(cp[0]) - 40.0, float(cp[1]) + 22.0)
+			add_child(lantern)
 	for bu in BUSHES:
 		var bush := PathParts.Bush.new()
 		bush.position = Vector2(bu[0], bu[1])
@@ -334,16 +343,26 @@ func _build_background() -> void:
 		var pl := ParallaxLayer.new()
 		pl.motion_scale = Vector2(float(L[1]), float(L[2]))
 		pb.add_child(pl)
-		var path := "res://art/bg/forest_old_%s.png" % L[3]
+		var path := "res://art/layers/%s_%s.png" % [ERA_ART, L[3]]
 		if L[3] != "" and ResourceLoader.exists(path):
+			# painted layer: [height, top y] in parallax space, so its foot sits where the placeholder's did
+			var fit: Array = {"sky": [1900.0, -750.0], "far": [1150.0, -150.0], "mid": [1450.0, -380.0], "near": [1050.0, 160.0]}[L[3]]
 			var spr := Sprite2D.new()
 			spr.texture = load(path)
 			spr.centered = false
-			var sc := 1300.0 / spr.texture.get_height()
+			var sc: float = float(fit[0]) / spr.texture.get_height()
 			spr.scale = Vector2(sc, sc)
-			spr.position = Vector2(0, -260)
+			spr.position = Vector2(0, float(fit[1]))
 			pl.motion_mirroring = Vector2(spr.texture.get_width() * sc, 0)
 			pl.add_child(spr)
+			if L[3] == "sky":
+				var spr2 := Sprite2D.new()
+				spr2.texture = spr.texture
+				spr2.centered = false
+				spr2.scale = Vector2(-sc, sc)
+				spr2.position = Vector2(spr.texture.get_width() * sc * 2.0, float(fit[1]))
+				pl.add_child(spr2)
+				pl.motion_mirroring = Vector2(spr.texture.get_width() * sc * 2.0, 0)
 		else:
 			var f := Scenery.ForestLayer.new()
 			f.kind = String(L[0])
@@ -355,7 +374,7 @@ func _build_background() -> void:
 	add_child(fg_layer)
 	_fg = Scenery.Foreground.new()
 	fg_layer.add_child(_fg)
-	var front := "res://art/bg/forest_old_front.png"
+	var front := "res://art/layers/%s_front.png" % ERA_ART
 	if ResourceLoader.exists(front):
 		# the painted foreground replaces the placeholder clumps (two copies side by side for the loop)
 		_fg.set_script(null)
@@ -574,6 +593,11 @@ class Dew extends Area2D:
 	func _draw() -> void:
 		var bob := sin(_t * 3.0 + phase) * 4.0
 		var c := Vector2(0, bob)
+		var ft := Kit.item(int(_t * 10.0 + phase * 3.0) % 3)
+		if ft:
+			draw_circle(c, 22.0 + sin(_t * 5.0 + phase) * 2.0, Color(1, 0.85, 0.3, 0.18))
+			Kit.draw_at(self, ft, c + Vector2(0, 22), 46.0 if not icon else 40.0)
+			return
 		draw_circle(c, 15.0 + sin(_t * 5.0 + phase) * 1.5, Color(1, 0.85, 0.3, 0.25))
 		var pts := PackedVector2Array([c + Vector2(0, -15), c + Vector2(8, -3), c + Vector2(9, 5), c + Vector2(0, 11), c + Vector2(-9, 5), c + Vector2(-8, -3)])
 		draw_colored_polygon(pts, Color("f2b632"))
@@ -630,6 +654,13 @@ class Murk extends CharacterBody2D:
 	func _draw() -> void:
 		var sq := sin(_t * 8.0) * 3.0
 		var c := Vector2(0, -30 - sq)
+		var et := Kit.tex("enemies_forest_parts", 4 if not freed else 22)
+		if et:
+			var s := 96.0 / et.get_height()
+			draw_set_transform(Vector2(0, 6), sin(_t * 8.0) * 0.06, Vector2(s * -dir * (1.0 + sq * 0.01), s * (1.0 - sq * 0.012)))
+			draw_texture(et, Vector2(-et.get_width() * 0.5, -et.get_height()))
+			draw_set_transform(Vector2.ZERO)
+			return
 		draw_circle(c, 33.0, Color("2a1f3d"))
 		draw_circle(c, 30.0, Color("5b3f8a") if not freed else Color("f6c94a"))
 		for k in 4:
@@ -666,6 +697,13 @@ class Cage extends Area2D:
 
 	func _draw() -> void:
 		var c := Vector2(0, -60)
+		var ct := Kit.item(16 if not opened else 18)
+		if ct:
+			Kit.draw_at(self, ct, Vector2(0, 10), 150.0 if not icon else 150.0, sin(_t * 1.5) * 0.04)
+			var sp := Kit.item(10 if not opened else 11 + int(_t * 4.0) % 2 * 4)
+			var fly := 0.0 if not opened else minf(_t, 3.0) * 70.0
+			Kit.draw_at(self, sp, Vector2(sin(_t * 3.0) * 6.0, -40.0 - fly + sin(_t * 5.0) * 4.0), 70.0)
+			return
 		if not opened:
 			draw_circle(c, 52.0, Color(0.3, 0.2, 0.45, 0.35))
 			for k in 7:
@@ -706,6 +744,14 @@ class ExitGate extends Area2D:
 		queue_redraw()
 
 	func _draw() -> void:
+		var arch := Kit.env(17)
+		if arch:
+			draw_circle(Vector2(0, -110), 70.0 + sin(_t * 3.0) * 6.0, Color(1, 0.9, 0.5, 0.3))
+			for i in 3:
+				var st := _t * (1.5 + i * 0.4) + i * 2.0
+				draw_arc(Vector2(0, -105), 16.0 + i * 14.0, st, st + 3.5, 20, Color(1, 0.95, 0.75, 0.85 - i * 0.2), 5.0)
+			Kit.draw_at(self, arch, Vector2(0, 16), 250.0)
+			return
 		for side in [-1.0, 1.0]:
 			draw_rect(Rect2(side * 70 - 18, -230, 36, 230), Color("3b2416"))
 			draw_rect(Rect2(side * 70 - 14, -226, 28, 226), Color("d8c39a"))

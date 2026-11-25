@@ -63,9 +63,9 @@ func _ready() -> void:
 	var shape := CollisionShape2D.new()
 	var cap := CapsuleShape2D.new()
 	cap.radius = 26.0
-	cap.height = 128.0
+	cap.height = 150.0
 	shape.shape = cap
-	shape.position = Vector2(0, -64)
+	shape.position = Vector2(0, -75)
 	add_child(shape)
 	add_to_group("hero")
 

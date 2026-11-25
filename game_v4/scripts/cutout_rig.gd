@@ -25,11 +25,120 @@ const COL := {"skin": Color("c98b5a"), "tunic": Color("e8d2a0"), "sash": Color("
 	"boot": Color("4a2f1c"), "cloak": Color("1f6f78"), "trim": Color("e9c46a"), "hair": Color("2b1d14"), "staff": Color("8a5a2b")}
 
 
+## The painted rig (data/rig_<who>.json + art/cut/<sheet>): name -> {tex, piv (px), v (pivot->tip, px), extra points}
+var _parts := {}
+var _s := 0.27
+var expression := ""                 ## "", "happy", "fight", "wow" (the head picture)
+
+
 func _ready() -> void:
-	for part in ["head", "torso", "pelvis", "upper", "fore", "hand", "thigh", "shin", "foot", "cloak", "cloak_open", "staff"]:
-		var path := "res://art/chars/%s/%s.png" % [who, part]
-		if ResourceLoader.exists(path):
-			_tex[part] = load(path)
+	var f := FileAccess.open("res://data/rig_%s.json" % who, FileAccess.READ)
+	if f == null:
+		return
+	var rig: Dictionary = JSON.parse_string(f.get_as_text())
+	var sheet := String(rig.sheet)
+	var mf := FileAccess.open("res://art/cut/%s/%s.json" % [sheet, sheet], FileAccess.READ)
+	if mf == null:
+		return
+	var meta: Dictionary = JSON.parse_string(mf.get_as_text())
+	_s = float(rig.get("scale", 0.27))
+	for name in rig.parts:
+		var d: Dictionary = rig.parts[name]
+		var path := "res://art/cut/%s/%s" % [sheet, String(meta.pieces[int(d.piece)].file)]
+		if not ResourceLoader.exists(path):
+			continue
+		var tex: Texture2D = load(path)
+		var sz := Vector2(tex.get_width(), tex.get_height())
+		var entry := {"tex": tex, "piv": Vector2(d.pivot[0], d.pivot[1]) * sz, "v": (Vector2(d.tip[0], d.tip[1]) - Vector2(d.pivot[0], d.pivot[1])) * sz}
+		for k in ["shoulder", "shoulder_b", "hip"]:
+			if d.has(k):
+				entry[k] = Vector2(d[k][0], d[k][1]) * sz
+		_parts[name] = entry
+
+
+func painted() -> bool:
+	return _parts.has("torso") and _parts.has("thigh")
+
+
+func _len(part: String) -> float:
+	return (_parts[part].v as Vector2).length() * _s
+
+
+## Draws a painted part with its pivot at `at` and its pivot->tip along `ang`; returns the transform picture->rig.
+func _put(part: String, at: Vector2, ang: float, shade := 1.0, flip_draw := true) -> Transform2D:
+	var e: Dictionary = _parts[part]
+	var r: float = ang - (e.v as Vector2).angle()
+	var xf := Transform2D(r, Vector2(_s, _s), 0.0, at) * Transform2D(0.0, -(e.piv as Vector2))
+	if flip_draw:
+		draw_set_transform_matrix(xf)
+		draw_texture(e.tex, Vector2.ZERO, Color(shade, shade, shade))
+		draw_set_transform_matrix(Transform2D.IDENTITY)
+	return xf
+
+
+static func _down(a: float) -> float:
+	return PI * 0.5 + a
+
+
+## The painted puppet (same bones and poses as the placeholder, art from the parts sheet).
+func _draw_painted() -> void:
+	var thigh_l := _len("thigh")
+	var shin_l := _len("shin")
+	var foot_l := _len("foot")
+	var lean := float(p.lean)
+	var hip := Vector2(0, -(thigh_l + shin_l + foot_l * 0.85) + float(p.bob))
+	var up := -PI * 0.5 + lean
+	var torso_xf := _put("torso", hip, up, 1.0, false)
+	var shoulder: Vector2 = torso_xf * (_parts.torso.shoulder as Vector2)
+	var shoulder_b: Vector2 = torso_xf * (_parts.torso.get("shoulder_b", _parts.torso.shoulder) as Vector2)
+	var neck: Vector2 = torso_xf * ((_parts.torso.piv as Vector2) + (_parts.torso.v as Vector2))
+	var pelvis_xf := _put("pelvis", hip, _down(lean * 0.5), 1.0, false)
+	var hipj: Vector2 = pelvis_xf * (_parts.pelvis.get("hip", _parts.pelvis.piv) as Vector2)
+	# back limbs (darker), cloak, shorts, front leg, torso, head, front arm with the staff
+	_arm_p(shoulder_b, float(p.sh_b), float(p.el_b), 0.7, "fist")
+	_leg_p(hipj + Vector2(-5, 0), float(p.thigh_b), float(p.knee_b), float(p.foot_b), 0.7)
+	if float(p.spread) > 0.4 and _parts.has("cloak_open"):
+		_put("cloak_open", shoulder_b + Vector2(0, -6), _down(lean * 0.3))
+	else:
+		_put("cloak", shoulder_b + Vector2(-2, -8), _down(lean + float(p.cloak)))
+	_put("pelvis", hip, _down(lean * 0.5))
+	_leg_p(hipj + Vector2(5, 0), float(p.thigh_f), float(p.knee_f), float(p.foot_f), 1.0)
+	_put("torso", hip, up)
+	var head := "head"
+	if expression != "" and _parts.has("head_" + expression):
+		head = "head_" + expression
+	_put(head, neck, up + float(p.head))
+	var wr := _arm_p(shoulder, float(p.sh_f), float(p.el_f), 1.0, "grip")
+	if _parts.has("staff"):
+		var sa := lerpf(-0.12, float(p.sh_f) + float(p.el_f) + 0.3, float(p.staff))
+		if body and body.state in ["jump", "glide", "wall", "hang", "wallrun"]:
+			sa = float(p.sh_f) + float(p.el_f) + 0.6
+		_put("staff", wr, _down(sa))
+		_arm_hand_over(shoulder, float(p.sh_f), float(p.el_f))
+
+
+func _leg_p(jt: Vector2, thigh: float, knee: float, foot_a: float, shade: float) -> void:
+	var kp := jt + Vector2.from_angle(_down(thigh)) * _len("thigh")
+	var ak := kp + Vector2.from_angle(_down(thigh + knee)) * _len("shin")
+	_put("foot", ak, _down(foot_a * 0.6), shade)
+	_put("shin", kp, _down(thigh + knee), shade)
+	_put("thigh", jt, _down(thigh), shade)
+
+
+func _arm_p(sh: Vector2, a: float, e: float, shade: float, hand: String) -> Vector2:
+	var el := sh + Vector2.from_angle(_down(a)) * _len("upper")
+	var wr := el + Vector2.from_angle(_down(a + e)) * _len("fore")
+	_put("upper", sh, _down(a), shade)
+	_put("fore", el, _down(a + e), shade)
+	_put(hand if _parts.has(hand) else "hand", wr, _down(a + e), shade)
+	return wr
+
+
+## The gripping hand is drawn again over the staff so the fingers close around it.
+func _arm_hand_over(sh: Vector2, a: float, e: float) -> void:
+	var el := sh + Vector2.from_angle(_down(a)) * _len("upper")
+	var wr := el + Vector2.from_angle(_down(a + e)) * _len("fore")
+	_put("grip" if _parts.has("grip") else "hand", wr, _down(a + e))
 
 
 func _process(delta: float) -> void:
@@ -46,6 +155,15 @@ func _process(delta: float) -> void:
 	_cloak_v *= exp(-delta * 7.0)
 	_cloak += _cloak_v * delta
 	p.cloak = _cloak
+	match body.state:
+		"strike":
+			expression = "fight"
+		"fall":
+			expression = "wow" if body.velocity.y > 1100.0 else ""
+		"glide", "hang", "slide":
+			expression = "happy"
+		_:
+			expression = ""
 	scale = Vector2(body.facing * (1.0 + body.land_squash * 0.16), 1.0 - body.land_squash * 0.2)
 	if body.state == "jump":
 		scale.y *= 1.0 + clampf(-body.velocity.y / 1080.0, 0.0, 1.0) * 0.08
@@ -109,6 +227,9 @@ func _target_pose(delta: float) -> Dictionary:
 # ---------------------------------------------------------------- drawing (forward kinematics)
 
 func _draw() -> void:
+	if painted():
+		_draw_painted()
+		return
 	var hip := Vector2(0, -78 + float(p.bob))
 	var lean := float(p.lean)
 	var torso_dir := Vector2(0, -1).rotated(lean)

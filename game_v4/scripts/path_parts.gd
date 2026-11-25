@@ -47,6 +47,23 @@ class Trunk extends StaticBody2D:
 		add_child(shape)
 
 	func _draw() -> void:
+		var bark := Kit.env(8)
+		if bark:
+			# the painted trunk repeated up, a crown of big bushes on top, roots at the foot
+			# one long trunk: the bark picture stretched up, mirrored halves so no seam shows
+			var full := bottom + 30.0 - (top - 60.0)
+			var half := full * 0.5
+			draw_texture_rect(bark, Rect2(-w * 0.62, top - 60.0 + half, w * 1.25, half), false)
+			draw_set_transform(Vector2(0, top - 60.0 + half), 0.0, Vector2(1, -1))
+			draw_texture_rect(bark, Rect2(-w * 0.62, 0, w * 1.25, half), false)
+			draw_set_transform(Vector2.ZERO)
+			var bush := Kit.env(18)
+			for k in 7:
+				var a := -PI * 0.5 + (k - 3) * 0.42
+				Kit.draw_at(self, bush, Vector2(0, top + 60) + Vector2.from_angle(a) * 150.0 + Vector2(0, 90), 240.0, 0.0, k % 2 == 0,
+					Color(0.82, 0.92, 0.82))
+			Kit.draw_at(self, bush, Vector2(0, top + 40), 300.0)
+			return
 		var pts := PackedVector2Array([Vector2(-w * 0.5 - 40, bottom + 10), Vector2(-w * 0.5, bottom - 80), Vector2(-w * 0.45, top),
 			Vector2(w * 0.45, top), Vector2(w * 0.5, bottom - 80), Vector2(w * 0.5 + 46, bottom + 10)])
 		draw_colored_polygon(pts, OUTLINE)
@@ -86,6 +103,16 @@ class Branch extends StaticBody2D:
 			add_child(seg)
 
 	func _draw() -> void:
+		var piece := Kit.env(10 if absf(points[0].y - points[points.size() - 1].y) > 20.0 else 9)
+		if piece:
+			var a: Vector2 = points[0]
+			var b: Vector2 = points[points.size() - 1]
+			var flip := b.x < a.x
+			if flip:
+				Kit.draw_along(self, piece, b + Vector2(0, 14), a + Vector2(0, 14), 74.0)
+			else:
+				Kit.draw_along(self, piece, a + Vector2(0, 14), b + Vector2(0, 14), 74.0)
+			return
 		var n := _line.size()
 		for i in n - 1:
 			var k := float(i) / n
@@ -142,6 +169,13 @@ class Vine extends Node2D:
 
 	func _draw() -> void:
 		var tp := Vector2(sin(angle), cos(angle)) * length
+		var vt := Kit.env(11)
+		if vt:
+			var sc := length / float(vt.get_height())
+			draw_set_transform(Vector2.ZERO, -angle, Vector2(sc * 1.4, sc))
+			draw_texture(vt, Vector2(-vt.get_width() * 0.5, 0))
+			draw_set_transform(Vector2.ZERO)
+			return
 		var mid := tp * 0.5 + Vector2(cos(angle), -sin(angle)) * (_vel * 6.0)
 		var pts := PathParts.smooth([Vector2.ZERO, mid, tp], 14.0)
 		draw_polyline(pts, OUTLINE, 11.0)
@@ -179,6 +213,13 @@ class Mushroom extends Area2D:
 
 	func _draw() -> void:
 		var sq := sin(_squash * PI) * 0.35
+		var mt := Kit.env(14)
+		if mt:
+			var s := 150.0 / mt.get_height()
+			draw_set_transform(Vector2(0, 8), 0.0, Vector2(s * (1.0 + sq), s * (1.0 - sq)))
+			draw_texture(mt, Vector2(-mt.get_width() * 0.5, -mt.get_height()))
+			draw_set_transform(Vector2.ZERO)
+			return
 		draw_rect(Rect2(-18, -62, 36, 62), OUTLINE)
 		draw_rect(Rect2(-14, -60, 28, 60), Color("f6efe0"))
 		draw_set_transform(Vector2(0, -66), 0.0, Vector2(1.0 + sq, 1.0 - sq))
@@ -223,7 +264,12 @@ class Pond extends Area2D:
 		queue_redraw()
 
 	func _draw() -> void:
-		draw_rect(Rect2(0, 0, w, 400), Color(0.25, 0.55, 0.75, 0.85))
+		# painterly water: deep teal fading down, a light band under the surface, ripples and drifting glints
+		for i in 10:
+			var c := Color("6fc2b5").lerp(Color("1f4f52"), i / 9.0)
+			c.a = 0.88
+			draw_rect(Rect2(0, i * 40.0, w, 41.0), c)
+		draw_rect(Rect2(0, 0, w, 10), Color(0.85, 1.0, 0.95, 0.35))
 		var pts := PackedVector2Array()
 		for i in int(w / 16.0) + 1:
 			pts.append(Vector2(i * 16.0, sin(_t * 2.0 + i * 0.5) * 4.0))
@@ -261,6 +307,10 @@ class Leaf extends AnimatableBody2D:
 		queue_redraw()
 
 	func _draw() -> void:
+		var lt := Kit.env(15)
+		if lt:
+			Kit.draw_at(self, lt, Vector2(0, 22), 70.0, 0.0, false, Color(1, 1, 1) if _sink < 40.0 else Color(0.8, 0.85, 0.8))
+			return
 		draw_colored_polygon(PathParts._leaf(84.0, 18.0), OUTLINE)
 		draw_colored_polygon(PathParts._leaf(80.0, 15.0), Color("4f9a3e") if _sink < 40.0 else Color("3d7a32"))
 		draw_line(Vector2(-60, 0), Vector2(60, 0), Color("6cbf55"), 3.0)
@@ -302,6 +352,7 @@ class Wind extends Area2D:
 		queue_redraw()
 
 	func _draw() -> void:
+		Kit.draw_at(self, Kit.env(16), Vector2(0, 12), 110.0)
 		for i in 26:
 			var k := fmod(_t * 0.7 + i * 0.137, 1.0)
 			var x := sin(i * 2.3 + _t * 2.0) * size.x * 0.4
@@ -322,6 +373,11 @@ class Bush extends Node2D:
 		modulate.a = lerpf(modulate.a, 0.25 if near else 1.0, 0.12)
 
 	func _draw() -> void:
+		var bt := Kit.env(18)
+		if bt:
+			for k in 3:
+				Kit.draw_at(self, bt, Vector2((k - 1) * radius * 0.6, radius * 0.6), radius * 1.3, 0.0, k == 1, Color(0.45, 0.6, 0.5))
+			return
 		for k in 9:
 			var a := -PI + k * PI / 8.0
 			var c := Vector2.from_angle(a) * radius * 0.55 + Vector2(0, 40)

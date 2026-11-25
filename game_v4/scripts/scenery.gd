@@ -19,7 +19,65 @@ class MossTerrain extends Node2D:
 	var top: PackedVector2Array
 	var depth := 1600.0
 
+	func _ready() -> void:
+		var rock := Kit.ground("rock")
+		var lip_t := Kit.ground("lip")
+		if rock == null or lip_t == null:
+			return
+		# the painted ground: the rock body repeats, darker deeper down; the mossy lip follows the curve
+		var poly := top.duplicate()
+		poly.append(Vector2(top[top.size() - 1].x, depth))
+		poly.append(Vector2(top[0].x, depth))
+		var body := Polygon2D.new()
+		body.polygon = poly
+		body.texture = rock
+		body.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+		var uv := PackedVector2Array()
+		var cols := PackedColorArray()
+		for q in poly:
+			uv.append(q / 1.1)
+			var dy := q.y - _top_y(q.x)
+			cols.append(Color(1, 1, 1).lerp(Color(0.1, 0.17, 0.14), clampf((dy - 40.0) / 300.0, 0.0, 1.0)))
+		body.uv = uv
+		body.vertex_colors = cols
+		add_child(body)
+		var shade := Shade.new()
+		shade.top = top
+		add_child(shade)
+		var lip := Line2D.new()
+		var pts := PackedVector2Array()
+		for q in top:
+			pts.append(q + Vector2(0, 30))
+		lip.points = pts
+		lip.width = 92.0
+		lip.texture = lip_t
+		lip.texture_mode = Line2D.LINE_TEXTURE_TILE
+		lip.texture_repeat = CanvasItem.TEXTURE_REPEAT_MIRROR
+		lip.joint_mode = Line2D.LINE_JOINT_ROUND
+		add_child(lip)
+		# plants along the top, some in front of the hero
+		var rng := RandomNumberGenerator.new()
+		rng.seed = int(top[0].x)
+		var x := top[0].x + 80.0
+		while x < top[top.size() - 1].x - 80.0:
+			var idx: int = [18, 19, 20, 25, 19, 18, 26][rng.randi() % 7]
+			var t := Kit.env(idx)
+			if t:
+				var s := Sprite2D.new()
+				s.texture = t
+				var h := rng.randf_range(60.0, 120.0) * (1.6 if idx == 18 else 1.0)
+				s.scale = Vector2.ONE * h / t.get_height() * (-1.0 if rng.randf() < 0.5 else 1.0) * Vector2(1, 1)
+				s.scale.y = absf(s.scale.y)
+				s.offset = Vector2(0, -t.get_height() * 0.5)
+				s.position = Vector2(x, _top_y(x) + 16.0)
+				s.z_index = 7 if rng.randf() < 0.25 else -1
+				s.modulate = Color(0.75, 0.82, 0.78) if s.z_index > 0 else Color.WHITE
+				add_child(s)
+			x += rng.randf_range(160.0, 380.0)
+
 	func _draw() -> void:
+		if Kit.ground("rock") != null and Kit.ground("lip") != null:
+			return
 		var rng := RandomNumberGenerator.new()
 		rng.seed = int(top[0].x * 7.0 + top[0].y)
 		var poly := top.duplicate()
@@ -83,6 +141,25 @@ class MossTerrain extends Node2D:
 				var t := (x - top[i].x) / maxf(top[i + 1].x - top[i].x, 0.001)
 				return lerpf(top[i].y, top[i + 1].y, t)
 		return top[0].y if x < top[0].x else top[top.size() - 1].y
+
+
+## Darkness that grows under the mossy top (the deep rock goes almost black-green, like the hollows in the videos).
+class Shade extends Node2D:
+	var top: PackedVector2Array
+
+	func _draw() -> void:
+		var dark := Color(0.06, 0.12, 0.1)
+		for i in top.size() - 1:
+			var a: Vector2 = top[i]
+			var b: Vector2 = top[i + 1]
+			var bands := [[60.0, 0.0], [220.0, 0.55], [460.0, 0.92], [3000.0, 0.96]]
+			for k in bands.size() - 1:
+				var y0: float = bands[k][0]
+				var y1: float = bands[k + 1][0]
+				var c0 := Color(dark, float(bands[k][1]))
+				var c1 := Color(dark, float(bands[k + 1][1]))
+				draw_polygon(PackedVector2Array([a + Vector2(0, y0), b + Vector2(0, y0), b + Vector2(0, y1), a + Vector2(0, y1)]),
+					PackedColorArray([c0, c0, c1, c1]))
 
 
 ## A background layer of the forest (drawn over a strip `width` wide, repeated by its ParallaxLayer).
