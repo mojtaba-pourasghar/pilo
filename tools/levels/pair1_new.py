@@ -142,7 +142,7 @@ level = {
     "terrain": terrain, "surface": "grass",
     "ambient": {"weather": "none", "critters": ["bird", "butterfly", "snail", "dragonfly", "frog"], "critter_count": 14},
     "backdrops": [{"from": 24 * T, "art": "v3_scene_valley_new"}, {"from": 52 * T, "art": ""},
-                  {"from": 76 * T, "art": "v3_scene_tower_inside"}, {"from": 112 * T, "art": ""},
+                  {"from": 76 * T, "art": "v3_scene_tower_inside"}, {"from": 112 * T, "art": "v3_scene_ruins_new"},
                   {"from": 136 * T, "art": "v3_scene_antlerion_den_new"}],
     "scenes": [["N1", 0], ["N2", 24], ["N3", 52], ["N4", 76], ["N5", 112], ["N6", 136]],
     "swipe_start": True,

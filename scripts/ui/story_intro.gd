@@ -26,8 +26,8 @@ func _leave() -> void:
 	LevelManager.after_intro = "menu"
 	match then:
 		"level":
-			Economy.enter(1)
-			LevelManager.play_level(1)
+			# v3: the first level is the old level of pair 1 (free, no heart, CLAUDE.md rule 6)
+			LevelManager.play_pair_level("old_01")
 		"hub":
 			LevelManager.goto_village()
 		_:

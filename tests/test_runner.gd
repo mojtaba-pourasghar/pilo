@@ -1171,6 +1171,20 @@ func _test_v3f_art_and_market() -> void:
 	DeedsStore.clear()
 	var d := LevelManager.load_pair_level("old_01")
 	_check(String(d.get("next_pair", "")) == "new_01" and String(d.get("pair_name", "")) == "old_01", "the old level leads to its new pair")
+	# the v3 chapter map is the main map: pair 1 old is open, its new level only after the old one
+	_check(LevelManager.MAP_SCENE.ends_with("map_v3.tscn"), "the main map is the v3 chapter map")
+	var keep_r: Dictionary = SaveManager.data.get("ratings", {}).duplicate()
+	SaveManager.data["ratings"] = {}
+	_check(MapV3.open(0, 0) and not MapV3.open(0, 1) and not MapV3.open(1, 0), "map: old 1 open, new 1 waits for old 1, pair 2 not built")
+	SaveManager.data["ratings"] = {"101": 2}
+	_check(MapV3.open(0, 1) and MapV3.stars(0, 0) == 2, "map: finishing old 1 opens new 1 and shows its stars")
+	SaveManager.data["ratings"] = keep_r
+	var map: Control = load(LevelManager.MAP_SCENE).instantiate()
+	add_child(map)
+	await get_tree().process_frame
+	_check(map._stage.get_child_count() > 12, "the v3 map builds its nodes")
+	map.queue_free()
+	_check(SideRig.pic("v3_obst_traps", 6, 7) != null and SideRig.pic("v3_obst_traps", 2, 3) != null, "the painted trap frames are cut (boulder, snapper)")
 	await get_tree().process_frame
 
 

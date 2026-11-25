@@ -1210,7 +1210,7 @@ func _show_result_v3(_result: Dictionary) -> void:
 		return
 	var next := String(data.get("next_pair", ""))
 	if next == "":
-		LevelManager.goto_village()
+		LevelManager.goto_map()
 		return
 	var clock := GreatClock.new()
 	add_child(clock)

@@ -555,6 +555,9 @@ class SpikePit extends Zone:
 		queue_redraw()
 
 	func _draw() -> void:
+		var f := int(Time.get_ticks_msec() * 0.008 + position.x) % 6
+		if pic("v3_obst_traps", 0, f, Vector2(0, 8), box.x * 1.1, 0.0, true):
+			return
 		var up := 10.0 + 8.0 * sin(Time.get_ticks_msec() * 0.004 + position.x)
 		var n := int(box.x / 26.0)
 		for i in n:
@@ -590,6 +593,8 @@ class Tar extends Zone:
 		queue_redraw()
 
 	func _draw() -> void:
+		if pic("v3_obst_traps", 1, int(Time.get_ticks_msec() * 0.006 + position.x) % 6, Vector2(0, 6), box.x * 1.15, 0.0, true):
+			return
 		var r := Rect2(-box.x * 0.5, -10, box.x, 14)
 		draw_rect(r, Color("2a1f3d"))
 		draw_rect(Rect2(r.position.x + 3, r.position.y + 2, r.size.x - 6, 8), Color("463a52"))
@@ -621,6 +626,9 @@ class Snapper extends Zone:
 	func _draw() -> void:
 		var phase := fmod(_t, 2.0) / 2.0
 		var open := 1.0 - smoothstep(0.80, 0.9, phase) if phase > 0.5 else smoothstep(0.0, 0.5, phase)
+		var sf := clampi(int(round(open * 3.0)), 0, 3) if phase <= 0.8 else (4 if phase < 0.86 else 5)
+		if pic("v3_obst_traps", 2, sf, Vector2(0, 6), 104.0, 0.0, true):
+			return
 		draw_rect(Rect2(-6, -30, 12, 30), Color("3f8f3e"))
 		for sgn in [-1.0, 1.0]:
 			var pts := PackedVector2Array([Vector2(0, -34), Vector2(sgn * 46, -34 - 40 * open), Vector2(sgn * 52, -34 - 6 * open), Vector2(sgn * 14, -22)])
@@ -678,6 +686,12 @@ class DoorTrap extends Zone:
 
 	func _draw() -> void:
 		var h := TILE * height
+		var raised_y := -TILE * height * 0.5 - TILE * height
+		var k := clampf((_door.position.y - raised_y) / (TILE * height), 0.0, 1.0)     # 0 open .. 1 shut
+		if SideRig.pic("v3_obst_traps", 3, 0) != null:
+			pic("v3_obst_traps", 3, clampi(int(round(k * 5.0)), 0, 5), Vector2(0, 6), TILE * 1.9, 0.0, true)
+			pic("v3_obst_traps", 3, 8 if _closed else 6, Vector2(_plate_x, 6), 84.0, 0.0, true)
+			return
 		draw_rect(Rect2(-16, _door.position.y - h * 0.5, 32, h), Color("2a1f3d"))
 		draw_rect(Rect2(-13, _door.position.y - h * 0.5 + 3, 26, h - 6), Color("8a8f9a"))
 		var plate := Rect2(_plate_x - 24, -6, 48, 8)
@@ -719,7 +733,10 @@ class NetTrap extends Zone:
 		queue_redraw()
 
 	func _draw() -> void:
-		if pic("v3f_i_hazards2", 3, 5 if _torn > 0.0 else 4, Vector2(0, 4), box.x * 1.05, 0.0, true):
+		var nf := 0 if _torn <= 0.0 else clampi(int((5.0 - _torn) * 8.0) + 1, 1, 4)
+		if _stuck:
+			nf = clampi(_taps, 0, 2)
+		if pic("v3_obst_traps", 4, nf, Vector2(0, 4), box.x * 1.2, 0.0, true):
 			return
 		var a := 0.15 if _torn > 0.0 else 0.85
 		var w := box.x * 0.5
@@ -753,6 +770,8 @@ class QuickSand extends Zone:
 		queue_redraw()
 
 	func _draw() -> void:
+		if pic("v3_obst_traps", 5, int(Time.get_ticks_msec() * 0.006 + position.x) % 6, Vector2(0, 10), box.x * 1.15, 0.0, true):
+			return
 		var r := Rect2(-box.x * 0.5, -6, box.x, 12)
 		draw_rect(r, Color("c9a35a"))
 		draw_rect(Rect2(r.position.x, r.position.y, r.size.x, 4), Color("e8c98a"))
@@ -815,7 +834,7 @@ class BoulderChase extends Part:
 		var c := to_local(Vector2(_x, _ground_y(_x) - 40.0))
 		if _state == 1:
 			draw_line(to_local(Vector2(_x - 120.0, _ground_y(_x) - 6.0)), to_local(Vector2(_x - 40.0, _ground_y(_x) - 6.0)), Color(1, 0.6, 0.2, 0.7), 6.0)
-		if pic("v3f_i_hazards2", 0, 3, c, 96.0, _rot):
+		if pic("v3_obst_traps", 6, int(absf(_rot) * 8.0 / TAU * 2.0) % 8, c + Vector2(0, 4), 104.0):
 			return
 		draw_circle(c, 44.0, Color("2a1f3d"))
 		draw_circle(c, 40.0, Color("8d8f9a"))

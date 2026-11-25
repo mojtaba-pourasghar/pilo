@@ -1,0 +1,527 @@
+{
+ "sheet": "v3_obst_traps",
+ "key": "white_fx",
+ "size": [
+  1776,
+  896
+ ],
+ "rows": [
+  {
+   "base": 121,
+   "frames": [
+    {
+     "file": "v3_obst_traps_r00_f00.png",
+     "box": [
+      32,
+      56,
+      177,
+      121
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r00_f01.png",
+     "box": [
+      212,
+      17,
+      359,
+      121
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r00_f02.png",
+     "box": [
+      394,
+      16,
+      541,
+      121
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r00_f03.png",
+     "box": [
+      574,
+      10,
+      722,
+      121
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r00_f04.png",
+     "box": [
+      756,
+      55,
+      903,
+      121
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r00_f05.png",
+     "box": [
+      937,
+      58,
+      1084,
+      121
+     ]
+    }
+   ]
+  },
+  {
+   "base": 210,
+   "frames": [
+    {
+     "file": "v3_obst_traps_r01_f00.png",
+     "box": [
+      31,
+      162,
+      184,
+      210
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r01_f01.png",
+     "box": [
+      211,
+      144,
+      365,
+      210
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r01_f02.png",
+     "box": [
+      394,
+      148,
+      547,
+      210
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r01_f03.png",
+     "box": [
+      575,
+      136,
+      731,
+      210
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r01_f04.png",
+     "box": [
+      760,
+      158,
+      913,
+      210
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r01_f05.png",
+     "box": [
+      949,
+      163,
+      1107,
+      210
+     ]
+    }
+   ]
+  },
+  {
+   "base": 343,
+   "frames": [
+    {
+     "file": "v3_obst_traps_r02_f00.png",
+     "box": [
+      48,
+      230,
+      159,
+      343
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r02_f01.png",
+     "box": [
+      233,
+      220,
+      343,
+      343
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r02_f02.png",
+     "box": [
+      415,
+      221,
+      525,
+      343
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r02_f03.png",
+     "box": [
+      596,
+      220,
+      708,
+      343
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r02_f04.png",
+     "box": [
+      778,
+      230,
+      889,
+      343
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r02_f05.png",
+     "box": [
+      974,
+      230,
+      1087,
+      343
+     ]
+    }
+   ]
+  },
+  {
+   "base": 482,
+   "frames": [
+    {
+     "file": "v3_obst_traps_r03_f00.png",
+     "box": [
+      39,
+      360,
+      170,
+      482
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r03_f01.png",
+     "box": [
+      231,
+      360,
+      363,
+      482
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r03_f02.png",
+     "box": [
+      424,
+      359,
+      554,
+      482
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r03_f03.png",
+     "box": [
+      619,
+      359,
+      751,
+      482
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r03_f04.png",
+     "box": [
+      818,
+      359,
+      948,
+      482
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r03_f05.png",
+     "box": [
+      1013,
+      359,
+      1145,
+      482
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r03_f06.png",
+     "box": [
+      1206,
+      398,
+      1346,
+      477
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r03_f07.png",
+     "box": [
+      1401,
+      407,
+      1539,
+      477
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r03_f08.png",
+     "box": [
+      1596,
+      398,
+      1735,
+      477
+     ]
+    }
+   ]
+  },
+  {
+   "base": 593,
+   "frames": [
+    {
+     "file": "v3_obst_traps_r04_f00.png",
+     "box": [
+      32,
+      497,
+      219,
+      592
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r04_f01.png",
+     "box": [
+      266,
+      498,
+      451,
+      593
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r04_f02.png",
+     "box": [
+      502,
+      498,
+      689,
+      593
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r04_f03.png",
+     "box": [
+      737,
+      497,
+      925,
+      593
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r04_f04.png",
+     "box": [
+      974,
+      497,
+      1162,
+      593
+     ]
+    }
+   ]
+  },
+  {
+   "base": 692,
+   "frames": [
+    {
+     "file": "v3_obst_traps_r05_f00.png",
+     "box": [
+      33,
+      622,
+      216,
+      691
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r05_f01.png",
+     "box": [
+      268,
+      612,
+      451,
+      692
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r05_f02.png",
+     "box": [
+      502,
+      606,
+      682,
+      692
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r05_f03.png",
+     "box": [
+      726,
+      594,
+      904,
+      692
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r05_f04.png",
+     "box": [
+      945,
+      593,
+      1123,
+      692
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r05_f05.png",
+     "box": [
+      1167,
+      594,
+      1348,
+      692
+     ]
+    }
+   ]
+  },
+  {
+   "base": 794,
+   "frames": [
+    {
+     "file": "v3_obst_traps_r06_f00.png",
+     "box": [
+      40,
+      712,
+      155,
+      793
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r06_f01.png",
+     "box": [
+      234,
+      712,
+      349,
+      793
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r06_f02.png",
+     "box": [
+      447,
+      712,
+      575,
+      793
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r06_f03.png",
+     "box": [
+      669,
+      712,
+      800,
+      793
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r06_f04.png",
+     "box": [
+      889,
+      712,
+      1014,
+      793
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r06_f05.png",
+     "box": [
+      1116,
+      712,
+      1244,
+      793
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r06_f06.png",
+     "box": [
+      1351,
+      712,
+      1486,
+      793
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r06_f07.png",
+     "box": [
+      1571,
+      712,
+      1695,
+      794
+     ]
+    }
+   ]
+  },
+  {
+   "base": 877,
+   "frames": [
+    {
+     "file": "v3_obst_traps_r07_f00.png",
+     "box": [
+      29,
+      815,
+      233,
+      877
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r07_f01.png",
+     "box": [
+      277,
+      815,
+      480,
+      877
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r07_f02.png",
+     "box": [
+      529,
+      816,
+      733,
+      877
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r07_f03.png",
+     "box": [
+      863,
+      816,
+      1063,
+      877
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r07_f04.png",
+     "box": [
+      1089,
+      816,
+      1290,
+      877
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r07_f05.png",
+     "box": [
+      1317,
+      816,
+      1517,
+      877
+     ]
+    },
+    {
+     "file": "v3_obst_traps_r07_f06.png",
+     "box": [
+      1546,
+      816,
+      1746,
+      877
+     ]
+    }
+   ]
+  }
+ ]
+}
