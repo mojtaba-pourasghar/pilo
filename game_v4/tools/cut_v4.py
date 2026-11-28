@@ -23,7 +23,7 @@ SHEETS = {"chars": ["grandfather_parts", "arsam_parts", "tikkit_parts", "enemies
 SKIES = {"forest_old_sky", "forest_new_sky"}
 
 
-def key(img: Image.Image, tol=28, soft=30, everywhere=False) -> Image.Image:
+def key(img: Image.Image, tol=28, soft=30, everywhere=False, layer=False) -> Image.Image:
     """Removes the background that touches the picture's edges (white, near-white or magenta), with soft edges and
     the white fringe taken out of the semi-transparent border."""
     a = np.asarray(img.convert("RGB")).astype(np.float32)
@@ -51,9 +51,29 @@ def key(img: Image.Image, tol=28, soft=30, everywhere=False) -> Image.Image:
         # un-premultiply white out of the border pixels
         k = np.clip(alpha, 0.05, 1.0)[..., None]
         rgb = np.where(band[..., None], np.clip((a - 255.0 * (1.0 - k)) / k, 0, 255), a)
-    # stray magenta specks inside (the picture tool sometimes leaves them)
-    speck = ((magenta < 90) | ((a[..., 0] > 170) & (a[..., 2] > 170) & (a[..., 1] < 150))) & ~bg
-    alpha[speck] = 0.0
+    # stray pure-magenta specks inside (the picture tool sometimes leaves them)
+    alpha[(magenta < 90) & ~bg] = 0.0
+    if layer:
+        # background paintings: pink/violet streaks are matte residue, never design -> repaint them from the
+        # nearest clean pixels (no hole is left)
+        pink = (a[..., 0] > 160) & (a[..., 2] > 140) & (a[..., 1] < np.minimum(a[..., 0], a[..., 2]) - 45)
+        pink = ndi.binary_dilation(pink, iterations=2) & (alpha > 0.5)
+        if pink.any():
+            _, idx = ndi.distance_transform_edt(pink, return_indices=True)
+            rgb = rgb[idx[0], idx[1]]
+    # edge clean-up (no white or coloured halo): the outer 1 px goes, light fringe pixels go, and every edge pixel
+    # takes the colour of the nearest solid inside pixel
+    solid = alpha > 0.98
+    inner = ndi.binary_erosion(solid, iterations=2)
+    edge = (alpha > 0.0) & ~inner
+    if inner.any():
+        _, idx = ndi.distance_transform_edt(~inner, return_indices=True)
+        rgb = np.where(edge[..., None], rgb[idx[0], idx[1]], rgb)
+    outer = (alpha > 0.0) & ~ndi.binary_erosion(alpha > 0.0, iterations=1)
+    alpha[outer] *= 0.35
+    light = edge & (a.min(axis=2) > 215)
+    alpha[light] = 0.0
+    alpha = ndi.gaussian_filter(alpha, 0.6) * (alpha > 0.0)
     return Image.fromarray(np.dstack([rgb, alpha * 255.0]).clip(0, 255).astype(np.uint8), "RGBA")
 
 
@@ -120,7 +140,7 @@ def do_layers() -> None:
             continue
         name = f[:-4]
         img = Image.open(os.path.join(ROOT, "bg", f))
-        res = img.convert("RGBA") if name in SKIES else key(img, everywhere=name.endswith(("_mid", "_far", "_near")))
+        res = img.convert("RGBA") if name in SKIES else key(img, everywhere=name.endswith(("_mid", "_far", "_near")), layer=True)
         res.save(os.path.join(out, f))
         print("layer", name, res.size)
 
