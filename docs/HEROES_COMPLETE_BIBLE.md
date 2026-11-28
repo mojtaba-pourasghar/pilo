@@ -1,7 +1,7 @@
 # HEROES_COMPLETE_BIBLE — شناسنامه، Ability Card و ارتقای ۱۲ قهرمان (+ پدربزرگ جوان)
 
 > نسخه 1.0 — ۲۸ نوامبر ۲۰۲۶ · مکمل اجباری `docs/PRODUCTION_SOURCE_OF_TRUTH.md` و `docs/GAMEPLAY_EXPERIENCE_AND_RETENTION_BIBLE.md` §۵.
-> منبع نام و نقش: جدول قهرمان‌ها در `docs/narrative/MASTER_GAMEPLAY_SCENARIO.md` §۳. حرکت پایه: `docs/45_v4_rayman_style_rewrite.md` §۳–۴. سلاح ویژه: `docs/content/14_weapons_tools_detail.md` §۴ (بازنویسی‌شده برای دو دنیای جدا).
+> منبع نام و نقش: جدول قهرمان‌ها در `docs/narrative/MASTER_GAMEPLAY_SCENARIO.md` §۳. حرکت پایه: `docs/45_v4_rayman_style_rewrite.md` §۳–۴. سلاح ویژه: `docs/TOOLS_WEAPONS_UPGRADE_BIBLE.md` §۴ (بازنویسی‌شده برای دو دنیای جدا).
 > الگوی کیفیت و حس حرکت از Rayman Adventures؛ هیچ شخصیت، توان یا دارایی کپی نمی‌شود (قاعدهٔ ۹ CLAUDE.md).
 > هر عدد این سند «نقطهٔ شروع تست» است؛ پس از تست حس حرکت در `game_v4/` تنظیم و در `game_v4/data/heroes.json` ثبت می‌شود. موارد بدون تصمیم مالک با `NEEDS_OWNER_APPROVAL` علامت خورده‌اند.
 
