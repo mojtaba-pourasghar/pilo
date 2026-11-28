@@ -1,29 +1,20 @@
-> **شروع از اینجا:** برای ساخت بازی ابتدا `docs/BUILD_BRIEF.md` را بخوان (تصمیم‌های قفل‌شده و گام‌های T0–T20). پرامت آماده: `docs/CLAUDE_CODE_PROMPT.md`.
+# نگهبانان زمان — راهنمای شروع توسعه
 
-# نگهبانان زمان — بستهٔ تحویل به Claude Code
+## ترتیب اجباری مطالعه
+1. `CLAUDE.md` — قوانین مالک و اولویت اسناد.
+2. `docs/PRODUCTION_SOURCE_OF_TRUTH.md` — تنها قرارداد تولید مرحله، مسیر، گرافیک، دشمن، همراه و Godot.
+3. `docs/SCENARIO.md` — مرجع داستان.
+4. `docs/narrative/MASTER_GAMEPLAY_SCENARIO.md` — طرح روایی ۱۵ فصل.
+5. `docs/45_v4_rayman_style_rewrite.md` — کنترل، حرکت و ریتم.
+6. `docs/46_art_v4.md` — کتاب سبک هنری و قواعد برش.
+7. `docs/design_sheets/` — فقط طرح‌های تأییدشده مالک.
 
-بازی: پلتفرمر معمایی-ماجرایی دوبعدی برای موبایل (۸ تا ۱۵ سال)، Godot 4.3/GDScript. گذشته و حال با هم؛ ۱۵ فصل؛ ۱۲ قهرمان؛ ۱۶ همراه. (پیش‌تر «سفر پیلو».)
+## وضعیت مهم
+سناریوی جامع فعلی، خلاصه رخدادهای ۱۲۰ مرحله را دارد؛ اما هنوز جایگزین طراحی تولیدی ۲۴۰ بخش نیست. هر بخش باید طبق چک‌لیست سند مرجع تولید، با نقشه مختصاتی، شاخه‌ها، موانع، دشمن/غول، رفتار همراه، Art Brief، دارایی‌ها، صدا و معیار تست تکمیل شود. تا آن زمان کدنویسی مرحله ممنوع است.
 
-> **گام‌به‌گام:** `docs/STEP.md` را بخوان؛ فقط گام «بعدی» را انجام بده.
-
-## ترتیب خواندن
-1. `CLAUDE.md` — قواعد دائمی
-2. `docs/BUILD_BRIEF.md` — دستور ساخت
-3. `docs/SCENARIO.md` — داستان
-4. `docs/02_godot_spec.md` — مشخصات فنی
-5. `docs/03_levels_ch1-15.md` — مرحله‌ها
-6. `docs/content/` — فصل‌ها، قهرمان‌ها، همراه‌ها، کلید، سلاح، اقتصاد، آنلاین
-7. `docs/screenplay/` — فیلم‌نامهٔ هر فصل
-8. `docs/18_gameplay_design.md`، `docs/content/12_hero_behavior.md`، `13_companion_system.md`، `14_weapons_tools_detail.md`، `15_enemies_and_keepers.md`، `17_combat_scenario.md`، `16_guardians_bosses.md`، `docs/dialogue/`، `docs/19_effects_catalog.md`، `docs/20_sound_catalog.md`
-9. `docs/04_art_and_sound_bible.md`، `docs/17_ui_screens_design.md`
-9. `docs/05_release_v1_plan.md`، `docs/06_side_games.md`، `docs/07_memories_and_collectibles.md`، `docs/08_combat_and_overworld.md`
-10. `docs/DECISIONS.md`، `docs/STATUS.md`، `docs/WORKFLOW.md`
-
-## ارتباط با مدیر پروژه
-پوشهٔ `comms/` (درخواست هنر، پاسخ، وضعیت کد، صف تصمیم). هر بار شروع و قبل از هر کامیت `git pull` و `comms/` را بخوان.
-
-## هنر
-فهرست یکتای دارایی‌ها: `assets/manifest/assets.csv` (+ `docs/ASSET_PIPELINE.md`، `docs/ASSET_LIST.md`). فقط از دارایی‌های `draft/final` استفاده کن؛ نبودن ← جانگهدار + `comms/ART_REQUESTS.md`.
-
-## نکته
-متن‌ها فارسی راست‌به‌چپ‌اند. بخش‌های قدیمی (v3) در `docs/archive/` و `docs/WORK_LOG.md` است. مرجع داستان قبلی دیگر معتبر نیست.
+## قواعد
+- ساختار کمپین: ۱۵ فصل، هر فصل ۸ مرحله، هر مرحله ۲ بخش (قدیم/حال).
+- بخش قدیم با پدربزرگ جوان و بخش حال با آرسام/قهرمان انتخابی.
+- عمل مهم در گذشته باید نتیجه دیدنی در بخش حال داشته باشد.
+- هیچ دارایی یا مرحله‌ای از بازی دیگر کپی نشود.
+- فایل‌های خارج از ترتیب مطالعه بالا، مرجع تصمیم نیستند.
