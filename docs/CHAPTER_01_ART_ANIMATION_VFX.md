@@ -40,16 +40,16 @@
 | ۶ پیش‌زمینه | برگ/بوتهٔ تیره، قندیل | ۱٫۱–۱٫۴ | تیره (سیلوئت) |
 - پس‌زمینه‌ها **۳۰۷۲×۱۰۲۴ بی‌درز تکرارپذیر** (چپ↔راست)؛ آسمان ۳۰۷۲×۱۰۲۴.
 - نور واحد: بالا-چپ، جهت سایه ثابت (پایین-راست)؛ rim light طلایی `#F5C85B` روی شخصیت/آیتم.
-- افکت نورانی باید منبع داشته باشد (شبنم، پیلو، قفس، تخم)؛ نور بدون منبع و هالهٔ سفید تصادفی ممنوع.
+- افکت نورانی باید منبع داشته باشد (شبنم، Tikkit، قفس، تخم)؛ نور بدون منبع و هالهٔ سفید تصادفی ممنوع.
 
 ### ۱.۳ مقیاس مرجع (شیت مقیاس)
 | عنصر | اندازه (px در طرح ۱۲۸۰×۷۲۰ — پایه قهرمان ۹۰px ارتفاع) |
 |---|---|
 | قهرمان آرسام | ۹۰ × ۵۵ |
 | پدربزرگ | ۹۸ × ۵۸ |
-| پیلو | ۳۰ × ۳۰ (کوچک)، ۶۰ (نور بزرگ) |
-| دودک | ۷۰×۶۰ · سنگ‌بالک ۱۱۰×۸۰ · ماهی‌کش ۱۰۰×۷۰ · ریشه‌دار ۲۴۰×۳۲۰ · پروانه ۹۰×۷۰ · خارپشت ۸۰×۶۰ |
-| خرس پیر | ۲۳۰×۲۵۰ (۲٫۵× قد آرسام) |
+| Tikkit | ۳۰ × ۳۰ (کوچک)، ۶۰ (نور بزرگ) |
+| Murkling | ۷۰×۶۰ · Barkshield ۱۱۰×۸۰ · Murkangler ۱۰۰×۷۰ · Stiltmurk ۲۴۰×۳۲۰ · پروانه ۹۰×۷۰ · Spinroot ۸۰×۶۰ |
+| Antlerion | ۲۳۰×۲۵۰ (۲٫۵× قد آرسام) |
 | قارچ فنری | کلاه ۲۲۰، ساقه ۱۴۰؛ بزرگ (LV06_B) کلاه ۳۴۰ |
 | ریشهٔ جهنده | ۱۸۰×۶۰ |
 | عرض مسیر قابل‌ایستادن | ≥ ۲×۹۰؛ سکوی فرود ≥ ۱٫۵ عرض قهرمان |
@@ -71,7 +71,7 @@
 Sheet: <نام>. Layout: <چیدمان>. Pieces: <فهرست قطعات>. Side view facing right (characters). Palette: <HEX>. Scale: <اندازه>. 
 [MAGENTA block]
 ```
-- ورق‌های ف۱: `ch01_set_ground_past` (کیت زمین گذشته)، `ch01_set_ground_present`، `ch01_set_props` (قارچ/ریشه/پیچک/برگ/آبراه/دریچه/زنگ/نشان)، `ch01_enemies` (۸ دشمن)، `ch01_boss_bear` (اعضای خرس)، `ch01_pilo_hero_sheets` (از طراحی مرجع)، `ch01_bg_past_layers_01..03`، `ch01_bg_present_layers_01..03`، `ch01_fx_sheet`. تأیید مالک **تک‌به‌تک** (CLAUDE.md).
+- ورق‌های ف۱: `ch01_set_ground_past` (کیت زمین گذشته)، `ch01_set_ground_present`، `ch01_set_props` (قارچ/ریشه/پیچک/برگ/آبراه/دریچه/زنگ/نشان)، `ch01_enemies` (۸ دشمن)، `ch01_boss_antlerion` (اعضای Antlerion)، `ch01_pilo_hero_sheets` (از طراحی مرجع)، `ch01_bg_past_layers_01..03`، `ch01_bg_present_layers_01..03`، `ch01_fx_sheet`. تأیید مالک **تک‌به‌تک** (CLAUDE.md).
 
 ---
 
@@ -82,21 +82,21 @@ Sheet: <نام>. Layout: <چیدمان>. Pieces: <فهرست قطعات>. Side v
 |---|---|---|---|---|
 | `char_grandfather` | سر، تنه، بازو/ساعد/دست×۲، ران/ساق/پا×۲، شنل، کلاه، عصا، ساعت جیبی | idle، walk، run، jump_up، jump_apex، fall، land، glide، wall_slide، wall_jump، work(کار)، hit_cane، hurt، release_pose | ۲۵۶×۳۲۰ ورق | پا-مرکز |
 | `char_arsam` | سر، تنه، بازو×۲ (کمان)، پا×۲، شال‌گردن (۳ بخش)، کوله | idle، walk، run، jump، dj، glide، wall، shoot، lens_cast، hurt | ۲۵۶×۳۲۰ | پا |
-| `comp_pilo` | بدنه، بال×۲، دم نور | idle، follow، beam، chirp، sleep | ۱۲۸ | مرکز |
+| `comp_tikkit` | بدنه، بال×۲، دم نور | idle، follow، beam، chirp، sleep | ۱۲۸ | مرکز |
 - حرکت ثانویه: شنل/شال با فنر جرم-فنر (۳ بخش، میرایی ۰٫۸)، سر با تأخیر ۲ فریم، کشیدگی/فشردگی فرود (۱٫۱۵/۰٫۸۵ در ۰٫۱۲ث).
 - **اضافه شدن:** `char_grandfather_work` (انیمیشن دست‌کار ۰٫۶–۱٫۲ث با جرقه).
 
 ### ۳.۲ دشمن‌ها (هر کدام ریگ ساده + حالت‌ها)
 | ID | حالت‌ها | FX | SFX |
 |---|---|---|---|
-| `en01_dudak` | sleep، patrol، telegraph(دود بنفش)، puff، recover، released | `fx_smoke_purple`، `fx_release_butterfly` | `sfx_dudak_snore`, `sfx_puff`, `sfx_release_chime` |
-| `en02_stonewing` | patrol، retreat، shove، shield_flash، released | `fx_shield_flash` | `sfx_stone_scrape` |
-| `en03_fishhook` | submerge، ring، leap، recover | `fx_water_ring` | `sfx_splash_small` |
-| `en04_rooter` | idle، raise_hand، root_strike، calm | `fx_ground_crack` | `sfx_root_rise` |
-| `en05_moth` | wave_fly، wing_fold، dust_burst | `fx_dust_burst_purple` | `sfx_wing_flap` |
-| `en06_hedgehog` | patrol، curl، roll | `fx_roll_dust` | `sfx_rustle` |
-| `en07_gardener` | stand، block، step_aside | — | `sfx_wood_bell` |
-| `boss_bear` | idle، paw_raise، paw_slam، stuck،breath_in، roar_wave، summon_root،calm،release | `fx_boss_telegraph`، `fx_boss_hit_dust`، `fx_armor_crack` | `sfx_bear_*` |
+| `en01_murkling` | sleep، patrol، telegraph(دود بنفش)، puff، recover، released | `fx_smoke_purple`، `fx_release_butterfly` | `sfx_dudak_snore`, `sfx_puff`, `sfx_release_chime` |
+| `en02_barkshield` | patrol، retreat، shove، shield_flash، released | `fx_shield_flash` | `sfx_stone_scrape` |
+| `en03_murkangler` | submerge، ring، leap، recover | `fx_water_ring` | `sfx_splash_small` |
+| `en04_stiltmurk` | idle، raise_hand، root_strike، calm | `fx_ground_crack` | `sfx_root_rise` |
+| `en05_murkmoth` | wave_fly، wing_fold، dust_burst | `fx_dust_burst_purple` | `sfx_wing_flap` |
+| `en06_spinroot` | patrol، curl، roll | `fx_roll_dust` | `sfx_rustle` |
+| `en07_stumpguard` | stand، block، step_aside | — | `sfx_wood_bell` |
+| `boss_antlerion` | idle، paw_raise، paw_slam، stuck،breath_in، roar_wave، summon_root،calm،release | `fx_boss_telegraph`، `fx_boss_hit_dust`، `fx_armor_crack` | `sfx_antlerion_*` |
 
 ### ۳.۳ محیط و مسیر
 | ID | سایز px | شرح | نقطهٔ اتصال | حالت‌ها/انیمیشن |
@@ -132,8 +132,8 @@ Sheet: <نام>. Layout: <چیدمان>. Pieces: <فهرست قطعات>. Side v
 - **غالب:** سبز `#9ABF68`؛ **ثانویه:** فیروزه `#91D5C9`؛ **تعاملی:** `#F0D58A`؛ **خطر:** `#74518C`؛ **پاداش:** `#F5C85B`.
 - **ترکیب‌بندی:** تخم در لانهٔ سه ریشه، نور صبح از سمت چپ، پرتو زاویه‌دار، تنهٔ غول ادامهٔ کامل تا زمین.
 - **لایه‌ها:** ۰ آسمان مه گرم · ۱ سیلوئت درختان در مه · ۲ تنه‌های غول با ریشه · ۳ تپهٔ ریشه‌ای · ۴ گرده و کرم‌شب‌تاب · ۵ مسیر · ۶ برگ تیره.
-- **دارایی:** `bg_past_ch01_01_{sky,far,mid,back,ray}`، `env_ground_chunk_*`، `env_root_jumper`، `env_mushroom_spring`، `env_egg_nest`، `en01_dudak`، `char_grandfather`.
-- **انیمیشن‌های کلیدی:** پدربزرگ دست‌کار روی غلاف تخم (۱٫۲ث)، تخم نبض، دودک خواب (تنفس)، قارچ نبض.
+- **دارایی:** `bg_past_ch01_01_{sky,far,mid,back,ray}`، `env_ground_chunk_*`، `env_root_jumper`، `env_mushroom_spring`، `env_egg_nest`، `en01_murkling`، `char_grandfather`.
+- **انیمیشن‌های کلیدی:** پدربزرگ دست‌کار روی غلاف تخم (۱٫۲ث)، تخم نبض، Murkling خواب (تنفس)، قارچ نبض.
 - **FX:** `fx_dew_collect_chain`، `fx_root_dust`، `fx_spore_puff`، `fx_egg_glow_pulse`؛ **SFX:** `sfx_tick_deep`، `sfx_egg_hum`.
 - **افکت‌های محیطی:** مه می‌لغزد، پرتو نور تکان، پروانه‌های ریز.
 - **اتصال:** تخم روی سه ریشه؛ قارچ به خاک با سایهٔ تماس؛ تنه تا پایین قاب.
@@ -142,80 +142,80 @@ Sheet: <نام>. Layout: <چیدمان>. Pieces: <فهرست قطعات>. Side v
 ### CH01_LV01_B — رد نور (حال)
 - **غالب:** سبز-خاکستری `#6E8E8A`؛ **ثانویه:** فیروزه سرد؛ **خطر:** بنفش در شکاف‌ها؛ **رگه‌های حیات:** `#9ABF68`.
 - **ترکیب‌بندی:** همان جغرافیا؛ ریشه‌های ضخیم‌تر، پل ریشه‌ای (اثر deed)، شکاف‌ها بنفش، قفس ساعتک در انتها.
-- **دارایی:** `bg_present_ch01_01_*`، `env_ground_chunk_pres_*`، `env_root_bridge`، `env_mushroom_spring`، `env_cage_clock`، `comp_pilo`.
-- **FX:** `fx_smoke_purple_crack`، `fx_pilo_beam_gold`، `fx_cage_react`؛ **SFX:** `sfx_cage_hum`، `sfx_cage_release`.
-- **انیمیشن:** قفس: idle نبض → واکنش به نور پیلو → ترک نور → ذرات به سمت ساعتک → آزادی. 
+- **دارایی:** `bg_present_ch01_01_*`، `env_ground_chunk_pres_*`، `env_root_bridge`، `env_mushroom_spring`، `env_cage_clock`، `comp_tikkit`.
+- **FX:** `fx_smoke_purple_crack`، `fx_tikkit_beam_gold`، `fx_cage_react`؛ **SFX:** `sfx_cage_hum`، `sfx_cage_release`.
+- **انیمیشن:** قفس: idle نبض → واکنش به نور Tikkit → ترک نور → ذرات به سمت ساعتک → آزادی. 
 - **اتصال:** پل ریشه‌ای از دو کرانه رشد کرده؛ تنه افتاده به کرانه چفت.
 
 ### CH01_LV02_A — بستن دو کرانه
 - **غالب:** چوب گرم `#A66D3F`؛ ثانویه: سبز؛ **تعاملی:** گوه‌ها (لبه طلایی).
 - **ترکیب‌بندی:** سه کنده با **طناب واقعی به دو تنه**؛ کرانه‌ها روی زمین؛ سکوی کار مثلث‌وار.
-- **دارایی:** `env_log_bridge_half`، `env_wedge`، `env_rope_anchor`، `en02_stonewing`.
+- **دارایی:** `env_log_bridge_half`، `env_wedge`، `env_rope_anchor`، `en02_barkshield`.
 - **انیمیشن:** گوه جا می‌افتد (۰٫۵ث + ضربه)، تخته لق لرزش ۰٫۶ث؛ **FX:** `fx_wood_chips`؛ **SFX:** `sfx_wedge_knock`، `sfx_wood_creak`.
 - **افکت محیطی:** آب زیر پل جاری (لایه ۳)، مه.
 - **اتصال:** پل/طناب همه به مهار.
 
 ### CH01_LV02_B — پل حافظه
 - **حال:** پل فرسوده، طناب افتاده **به کنده متصل**، شکاف‌های بنفش، یک کنده پوسیده (ترک نورانی).
-- **دارایی:** `env_log_bridge_worn`، `env_log_bridge_rotten`، `env_rope_hanging`، `en02_stonewing`، `comp_pilo`.
+- **دارایی:** `env_log_bridge_worn`، `env_log_bridge_rotten`، `env_rope_hanging`، `en02_barkshield`، `comp_tikkit`.
 - **انیمیشن:** کندهٔ پوسیده می‌ریزد (۱٫۰ث) پس از لرزش؛ **FX:** `fx_wood_dust_cold`؛ **SFX:** `sfx_log_crumble`.
 - **FX محیطی:** پرتوهای سرد کم‌رنگ؛ دود بنفش در شکاف.
 
 ### CH01_LV03_A — چرخاندن آب
 - **غالب:** آبی-سبز `#4FB6B0`؛ سنگ `#7B8B88`؛ تعاملی: چرخ چوبی با لبهٔ طلایی.
 - **ترکیب‌بندی:** آبشار از لبهٔ بالای قاب تا حوضچه **بی‌وقفه**؛ چرخ به محور و پایهٔ سنگی.
-- **دارایی:** `env_waterfall_strip`، `env_water_wheel`، `env_rocks_wet`، `env_bubble_safe`، `en03_fishhook`.
+- **دارایی:** `env_waterfall_strip`، `env_water_wheel`، `env_rocks_wet`، `env_bubble_safe`، `en03_murkangler`.
 - **انیمیشن:** چرخ می‌چرخد با کشش؛ آب منحرف‌شونده؛ **FX:** `fx_water_spray`، `fx_ripple`؛ **SFX:** `sfx_waterfall_loop`، `sfx_wheel`.
 - **اتصال:** حباب‌های هوا به مسیر آب بسته؛ هیچ آب معلق.
 
 ### CH01_LV03_B — غار خشک
 - **ترکیب‌بندی:** بستر خشک اما مرطوب؛ رد جریان؛ آب باریک در پس‌زمینه؛ غار تاریک‌تر.
-- **دارایی:** `env_riverbed_dry`، `env_cave_mouth`، `env_drip`، `en03_fishhook_small`، `env_key_ledge`.
+- **دارایی:** `env_riverbed_dry`، `env_cave_mouth`، `env_drip`، `en03_murkangler_small`، `env_key_ledge`.
 - **FX:** `fx_drip_shadow`، `fx_glow_ledge`؛ **SFX:** `sfx_drip_cave`.
 
 ### CH01_LV04_A — سه نشانه
 - **غالب:** خاک و ریشه `#7A5A3A`؛ نور کم؛ تعاملی: نشان‌های حکاکی (طلایی ملایم).
-- **دارایی:** `env_tunnel_root_*`، `env_glyph_plate`، `en04_rooter`، `env_pollen_cloud`.
+- **دارایی:** `env_tunnel_root_*`، `env_glyph_plate`، `en04_stiltmurk`، `env_pollen_cloud`.
 - **انیمیشن:** نشان با لمس روشن، گرده ابر؛ **FX:** `fx_glyph_glow`، `fx_pollen_puff`؛ **SFX:** `sfx_glyph_chime`.
 - **اتصال:** ریشه‌ها به سقف تونل و تنهٔ مادر؛ نشان‌ها حکاکی روی تنه (نه آیکون شناور).
 
 ### CH01_LV04_B — پاسخ ریشه‌ها
 - **حال:** ریشه‌های ضخیم‌تر، نقش‌ها برجسته با نور بنفش-سبز کم؛ ریشه‌های متحرک.
-- **دارایی:** `env_root_moving`، `env_glyph_plate_lit`، `en04_rooter`.
+- **دارایی:** `env_root_moving`، `env_glyph_plate_lit`، `en04_stiltmurk`.
 - **انیمیشن:** ریشه چرخهٔ ۳ث؛ **FX:** `fx_root_light`؛ **SFX:** `sfx_root_move`.
 
 ### CH01_LV05_A — نهال تشنه
 - **ترکیب‌بندی:** نهال با ریشه در خاک؛ آبراه شیب ملایم؛ لانهٔ ساعتک بالا.
-- **دارایی:** `env_sapling`، `env_waterway`، `env_gate_valve`، `en05_moth`، `env_leaf_broad`.
+- **دارایی:** `env_sapling`، `env_waterway`، `env_gate_valve`، `en05_murkmoth`، `env_leaf_broad`.
 - **FX:** `fx_water_trickle`، `fx_sapling_grow`؛ **SFX:** `sfx_trickle`، `sfx_grow_sparkle`.
 
 ### CH01_LV05_B — شاخه‌ای به‌جای پل
 - **ترکیب‌بندی:** شاخهٔ بالغ از تنه به صخره **قفل‌شده**؛ ریشه در کف قاب.
-- **دارایی:** `env_branch_bridge`، `env_leaf_broad`، `env_trunk_hollow`، `comp_pilo`.
-- **FX:** `fx_leaf_fall`، `fx_pilo_pulse`؛ **SFX:** `sfx_leaf_bend`.
+- **دارایی:** `env_branch_bridge`، `env_leaf_broad`، `env_trunk_hollow`، `comp_tikkit`.
+- **FX:** `fx_leaf_fall`، `fx_tikkit_pulse`؛ **SFX:** `sfx_leaf_bend`.
 
 ### CH01_LV06_A — بذر جهنده
-- **دارایی:** `env_thorn_bed`، `env_seed`، `env_soft_soil`، `en06_hedgehog`، `env_rock_roll`.
+- **دارایی:** `env_thorn_bed`، `env_seed`، `env_soft_soil`، `en06_spinroot`، `env_rock_roll`.
 - **انیمیشن:** بذر کاشت (۱٫۵ث) → جوانه؛ **FX:** `fx_seed_burst`، `fx_soil_puff`؛ **SFX:** `sfx_seed_plant`.
 - **اتصال:** خارها از زمین با پایه؛ سنگ روی زمین می‌غلتد؛ خاک گود متصل.
 
 ### CH01_LV06_B — پرش تا تاج
 - **ترکیب‌بندی:** قارچ بزرگ (کلاه ۳۴۰) با سایهٔ تماس؛ سکوی میانی از شاخهٔ واقعی؛ قوس شبنم.
-- **دارایی:** `env_mushroom_spring_big`، `env_branch_platform`، `en06_hedgehog`، `comp_pilo`.
+- **دارایی:** `env_mushroom_spring_big`، `env_branch_platform`، `en06_spinroot`، `comp_tikkit`.
 - **FX:** `fx_spore_big`، `fx_dew_arc`؛ **SFX:** `sfx_mushroom_boing_big`.
 
 ### CH01_LV07_A/B — باغ پنهان
 - **غالب:** باغ سبز-طلایی `#8DB360`؛ زنگ‌ها آویزان با **نخ قابل مشاهده**.
 - **A:** باغ زنده و پر از گل؛ **B:** باغ متروک، زنگ‌های شکسته، **خاطره به‌صورت نقاشی نورانی نیمه‌شفاف روی تنه** (نه UI).
-- **دارایی:** `env_bell_wood`، `env_leaf_float`، `env_memory_tree`، `env_memory_mural`، `en07_gardener`، `en01_dudak_small`.
+- **دارایی:** `env_bell_wood`، `env_leaf_float`، `env_memory_tree`، `env_memory_mural`، `en07_stumpguard`، `en01_murkling_small`.
 - **FX:** `fx_note_pulse_{a,b,c}`، `fx_mural_reveal`؛ **SFX:** `sfx_wood_bell_*`، `sfx_lullaby_*`.
 
-### CH01_LV08_A/B — لانهٔ خرس پیر
-- **A:** لانه سنگی با ستون‌های **متصل به سقف**؛ سنگ آواز روی سه‌پایه؛ رد پنجه.
-- **B:** خرس ۲٫۵×؛ پاها روی زمین؛ زرهٔ ریشه‌ای **به بدن متصل** (بدون قطعهٔ شناور)؛ دود بنفش فقط از شکاف‌ها.
-- **دارایی:** `boss_bear_*`، `env_pillar_stone`، `env_song_stone`، `env_nest_floor`.
-- **FX:** `fx_boss_telegraph`، `fx_armor_crack`، `fx_roar_wave`، `fx_song_pulse`، `fx_release_bear`؛ **SFX:** `sfx_bear_roar`، `sfx_song_stone_hum`، `sfx_lullaby_final`.
-- **انیمیشن پایان:** لایهٔ دود جدا → زره می‌ریزد → خرس به رنگ طبیعی → آرام.
+### CH01_LV08_A/B — لانهٔ Antlerion
+- **A:** لانه سنگی با ستون‌های **متصل به سقف**؛ سنگ آواز روی سه‌پایه؛ رد شاخ.
+- **B:** Antlerion ۲٫۵×؛ پاها روی زمین؛ زرهٔ ریشه‌ای **به بدن متصل** (بدون قطعهٔ شناور)؛ دود بنفش فقط از شکاف‌ها.
+- **دارایی:** `boss_antlerion_*`، `env_pillar_stone`، `env_song_stone`، `env_nest_floor`.
+- **FX:** `fx_boss_telegraph`، `fx_armor_crack`، `fx_roar_wave`، `fx_song_pulse`، `fx_release_bear`؛ **SFX:** `sfx_antlerion_roar`، `sfx_song_stone_hum`، `sfx_lullaby_final`.
+- **انیمیشن پایان:** لایهٔ دود جدا → زره می‌ریزد → Antlerion به رنگ طبیعی → آرام.
 
 ---
 
@@ -227,7 +227,7 @@ Sheet: <نام>. Layout: <چیدمان>. Pieces: <فهرست قطعات>. Side v
 | `fx_root_dust` | ریشه/فرود | پا | ۰٫۴ث | خاکی | کم | ۱۶ |
 | `fx_smoke_purple` | دشمن/خطر | بدن | ۱٫۰ث | بنفش | متوسط | ۳۰ |
 | `fx_release_butterfly` | آزادسازی | بدن | ۱٫۵ث | رنگ طبیعی | زیاد | ۲۰ |
-| `fx_pilo_beam_gold` | توان پیلو | منقار | ۱–۶ث | طلایی | متوسط | ۴۰ |
+| `fx_tikkit_beam_gold` | توان Tikkit | منقار | ۱–۶ث | طلایی | متوسط | ۴۰ |
 | `fx_lens_ring_blue` | لنز آرسام | قهرمان | ۴ث | آبی | متوسط | ۳۰ |
 | `fx_cage_react` | قفس ساعتک | قفس | ۱٫۲ث | سفید-طلایی | متوسط | ۳۰ |
 | `fx_boss_telegraph` | حمله غول | نقطهٔ زمین | ۰٫۹ث | قرمز-نارنجی | زیاد | ۲۰ |
@@ -239,7 +239,7 @@ Sheet: <نام>. Layout: <چیدمان>. Pieces: <فهرست قطعات>. Side v
 
 ## ۶) قواعد انیمیشن
 - همه جاندارها ریگ cut-out با **حرکت ثانویه**؛ هیچ تصویر ثابت جابه‌جا نمی‌شود.
-- زمان‌ها: جهش ۰٫۱۸–۰٫۲۲ث؛ فرود squash ۰٫۱۲؛ خلق دودک ۰٫۷ث تلگراف؛ قفس ۱٫۲ث.
+- زمان‌ها: جهش ۰٫۱۸–۰٫۲۲ث؛ فرود squash ۰٫۱۲؛ خلق Murkling ۰٫۷ث تلگراف؛ قفس ۱٫۲ث.
 - هر دشمن: ۴ حالت + ریکاوری؛ هر شیء تعاملی: idle + هشدار + اجرا + پایان.
 - **تلگراف دیداری** قبل از هر حمله (دود، ترک زمین، حلقهٔ نور)؛ همراه با SFX.
 
