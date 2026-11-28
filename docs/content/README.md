@@ -21,3 +21,5 @@
 | [15_enemies_and_keepers.md](15_enemies_and_keepers.md) | دشمن‌ها و ۹۰ پاسدار |
 | [16_guardians_bosses.md](16_guardians_bosses.md) | ۱۵ نگهبان فصل |
 | [17_combat_scenario.md](17_combat_scenario.md) | سناریوی جنگ و مبارزه، دام‌ها، فریم‌دیتا |
+
+> **۲۸ نوامبر ۲۰۲۶:** فایل‌های این پوشه بخش‌هایی از مدل قدیمی (لنز، شبح، نام‌های فارسی همراهان/قهرمانان) را دارند و مرجع نیستند. مرجع نام‌ها `docs/ROSTER_REDESIGN_V5.md`، مرجع داستان `docs/SCENARIO.md` و `docs/narrative/MASTER_GAMEPLAY_SCENARIO.md`.
