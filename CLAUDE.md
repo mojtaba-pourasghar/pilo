@@ -63,3 +63,14 @@ do not build that screen; ask in `comms/DECISION_QUEUE.md`.
 - **قبل از commit:** `python3 tests/validate_levels.py` و `godot --headless --path . res://tests/test_runner.tscn`.
 - صدای شخصیت‌ها: دیالوگ را در فایل مرحله/داده بنویس، بعد `python3 tools/voice/build_voice_lines.py` و `python3 tools/voice/make_recording_script.py`. صدا با استودیوی `tools/voice-studio` (آواشو، هر شخصیت صدای خودش)؛ **صداگذاری نام قهرمان را نمی‌گوید**؛ ضبط انسانی (فایل‌های خارج از `docs/voice/tts_generated.json`) هرگز بازنویسی نشود.
 - صدای محیط: ضبط واقعی از Commons با `tools/audio/fetch_ambience.py` (منبع و مجوز در `docs/audio/sound_sources.json`)، وگرنه `tools/audio/synth_ambience.py`؛ بقیهٔ جلوه‌ها `tools/audio.py`.
+
+
+## مرجع تولید یگانه (الزامی — ۲۸ نوامبر ۲۰۲۶)
+
+- پیش از هر کار مرحله‌سازی، فقط این سند را به‌عنوان قرارداد تولید بخوان: `docs/PRODUCTION_SOURCE_OF_TRUTH.md`.
+- ساختار کمپین قطعی: ۱۵ فصل × ۸ مرحله × ۲ بخش قدیم/حال = ۱۲۰ مرحله و ۲۴۰ بخش.
+- مرجع داستان: `docs/SCENARIO.md` و `docs/narrative/MASTER_GAMEPLAY_SCENARIO.md`.
+- مرجع حرکت و سبک بصری v4: `docs/45_v4_rayman_style_rewrite.md` و `docs/46_art_v4.md`.
+- `docs/47_v4_game_design_like_reference.md` حذف شده؛ تعریف ۶ جفت مرحله در آن معتبر نیست.
+- هر سند قدیمی دیگر خارج از فهرست بالا مرجع تصمیم یا دستور ساخت نیست. اگر جزئیاتی لازم شد، فقط با درخواست صریح مالک از تاریخچه بازیابی کن؛ تناقض یا تصمیم قدیمی را وارد بازی نکن.
+- تا زمانی که هر بخش قابل‌بازی نقشه مسیر، قطعه‌بندی، موانع، دشمن و الگوی حمله، اکشن همراه، Art Brief، دارایی و معیار Done ندارد، آن بخش آماده پیاده‌سازی نیست.
